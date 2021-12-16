@@ -68,11 +68,11 @@
 		<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">
 			<param name="file" value="${logdir}/daily"></param>
 			<param name="append" value="true"></param>
+			<param name="DatePattern" value="'-'yyyy-MM-dd'.log'"></param>
 			<layout class="org.apache.log4j.PatternLayout">
 				<param name="ConversionPattern" value="%-5p: %m - %c (%d{yyyy-MM-dd HH:mm:ss})%n" />
 			</layout>
 			
-			<param name="DatePattern" value="'-'yyyy-MM-dd'.log'"></param>
 		</appender>
 	
 	<!-- 기본 로깅 설정(세부 설정이 있을 경우 세부 설정이 우선 적용) -->
