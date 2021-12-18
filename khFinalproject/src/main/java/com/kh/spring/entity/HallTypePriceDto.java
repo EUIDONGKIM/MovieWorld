@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class HallTypePriceDto {
-	private int hallType;
+	private String hallType;
 	private int hallPrice;
 }
