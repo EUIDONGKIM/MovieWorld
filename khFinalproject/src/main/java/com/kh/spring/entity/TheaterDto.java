@@ -10,4 +10,5 @@ public class TheaterDto {
 	private String theaterName;
 	private String theaterAddress;
 	private String theaterInfo;
+	private String theaterSido;
 }

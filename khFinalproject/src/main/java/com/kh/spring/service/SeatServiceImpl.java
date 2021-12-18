@@ -22,18 +22,21 @@ public class SeatServiceImpl implements SeatService{
 	
 	@Override
 	public void setSeatandUpdateHall(List<String> seat, int hallNo) {
-		int hallSeat = seat.size();
-		//hall에 총 좌석수를 업데이트 해준다.
-		hallDao.update(hallNo,hallSeat);
-		log.debug("홀넘버 = {}",hallNo);
+		int hallSeat = 0;
+		
 		//해당 hallNo의 seat을 차례대로 등록해준다
 		for(String seatName : seat) {
+			if(seatName.contains("normal")) {
 			SeatDto seatDto = new SeatDto();
 			seatDto.setHallNo(hallNo);
 			seatDto.setSeatName(seatName);
 			seatDao.insert(seatDto);
+			hallSeat++;
+			}
 		}
 		
+		//hall에 총 좌석수를 업데이트 해준다.
+		hallDao.update(hallNo,hallSeat);
 	}
 
 }
