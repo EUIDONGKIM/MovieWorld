@@ -22,4 +22,9 @@ public class AdminController {
 		return "admin/hall";
 	}
 	
+	@RequestMapping("/schedule")
+	public String main() {
+		return "admin/schedule";
+	}
+	
 }

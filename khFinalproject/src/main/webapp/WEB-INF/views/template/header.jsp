@@ -55,7 +55,7 @@
 
 						<li><a href="${root}/movie/">영화</a></li>
 						<li><a href="${root}/theater/">극장</a></li>
-						<li><a href="${root}/ticket/">예매</a></li>
+						<li><a href="${root}/reservation/">예매</a></li>
 				<c:choose>
 					<c:when test="${login}">
 								<c:choose>

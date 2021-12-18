@@ -7,10 +7,10 @@ import lombok.Data;
 @Data
 public class ScheduleDto {
 	private int scheduleNo;
-	private int theaterNo;
+	private int hallNo;
 	private int movieNo;
-	private Date scheduleDate;
-	private Date scheduleTime;
-	private Date scheduleStart;
-	private Date scheduleEnd;
+	private String scheduleDate;
+	private String scheduleTime;
+	private String scheduleStart;
+	private String scheduleEnd;
 }

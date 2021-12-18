@@ -14,33 +14,8 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="hall">
-	<select id="list" resultType="hallDto">
-		select * from hall
+<mapper namespace="movie">
+	<select id="list" resultType="MovieDto">
+		select * from movie
 	</select>
-
-	<select id="getHallTypeList" resultType="HallTypePriceDto">
-		select * from hall_type_price
-	</select>
-
-	<insert id="insert" parameterType="HallDto">
-		insert into hall values(
-		#{hallNo},
-		#{theaterNo},
-		#{hallType},
-		#{hallName},
-		#{hallRows},
-		#{hallCols},
-		0
-		)
-	</insert>
-	
-	<update id="update" parameterType="map">
-		update hall set hall_seat = #{hallSeat} where hall_no = #{hallNo}
-	</update>
-	
-	<select id="getSeq" resultType="int">
-		select hall_seq.nextval from dual
-	</select>
-
 </mapper>

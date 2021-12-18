@@ -45,7 +45,7 @@ $(function(){
 <h1> 상영관 생성 </h1>
 
 <template id="theater-template">
-<option value="{{no}}">{{name}}</option>
+	<option value="{{no}}">{{name}}</option>
 </template>
 
 <form action="create_seat" method="post">
