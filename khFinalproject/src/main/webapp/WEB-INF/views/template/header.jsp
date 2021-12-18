@@ -60,7 +60,7 @@
 					<c:when test="${login}">
 								<c:choose>
 									<c:when test="${admin}">
-										<li><a href="${root}/admin/home">관리메뉴</a></li>
+										<li><a href="${root}/admin/">관리메뉴</a></li>
 									</c:when>
 									<c:otherwise>
 										<li><a href="${root}/member/logout">로그아웃</a></li>

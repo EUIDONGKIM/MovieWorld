@@ -12,4 +12,5 @@ public class HallDto {
 	private String hallName;
 	private int hallRows;
 	private int hallCols;
+	private int hallSeat;
 }

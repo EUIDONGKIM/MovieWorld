@@ -14,6 +14,14 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="구분을위한이름(테이블명)">
-	
+<mapper namespace="seat">
+
+	<insert id="insert" parameterType="SeatDto">
+		insert into seat values(
+		seat_seq.nextval,
+		#{hallNo},
+		#{seatName}
+		)
+	</insert>
+
 </mapper>

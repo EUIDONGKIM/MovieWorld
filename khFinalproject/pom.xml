@@ -103,7 +103,7 @@
 		<dependency>
 		    <groupId>org.apache.logging.log4j</groupId>
 		    <artifactId>log4j-core</artifactId>
-		    <version>2.15.0</version>
+		    <version>2.16.0</version>
 		</dependency>
 
 		<!-- @Inject -->
@@ -249,6 +249,28 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- 
+			데이터 변환 라이브러리
+			= 의존성만 추가하면 모든 @RestController의 반환값을 변환 처리한다 
+		-->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+		
+		<!-- 
+			웹소켓(Websocket) 의존성
+			- spring-websocket : 스프링 웹소켓 모듈
+			- jackson-databind : 웹소켓에서 주고받는 데이터 변환 객체
+		 -->
+		 <dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+				 
 		
 	</dependencies>
 	
