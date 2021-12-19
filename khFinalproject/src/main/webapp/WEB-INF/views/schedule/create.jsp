@@ -33,18 +33,6 @@
 		</select>
 	</div>
 
-
-	<div class="row">
-		<label>상영일 선택</label>
-		<input type="date" name="scheduleDate" required>
-	</div>
-	
-	
-	<div class="row">
-		<label>상영 시작 시간</label>
-		<input type="time" name="scheduleTime" required>
-	</div>
-	
 	
 	<div class="row">
 		<label>상영 시작일</label>

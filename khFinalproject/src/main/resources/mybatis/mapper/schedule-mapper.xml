@@ -20,10 +20,12 @@
 		schedule_seq.nextval,
 		#{hallNo},
 		#{movieNo},
-		to_date(#{scheduleDate},'YYYY-MM-DD'),
-		to_date(#{scheduleTime},'HH24:MI:SS'),
 		to_date(#{scheduleStart},'YYYY-MM-DD'),
 		to_date(#{scheduleEnd},'YYYY-MM-DD')
 		)
 	</insert>
+	
+	<select id="list" resultType="ScheduleDto">
+		select * from schedule
+	</select>
 </mapper>

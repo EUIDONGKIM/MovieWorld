@@ -44,6 +44,11 @@ public class HallDaoImpl implements HallDao{
 	public List<HallDto> list() {
 		return sqlSession.selectList("hall.list");
 	}
+
+	@Override
+	public HallDto get(int hallNo) {
+		return sqlSession.selectOne("hall.get", hallNo);
+	}
 	
 	
 }
