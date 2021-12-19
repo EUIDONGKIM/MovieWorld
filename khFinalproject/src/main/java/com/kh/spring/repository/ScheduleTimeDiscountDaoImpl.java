@@ -6,22 +6,17 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.MovieDto;
+import com.kh.spring.entity.ScheduleTimeDiscountDto;
 
 @Repository
-public class MovieDaoImpl implements MovieDao{
+public class ScheduleTimeDiscountDaoImpl implements ScheduleTimeDiscountDao{
 
 	@Autowired
 	private SqlSession sqlSession;
+
+	@Override
+	public List<ScheduleTimeDiscountDto> list() {
+		return sqlSession.selectList("scheduleTimeDiscount.list");
+	}
 	
-	@Override
-	public List<MovieDto> list() {
-		return sqlSession.selectList("movie.list");
-	}
-
-	@Override
-	public MovieDto get(int movieNo) {
-		return sqlSession.selectOne("movie.get", movieNo);
-	}
-
 }

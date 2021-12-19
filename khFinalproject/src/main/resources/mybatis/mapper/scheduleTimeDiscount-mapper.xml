@@ -14,12 +14,11 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="movie">
-	<select id="list" resultType="MovieDto">
-		select * from movie
+<mapper namespace="scheduleTimeDiscount">
+	<select id="list" resultType="ScheduleTimeDiscountDto">
+		select * from schedule_time_discount
 	</select>
+
 	
-	<select id="get" parameterType="int" resultType="MovieDto">
-		select * from movie where movie_no = #{movieNo}
-	</select>
+
 </mapper>

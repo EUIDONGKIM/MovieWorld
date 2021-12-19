@@ -6,4 +6,6 @@ import com.kh.spring.entity.MovieDto;
 
 public interface MovieDao {
 	List<MovieDto> list();
+
+	MovieDto get(int movieNo);
 }

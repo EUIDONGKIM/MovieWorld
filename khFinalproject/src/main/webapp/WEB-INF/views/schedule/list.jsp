@@ -11,7 +11,33 @@
 </script>
 
 <h1> 극장별 상영 영화 리스트 </h1>
-<h2>리스트 보여주기 (추가 예정)</h2>
+<h2>리스트 보여주기 (개봉작)</h2>
 
+<table>
+	<thead>
+		<tr>		
+			<th>영화 명</th>
+			<th>지역</th>
+			<th>극장 명</th>
+			<th>상영관 명</th>
+			<th>상영 시작일</th>
+			<th>상영 종료일</th>
+			<th>상영 시간 추가</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach var="totalInfoViewDto" items="${totalInfoViewList}">	
+			<tr>
+				<td>${totalInfoViewDto.movieTitle }</td>
+				<td>${totalInfoViewDto.theaterSido }</td>
+				<td>${totalInfoViewDto.theaterName }</td>
+				<td>${totalInfoViewDto.hallName }</td>
+				<td>${totalInfoViewDto.scheduleStart }</td>
+				<td>${totalInfoViewDto.scheduleEnd }</td>
+				<td><a href="${root}/schedule/time/create?hallNo=${totalInfoViewDto.hallNo}">추가하기</a></td>
+			</tr>
+		</c:forEach>	
+	</tbody>
+</table>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

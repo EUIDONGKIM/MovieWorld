@@ -42,5 +42,9 @@
 	<select id="getSeq" resultType="int">
 		select hall_seq.nextval from dual
 	</select>
+	
+	<select id="get" parameterType="int" resultType="HallDto">
+		select * from hall where hall_no = #{hallNo}
+	</select>
 
 </mapper>
