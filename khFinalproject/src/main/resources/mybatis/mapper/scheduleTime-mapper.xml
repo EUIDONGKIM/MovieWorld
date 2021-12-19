@@ -18,6 +18,7 @@
 
 	<insert id="insert" parameterType="ScheduleTimeDto">
 		insert into schedule_time values(
+		schedule_time_no_seq.nextval,
 		#{scheduleNo},
 		to_date(#{scheduleTimeDate},'YYYY-MM-DD'),
 		to_date(#{scheduleTimeTime},'HH24:MI:SS'),

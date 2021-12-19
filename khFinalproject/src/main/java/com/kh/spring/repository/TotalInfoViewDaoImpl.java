@@ -23,6 +23,10 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	public TotalInfoViewDto get(int hallNo) {
 		return sqlSession.selectOne("totalInfoView.getByHallNo",hallNo);
 	}
+	@Override
+	public List<TotalInfoViewDto> list(int movieNo) {
+		return sqlSession.selectList("totalInfoView.listByMovie");
+	}
 	
 	
 }
