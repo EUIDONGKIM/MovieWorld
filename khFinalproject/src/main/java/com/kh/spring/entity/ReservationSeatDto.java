@@ -8,6 +8,7 @@ import lombok.Data;
 public class ReservationSeatDto {
 	private int reservationNo;
 	private int seatNo;
+	private int scheduleTimeNo;
 	private int hallPrice;
 	private int ageDiscountPrice;
 	private int scheduleDiscountPrice;

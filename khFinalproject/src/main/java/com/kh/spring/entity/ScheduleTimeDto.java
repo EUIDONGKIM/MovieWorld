@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ScheduleTimeDto {
+	private int scheduleTimeNo;
 	private int scheduleNo;
 	private String scheduleTimeDate;
 	private String scheduleTimeTime;
