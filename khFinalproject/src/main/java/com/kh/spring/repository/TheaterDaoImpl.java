@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.TheaterDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
 public class TheaterDaoImpl implements TheaterDao{
 	
@@ -22,6 +24,14 @@ public class TheaterDaoImpl implements TheaterDao{
 	@Override
 	public List<TheaterDto> list() {
 		return sqlSession.selectList("theater.list");
+	}
+
+	//극장 생성
+	@Override
+	public void create(TheaterDto theaterDto) {
+		int theaterNo = sqlSession.selectOne("theater.seq");
+		theaterDto.setTheaterNo(theaterNo);
+		sqlSession.insert("theater.create",theaterDto);
 	}
 
 }

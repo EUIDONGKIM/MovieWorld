@@ -9,6 +9,7 @@ public class TheaterDto {
 	private int theaterNo;
 	private String theaterName;
 	private String theaterAddress;
-	private String theaterInfo;
+	private String theaterDetailAddress;
 	private String theaterSido;
+	private String theaterInfo;
 }

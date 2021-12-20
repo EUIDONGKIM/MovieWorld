@@ -21,4 +21,16 @@
 	<select id="list" resultType="TheaterDto">
 		select * from theater
 	</select>
+	
+	<!-- 극장 생성 -->
+	<select id="seq" resultType="int">
+		select theater_seq.nextval from dual
+	</select>
+	<insert id="create" parameterType="TheaterDto">
+		insert into theater values(
+			#{theaterNo}, #{theaterName}, #{theaterAddress}, #{theaterDetailAddress}, #{theaterSido}, #{theaterInfo}
+		)
+	</insert>
+
+	
 </mapper>
