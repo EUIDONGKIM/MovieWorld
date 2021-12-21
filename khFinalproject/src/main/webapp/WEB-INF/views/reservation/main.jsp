@@ -34,7 +34,7 @@
 
 <script>
 $(function(){
-	
+	//상영 번호를 얻은 순간부터 다른 뷰로 사용하기.
 	movieList();
 	
 	function changeTimeList(date){

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.spring.entity.HallDto;
 import com.kh.spring.repository.HallDao;
+import com.kh.spring.repository.TheaterDao;
 
 
 @Controller
@@ -16,6 +17,8 @@ import com.kh.spring.repository.HallDao;
 public class HallController {
 	@Autowired
 	private HallDao hallDao;
+	@Autowired
+	private TheaterDao theaterDao;
 	
 	@RequestMapping("/list")
 	public String hallList(Model model) {
@@ -25,7 +28,7 @@ public class HallController {
 	@RequestMapping("/create")
 	public String hallCreate(Model model) {
 		model.addAttribute("hallTypeList", hallDao.getHallTypeList());
-		
+		model.addAttribute("theaterList",theaterDao.list());
 		return "hall/create";
 	}
 	

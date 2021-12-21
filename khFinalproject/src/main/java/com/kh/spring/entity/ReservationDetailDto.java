@@ -10,6 +10,7 @@ public class ReservationDetailDto {
 	private int seatNo;
 	private String seatName;
 	private int scheduleTimeNo;
+	private int hallType;
 	private int hallPrice;
 	private int ageName;
 	private int ageDiscountPrice;

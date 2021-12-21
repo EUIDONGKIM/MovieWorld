@@ -22,10 +22,10 @@
 	<select id="listByMovie" parameterType="int" resultType="TotalInfoViewDto">
 		select * from total_info_view where movie_no = ${movieNo}
 	</select>
-<!-- 
+
 	<select id="getByHallNo" parameterType="int" resultType="TotalInfoViewDto">
 		select * from total_info_view where hall_no = #{hallNo}
 	</select>
- -->
+
 
 </mapper>
