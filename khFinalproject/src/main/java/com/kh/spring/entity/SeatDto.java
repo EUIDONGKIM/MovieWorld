@@ -8,5 +8,7 @@ import lombok.Data;
 public class SeatDto {
 	private int seatNo;
 	private int hallNo;
-	private String seatName;
+	private int seatRows;
+	private int seatCols;
+	private String seatStatus;
 }

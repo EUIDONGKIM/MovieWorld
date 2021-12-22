@@ -27,10 +27,10 @@ public class HallDaoImpl implements HallDao{
 	}
 
 	@Override
-	public void update(int hallNo, int hallSeat) {
+	public void update(int hallNo, int count) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("hallNo",hallNo);
-		param.put("hallSeat",hallSeat);
+		param.put("count",count);
 		
 		sqlSession.update("hall.update", param);
 	}
