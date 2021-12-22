@@ -3,6 +3,7 @@ package com.kh.spring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,11 @@ public class HallController {
 		model.addAttribute("hallTypeList", hallDao.getHallTypeList());
 		model.addAttribute("theaterList",theaterDao.list());
 		return "hall/create";
+	}
+	
+	@GetMapping("/create_seat")
+	public String test() {
+		return "hall/create_seat";
 	}
 	
 	@PostMapping("/create_seat")

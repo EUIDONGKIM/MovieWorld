@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.css">
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.css"> -->
+<!-- 이미지가 안바껴서 강사님 코드 css에 넣어둠 (허락맡아야함) 현재는 테스트 이미지 -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/cinema.css">
     <style>
         *{
             box-sizing: border-box;
@@ -48,7 +50,9 @@
         <div>
             <form action="${pageContext.request.contextPath}/seat/insert" method="post">
                 <div id="cinema" class="cinema-wrap" data-name="seat">
-                    <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows }" data-colsize="${hallDto.hallCols }" data-mode="manager" data-fill="auto" data-seatno="visible"></div>
+            	<div class="cinema-screen">전면스크린</div>
+                    <div class="cinema-seat-area" data-rowsize="5" data-colsize="5" data-mode="manager" data-fill="auto" data-seatno="visible"></div>
+                    <%-- <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows }" data-colsize="${hallDto.hallCols }" data-mode="manager" data-fill="auto" data-seatno="visible"></div> --%>
                 </div>
         
                 <input type="hidden" name="hallNo" value="${hallDto.hallNo}">
