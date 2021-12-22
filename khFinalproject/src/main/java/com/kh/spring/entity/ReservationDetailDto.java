@@ -8,8 +8,10 @@ import lombok.Data;
 public class ReservationDetailDto {
 	private int reservationNo;
 	private int seatNo;
-	private String seatName;
+	private int seatRows;
+	private int seatCols;
 	private int scheduleTimeNo;
+	private int hallType;
 	private int hallPrice;
 	private int ageName;
 	private int ageDiscountPrice;

@@ -14,20 +14,10 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="seat">
+<mapper namespace="reservationInfoView">
 
-	<insert id="insert" parameterType="SeatDto">
-		insert into seat values(
-		seat_seq.nextval,
-		#{hallNo},
-		#{seatRows},
-		#{seatCols},
-		#{seatStatus}
-		)
-	</insert>
-	
-	<select id="list" parameterType="int" resultType="SeatDto">
-		select * from seat where hall_no = #{hallNo}
+	<select id="get" parameterType="int" resultType="ReservationInfoViewDto">
+		select * from reservation_info_view where schedule_time_no = #{scheduleTimeNo}
 	</select>
-
+ 
 </mapper>

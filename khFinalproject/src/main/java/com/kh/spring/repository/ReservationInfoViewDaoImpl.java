@@ -6,22 +6,16 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.SeatDto;
+import com.kh.spring.entity.ReservationInfoViewDto;
 
 @Repository
-public class SeatDaoImpl implements SeatDao{
-
+public class ReservationInfoViewDaoImpl implements ReservationInfoViewDao{
 	@Autowired
 	private SqlSession sqlSession;
-	
-	@Override
-	public void insert(SeatDto seatDto) {
-		sqlSession.insert("seat.insert",seatDto);
-	}
 
 	@Override
-	public List<SeatDto> list(int hallNo) {
-		return sqlSession.selectList("seat.list",hallNo);
+	public ReservationInfoViewDto get(int scheduleTimeNo) {
+		return sqlSession.selectOne("reservationInfoView.get",scheduleTimeNo);
 	}
 
 }

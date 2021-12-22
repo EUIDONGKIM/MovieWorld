@@ -36,7 +36,7 @@
 	</insert>
 	
 	<update id="update" parameterType="map">
-		update hall set hall_seat = #{hallSeat} where hall_no = #{hallNo}
+		update hall set hall_seat = #{count} where hall_no = #{hallNo}
 	</update>
 	
 	<select id="getSeq" resultType="int">

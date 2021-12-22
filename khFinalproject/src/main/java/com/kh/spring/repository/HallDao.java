@@ -11,7 +11,7 @@ public interface HallDao {
 	
 	void insert(HallDto hallDto);
 
-	void update(int hallNo, int hallSeat);
+	void update(int hallNo, int count);
 
 	int getSeq();
 	HallDto get(int hallNo);

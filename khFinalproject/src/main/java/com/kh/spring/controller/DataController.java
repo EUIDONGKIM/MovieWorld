@@ -1,5 +1,8 @@
 package com.kh.spring.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +26,8 @@ public class DataController {
 	private TotalInfoViewDao totalInfoViewDao;
 	
 	@GetMapping("/getHalls")
-	public List<TheaterDto> getHalls(@RequestParam int city) {
-		String cityName = "";
-		if(city == 1) cityName = "서울";
-		if(city == 2) cityName = "대구";
+	public List<TheaterDto> getHalls(@RequestParam String city) throws UnsupportedEncodingException {
+		String cityName = URLDecoder.decode(city, "UTF-8"); //디코딩을 해야 값이 들어간다.
 		
 		return theaterDao.listByCity(cityName);
 	}

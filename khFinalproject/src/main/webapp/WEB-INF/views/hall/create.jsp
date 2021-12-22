@@ -53,8 +53,9 @@ $(function(){
 		<label>지역 선택</label>
 		<select class="city" required>
 			<option value="">지역 선택</option>
-			<option value="1">서울</option>
-			<option value="2">대구</option>
+				<c:forEach var="theaterDto" items="${theaterList}">
+					<option>${theaterDto.theaterSido}</option>
+				</c:forEach>
 		</select>
 	</div>
 	
