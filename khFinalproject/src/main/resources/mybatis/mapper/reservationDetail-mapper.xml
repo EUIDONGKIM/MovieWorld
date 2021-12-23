@@ -14,9 +14,9 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="rtest">
-	<select id="list" parameterType="int" resultType="RtestDto">
-		select * from rtest where schedule_time_no = ${scheduleTimeNo}
+<mapper namespace="reservationDetail">
+	<select id="list" parameterType="int" resultType="ReservationDetailDto">
+		select * from reservation_detail where schedule_time_no = ${scheduleTimeNo}
 	</select>
 
 </mapper>
