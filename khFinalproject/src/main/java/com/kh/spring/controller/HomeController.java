@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.ReservationInfoViewDto;
+import com.kh.spring.entity.RtestDto;
 import com.kh.spring.entity.SeatDto;
 import com.kh.spring.repository.ReservationInfoViewDao;
+import com.kh.spring.repository.RtestDao;
 import com.kh.spring.repository.SeatDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,8 @@ public class HomeController {
 	private ReservationInfoViewDao reservationInfoViewDao;
 	@Autowired
 	private SeatDao seatDao;
+	@Autowired
+	private RtestDao rtestDao;
 
 	@RequestMapping("/")
 	public String home(Model model) {
@@ -40,19 +44,24 @@ public class HomeController {
 		
 		ReservationInfoViewDto reservationInfoViewDto = reservationInfoViewDao.get(scheduleTimeNo);
 		int HallNo = reservationInfoViewDto.getHallNo();
+		
 		List<SeatDto> seatList = seatDao.list(HallNo);
+		List<RtestDto> rtestList = rtestDao.list(scheduleTimeNo);
+		
 		model.addAttribute("seatList",seatList);
 		model.addAttribute("reservationInfoViewDto",reservationInfoViewDto);
-		
+		model.addAttribute("rtestList",rtestList);
+		log.debug("rtestList는!!==========================={}",rtestList);
 		return "test/test";
 	}
 	
 	@PostMapping("/test")
-	public String test(@RequestParam List<String> seat) {
+	public String test(@RequestParam List<String> seat,@RequestParam int hallNo) {
 		//길기때문에 추후 서비스로 넘기거나 레스트 컨트롤러에서 처리하는 부분
 		
 		//예약상세에서 홀번호에 해당하는 예약된 좌석번호도 추후에 넘겨준다.
 		log.debug("seat=========={}",seat);
+		log.debug("hallNo={}",hallNo);
 		return "redirect:/";
 	}
 	

@@ -26,8 +26,43 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 		$(function(){
+// 			var form = $("<form>").attr("action", "${pageContext.request.contextPath}/test")
+// 			.attr("method", "post").addClass("send-form");
+// 			$("body").append(form);
+			
+// 			$("#test-btn").click(function(){
+				
+			
+// 			var count=0;
+// 			$(".hide-chk").each(function(){
+				
+// 				if($(this).prop("checked")){//체크박스가 체크된 경우
+// 					//체크박스의 value가 상품번호이고 입력창의 숫자가 상품수량이므로 이 둘을 각각 별도의 form에 추가
+// 					var seatRows = $(this).data("row");
+// 					var seatCols = $(this).data("col");
+// 					var hallNo = $(this).val();
+// 					var seatNo = $(this).data("seatNo");
+					
+// 					console.log(seatRows);
+// 					console.log(seatCols);
+// 					console.log(hallNo);
+// 					console.log(seatNo);
+					
+// 					$("<input type='hidden' name='list["+count+"].seatNo'>").val(seatNo).appendTo(".send-form");
+// 					$("<input type='hidden' name='list["+count+"].hallNo'>").val(hallNo).appendTo(".send-form");
+// 					$("<input type='hidden' name='list["+count+"].seatRows'>").val(seatRows).appendTo(".send-form");
+// 					$("<input type='hidden' name='list["+count+"].seatCols'>").val(seatCols).appendTo(".send-form");
+// 					count++;
+// 				}
+// 				//계층형 흐름도 컨트롤러 서비스 디에이오 등
+// 				// 플로우는 컨트롤러 연결정도
+// 			});
+			
+// 		});
+			
 			var seatList = $(".result").val();
 			var hallNo = ${reservationInfoViewDto.hallNo};
+			
 		});
 	</script>
 	<script>
@@ -55,34 +90,24 @@
         <li>좌석 열 수를 벗어나는 좌석은 삭제됨</li>
         <li>좌석 칸 수를 벗어나는 좌석은 삭제됨</li>
     </ul>
-
     <div class="float-box">
-      		<div>
-    			<form action="${pageContext.request.contextPath}/test" method="post">
-                <div id="cinema" class="cinema-wrap" data-name="seat">
-	                  	<div class="cinema-screen">상단 구조물 또는 제목 영역</div>
-		  				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
-					    <c:forEach var="seatDto" items="${seatList}">
-						    <c:forEach var="RtestDto" items="${rtestList}">
-								<c:choose>
-									<c:when test="${seatDto.seatCols == RtestDto.seatCols && seatDto.seatRows == RtestDto.seatRows  }">										
-						    			<div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="disabled"></div>					    			
-									</c:when>
-									<c:otherwise>
-						    			<div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }"></div>									
-									</c:otherwise>
-								</c:choose>					   
+        <div>
+
+		                <div id="cinema" class="cinema-wrap" data-name="seat">
+		                    <div class="cinema-screen">상단 구조물 또는 제목 영역</div>
+		    				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
+						    <c:forEach var="seatDto" items="${seatList}">
+						    	<label>
+						    	<input type="checkbox" name="hallNo" value="${reservationInfoViewDto.hallNo}" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }" data-seatNo="${seatDto.seatNo }" class="hide-chk">
+						        <div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }"></div>
+						    	</label>
 						    </c:forEach>
-					    </c:forEach>
-					    
 						</div>
+                    </div>
                 </div>
-            </div>
-            
-      		<input type="hidden" name="hallNo" value="${reservationInfoViewDto.hallNo}">
-            <input type="submit" value="선택">
-          		 </form>
-      </div>
+        		
+                <input type="submit" value="선택">
+        </div>
 
         <h2 align="center">전송되는 데이터 형태</h2>
 
