@@ -15,7 +15,20 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<!-- 조회 -->
 	<select id="list" resultType="MemberDto">
 		select * from member
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join" parameterType="MemberDto">
+				insert into member(
+			member_email, member_pw, member_nick,
+			member_birth, , member_phone , member_gender
+		)
+		values(
+			#{memberEmail}, #{memberPw}, #{memberNick},
+			#{memberBirth}, #{memberPhone} ,#{member_gender}
+		)
+	</insert>
 </mapper>
