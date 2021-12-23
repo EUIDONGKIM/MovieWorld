@@ -34,22 +34,74 @@
 .title-wrapper {
 	flex-grow: 1;
 }
+.memberInfo_wrap{
+	display:flex;
+}
+.memberInfo_wrap2{
+	display: block;
+	padding: 4px 4px 0px 0px ;
+	
+}
+
 </style>
 
 </head>
 <body>
+<!-- 메인시작 -->
 	<main>
+		<!--  헤더시작   -->
 		<header>
 			<div class="flex-container">
-				<div class="logo-wrapper">
+				<div class="flex-equal container-left">
 					<a href="${root}">
-						<img src="${root}/resources/image/cgv_logo.png">
+						<img src="${root}/resources/image/메인로고.png" height="120px" width="250px">
 					</a>
+				</div>
+				<div class="flex-equal center">
+					
+				</div>
+				<div class="flex-equal container-right" style="padding-top: 30px" >
+					<ul class="memberInfo_wrap" >
+						<li>
+							<a href="#">
+								<img src="https://via.placeholder.com/50x50"  class="memberInfo_wrap2">
+								<span>로그인</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
+								<label>로그인</label>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
+								<label>로그인</label>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
+								<label>로그인</label>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
+								<label>로그인</label>
+							</a>
+						</li>
+						
+			
+					</ul>	
+	
 				</div>
 			</div>
 
 		</header>
-
+		<!-- 헤더 끝 -->
+		<!-- 네비게이션 시작 -->
 		<nav>
 			<ul class="slide-menu">
 
