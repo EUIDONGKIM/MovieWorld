@@ -22,8 +22,7 @@ public class SeatServiceImpl implements SeatService{
 	
 	@Override
 	public void setSeatandUpdateHall(List<SeatDto> seatList, int hallNo) {
-		int hallSeat = 0;
-		
+
 		int count = 0;
 		for(SeatDto seatDto : seatList) {
 			seatDto.setHallNo(hallNo);

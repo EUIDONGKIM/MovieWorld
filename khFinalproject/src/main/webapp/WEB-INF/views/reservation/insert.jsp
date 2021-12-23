@@ -58,7 +58,7 @@
 
     <div class="float-box">
       		<div>
-    			<form action="${pageContext.request.contextPath}/test" method="post">
+    			<form action="${pageContext.request.contextPath}/reservation/insert" method="post">
                 <div id="cinema" class="cinema-wrap" data-name="seat">
 	                  	<div class="cinema-screen">상단 구조물 또는 제목 영역</div>
 		  				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
@@ -70,7 +70,7 @@
                 </div>
             </div>
             
-      		<input type="hidden" name="hallNo" value="${reservationInfoViewDto.hallNo}">
+      		<input type="hidden" name="scheduleTimeNo" value="${reservationInfoViewDto.scheduleTimeNo}">
             <input type="submit" value="선택">
           		 </form>
       </div>
@@ -80,8 +80,7 @@
         <div class="result">
             
         </div>
-        
-        <button id="test-btn">테스트 버튼</button>
+
     </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
