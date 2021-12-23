@@ -18,17 +18,45 @@
         .float-box > .result {
             padding:0.5rem;
         }
+        .hide-chk{
+        	display: none;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.js"></script>
-    <script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script>
+		$(function(){
+			var form = $("<form>").attr("action", "${pageContext.request.contextPath}/test")
+			.attr("method", "post").addClass("send-form");
+			$("body").append(form);
+			
+			var count=0;
+			$(".hide-chk").each(function(){
+				var row = $(this).data("row");
+				var col = $(this).data("col");
+				console.log(row, col);
+				
+				if($(this).prop("checked")){//체크박스가 체크된 경우
+					//체크박스의 value가 상품번호이고 입력창의 숫자가 상품수량이므로 이 둘을 각각 별도의 form에 추가
+					var no = row.val();
+					var quantity = col.val();
+					
+					$("<input type='hidden' name='list["+count+"].no'>").val(no).appendTo(".send-form");
+					$("<input type='hidden' name='list["+count+"].quantity'>").val(quantity).appendTo(".send-form");
+					count++;
+				}
+				
+			});
+			
+		});
+	</script>
+	<script>
         window.addEventListener("load", function(){
             var cinema = new Hacademy.Reservation("#cinema");
             cinema.addChangeListener(function(seat){
                 print(this);
             });
-            
             print(cinema);
-            
             function print(app){
                 document.querySelector(".result").textContent = app.getQueryString();
             }
@@ -49,20 +77,21 @@
     </ul>
     <div class="float-box">
         <div>
-            <form action="${pageContext.request.contextPath}/test" method="post">
 
 		                <div id="cinema" class="cinema-wrap" data-name="seat">
 		                    <div class="cinema-screen">상단 구조물 또는 제목 영역</div>
 		    				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
 						    <c:forEach var="seatDto" items="${seatList}">
+						    	<label>
+						    	<input type="checkbox" name="hallNo" value="${reservationInfoViewDto.hallNo}" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }" class="hide-chk">
 						        <div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }"></div>
+						    	</label>
 						    </c:forEach>
 						</div>
                     </div>
                 </div>
         
                 <input type="submit" value="선택">
-            </form> 
         </div>
 
         <h2 align="center">전송되는 데이터 형태</h2>
