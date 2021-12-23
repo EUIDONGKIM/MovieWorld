@@ -62,17 +62,8 @@
                 <div id="cinema" class="cinema-wrap" data-name="seat">
 	                  	<div class="cinema-screen">상단 구조물 또는 제목 영역</div>
 		  				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
-					    <c:forEach var="seatDto" items="${seatList}">
-						    <c:forEach var="RtestDto" items="${rtestList}">
-								<c:choose>
-									<c:when test="${seatDto.seatCols == RtestDto.seatCols && seatDto.seatRows == RtestDto.seatRows  }">										
-						    			<div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="disabled"></div>					    			
-									</c:when>
-									<c:otherwise>
-						    			<div class="cinema-seat" data-row="${seatDto.seatRows }" data-col="${seatDto.seatCols }" data-state="${seatDto.seatStatus }"></div>									
-									</c:otherwise>
-								</c:choose>					   
-						    </c:forEach>
+					    <c:forEach var="reservationVO" items="${reservationVOList}">
+			    			<div class="cinema-seat" data-row="${reservationVO.seatRows }" data-col="${reservationVO.seatCols }" data-state="${reservationVO.seatStatus }"></div>									
 					    </c:forEach>
 					    
 						</div>
