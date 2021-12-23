@@ -11,10 +11,11 @@ public class ReservationDto {
 	private String tid;
 	private String itemName;
 	private int scheduleTimeNo;
+	private String scheduleTimeDate;
 	private String scheduleTimeTime;
 	private int reservationTotalNumber;
 	private String buyTime;
 	private int pointUse;
 	private long totalAmount;
-	private int reservationStatus;
+	private String reservationStatus;
 }
