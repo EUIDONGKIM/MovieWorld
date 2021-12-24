@@ -29,6 +29,7 @@ import com.kh.spring.repository.ReservationInfoViewDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.vo.ReservationVO;
+import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -131,11 +132,11 @@ public class ReservationController {
 			LocalDate today = LocalDate.now();
 			int memberYear = Integer.parseInt(memberDto.getMemberBirth().substring(0, 4));
 			int age = today.getYear() - memberYear + 1;
-			int ageName;
+			String ageName;
 			
-			if(age<20) ageName = 1;
-			else if(age >=20 && age < 65) ageName = 2;
-			else ageName =3;
+			if(age<20) ageName = "청소년";
+			else if(age >=20 && age < 65) ageName = "일반";
+			else ageName ="경로";
 			
 			int ageDicountPrice = ageDiscountDao.getPrice(ageName);
 			
@@ -178,7 +179,8 @@ public class ReservationController {
 		
 		@RequestMapping("/")
 		public String main(Model model) {
-			model.addAttribute("theaterSidoList",theaterDao.sidoList());
+			List<TheaterCityVO> list = theaterDao.cityList();
+			model.addAttribute("TheaterCityVOList",list);
 			return "reservation/main";
 		}
 }

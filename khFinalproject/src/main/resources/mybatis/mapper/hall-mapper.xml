@@ -27,8 +27,8 @@
 		insert into hall values(
 		#{hallNo},
 		#{theaterNo},
-		#{hallType},
 		#{hallName},
+		#{hallType},
 		#{hallRows},
 		#{hallCols},
 		0
@@ -45,6 +45,10 @@
 	
 	<select id="get" parameterType="int" resultType="HallDto">
 		select * from hall where hall_no = #{hallNo}
+	</select>
+	
+	<select id="listByheaterNo" parameterType="int" resultType="HallDto">
+		select * from hall where theater_no = #{theaterNo}
 	</select>
 
 </mapper>
