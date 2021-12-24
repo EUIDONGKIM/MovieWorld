@@ -34,7 +34,7 @@
 				<td>${totalInfoViewDto.hallName }</td>
 				<td>${totalInfoViewDto.scheduleStart }</td>
 				<td>${totalInfoViewDto.scheduleEnd }</td>
-				<td><a href="${root}/schedule/time/create?hallNo=${totalInfoViewDto.hallNo}">추가하기</a></td>
+				<td><a href="${root}/schedule/time/create?hallNo=${totalInfoViewDto.hallNo}&movieNo=${totalInfoViewDto.movieNo}">추가하기</a></td>
 			</tr>
 		</c:forEach>	
 	</tbody>

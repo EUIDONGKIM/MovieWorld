@@ -64,8 +64,8 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("/time/create")
-	public String timeCreate(@RequestParam int hallNo,Model model) {
-		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(hallNo);
+	public String timeCreate(@RequestParam int hallNo,@RequestParam int movieNo,Model model) {
+		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(hallNo,movieNo);
 		
 		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
 		model.addAttribute("scheduleTimeDiscountList", scheduleTimeDiscountDao.list());
