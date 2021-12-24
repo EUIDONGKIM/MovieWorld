@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +42,18 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto) {
+	public String login(@ModelAttribute MemberDto memberDto,HttpSession session) {
 		MemberDto findDto = memberDao.login(memberDto);
+			session.setAttribute("ses",findDto.getMemberEmail());
+			session.setAttribute("grade", findDto.getMemberGrade());
+			return "redirect:/";	
+		
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("ses");
+		session.removeAttribute("grade");
 		return "redirect:/";
 	}
 	
