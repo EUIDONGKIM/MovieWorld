@@ -4,8 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="login" value="${memberNo != null}"></c:set>
-<c:set var="admin" value="${memberGrade eq '관리자'}"></c:set>
+<c:set var="login" value="${ses != null}"></c:set>
+<c:set var="grade" value="${grade}"></c:set>
+<c:set var="admin" value="${grade eq '관리자'}"></c:set>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -66,34 +67,46 @@ img {
 					</a>
 				</div>
 				<div class="flex-equal center">
-					
+					<div>로그인 상태 : ${login}</div>
+					<div>등급 : ${grade}</div>
 				</div>
 				<div class="flex-equal container-right" style="padding-top: 30px" >
 					<ul class="memberInfo_wrap" >
-						<li>
-							<a href="${root}/member/login">
-								<img src="${root}/resources/image/로그인.png"  class="memberInfo_wrap2" width="50px" height="50px">
-								<span>로그인</span>
-							</a>
-						</li>
-						<li>
-							<a href="${root}/member/join">
-								<img src="${root}/resources/image/회원가입.png" class="memberInfo_wrap2" width="50px" height="50px">
-								<label>회원가입</label>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
-								<label>마이페이지</label>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
-								<label>고객센터</label>
-							</a>
-						</li>
+						<c:if test="${!login}">
+							<li>
+								<a href="${root}/member/login">
+									<img src="${root}/resources/image/로그인.png"  class="memberInfo_wrap2" width="50px" height="50px">
+									<span>로그인</span>
+								</a>
+							</li>
+							<li>
+								<a href="${root}/member/join">
+									<img src="${root}/resources/image/회원가입.png" class="memberInfo_wrap2" width="50px" height="50px">
+									<label>회원가입</label>
+								</a>
+							</li>
+						</c:if>
+						<c:if test="${login}">
+							<li>
+								<a href="${root}/member/logout">
+									<img src="${root}/resources/image/로그인.png"  class="memberInfo_wrap2" width="50px" height="50px">
+									<span>로그아웃</span>
+								</a>
+							</li>						
+							
+						</c:if>
+							<li>
+								<a href="#">
+									<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
+									<label>마이페이지</label>
+								</a>
+						    </li>
+						    <li>
+								<a href="#">
+									<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
+									<label>고객센터</label>
+								</a>
+						    </li>
 						
 			
 					</ul>	
