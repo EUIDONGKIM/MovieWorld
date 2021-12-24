@@ -5,18 +5,20 @@ import java.util.List;
 import com.kh.spring.entity.MemberDto;
 
 public interface MemberDao {
-	void join(MemberDto memberDto);//가입
-	
-	MemberDto get(String memberId);//그냥 단일조회
-	MemberDto login(MemberDto memberDto);//비밀번호 검사까지 통과하면 객체를 반환하도록 구현
+	//회원가입
+	void join(MemberDto memberDto);
+	//단일 조회
+	MemberDto get(String memberEmail);
+	//로그인
+	MemberDto login(MemberDto memberDto);
 	
 	//비밀번호 변경
-	boolean changePassword(String memberId, String memberPw, String changePw);
+	boolean changePassword(String membeEmail, String memberPw, String changePw);
 	//개인정보 변경
 	boolean changeInformation(MemberDto memberDto);
 
 	//회원 탈퇴
-	boolean quit(String memberId, String memberPw);
+	boolean quit(String membeEmail, String memberPw);
 	
 	List<MemberDto> list();
 }

@@ -19,6 +19,6 @@
 
 <h2>통계 현황</h2>
 
-<h2>예매 관리</h2>
+<h2>결제(예매) 관리</h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
