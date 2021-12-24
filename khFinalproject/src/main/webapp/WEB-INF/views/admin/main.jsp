@@ -8,8 +8,8 @@
 
 <h2>회원 목록(관리)</h2>
 
-<h2>영화 정보 관리</h2>
-<h2>영화인 정보 관리</h2>
+<h2><a href="${root}/admin/movieInfo">영화 정보 관리</a></h2>
+<h2><a href="#">영화인 정보 관리</a></h2>
 
 <h2><a href="${root}/admin/theater">극장 정보 관리</a></h2>
 <h2><a href="${root}/admin/hall">상영관 정보 관리</a></h2>
