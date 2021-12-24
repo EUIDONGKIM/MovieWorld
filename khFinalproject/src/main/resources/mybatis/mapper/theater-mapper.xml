@@ -41,6 +41,12 @@
 	<select id="listByCity2" parameterType="String" resultType="TheaterDto">
 		select * from theater where theater_sido = #{theaterSido} order by theater_name asc
 	</select>
+	
+	<!-- 상세조회 -->
+	<select id="get" resultType="TheaterDto">
+		select * from theater where theater_no = #{theaterNo}
+	</select>
+	
 
 	
 </mapper>
