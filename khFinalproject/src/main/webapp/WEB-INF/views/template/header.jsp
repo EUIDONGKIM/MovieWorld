@@ -108,6 +108,7 @@
 						<li><a href="${root}/movie/">영화</a></li>
 						<li><a href="${root}/theater/">극장</a></li>
 						<li><a href="${root}/reservation/">예매</a></li>
+						<li><a href="${root}/admin/">관리메뉴</a></li>
 				<c:choose>
 					<c:when test="${login}">
 								<c:choose>
