@@ -31,6 +31,16 @@
 			#{theaterNo}, #{theaterName}, #{theaterAddress}, #{theaterDetailAddress}, #{theaterSido}, #{theaterInfo}
 		)
 	</insert>
+	
+	<!-- 지역 목록 -->
+	<select id="city" resultType="TheaterCityVO">
+		select theater_sido, count(*)count from theater group by theater_sido order by count desc, theater_sido asc
+	</select>
+	
+	<!-- 지역별 극장 목록 -->
+	<select id="listByCity2" parameterType="String" resultType="TheaterDto">
+		select * from theater where theater_sido = #{theaterSido} order by theater_name asc
+	</select>
 
 	
 </mapper>
