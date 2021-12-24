@@ -131,11 +131,11 @@ public class ReservationController {
 			LocalDate today = LocalDate.now();
 			int memberYear = Integer.parseInt(memberDto.getMemberBirth().substring(0, 4));
 			int age = today.getYear() - memberYear + 1;
-			int ageName;
+			String ageName;
 			
-			if(age<20) ageName = 1;
-			else if(age >=20 && age < 65) ageName = 2;
-			else ageName =3;
+			if(age<20) ageName = "청소년";
+			else if(age >=20 && age < 65) ageName = "일반";
+			else ageName ="경로";
 			
 			int ageDicountPrice = ageDiscountDao.getPrice(ageName);
 			

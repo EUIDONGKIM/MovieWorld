@@ -49,6 +49,6 @@ public class SeatController {
 		
 		seatService.setSeatandUpdateHall(seatList,hallNo);
 		
-		return "redirect:/";
+		return "redirect:/admin/hall";
 	}
 }

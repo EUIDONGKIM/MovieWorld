@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" type="text/css" href="<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/hacademy-cinema.css">">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.css">
     <style>
         *{
             box-sizing: border-box;
@@ -22,7 +22,7 @@
 /*         	display: none; */
 /*         } */
     </style>
-    <script src="${pageContext.request.contextPath}/resources/js/hacademy-cinema.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 		$(function(){
