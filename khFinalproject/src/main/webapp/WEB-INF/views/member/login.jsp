@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
  <div class="container-500 container-center">
  	<div class="row">
  		<div class="col center">
@@ -39,8 +40,8 @@
  	 
  	 <div class="row" >
 	  	<ul class="snapsync-member-nav">
-	  		<li><a href="#">아이디찾기</a></li>
-	  		<li><a href="#">비밀번호찾기</a></li>
+	  		<li><a href="#" onclick="window.open('idScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">아이디찾기</a></li>
+	  		<li><a href="#" onclick="window.open('pwScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">비밀번호찾기</a></li>
 	  		<li><a href="${root}/member/join">회원가입</a></li>
 	  	</ul>
 	 </div>
