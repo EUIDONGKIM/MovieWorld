@@ -1,1 +1,59 @@
-<mxfile host="app.diagrams.net" modified="2021-12-21T09:15:43.545Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="ucVhVLPaSfobrmUG1fn2" version="15.9.1" type="github"><diagram id="zwYQQWKk_VYO0Ho39kHj" name="Page-1">jZPdboMwDIWfhstJQBhtL1vWdtJWrVMn7TqFDCIlmKWmpXv6hcX8qaq0K5zPx4lzHDyW6GZreFXsIBPKC/2s8diTF4bBfPZoPy25OrLwQwdyIzMSDeAgfwRBn2gtM3GaCBFAoaymMIWyFClOGDcGLlPZF6jpqRXPxQ04pFzd0k+ZYeHoPJwN/FnIvOhODuKFy2jeiekmp4JncBkhtvZYYgDQRbpJhGrN63xxdZs72b4xI0r8T8HmZf+t9ce2qOPobbXavUds90C7nLmq6cLLFMFQx3jtbLDNV21Ya+UEbHUWBqU16pUfhdrDSaKE0kqOgAh6JFgqmbcJhMrSArWyi8CGUKOSpUj60fkWUkO2VjR3bxr0/tmHJ0ALNFcroYLIJ8vpzUWM1pdhgh0qRsOLiXF6M3m/82CrDcjZbjlM8C83+g/Y+hc=</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-12-24T03:47:43.138Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="6Ub9cYD8NglCA4L4AmsC" version="16.0.0" type="github">
+  <diagram id="zwYQQWKk_VYO0Ho39kHj" name="Page-1">
+    <mxGraphModel dx="2000" dy="1137" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="FKPqmmTGhu64OBBMQ43M-1" target="tx83hZ6bvp9vzBTZKQZn-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FKPqmmTGhu64OBBMQ43M-1" value="Actor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="400" y="430" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-4" value="memberDto&lt;br&gt;memberEmail&lt;br&gt;memberPw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-1" target="tx83hZ6bvp9vzBTZKQZn-3">
+          <mxGeometry x="0.5122" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="475" y="200" />
+              <mxPoint x="590" y="200" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-1" target="tx83hZ6bvp9vzBTZKQZn-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-1" value="home.jsp&lt;br&gt;메인페이지" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="355" y="350" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-3" value="login.jsp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="10" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-8" value="memberDto" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-5" target="tx83hZ6bvp9vzBTZKQZn-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-5" value="join.jsp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="530" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-7" target="tx83hZ6bvp9vzBTZKQZn-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-7" value="memberContoller" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="740" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="604" y="70" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="990" y="135" />
+              <mxPoint x="602" y="135" />
+              <mxPoint x="602" y="76" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-9" value="join_success.jsp" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="930" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
