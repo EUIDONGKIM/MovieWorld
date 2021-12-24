@@ -141,7 +141,7 @@ $(function(){
 					template2 = template2.replace("{{value}}",resp[i].theaterNo);
 
 					var tag = $(template2);
-					tag.find("input[type=checkbox]").on("input",function(){
+					tag.find("input[type=radio]").on("input",function(){
 						//하나만 체크가 남도록 설정하기 추후에
 						var theaterNo = $(this).attr("value");
 						changeDateList(theaterNo);
@@ -173,7 +173,7 @@ $(function(){
 					template2 = template2.replace("{{value}}",resp[i].theaterNo);
 
 					var tag = $(template2);
-					tag.find("input[type=checkbox]").on("input",function(){
+					tag.find("input[type=radio]").on("input",function(){
 						//하나만 체크가 남도록 설정하기 추후에
 						var theaterSido = $(this).attr("value");
 						changeTheaterNameList(theaterSido);
@@ -209,7 +209,7 @@ $(function(){
 					template1 = template1.replace("{{grade}}",resp[i].movieGrade);
 					
 					var tag = $(template1);
-					tag.find("input[type=checkbox]").on("input",function(){
+					tag.find("input[type=radio]").on("input",function(){
 						//하나만 체크가 남도록 설정하기 추후에
 						var movieNo = $(this).attr("value");
 						changeSidoList(movieNo);
@@ -246,7 +246,7 @@ $(function(){
 	<div>
 		<label>
 		<span>{{grade}} {{name}}</span>		
-		<input type="checkbox" class="movie-ckb" name="moveiNo" value="{{value}}">
+		<input type="radio" class="movie-ckb" name="moveiNo" value="{{value}}">
 		</label>
 	</div>	
 </template>
@@ -255,7 +255,7 @@ $(function(){
 	<div>
 		<label>
 		<span>{{name}}</span>
-		<input type="checkbox" class="theater-sido-ckb" name="theaterSido" value="{{value}}">
+		<input type="radio" class="theater-sido-ckb" name="theaterSido" value="{{value}}">
 		</label>
 	</div>	
 </template>
@@ -264,7 +264,7 @@ $(function(){
 	<div>
 		<label>
 		<span>{{name}}</span>
-		<input type="checkbox" class="theater-name-ckb" name="theaterNo" value="{{value}}">
+		<input type="radio" class="theater-name-ckb" name="theaterNo" value="{{value}}">
 		</label>
 	</div>	
 </template>
