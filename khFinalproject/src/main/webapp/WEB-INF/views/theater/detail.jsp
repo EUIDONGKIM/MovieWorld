@@ -9,4 +9,10 @@
 <h3>주소 : ${theaterDto.getTheaterFullAddress()}</h3>
 <h3>설명 : ${theaterDto.theaterInfo}</h3>
 
+<hr>
+
+<a href="${pageContext.request.contextPath }/hall/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
+
+<h3>상영관 목록</h3>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

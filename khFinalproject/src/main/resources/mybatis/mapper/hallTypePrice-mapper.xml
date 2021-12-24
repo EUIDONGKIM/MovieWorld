@@ -18,5 +18,9 @@
 	<select id="getPrice" parameterType="String" resultType="int">
 		select hall_price from hall_type_price where hall_type=#{hallType}
 	</select>
+	
+	<select id="list" resultType="HallTypePriceDto">
+		select * from hall_type_price order by hall_price asc
+	</select>
 
 </mapper>
