@@ -109,8 +109,7 @@ public class ReservationController {
 			reservationDto.setReservationNo(sequence);
 			reservationDto.setMemberNo((int)session.getAttribute("memberNo"));
 			reservationDto.setScheduleTimeNo(reservationInfoViewDto.getScheduleNo());
-			reservationDto.setScheduleTimeDate(reservationInfoViewDto.getScheduleTimeDate());
-			reservationDto.setScheduleTimeTime(reservationInfoViewDto.getScheduleTimeTime());
+			reservationDto.setScheduleTimeDateTime(reservationInfoViewDto.getScheduleTimeDateTime());
 			reservationDto.setReservationStatus("미결제");
 			//임시 예약 테이블 등록
 			reservationDao.insert(reservationDto);
