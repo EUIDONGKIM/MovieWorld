@@ -45,6 +45,7 @@
 
 img { 
 	display: block;
+	vertical-align: top;
 }
 
 
