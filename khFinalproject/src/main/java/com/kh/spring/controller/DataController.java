@@ -41,4 +41,11 @@ public class DataController {
 	public List<TotalInfoViewDto> getTotal2(@RequestParam int movieNo){
 		return totalInfoViewDao.list(movieNo);
 	}
+	
+	@GetMapping("/getTheaters")
+	public List<TheaterDto> getTheaters(String city) throws UnsupportedEncodingException{
+		String cityName = URLDecoder.decode(city, "UTF-8"); //디코딩을 해야 값이 들어간다.
+
+		return theaterDao.listByCity2(cityName);
+	}
 }
