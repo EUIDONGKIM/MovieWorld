@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.TheaterDto;
 import com.kh.spring.repository.TheaterDao;
@@ -45,5 +46,13 @@ public class TheaterController {
 		model.addAttribute("cityList",list);
 		
 		return "theater/list";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(@RequestParam int theaterNo, Model model) {
+		TheaterDto theaterDto = theaterDao.get(theaterNo);
+		model.addAttribute("theaterDto",theaterDto);
+		
+		return "theater/detail";
 	}
 }

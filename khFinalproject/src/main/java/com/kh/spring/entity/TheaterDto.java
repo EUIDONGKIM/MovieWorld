@@ -12,4 +12,9 @@ public class TheaterDto {
 	private String theaterDetailAddress;
 	private String theaterSido;
 	private String theaterInfo;
+	
+	//영화관 전체 주소 보여주기
+	public String getTheaterFullAddress() {
+		return theaterAddress + " " +  theaterDetailAddress;
+	}
 }

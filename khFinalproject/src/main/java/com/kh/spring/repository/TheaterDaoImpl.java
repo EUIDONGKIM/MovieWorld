@@ -45,4 +45,9 @@ public class TheaterDaoImpl implements TheaterDao{
 		return sqlSession.selectList("theater.listByCity2",city);
 	}
 
+	@Override
+	public TheaterDto get(int theaterNo) {
+		return sqlSession.selectOne("theater.get", theaterNo);
+	}
+
 }
