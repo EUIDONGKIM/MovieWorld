@@ -1,5 +1,6 @@
 package com.kh.spring.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -14,14 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ReservationDetailDto;
 import com.kh.spring.entity.ReservationDto;
 import com.kh.spring.entity.ReservationInfoViewDto;
 import com.kh.spring.entity.SeatDto;
+import com.kh.spring.repository.AgeDiscountDao;
+import com.kh.spring.repository.HallTypePriceDao;
+import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.ReservationDao;
 import com.kh.spring.repository.ReservationDetailDao;
 import com.kh.spring.repository.ReservationInfoViewDao;
 import com.kh.spring.repository.SeatDao;
+import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.vo.ReservationVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +44,15 @@ public class ReservationController {
 	private ReservationDetailDao reservationDetailDao;
 	@Autowired
 	private ReservationDao reservationDao;
+	@Autowired
+	private HallTypePriceDao hallTypePriceDao;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private AgeDiscountDao ageDiscountDao;
+	@Autowired
+	private TheaterDao theaterDao;
+	
 	//테스트 상영시간 번호를 받았을때 좌석을 넘겨주는 과정,
 		@GetMapping("/insert")
 		public String test(@RequestParam int scheduleTimeNo,Model model) {
@@ -106,17 +121,49 @@ public class ReservationController {
 			//상영관 종류 및 연령 등 DAO로 불러오기. 추가하기
 			//초기 상태는 미결제
 			
+			String hallType = reservationInfoViewDto.getHallType();
+			int hallPrice = hallTypePriceDao.getPrice(hallType);
+					
+			int memberNo = (int)session.getAttribute("memberNo");
+			//MemberDto memberDto = memberDao.get(memberNo);		
+			MemberDto memberDto = new MemberDto();
+			
+			LocalDate today = LocalDate.now();
+			int memberYear = Integer.parseInt(memberDto.getMemberBirth().substring(0, 4));
+			int age = today.getYear() - memberYear + 1;
+			int ageName;
+			
+			if(age<20) ageName = 1;
+			else if(age >=20 && age < 65) ageName = 2;
+			else ageName =3;
+			
+			int ageDicountPrice = ageDiscountDao.getPrice(ageName);
+			
+			
+			
 			for(String s : seat) {
 				
 				ReservationDetailDto reservationDetailDto = new ReservationDetailDto();
+				
+				reservationDetailDto.setReservationNo(reservationDto.getReservationNo());
+				reservationDetailDto.setScheduleTimeNo(scheduleTimeNo);
+				reservationDetailDto.setHallType(hallType);
+				reservationDetailDto.setHallPrice(hallPrice);
+				reservationDetailDto.setAgeName(ageName);
+				reservationDetailDto.setAgeDiscountPrice(ageDicountPrice);
+				reservationDetailDto.setScheduleTimeDiscountType(reservationInfoViewDto.getScheduleTimeDiscountType());
+				reservationDetailDto.setScheduleTimeDiscountPrice(reservationInfoViewDto.getScheduleTimeDiscountPrice());
+				reservationDetailDto.setReservationDetailStatus("미결제");
+				
 				StringTokenizer st = new StringTokenizer(s,"-");
 				
 				while(st.hasMoreTokens()) {
 					reservationDetailDto.setSeatRows(Integer.parseInt(st.nextToken()));
 					reservationDetailDto.setSeatCols(Integer.parseInt(st.nextToken()));
 				}
-
-
+				int seatNo = seatDao.getSeatNo(reservationInfoViewDto.getHallNo(),reservationDetailDto.getSeatRows(),reservationDetailDto.getSeatCols());
+				reservationDetailDto.setSeatNo(seatNo);
+				
 				}
 				
 			
@@ -128,5 +175,10 @@ public class ReservationController {
 			log.debug("seat=========={}",seat);
 			return "redirect:/";
 		}
-	
+		
+		@RequestMapping("/")
+		public String main(Model model) {
+			model.addAttribute("theaterSidoList",theaterDao.sidoList());
+			return "reservation/main";
+		}
 }

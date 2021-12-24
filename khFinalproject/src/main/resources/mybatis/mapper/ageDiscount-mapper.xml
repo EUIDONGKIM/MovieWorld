@@ -14,26 +14,8 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="seat">
-
-	<insert id="insert" parameterType="SeatDto">
-		insert into seat values(
-		seat_seq.nextval,
-		#{hallNo},
-		#{seatRows},
-		#{seatCols},
-		#{seatStatus}
-		)
-	</insert>
-	
-	<select id="list" parameterType="int" resultType="SeatDto">
-		select * from seat where hall_no = #{hallNo}
+<mapper namespace="ageDiscount">
+	<select id="getPrice" parameterType="int" resultType="int">
+		select age_discount_price from age_discount where age_no = #{ageNo}
 	</select>
-	
-	<select id="getSeatNo" parameterType="map" resultType="int">
-		select seat_no from seat where hall_no = #{hallNo}
-		and seat_rows=#{seatRows}
-		and seat_cols=#{seatCols}
-	</select>
-	
 </mapper>

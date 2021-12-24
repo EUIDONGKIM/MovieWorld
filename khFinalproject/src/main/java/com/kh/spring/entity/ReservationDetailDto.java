@@ -11,7 +11,7 @@ public class ReservationDetailDto {
 	private int seatRows;
 	private int seatCols;
 	private int scheduleTimeNo;
-	private int hallType;
+	private String hallType;
 	private int hallPrice;
 	private int ageName;
 	private int ageDiscountPrice;
