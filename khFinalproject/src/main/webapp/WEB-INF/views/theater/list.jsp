@@ -21,7 +21,7 @@
 					}
 				},
 				error:function(e){
-					console.log("실패",e);
+					console.log(" 실패",e);
 				}
 			});
 		});
