@@ -66,7 +66,7 @@ public class MemberController {
 		}
 		
 	}
-	
+	//로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("ses");
@@ -74,6 +74,19 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "member/mypage";
+	}
 	
+	@GetMapping("/joinSerial")
+	public String joinSerial() {
+		return "member/joinSerial";
+	}
+	@PostMapping("/joinSerial")
+	public String joinSerial(@RequestParam String memberEmail) {
+		
+		return "ridirect:member/join";
+	}
 
 }

@@ -418,3 +418,16 @@ textarea.vertical {
 	font-size:20px;
 	font-weight: bold;	
 }
+
+
+.snapsync-member-nav li ~ li {
+            border-left: #CFCFCF 1px solid;
+        }
+        
+.snapsync-member-nav li {
+            width: 32.5%;
+            text-align: center;
+            color: #A5A5A5;
+            list-style: none;
+            display: inline-block;
+}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  <div class="container-500 container-center">
  	<div class="row">
@@ -30,9 +31,19 @@
 			 	아이디 저장
 		 	</label>
 	 </div>
+
+ 	 
  	 <div class="row">
  			<input type="submit" value="login" class="form-btn">
  	 </div>
+ 	 
+ 	 <div class="row" >
+	  	<ul class="snapsync-member-nav">
+	  		<li><a href="#">아이디찾기</a></li>
+	  		<li><a href="#">비밀번호찾기</a></li>
+	  		<li><a href="${root}/member/join">회원가입</a></li>
+	  	</ul>
+	 </div>
  </form>	 
  </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
