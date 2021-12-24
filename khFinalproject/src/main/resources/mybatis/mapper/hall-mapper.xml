@@ -46,5 +46,9 @@
 	<select id="get" parameterType="int" resultType="HallDto">
 		select * from hall where hall_no = #{hallNo}
 	</select>
+	
+	<select id="listByheaterNo" parameterType="int" resultType="HallDto">
+		select * from hall where theater_no = #{theaterNo}
+	</select>
 
 </mapper>

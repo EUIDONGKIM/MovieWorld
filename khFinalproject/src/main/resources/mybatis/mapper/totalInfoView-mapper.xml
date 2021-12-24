@@ -23,8 +23,8 @@
 		select * from total_info_view where movie_no = ${movieNo}
 	</select>
 
-	<select id="getByHallMovieNo" parameterType="map" resultType="TotalInfoViewDto">
-		select * from total_info_view where hall_no = #{hallNo} and movie_no = #{movieNo}
+	<select id="getByscheduleNo" parameterType="int" resultType="TotalInfoViewDto">
+		select * from total_info_view where schedule_no = #{scheduleNo}
 	</select>
 
 

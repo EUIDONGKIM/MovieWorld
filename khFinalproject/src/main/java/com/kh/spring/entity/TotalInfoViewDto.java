@@ -19,8 +19,4 @@ public class TotalInfoViewDto {
 	private int hallSeat;
 	private String theaterSido;
 	private String theaterName;
-	
-	private String scheduleTimeDate;
-	private String scheduleTimeTime;
-	private String scheduleTimeDiscountType;
 }

@@ -29,6 +29,7 @@ import com.kh.spring.repository.ReservationInfoViewDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.vo.ReservationVO;
+import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -178,7 +179,8 @@ public class ReservationController {
 		
 		@RequestMapping("/")
 		public String main(Model model) {
-			model.addAttribute("theaterSidoList",theaterDao.sidoList());
+			List<TheaterCityVO> list = theaterDao.cityList();
+			model.addAttribute("TheaterCityVOList",list);
 			return "reservation/main";
 		}
 }

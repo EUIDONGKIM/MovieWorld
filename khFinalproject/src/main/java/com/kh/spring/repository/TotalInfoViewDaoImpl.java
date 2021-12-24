@@ -22,11 +22,9 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	}
 	//추후에 리스트들을 <where>로 통합.
 	@Override
-	public TotalInfoViewDto get(int hallNo,int movieNo) {
-		Map<String,Object> param = new HashMap<>();
-		param.put("hallNo",hallNo);
-		param.put("movieNo",movieNo);
-		return sqlSession.selectOne("totalInfoView.getByHallMovieNo",param);
+	public TotalInfoViewDto get(int scheduleNo) {
+
+		return sqlSession.selectOne("totalInfoView.getByscheduleNo",scheduleNo);
 	}
 	@Override
 	public List<TotalInfoViewDto> list(int movieNo) {
