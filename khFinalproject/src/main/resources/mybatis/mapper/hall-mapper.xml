@@ -27,8 +27,8 @@
 		insert into hall values(
 		#{hallNo},
 		#{theaterNo},
-		#{hallType},
 		#{hallName},
+		#{hallType},
 		#{hallRows},
 		#{hallCols},
 		0
