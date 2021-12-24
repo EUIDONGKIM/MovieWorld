@@ -14,11 +14,13 @@
 				type:"get",
 				dataType:"json",
 				success:function(resp){
+					
 					console.log("성공",resp)
 					for(var i = 0 ; i < resp.length ; i++){
 						var html = "<h3><a hfer=\"/theater?theaterNo=\""+resp[i].theaterNo+">"+resp[i].theaterName+"</a></h3>" 
 						$(".result").append();
 					}
+					
 				},
 				error:function(e){
 					console.log("실패",e);

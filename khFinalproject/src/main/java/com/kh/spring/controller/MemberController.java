@@ -74,6 +74,11 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "member/mypage";
+	}
+	
 	
 
 }
