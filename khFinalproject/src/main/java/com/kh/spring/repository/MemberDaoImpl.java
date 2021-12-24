@@ -21,19 +21,24 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public void join(MemberDto memberDto) {
-		sqlSession.insert("member.insert", memberDto);
+		sqlSession.insert("member.join", memberDto);
 	}
 
 	@Override
 	public MemberDto get(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("member.get", memberId);
 	}
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
-		// TODO Auto-generated method stub
-		return null;
+		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
+		
+		if(findDto != null && memberDto.getMemberPw().equals(findDto.getMemberPw())) {
+			return findDto;
+		}else {
+			return null;
+		}
+		
 	}
 
 	@Override

@@ -22,13 +22,18 @@
 	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="MemberDto">
-				insert into member(
-			member_email, member_pw, member_nick,
-			member_birth, , member_phone , member_gender
-		)
+		insert into member
 		values(
-			#{memberEmail}, #{memberPw}, #{memberNick},
-			#{memberBirth}, #{memberPhone} ,#{member_gender}
+			member_no_seq.nextval,#{memberEmail},#{memberPw},
+			#{memberName},#{memberNick},#{memberGender},
+			#{memberBirth}, #{memberPhone},'브론즈',0,sysdate
 		)
 	</insert>
+	
+	<!-- 단일조회 -->
+	<select id="get" parameterType="String" resultType="MemberDto">
+		select * from member where member_email = #{memeberEmail}
+	</select>
+	
+	
 </mapper>

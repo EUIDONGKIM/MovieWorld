@@ -39,9 +39,16 @@
 }
 .memberInfo_wrap2{
 	display: block;
-	padding: 4px 4px 0px 0px ;
-	
+	padding: 2px 2px 2px 2px;
+	margin: 0px
 }
+
+img { 
+	display: block;
+}
+
+
+
 
 </style>
 
@@ -63,33 +70,27 @@
 				<div class="flex-equal container-right" style="padding-top: 30px" >
 					<ul class="memberInfo_wrap" >
 						<li>
-							<a href="#">
-								<img src="https://via.placeholder.com/50x50"  class="memberInfo_wrap2">
+							<a href="${root}/member/login">
+								<img src="${root}/resources/image/로그인.png"  class="memberInfo_wrap2" width="50px" height="50px">
 								<span>로그인</span>
 							</a>
 						</li>
 						<li>
-							<a href="#">
-								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
-								<label>로그인</label>
+							<a href="${root}/member/join">
+								<img src="${root}/resources/image/회원가입.png" class="memberInfo_wrap2" width="50px" height="50px">
+								<label>회원가입</label>
 							</a>
 						</li>
 						<li>
 							<a href="#">
-								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
-								<label>로그인</label>
+								<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
+								<label>마이페이지</label>
 							</a>
 						</li>
 						<li>
 							<a href="#">
-								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
-								<label>로그인</label>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<img src="https://via.placeholder.com/50x50" class="memberInfo_wrap2">
-								<label>로그인</label>
+								<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
+								<label>고객센터</label>
 							</a>
 						</li>
 						
