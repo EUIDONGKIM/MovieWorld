@@ -42,15 +42,11 @@
 	</div>
 	
 	<div class="row">
-		<label>상영일 선택</label>
-		<input type="date" name="scheduleTimeDate" required>
+		<label>상영일/시간 선택</label>
+		<input type="datetime-local" name="scheduleTimeDateTime" required
+		pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
 	</div>
-	
-	
-	<div class="row">
-		<label>상영 시작 시간</label>
-		<input type="time" name="scheduleTimeTime" required>
-	</div>
+
 	
 	
 	<div class="row">

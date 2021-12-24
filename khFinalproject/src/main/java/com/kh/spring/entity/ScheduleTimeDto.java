@@ -6,8 +6,7 @@ import lombok.Data;
 public class ScheduleTimeDto {
 	private int scheduleTimeNo;
 	private int scheduleNo;
-	private String scheduleTimeDate;
-	private String scheduleTimeTime;
+	private String scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
 	private int hallNo;

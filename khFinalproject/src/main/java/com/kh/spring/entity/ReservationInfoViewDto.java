@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class ReservationInfoViewDto {
 	private int scheduleTimeNo;
-	private String scheduleTimeDate;
-	private String scheduleTimeTime;
+	private String scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
 	private int scheduleNo;
