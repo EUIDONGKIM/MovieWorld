@@ -94,6 +94,7 @@ img {
 								</a>
 							</li>						
 							
+						</c:if>
 							<li>
 								<a href="#">
 									<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
@@ -106,7 +107,6 @@ img {
 									<label>고객센터</label>
 								</a>
 						    </li>
-						</c:if>
 						
 			
 					</ul>	
