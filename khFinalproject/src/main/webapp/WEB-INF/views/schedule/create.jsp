@@ -13,11 +13,11 @@
 
 <form method="post">
 	<div class="row">
-		<label>상영관 선택</label>
-		<select name="hallNo" required>
-			<option value="">상영관 선택</option>
-				<c:forEach var="hallDto" items="${hallList}">
-					<option value="${hallDto.hallNo}">${hallDto.hallName}</option>
+		<label>극장 선택</label>
+		<select name="theaterNo" required>
+			<option value="">극장 선택</option>
+				<c:forEach var="theaterDto" items="${TheaterList}">
+					<option value="${theaterDto.theaterNo}">${theaterDto.theaterName}</option>
 				</c:forEach>
 		</select>
 	</div>

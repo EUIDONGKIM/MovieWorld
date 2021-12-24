@@ -32,6 +32,16 @@
 	<input type="hidden" name="scheduleNo" value="${totalInfoViewDto.scheduleNo }">
 	
 	<div class="row">
+		<label>상영관 선택</label>
+		<select name="hallNo" required>
+			<option value="">상영관 선택</option>
+				<c:forEach var="hallDto" items="${hallList}">
+					<option value="${hallDto.hallNo}">${hallDto.hallName}</option>
+				</c:forEach>
+		</select>
+	</div>
+	
+	<div class="row">
 		<label>상영일 선택</label>
 		<input type="date" name="scheduleTimeDate" required>
 	</div>

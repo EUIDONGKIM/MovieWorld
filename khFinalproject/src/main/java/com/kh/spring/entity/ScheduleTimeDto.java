@@ -10,4 +10,5 @@ public class ScheduleTimeDto {
 	private String scheduleTimeTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
+	private int hallNo;
 }
