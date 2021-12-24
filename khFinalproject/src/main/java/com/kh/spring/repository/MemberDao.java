@@ -8,17 +8,17 @@ public interface MemberDao {
 	//회원가입
 	void join(MemberDto memberDto);
 	//단일 조회
-	MemberDto get(String memberId);
+	MemberDto get(String memberEmail);
 	//로그인
 	MemberDto login(MemberDto memberDto);
 	
 	//비밀번호 변경
-	boolean changePassword(String memberId, String memberPw, String changePw);
+	boolean changePassword(String membeEmail, String memberPw, String changePw);
 	//개인정보 변경
 	boolean changeInformation(MemberDto memberDto);
 
 	//회원 탈퇴
-	boolean quit(String memberId, String memberPw);
+	boolean quit(String membeEmail, String memberPw);
 	
 	List<MemberDto> list();
 }
