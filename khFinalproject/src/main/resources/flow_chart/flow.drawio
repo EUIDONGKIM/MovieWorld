@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-12-24T03:47:43.138Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="6Ub9cYD8NglCA4L4AmsC" version="16.0.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-12-24T04:01:56.675Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36" etag="EAM-mP_TgWurN5Onwl6K" version="16.0.0" type="github">
   <diagram id="zwYQQWKk_VYO0Ho39kHj" name="Page-1">
-    <mxGraphModel dx="2000" dy="1137" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="1906" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -25,8 +25,18 @@
         <mxCell id="tx83hZ6bvp9vzBTZKQZn-1" value="home.jsp&lt;br&gt;메인페이지" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="355" y="350" width="120" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-3" target="tx83hZ6bvp9vzBTZKQZn-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="710" y="10" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-3" target="tx83hZ6bvp9vzBTZKQZn-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="tx83hZ6bvp9vzBTZKQZn-3" value="login.jsp" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="530" y="10" width="120" height="60" as="geometry" />
+          <mxGeometry x="520" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="tx83hZ6bvp9vzBTZKQZn-8" value="memberDto" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-5" target="tx83hZ6bvp9vzBTZKQZn-7">
           <mxGeometry relative="1" as="geometry" />
@@ -40,18 +50,23 @@
         <mxCell id="tx83hZ6bvp9vzBTZKQZn-7" value="memberContoller" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="740" y="210" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="tx83hZ6bvp9vzBTZKQZn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-9">
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.7;entryY=0.983;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="tx83hZ6bvp9vzBTZKQZn-9" target="tx83hZ6bvp9vzBTZKQZn-3">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="604" y="70" as="targetPoint" />
             <Array as="points">
               <mxPoint x="990" y="135" />
-              <mxPoint x="602" y="135" />
-              <mxPoint x="602" y="76" />
+              <mxPoint x="604" y="135" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="tx83hZ6bvp9vzBTZKQZn-9" value="join_success.jsp" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="930" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-12" value="mypage.jsp" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="650" y="-190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="tx83hZ6bvp9vzBTZKQZn-14" value="board.jsp" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="740" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
