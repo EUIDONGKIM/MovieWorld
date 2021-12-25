@@ -7,64 +7,13 @@
 <script>
 $(function(){
 	
-	$(".city").change(function(){
-		var city = $(this).val();
-		console.log(city);
-		$.ajax({
-			url:"${pageContext.request.contextPath}/data/getHalls",
-			type:"get",
-			data : {
-				city:city
-			},
-			dataType : "json",
-			success:function(resp){
-				console.log("성공", resp);
-
-				$("select[name=theaterNo]").empty();
-				
-				for(var i = 0 ; i < resp.length ; i++){
-					var template = $("#theater-template").html();
-					template = template.replace("{{no}}",resp[i].theaterNo);
-					console.log("극장 번호",resp[i].theaterNo);
-					template = template.replace("{{name}}",resp[i].theaterName);
-					
-					
-					$("select[name=theaterNo]").append(template);
-				}
-				
-			},
-			error:function(e){
-				console.log("실패", e);
-			}
-		});
-	});
-	
 });
 </script>
 
 <h1> 상영관 생성 </h1>
 
-<template id="theater-template">
-	<option value="{{no}}">{{name}}</option>
-</template>
-
-<form action="create_seat" method="post">
 	<div class="row">
-		<label>지역 선택</label>
-		<select class="city" required>
-			<option value="">지역 선택</option>
-				<c:forEach var="theaterDto" items="${theaterList}">
-					<option>${theaterDto.theaterSido}</option>
-				</c:forEach>
-		</select>
-	</div>
-	
-	
-	<div class="row">
-		<label>지점 선택</label>
-		<select name="theaterNo" required>
-			<option value="">지점 선택</option>
-		</select>
+		<h3>지점명 : ${theaterDto.theaterName }</h3>
 	</div>
 
 

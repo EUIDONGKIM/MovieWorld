@@ -17,13 +17,14 @@
 					
 					console.log("성공",resp)
 					for(var i = 0 ; i < resp.length ; i++){
-						var html = "<h3><a hfer=\"/theater?theaterNo=\""+resp[i].theaterNo+">"+resp[i].theaterName+"</a></h3>" 
-						$(".result").append();
+						//여기 고쳐야함
+						var html = "<h3><a href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a></h3>" 
+						$(".result").append(html);
 					}
 					
 				},
 				error:function(e){
-					console.log("실패",e);
+					console.log(" 실패",e);
 				}
 			});
 		});
@@ -31,7 +32,7 @@
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>극장 목록</h1>
+<h1>극장 목록(여기 미완성임 개판임 나중에 수정해야함)</h1>
 
 <c:forEach var="theaterCityVO" items="${cityList }">
 	<a class="city" data-city="${theaterCityVO.theaterSido}">
@@ -42,7 +43,6 @@
 <hr>
 
 <div class="result">
-	<h3><a hfer="/theater?theaterNo="+resp.theaterNo>resp.theaterName</a></h3>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

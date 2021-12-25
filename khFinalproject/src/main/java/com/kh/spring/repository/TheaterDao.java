@@ -16,5 +16,8 @@ public interface TheaterDao {
 	
 	//지역별 극장 목록
 	List<TheaterDto> listByCity2(String city);
+	
+	//상세 조회
+	TheaterDto get(int theaterNo);
 
 }
