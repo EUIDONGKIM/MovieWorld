@@ -1,7 +1,11 @@
 package com.kh.spring.controller;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -184,15 +188,23 @@ public class ReservationController {
 		
 		@RequestMapping("/")
 		public String main(Model model) {
+			//초기화면 10일치 날짜 생성.
+			List<String> dateList = new ArrayList<>();
+			Format f = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar c = Calendar.getInstance();
+			for(int i = 1 ;  i <= 10 ; i++) {
+				Date d = c.getTime();
+				dateList.add(f.format(d));
+				c.add(Calendar.DATE, 1);
+			}
 			//초기 화면 보여줄 시에, 예매율이 높은 순으로 보여준다.
 			
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
 			
-			log.debug("제발1111!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!movieList={}",movieList);
-			log.debug("제발2222!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!theaterList={}",theaterList);
 			model.addAttribute("movieCountVOList",movieList);
 			model.addAttribute("theaterCityVOList",theaterList);
+			model.addAttribute("dateList",dateList);
 			
 			return "reservation/main";
 		}

@@ -29,4 +29,20 @@
 		)
 	</insert>
  
+ 	<select id="dateList" parameterType="int" resultType="String">
+ 		select distinct(to_char(schedule_time_date_time,'YYYY-MM-DD')) sdate 
+ 		from schedule_time 
+ 		where schedule_no=#{scheduleNo}
+		order by sdate
+ 	</select>
+ 
+ 	 <select id="listByDate" parameterType="map" resultType="ScheduleTimeDto">
+ 		select * from schedule_time where schedule_no=#{scheduleNo} and
+ 		to_char(schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
+ 	</select>
+ 	
+ 	<select id="get" parameterType="int" resultType="ScheduleTimeDto">
+ 		select * from schedule_time where schedule_time_no=#{scheduleTimeNo}
+ 	</select>
+ 	
 </mapper>
