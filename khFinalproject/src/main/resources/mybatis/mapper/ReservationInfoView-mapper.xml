@@ -19,5 +19,12 @@
 	<select id="get" parameterType="int" resultType="ReservationInfoViewDto">
 		select * from reservation_info_view where schedule_time_no = #{scheduleTimeNo}
 	</select>
+	
+	<select id="listMoiveByCount" resultType="MovieCountVO">
+		select movie_no,movie_title,movie_grade,sum(schedule_time_count) count
+		from reservation_info_view 
+		group by movie_no,movie_title,movie_grade
+		order by count
+	</select>
  
 </mapper>

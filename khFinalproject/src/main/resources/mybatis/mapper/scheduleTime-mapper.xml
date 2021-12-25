@@ -23,7 +23,9 @@
 		to_date(#{scheduleTimeDateTime},'YYYY-MM-DD"T"HH24:MI'),
 		#{scheduleTimeDiscountType},
 		#{scheduleTimeDiscountPrice},
-		#{hallNo}
+		#{hallNo},
+		0,
+		0
 		)
 	</insert>
  

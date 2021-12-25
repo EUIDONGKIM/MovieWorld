@@ -4,19 +4,24 @@ import lombok.Data;
 
 @Data
 public class ReservationInfoViewDto {
+	private int movieNo;
+	private String movieTitle;
+	private String movieEngTitle;
+	private String movieGrade;
+	private int movieRuntime;
+	private int scheduleNo;
+	private String scheduleStart;
+	private String scheduleEnd;
+	private int theaterNo;
+	private String theaterName;
+	private String theaterAddress;
+	private String theaterDetailAddress;
+	private String theaterSido;
 	private int scheduleTimeNo;
 	private String scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
-	private int scheduleNo;
-	private int movieNo;
-	private String scheduleStart;
-	private String scheduleEnd;
 	private int hallNo;
-	private int theaterNo;
-	private String hallName;
-	private String hallType;
-	private int hallRows;
-	private int hallCols;
-	private int hallSeat;
+	private int scheduleTimeCount;
+	private int scheduleTimeSum;
 }
