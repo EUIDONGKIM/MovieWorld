@@ -27,17 +27,14 @@ public class TheaterController {
 	
 	@GetMapping("/create")
 	public String create() {
-		log.debug("극장 생성 페이지");
 		return "theater/create";
 	}
 	
 	@PostMapping("/create")
 	public String create(@ModelAttribute TheaterDto theaterDto) {
-		log.debug("theaterDto = {}",theaterDto);
-		log.debug("극장번호 = {}",theaterDto.getTheaterNo());
 		theaterDao.create(theaterDto);
 		
-		return "redirect:/theater/create";
+		return "redirect:/theater/detail?theaterNo="+theaterDto.getTheaterNo();
 	}
 	
 	@RequestMapping("/list")
