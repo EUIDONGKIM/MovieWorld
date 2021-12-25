@@ -61,7 +61,7 @@
     			<form action="${pageContext.request.contextPath}/reservation/insert" method="post">
                 <div id="cinema" class="cinema-wrap" data-name="seat">
 	                  	<div class="cinema-screen">상단 구조물 또는 제목 영역</div>
-		  				<div class="cinema-seat-area" data-rowsize="${reservationInfoViewDto.hallRows}" data-colsize="${reservationInfoViewDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
+		  				<div class="cinema-seat-area" data-rowsize="${hallDto.hallRows}" data-colsize="${hallDto.hallCols }" data-mode="client" data-fill="manual"" data-seatno="visible">
 					    <c:forEach var="reservationVO" items="${reservationVOList}">
 			    			<div class="cinema-seat" data-row="${reservationVO.seatRows }" data-col="${reservationVO.seatCols }" data-state="${reservationVO.seatStatus }"></div>									
 					    </c:forEach>
@@ -70,7 +70,7 @@
                 </div>
             </div>
             
-      		<input type="hidden" name="scheduleTimeNo" value="${reservationInfoViewDto.scheduleTimeNo}">
+      		<input type="hidden" name="scheduleTimeNo" value="${scheduleTimeNo}">
             <input type="submit" value="선택">
           		 </form>
       </div>

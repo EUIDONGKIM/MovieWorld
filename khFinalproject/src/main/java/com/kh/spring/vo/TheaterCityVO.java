@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class TheaterCityVO {
 	
-	private String TheaterSido;
+	private String theaterSido;
 	private int count;
 }
