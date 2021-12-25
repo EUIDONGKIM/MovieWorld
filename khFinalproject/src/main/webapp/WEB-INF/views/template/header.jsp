@@ -18,6 +18,9 @@
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/commons.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/layout.css">
+<!-- sha1 암호화 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
 <!--bootstrap cdn-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <!-- bootstrap javascript cdn-->
@@ -45,12 +48,28 @@
 	margin: 0px
 }
 
-
-
-
-
-
 </style>
+<script>
+//form이 전송되면 input[type=password]가 자동 암호화되도록 설정
+$(function(){
+	$("form").submit(function(e){
+		e.preventDefault();//form 기본 전송 이벤트 방지
+		
+		//this == form
+		//모든 비밀번호 입력창에 SHA-1 방식 암호화 지시(32byte 단방향 암호화)
+		$(this).find("input[type=password]").each(function(){
+			//this == 입력창
+			var origin = $(this).val();
+			var hash = CryptoJS.SHA1(origin);//암호화(SHA-1)
+			var encrypt = CryptoJS.enc.Hex.stringify(hash);//암호화 값 문자열 변환
+			$(this).val(encrypt);
+		});
+		
+		this.submit();//form 전송 지시
+	});
+});
+
+</script>
 
 </head>
 <body>

@@ -79,14 +79,23 @@ public class MemberController {
 		return "member/mypage";
 	}
 	
-	@GetMapping("/joinSerial")
-	public String joinSerial() {
-		return "member/joinSerial";
+	@GetMapping("/idScan")
+	public String idScan() {
+		return "member/idScan";
 	}
-	@PostMapping("/joinSerial")
-	public String joinSerial(@RequestParam String memberEmail) {
+	@PostMapping("/idScan")
+	public String idScan(@RequestParam String memberEmail) {
 		
-		return "ridirect:member/join";
+		return "ridirect:member/login";
 	}
 
+	@GetMapping("/pwScan")
+	public String pwScan() {
+		return "member/pwScan";
+	}
+	@PostMapping("/pwScan")
+	public String pwScan(@RequestParam String memberEmail) {
+		
+		return "ridirect:member/login";
+	}
 }

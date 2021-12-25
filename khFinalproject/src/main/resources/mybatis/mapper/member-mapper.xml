@@ -35,5 +35,14 @@
 		select * from member where member_email = #{memeberEmail}
 	</select>
 	
+	<!-- 아이디찾기 -->
+	<select id="findId" parameterType="map" resultType="MemberDto">
+		select member_email from member where member_name=#{memberName} and member_phone=#{memberPhone};
+	</select>
+	
+	<!-- 비밀번호찾기 -->
+	<select id="findPw" parameterType="map" resultType="MemberDto">
+		select member_pw from member where member_name=#{memberName} and member_emial=#{memberEmail} and member_phone=#{memberPhone} 
+	</select>
 	
 </mapper>
