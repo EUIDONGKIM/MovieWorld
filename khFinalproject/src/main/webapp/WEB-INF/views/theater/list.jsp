@@ -14,12 +14,14 @@
 				type:"get",
 				dataType:"json",
 				success:function(resp){
+					
 					console.log("성공",resp)
 					for(var i = 0 ; i < resp.length ; i++){
 						//여기 고쳐야함
 						var html = "<h3><a href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a></h3>" 
 						$(".result").append(html);
 					}
+					
 				},
 				error:function(e){
 					console.log(" 실패",e);

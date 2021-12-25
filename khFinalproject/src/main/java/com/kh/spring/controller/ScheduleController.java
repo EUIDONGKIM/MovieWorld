@@ -17,6 +17,7 @@ import com.kh.spring.repository.MovieDao;
 import com.kh.spring.repository.ScheduleDao;
 import com.kh.spring.repository.ScheduleTimeDao;
 import com.kh.spring.repository.ScheduleTimeDiscountDao;
+import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.repository.TotalInfoViewDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +39,13 @@ public class ScheduleController {
 	private ScheduleTimeDiscountDao scheduleTimeDiscountDao;
 	@Autowired
 	private TotalInfoViewDao totalInfoViewDao;
-	
+	@Autowired
+	private TheaterDao theaterDao;
 	
 	
 	@GetMapping("/create")
 	public String create(Model model) {
-		model.addAttribute("hallList", hallDao.list());
+		model.addAttribute("TheaterList", theaterDao.list());
 		model.addAttribute("movieList", movieDao.list());
 		return "schedule/create";
 	}
@@ -64,9 +66,10 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("/time/create")
-	public String timeCreate(@RequestParam int hallNo,Model model) {
-		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(hallNo);
+	public String timeCreate(@RequestParam int scheduleNo,Model model) {
 		
+		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(scheduleNo);
+		model.addAttribute("hallList", hallDao.list(totalInfoViewDto.getTheaterNo()));
 		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
 		model.addAttribute("scheduleTimeDiscountList", scheduleTimeDiscountDao.list());
 		

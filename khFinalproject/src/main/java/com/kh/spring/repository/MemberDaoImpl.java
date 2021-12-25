@@ -1,9 +1,12 @@
 package com.kh.spring.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.MemberDto;
@@ -14,6 +17,9 @@ public class MemberDaoImpl implements MemberDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@Override
 	public List<MemberDto> list() {
 		return sqlSession.selectList("member.list");
@@ -21,6 +27,10 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public void join(MemberDto memberDto) {
+		String origin = memberDto.getMemberPw();
+		String encrypt = encoder.encode(origin);
+		memberDto.setMemberPw(encrypt);
+		
 		sqlSession.insert("member.join", memberDto);
 	}
 
@@ -33,9 +43,11 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto login(MemberDto memberDto) {
 		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
 		
-		if(findDto != null && memberDto.getMemberPw().equals(findDto.getMemberPw())) {
+		//해당 아이디의 회원정보가 존재 && 입력 비밀번호와 조회된 비밀번호가 같다면 => 로그인 성공(객체를 반환)
+		if(findDto != null && encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
 			return findDto;
-		}else {
+		}
+		else {//아니면 null을 반환
 			return null;
 		}
 		
@@ -57,6 +69,25 @@ public class MemberDaoImpl implements MemberDao {
 	public boolean quit(String memberId, String memberPw) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public MemberDto findId(String memberName, String memberPhone) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberPhone",memberPhone);
+		
+		return sqlSession.selectOne("member.findId",param);
+	}
+	
+	@Override
+	public MemberDto findPw(String memberName, String memberEmail, String memberPhone) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberName", memberName);
+		param.put("memberEmail", memberEmail);
+		param.put("memberPhone",memberPhone);
+		
+		return sqlSession.selectOne("member.findPw",param);
 	}
 
 }

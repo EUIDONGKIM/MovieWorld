@@ -20,10 +20,12 @@
 		insert into schedule_time values(
 		schedule_time_no_seq.nextval,
 		#{scheduleNo},
-		to_date(#{scheduleTimeDate},'YYYY-MM-DD'),
-		to_date(#{scheduleTimeTime},'HH24:MI:SS'),
+		to_date(#{scheduleTimeDateTime},'YYYY-MM-DD"T"HH24:MI'),
 		#{scheduleTimeDiscountType},
-		#{scheduleTimeDiscountPrice}
+		#{scheduleTimeDiscountPrice},
+		#{hallNo},
+		0,
+		0
 		)
 	</insert>
  

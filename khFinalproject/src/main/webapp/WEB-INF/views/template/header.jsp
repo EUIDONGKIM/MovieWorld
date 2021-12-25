@@ -15,13 +15,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<link rel="stylesheet" type="text/css"
-	href="${root}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css"
-	href="${root}/resources/css/commons.css">
-<link rel="stylesheet" type="text/css"
-	href="${root}/resources/css/layout.css">
-
+<link rel="stylesheet" type="text/css" href="${root}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${root}/resources/css/commons.css">
+<link rel="stylesheet" type="text/css" href="${root}/resources/css/layout.css">
+<!-- sha1 암호화 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
+<!--bootstrap cdn-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- bootstrap javascript cdn-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <style>
 .logo-wrapper {
 	width: 130px;
@@ -44,15 +48,28 @@
 	margin: 0px
 }
 
-img { 
-	display: block;
-	vertical-align: top;
-}
-
-
-
-
 </style>
+<script>
+//form이 전송되면 input[type=password]가 자동 암호화되도록 설정
+$(function(){
+	$("form").submit(function(e){
+		e.preventDefault();//form 기본 전송 이벤트 방지
+		
+		//this == form
+		//모든 비밀번호 입력창에 SHA-1 방식 암호화 지시(32byte 단방향 암호화)
+		$(this).find("input[type=password]").each(function(){
+			//this == 입력창
+			var origin = $(this).val();
+			var hash = CryptoJS.SHA1(origin);//암호화(SHA-1)
+			var encrypt = CryptoJS.enc.Hex.stringify(hash);//암호화 값 문자열 변환
+			$(this).val(encrypt);
+		});
+		
+		this.submit();//form 전송 지시
+	});
+});
+
+</script>
 
 </head>
 <body>
@@ -96,13 +113,13 @@ img {
 							
 						</c:if>
 							<li>
-								<a href="#">
+								<a href="${root}/member/mypage">
 									<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>마이페이지</label>
 								</a>
 						    </li>
 						    <li>
-								<a href="#">
+								<a href="${root}/board/main">
 									<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>고객센터</label>
 								</a>

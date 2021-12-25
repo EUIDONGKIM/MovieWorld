@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ReservationDetailDto;
 import com.kh.spring.entity.ReservationDto;
 import com.kh.spring.entity.ReservationInfoViewDto;
 import com.kh.spring.entity.SeatDto;
 import com.kh.spring.repository.AgeDiscountDao;
+import com.kh.spring.repository.HallDao;
 import com.kh.spring.repository.HallTypePriceDao;
 import com.kh.spring.repository.MemberDao;
 import com.kh.spring.repository.ReservationDao;
@@ -28,7 +30,9 @@ import com.kh.spring.repository.ReservationDetailDao;
 import com.kh.spring.repository.ReservationInfoViewDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
+import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
+import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +56,8 @@ public class ReservationController {
 	private AgeDiscountDao ageDiscountDao;
 	@Autowired
 	private TheaterDao theaterDao;
+	@Autowired
+	private HallDao hallDao;
 	
 	//테스트 상영시간 번호를 받았을때 좌석을 넘겨주는 과정,
 		@GetMapping("/insert")
@@ -59,9 +65,10 @@ public class ReservationController {
 			//길기때문에 추후 서비스로 넘기거나 레스트 컨트롤러에서 처리하는 부분
 			
 			ReservationInfoViewDto reservationInfoViewDto = reservationInfoViewDao.get(scheduleTimeNo);
-			int HallNo = reservationInfoViewDto.getHallNo();
+			int hallNo = reservationInfoViewDto.getHallNo();
+			HallDto hallDto = hallDao.get(hallNo);
 			
-			List<SeatDto> seatList = seatDao.list(HallNo);
+			List<SeatDto> seatList = seatDao.list(hallNo);
 			List<ReservationDetailDto> reservationDetailList = reservationDetailDao.list(scheduleTimeNo);
 			
 			List<ReservationVO> reservationVOList = new ArrayList<>();
@@ -86,8 +93,8 @@ public class ReservationController {
 				reservationVOList.add(reservationVO);
 			}
 			
-			model.addAttribute("seatList",seatList);
-			model.addAttribute("reservationInfoViewDto",reservationInfoViewDto);
+			model.addAttribute("scheduleTimeNo",scheduleTimeNo);
+			model.addAttribute("hallDto",hallDto);
 			model.addAttribute("reservationVOList",reservationVOList);
 			log.debug("reservationVOList는!!==========================={}",reservationVOList);
 			
@@ -108,8 +115,7 @@ public class ReservationController {
 			reservationDto.setReservationNo(sequence);
 			reservationDto.setMemberNo((int)session.getAttribute("memberNo"));
 			reservationDto.setScheduleTimeNo(reservationInfoViewDto.getScheduleNo());
-			reservationDto.setScheduleTimeDate(reservationInfoViewDto.getScheduleTimeDate());
-			reservationDto.setScheduleTimeTime(reservationInfoViewDto.getScheduleTimeTime());
+			reservationDto.setScheduleTimeDateTime(reservationInfoViewDto.getScheduleTimeDateTime());
 			reservationDto.setReservationStatus("미결제");
 			//임시 예약 테이블 등록
 			reservationDao.insert(reservationDto);
@@ -131,11 +137,11 @@ public class ReservationController {
 			LocalDate today = LocalDate.now();
 			int memberYear = Integer.parseInt(memberDto.getMemberBirth().substring(0, 4));
 			int age = today.getYear() - memberYear + 1;
-			int ageName;
+			String ageName;
 			
-			if(age<20) ageName = 1;
-			else if(age >=20 && age < 65) ageName = 2;
-			else ageName =3;
+			if(age<20) ageName = "청소년";
+			else if(age >=20 && age < 65) ageName = "일반";
+			else ageName ="경로";
 			
 			int ageDicountPrice = ageDiscountDao.getPrice(ageName);
 			
@@ -178,7 +184,16 @@ public class ReservationController {
 		
 		@RequestMapping("/")
 		public String main(Model model) {
-			model.addAttribute("theaterSidoList",theaterDao.sidoList());
+			//초기 화면 보여줄 시에, 예매율이 높은 순으로 보여준다.
+			
+			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
+			List<TheaterCityVO> theaterList = theaterDao.cityList();
+			
+			log.debug("제발1111!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!movieList={}",movieList);
+			log.debug("제발2222!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!theaterList={}",theaterList);
+			model.addAttribute("movieCountVOList",movieList);
+			model.addAttribute("theaterCityVOList",theaterList);
+			
 			return "reservation/main";
 		}
 }

@@ -18,7 +18,7 @@
 	<insert id="insert" parameterType="ScheduleDto">
 		insert into schedule values(
 		schedule_seq.nextval,
-		#{hallNo},
+		#{theaterNo},
 		#{movieNo},
 		to_date(#{scheduleStart},'YYYY-MM-DD'),
 		to_date(#{scheduleEnd},'YYYY-MM-DD')

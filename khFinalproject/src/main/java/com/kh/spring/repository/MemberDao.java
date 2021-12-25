@@ -12,6 +12,11 @@ public interface MemberDao {
 	//로그인
 	MemberDto login(MemberDto memberDto);
 	
+	//아이디 찾기
+	MemberDto findId(String memberName ,String memberPhone);
+	//비밀번호 찾기
+	MemberDto findPw(String memberName, String memberEmail , String memberPhone);
+	
 	//비밀번호 변경
 	boolean changePassword(String membeEmail, String memberPw, String changePw);
 	//개인정보 변경
@@ -19,6 +24,7 @@ public interface MemberDao {
 
 	//회원 탈퇴
 	boolean quit(String membeEmail, String memberPw);
+	
 	
 	List<MemberDto> list();
 }

@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
@@ -42,14 +45,28 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto,HttpSession session) {
+	public String login(@ModelAttribute MemberDto memberDto,HttpSession session,
+						@RequestParam(required = false) String saveId,HttpServletResponse response) {
 		MemberDto findDto = memberDao.login(memberDto);
-			session.setAttribute("ses",findDto.getMemberEmail());
-			session.setAttribute("grade", findDto.getMemberGrade());
-			return "redirect:/";	
+		if(findDto !=null) {
+		 session.setAttribute("ses",findDto.getMemberEmail());
+		 session.setAttribute("grade", findDto.getMemberGrade());
+			if(saveId !=null) {
+				Cookie c = new Cookie("saveId",findDto.getMemberEmail());
+				c.setMaxAge(4*7*24 *60 *60); //2주간 저장
+				response.addCookie(c);
+			}else {
+				Cookie c = new Cookie("saveId",findDto.getMemberEmail());
+				c.setMaxAge(0);//쿠키삭제
+				response.addCookie(c);
+			}
+			return "redirect:/";
+		}else {
+			return "redirect:login?error";	
+		}
 		
 	}
-	
+	//로그아웃
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("ses");
@@ -57,6 +74,28 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/mypage")
+	public String mypage() {
+		return "member/mypage";
+	}
 	
+	@GetMapping("/idScan")
+	public String idScan() {
+		return "member/idScan";
+	}
+	@PostMapping("/idScan")
+	public String idScan(@RequestParam String memberEmail) {
+		
+		return "ridirect:member/login";
+	}
 
+	@GetMapping("/pwScan")
+	public String pwScan() {
+		return "member/pwScan";
+	}
+	@PostMapping("/pwScan")
+	public String pwScan(@RequestParam String memberEmail) {
+		
+		return "ridirect:member/login";
+	}
 }
