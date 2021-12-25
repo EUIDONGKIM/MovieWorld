@@ -10,4 +10,6 @@ public interface ScheduleDao {
 
 	List<ScheduleDto> list();
 
+	int getByMovieTheater(int movieNo, int theaterNo);
+
 }

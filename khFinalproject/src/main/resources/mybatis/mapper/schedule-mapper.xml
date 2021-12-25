@@ -28,4 +28,8 @@
 	<select id="list" resultType="ScheduleDto">
 		select * from schedule
 	</select>
+	
+	 <select id="getByMovieTheater" parameterType="map" resultType="int">
+ 		select * from schedule where movie_no = #{movieNo} and theater_no = #{theaterNo}
+ 	</select>
 </mapper>

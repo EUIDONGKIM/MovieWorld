@@ -1,6 +1,8 @@
 package com.kh.spring.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,14 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	@Override
 	public List<ScheduleDto> list() {
 		return sqlSession.selectList("schedule.list");
+	}
+
+	@Override
+	public int getByMovieTheater(int movieNo, int theaterNo) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("movieNo",movieNo);
+		param.put("theaterNo",theaterNo);
+		return sqlSession.selectOne("schedule.getByMovieTheater", param);
 	}
 
 }

@@ -26,5 +26,15 @@
 		group by movie_no,movie_title,movie_grade
 		order by count
 	</select>
- 
+	
+	<select id="listSidoByMovie" parameterType="int" resultType="String">
+		select DISTINCT(theater_sido) from reservation_info_view where movie_no=#{moveiNo}
+	</select>
+ 	
+ 	<select id="getTheaterNames" parameterType="map" resultType="TheaterNameBySidoVO">
+	 	select DISTINCT(theater_no),theater_name
+		from reservation_info_view 
+		where movie_no=#{movieNo} and theater_sido=#{theaterSido}
+ 	</select>
+ 	
 </mapper>
