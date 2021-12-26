@@ -127,14 +127,11 @@ public class MemberController {
 		if(isPass!=null) {
 			//6자리의 난수 비밀번호 생성
 			isPass.setMemberPw(number);
-			System.out.println("여기 1");
 
 			String chagePw = isPass.getMemberPw();
 		
 			memberDao.temporayPassword(memberDto,chagePw);
-			System.out.println("여기 2");
 			model.addAttribute("memberPw",chagePw);
-			System.out.println("여기 3");
 			
 			return "member/PwScanSuccess";
 		}else {
