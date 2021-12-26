@@ -5,19 +5,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-<script>
-
-</script>
-
-<h1> 영화 추가 </h1>
-
-<form method="post">
-	<div class="row">
-	<label>영화 한국어 제목</label>
-	<input type="text" name="movieTitle" required>
-	</div>
-	
-</form>
+<h1>MOVIE CHART</h1>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

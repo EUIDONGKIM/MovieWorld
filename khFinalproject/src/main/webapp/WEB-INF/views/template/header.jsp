@@ -137,7 +137,7 @@ $(function(){
 		<nav>
 			<ul class="slide-menu">
 
-						<li><a href="${root}/movie/">영화</a></li>
+						<li><a href="${root}/movie/movieChart">영화</a></li>
 						<li><a href="${root}/theater/list">극장</a></li>
 						<li><a href="${root}/reservation/">예매</a></li>
 						<li><a href="${root}/admin/">관리메뉴</a></li>

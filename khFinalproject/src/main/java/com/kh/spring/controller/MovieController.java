@@ -8,16 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.spring.entity.ScheduleDto;
 
+import oracle.jdbc.proxy.annotation.GetProxy;
+
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/movie")
 public class MovieController {
 	
-	@GetMapping("/movieInfo")
-		public String insert() {
-		
-		return "admin/movieInfo";
+	
+	@GetMapping("/list")
+	public String list() {//리스트를 찍으려면 뭔가가 필요합니다잉
+		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
 	}
 	
-	
+	@GetMapping("/insert")
+	public String insert() {
+		return "movie/insert";
+	}
 	
 }
