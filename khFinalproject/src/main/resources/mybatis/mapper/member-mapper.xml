@@ -57,4 +57,8 @@
 		update member set member_pw = #{changePw}
 		where member_email = #{memberEmail}
 	</update>
+	
+	<delete id="quit" parameterType="String">
+		delete member where member_email = #{memberEmail}
+	</delete>
 </mapper>

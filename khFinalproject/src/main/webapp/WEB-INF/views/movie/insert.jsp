@@ -15,9 +15,9 @@
 		영화 등급 선택으로 만들어
  --%>
 
-<form method="post">
-	<div class= "container-400">
-		<div class="row">
+<form method="post" enctype="multipart/form-data">
+	<div class= "container-400 container-center">
+		<div class="row center">
 			<label>영화 한국어 제목</label>
 				<input type="text" name="movieTitle" required>
 		</div>
@@ -31,7 +31,10 @@
 			<label>영화 등급</label>
 				<select name="movieGrade" required>
 					<option value="">등급 선택</option>
-						
+					<option>12세 관람가</option>
+					<option>15세 관람가</option>
+					<option>청소년 관람불가</option>
+					<option>전체 관람가</option>	
 				</select>
 		</div>
 	
@@ -52,20 +55,20 @@
 		
 		<div class="row">
 			<label>런타임</label>
-				<input type="text" name="movieType" required>
+				<input type="text" name="movieRuntime" required>
 		</div>
 		
 		<div class="row">
 			<label>메인 포스터 이미지(한장)</label>
-				<input type="file" name="photo">
+				<input type="file" name="photo" accept="image/*" required>
 		</div>
 		
 		<div class="row">
 			<label>스틸컷(여러장)</label>
-				<input type="file" name="photo1" mutiple>
+				<input type="file" name="attach" accept="image/*" multiple="multiple">
 		</div>
 		
-		<button type="submit">등록</button>
+		<button type="submit">역할 선택(동영상 추가 포함)</button>
 	</div>
 </form>
 

@@ -8,4 +8,8 @@ public interface MovieDao {
 	List<MovieDto> list();
 
 	MovieDto get(int movieNo);
+
+	int getSequence();
+
+	void insert(MovieDto movieDto);
 }

@@ -14,35 +14,21 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="movie">
-	<select id="getSequence" resultType="int">
-		select movie_seq.nextval from dual
-	</select>
+<mapper namespace="moviePhoto">
 	
 	<select id="getPhotoSequence" resultType="int">
 		select movie_photo_seq.nextval from dual
 	</select>
 	
-	<insert id="insert" parameterType="MemberDto">
-		insert into movie values(
-		#{movieNo},
-		#{movieTitle},
-		#{movieEngTitle},
-		#{movieGrade},
-		#{movieType},
-		#{movieCountry},
-		#{movieOpening},
-		#{movieRuntime},
-		0
+	<insert id="insert" parameterType="MoviePhotoDto">
+		insert into movie_photo values(
+			#{moviePhotoNo},
+			#{movieNo},
+			#{moviePhotoUploadName},
+			#{moviePhotoSaveName},
+			#{moviePhotoSize},
+			#{moviePhotoType}
 		)
 	</insert>
-	
 
-	<select id="list" resultType="MovieDto">
-		select * from movie
-	</select>
-	
-	<select id="get" parameterType="int" resultType="MovieDto">
-		select * from movie where movie_no = #{movieNo}
-	</select>
 </mapper>

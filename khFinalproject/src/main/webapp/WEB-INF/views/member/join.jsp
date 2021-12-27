@@ -1,7 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<script>
+$(function(){
+	$("button").click(function(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/send/",
+			type:"post",
+			dataType:"text",
+			success:function(resp){
+				console.log("성공",resp);
+//					$("#result").html(resp);
+				$("#result").append(resp);
+			},
+			error:function(e){
+				console.log("실패",e);
+//					alert("통신실패");
+			}
+		});
+	});
+});
+</script>
 
 <div class="container-800 container-center">
 
@@ -12,11 +31,20 @@
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>아이디(이메일)</label>
-				 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input">
-				 <button onclick="window.open('joinSerial','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">button</button>
+				 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input" id="userinput_email">
+				 <button id="email" type="button">이메일인증</button>
 	    	</div> 
 	    </div>
 	    
+	    <div class="row">
+	    	<div class="col">
+		    	 <label>인증번호</label>
+				 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2">
+				 
+	    	</div> 
+	    </div>
+        
+	   
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>비밀번호</label>

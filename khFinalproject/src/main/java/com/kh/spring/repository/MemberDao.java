@@ -2,7 +2,7 @@ package com.kh.spring.repository;
 
 import java.util.List;
 
-import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.member.MemberDto;
 
 public interface MemberDao {
 	//회원가입
@@ -26,7 +26,8 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto);
 
 	//회원 탈퇴
-	boolean quit(String membeEmail, String memberPw);
+	boolean quit(String memberEmail, String memberPw);
+
 	
 	
 	List<MemberDto> list();

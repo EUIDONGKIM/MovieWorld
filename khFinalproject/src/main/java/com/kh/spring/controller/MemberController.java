@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.service.EmailService;
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class MemberController {
 	@Autowired
 	private RandomUtil randomUtil;
 	
+	@Autowired
+	private EmailService emailService;
+	
 
 	//회원가입 
 	@GetMapping("/join")
@@ -40,6 +44,19 @@ public class MemberController {
 	public String join(@ModelAttribute MemberDto memberDto) {
 		memberDao.join(memberDto);
 		return "redirect:join_success";
+	}
+	
+	//이메일 체크
+	@PostMapping("/email_check")
+	public String check(@ModelAttribute MemberDto memberDto) {
+		boolean success = true;//certiDao.check(certiDTO);
+		if(success) {
+			return "redirect:/success";//절대경로
+//			return "redirect:success";//상대경로
+		}
+		else {
+			return "redirect:/?error";
+		}
 	}
 	
 	@RequestMapping("/join_success")
@@ -171,4 +188,30 @@ public class MemberController {
 		}
 	}
 	
+	//회원탈퇴
+	@RequestMapping("/quit")
+	public String quit() {
+		return "member/quit";
+	}
+	
+	@PostMapping("/quit")
+	public String quit(String memberPw,HttpSession session) {
+		String memberEmail = (String)session.getAttribute("ses");
+		System.out.println(memberPw);
+		System.out.println(memberEmail);
+		boolean result =memberDao.quit(memberEmail, memberPw);
+		if(result) {
+			session.removeAttribute("ses");
+			session.removeAttribute("grade");
+			return "redirect:quit_success";
+		}else {
+			return "redirect:quit?error";
+		
+	}
+	
+   }
+	@RequestMapping("quit_success")
+	public String quit_success() {
+		return "member/quit_success";
+	}
 }
