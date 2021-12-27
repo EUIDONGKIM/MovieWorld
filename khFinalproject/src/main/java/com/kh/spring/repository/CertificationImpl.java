@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.CertificationDto;
+import com.kh.spring.entity.member.CertificationDto;
 
 @Repository
 public class CertificationImpl implements CertificationDao{

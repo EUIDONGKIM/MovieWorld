@@ -1,6 +1,6 @@
 package com.kh.spring.repository;
 
-import com.kh.spring.entity.CertificationDto;
+import com.kh.spring.entity.member.CertificationDto;
 
 public interface CertificationDao {
 	void insert(CertificationDto certificationDto);

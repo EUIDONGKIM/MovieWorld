@@ -5,7 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.kh.spring.entity.CertificationDto;
+import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.repository.CertificationDao;
 import com.kh.spring.util.RandomUtil;
 
