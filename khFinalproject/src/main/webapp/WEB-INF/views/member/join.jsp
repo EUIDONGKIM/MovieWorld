@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<script>
+setInterval(function(){ alert("Popup window!"); }, 500);
+var timeleft = 10;
+var downloadTimer = setInterval(function(){
+  if(timeleft <= 0){
+    clearInterval(downloadTimer);
+  }
+  document.getElementById("progressBar").value = 10 - timeleft;
+  timeleft -= 1;
+}, 1000);
+<progress value="0" max="10" id="progressBar"></progress>
+</script>
 
 <div class="container-800 container-center">
 
@@ -12,11 +23,12 @@
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>아이디(이메일)</label>
-				 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input">
-				 <button onclick="window.open('joinSerial','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">button</button>
+				 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input" id="userinput_email">
+				 <button id="email" type="button">이메일인증</button>
 	    	</div> 
 	    </div>
-	    
+    
+	   
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>비밀번호</label>

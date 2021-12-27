@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.MemberDto;
 import com.kh.spring.repository.MemberDao;
+import com.kh.spring.service.EmailService;
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class MemberController {
 	@Autowired
 	private RandomUtil randomUtil;
 	
+	@Autowired
+	private EmailService emailService;
+	
 
 	//회원가입 
 	@GetMapping("/join")
@@ -38,8 +42,22 @@ public class MemberController {
 	}
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
+		emailService.sendCertificationNumber(memberDto.getMemberEmail());
 		memberDao.join(memberDto);
 		return "redirect:join_success";
+	}
+	
+	//이메일 체크
+	@PostMapping("/email_check")
+	public String check(@ModelAttribute MemberDto memberDto) {
+		boolean success = true;//certiDao.check(certiDTO);
+		if(success) {
+			return "redirect:/success";//절대경로
+//			return "redirect:success";//상대경로
+		}
+		else {
+			return "redirect:/?error";
+		}
 	}
 	
 	@RequestMapping("/join_success")
