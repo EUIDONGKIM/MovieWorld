@@ -3,35 +3,48 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
+<style>
+	#actorNo{
+		display: none;
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
 
-        $("input[name=actorName]").focus(function(){
-            window.open("insert_actor_propup.jsp", "popup", "width=500 , height=500");
+        $("input[name=actorName]").click(function(){
+            window.open("${pageContext.request.contextPath}/movie/insert_popup", "popup", "width=500 , height=500");
         });
-
+		$(".exit-btn").click(function(){
+			location.href = "${pageContext.request.contextPath}/movie/list";
+			console.log(actorNo);
+			console.log(actorName);
+		});
 
 		$(".role-add-btn").click(function(){
             var movieNo = $("input[name=movieNo]").val();
             var roleType = $("select[name=roleType]").val();
             var actorNo = $("input[name=actorNo]").val();
             var actorName = $("input[name=actorName]").val();
-            var rollName = $("input[name=rollName]").val();
-
-            if(!roleType||!actorNo||!rollName){
+            var roleName = $("input[name=roleName]").val();
+			console.log(movieNo);
+			console.log(roleType);
+			console.log(actorNo);
+			console.log(actorName);
+			console.log(roleName);
+            if(!roleType||!actorNo||!roleName){
                 return;
             }
 
 			var template = $("#add-role-template").html();
             template = template.replace("{{roleType}}",roleType);
-            template = template.replace("{{actorNo}}",actorNo);
+            template = template.replace("{{actorName}}",actorName);
             template = template.replace("{{roleName}}",roleName);
 
 			$(".role-result").append(template);
             
+			addRole(movieNo,roleType,actorNo,roleName);
+
             $("select[name=roleType]").val("");
             $("input[name=actorNo]").val("");
             $("input[name=actorName]").val("");
@@ -54,7 +67,12 @@
             template = template.replace("{{videoTitle}}",videoTitle);
             template = template.replace("{{videoRoot}}",videoRoot);
             $(".video-result").append(template);
-
+			
+            addVideo(movieNo,videoTitle,videoRoot);
+			console.log(movieNo);
+			console.log(videoTitle);
+			console.log(videoRoot);
+            
             $("input[name=vedioTitle]").val("");
             $("input[name=videoRoot]").val("");
 
@@ -106,7 +124,7 @@
             <label>역할 : </label>    
             <span>{{roleType}}</span>
             <label>/ 영화인 : </label>
-            <span>{{actorNo}}</span>
+            <span>{{actorName}}</span>
             <label>/ 역이름 : </label>
             <span>{{roleName}}</span>
         </div>
@@ -135,7 +153,7 @@
         
         <label>영화인 선택</label>
         <input type="text" name="actorName" id="actorName" class="form-input form-inline" readonly>
-        <input type="hidden" name="actorNo" id="actorNo">
+        <input type="number" name="actorNo" id="actorNo">
 
         <label>역이름</label>
         <input type="text" name="roleName" class="form-input form-inline">
@@ -163,5 +181,6 @@
 
     <div class="video-result"></div>
     <button class="video-add-btn">비디오 추가</button>
-
+    
+	<button class="exit-btn">추가 완료</button>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

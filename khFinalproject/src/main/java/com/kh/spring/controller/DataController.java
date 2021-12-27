@@ -65,7 +65,17 @@ public class DataController {
 	private RoleDao roleDao;
 	
 	@PostMapping("/addVideo")
-	public void addVideo(@ModelAttribute VideoDto videoDto) {
+	public void addVideo(
+			@RequestParam int movieNo,
+			@RequestParam String videoTitle,
+			@RequestParam String videoRoot
+			) {
+		
+		VideoDto videoDto = new VideoDto();
+		videoDto.setMovieNo(movieNo);
+		videoDto.setVideoTitle(videoTitle);
+		videoDto.setVideoRoot(videoRoot);
+		
 		videoDao.insert(videoDto);
 	}
 	
@@ -75,7 +85,18 @@ public class DataController {
 	}
 	
 	@PostMapping("/addRole")
-	public void addRole(@ModelAttribute RoleDto roleDto) {
+	public void addRole(
+			@RequestParam int movieNo,
+			@RequestParam int actorNo,
+			@RequestParam String roleType,
+			@RequestParam String roleName
+			) {
+		RoleDto roleDto = new RoleDto();
+		roleDto.setActorNo(actorNo);
+		roleDto.setMovieNo(movieNo);
+		roleDto.setRoleName(roleName);
+		roleDto.setRoleType(roleType);
+		
 		roleDao.insert(roleDto);
 	}
 	

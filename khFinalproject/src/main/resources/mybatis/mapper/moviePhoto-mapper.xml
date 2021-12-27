@@ -17,7 +17,18 @@
 <mapper namespace="moviePhoto">
 	
 	<select id="getPhotoSequence" resultType="int">
-		select movie_photo_seq.nextval from dual;
+		select movie_photo_seq.nextval from dual
 	</select>
+	
+	<insert id="insert" parameterType="MoviePhotoDto">
+		insert into movie_photo values(
+			#{moviePhotoNo},
+			#{movieNo},
+			#{moviePhotoUploadName},
+			#{moviePhotoSaveName},
+			#{moviePhotoSize},
+			#{moviePhotoType}
+		)
+	</insert>
 
 </mapper>

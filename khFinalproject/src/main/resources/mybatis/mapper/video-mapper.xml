@@ -20,7 +20,7 @@
 			video_seq.nextval,
 			#{movieNo},
 			#{videoTitle},
-			#{videoDate},
+			sysdate,
 			#{videoRoot}
 		)
 	</insert>
