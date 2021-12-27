@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.MemberDto;
+import com.kh.spring.entity.member.MemberDto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -76,9 +76,12 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public boolean quit(String memberId, String memberPw) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean quit(String memberEmail, String memberPw) {
+		MemberDto memberDto = new MemberDto();
+		memberDto.setMemberEmail(memberEmail);
+		memberDto.setMemberPw(memberPw);
+		int count = sqlSession.delete("member.quit", memberDto);
+		return count > 0;
 	}
 
 	@Override
