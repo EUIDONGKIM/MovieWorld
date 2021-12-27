@@ -15,6 +15,7 @@ import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.TheaterDto;
 import com.kh.spring.repository.HallDao;
 import com.kh.spring.repository.TheaterDao;
+import com.kh.spring.service.TheaterService;
 import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,9 @@ public class TheaterController {
 	
 	@Autowired
 	private HallDao hallDao;
+	
+	@Autowired
+	private TheaterService theaterService;
 	
 	@GetMapping("/create")
 	public String create() {
@@ -58,5 +62,35 @@ public class TheaterController {
 		model.addAttribute("hallList",hallList);
 		
 		return "theater/detail";
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int theaterNo, Model model) {
+		TheaterDto theaterDto = theaterDao.get(theaterNo);
+		model.addAttribute("theaterDto",theaterDto);
+		
+		return "theater/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute TheaterDto theaterDto) {
+		boolean success = theaterDao.edit(theaterDto);
+		if(success) {
+			return "redirect:/theater/detail?theaterNo="+theaterDto.getTheaterNo();
+		}
+		else {
+			return "redirect:edit?error"; //실패
+		}
+		
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam int theaterNo) {
+		boolean success = theaterService.delete(theaterNo);
+		if(success) {
+			return "redirect:/theater/list";//성공하면 목록으로
+		}
+		else {
+			return "redirect:/theater/detail?error"; //실패
+		}
 	}
 }

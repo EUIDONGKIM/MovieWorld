@@ -7,7 +7,6 @@
 		
 		$(".city").click(function(){
 			
-			$(".result").empty();
 			var cityValue = $(this).text();
 			
 			$.ajax({
@@ -15,11 +14,13 @@
 				type:"get",
 				dataType:"json",
 				success:function(resp){
-					
 					console.log("성공",resp)
+					//$(".result").remove();
+					$(".result").empty();
+					
 					for(var i = 0 ; i < resp.length ; i++){
 						//여기 고쳐야함
-						var html = "<li><a href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a></li>" 
+						var html = "<div><a href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a></div>" 
 						$(".result").append(html);
 					}
 					
@@ -33,23 +34,19 @@
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>극장 목록(여기 미완성임 개판임 나중에 수정해야함)</h1>
+<h1>극장 목록(레이아웃 생각해보기...내가 선호하는 or 자주가는 극장도 ?)</h1>
 
-<ul>
-<c:forEach var="theaterCityVO" items="${cityList }">
-<li>
-	<a class="city" data-city="${theaterCityVO.theaterSido}">
-		${theaterCityVO.theaterSido}
-	</a>
-</li>
-</c:forEach>
-</ul>
+<div>
+	<c:forEach var="theaterCityVO" items="${cityList }">
+		<div>
+			<a class="city" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
+		</div>
+	</c:forEach>
 
 <hr>
 
-<div>
-	<ul class="result">
-	</ul>
+	<div class="result"></div>
+
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

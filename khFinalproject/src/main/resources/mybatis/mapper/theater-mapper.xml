@@ -47,6 +47,22 @@
 		select * from theater where theater_no = #{theaterNo}
 	</select>
 	
+	<!-- 폐점... -->
+	<delete id="delete" parameterType="int">
+		delete theater where theater_no = #{theaterNo}
+	</delete>
+	
+	<!-- 수정 -->
+	<update id="edit" parameterType="TheaterDto">
+		update theater set 
+			theater_name = #{theaterName}, 
+			theater_address = #{theaterAddress}, 
+			theater_detailaddress = #{theaterDetailAddress}, 
+			theater_sido = #{theaterSido}, 
+			theater_info = #{theaterInfo} 
+		where theater_no = #{theaterNo} 
+	</update>
+	
 
 	
 </mapper>

@@ -19,5 +19,11 @@ public interface TheaterDao {
 	
 	//상세 조회
 	TheaterDto get(int theaterNo);
+	
+	//극장 삭제 
+	boolean delete(int theaterNo);
+	
+	//수정
+	boolean edit(TheaterDto theaterDto);
 
 }
