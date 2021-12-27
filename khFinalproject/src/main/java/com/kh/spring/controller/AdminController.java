@@ -32,4 +32,9 @@ public class AdminController {
 	public String adminMovieInfo() {
 		return "admin/movieInfo";
 	}
+	
+	@GetMapping("/actorInfo")
+	public String adminActorInfo() {
+		return "admin/actorInfo";
+	}
 }
