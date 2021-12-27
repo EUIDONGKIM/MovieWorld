@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
@@ -42,25 +43,23 @@ $(function(){
 });
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<h1>극장 생성</h1>
+<h1>${theaterDto.theaterName}점 정보 수정</h1>
 
 <form method="post">
-	극장명 : <input type="text" name="theaterName" required>
+	<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo }">
+	극장명 : <input type="text" name="theaterName" value="${theaterDto.theaterName}"required>
 	<br>
 	
 	<!-- 다음 주소 api사용 -->
-	주소 : <input type="text" name="theaterAddress" required><button type="button" class="find-address-btn">주소찾기</button>
+	주소 : <input type="text" name="theaterAddress" value="${theaterDto.theaterAddress}" required><button type="button" class="find-address-btn">주소찾기</button>
 	<br>
-	상세주소 : <input type="text" name="theaterDetailAddress">
-	시도 : <input type="hidden" name="theaterSido" required>
+	상세주소 : <input type="text" name="theaterDetailAddress" value="${theaterDto.theaterDetailAddress}">
+	<input type="hidden" name="theaterSido" value="${theaterDto.theaterSido}" required>
 	<br>
-	설명 : <textarea name="theaterInfo"></textarea> 
+	
+	설명 : <textarea name=theaterInfo>${theaterDto.theaterInfo }</textarea> 
 	<br>
-	<input type="submit" value="생성">
-
+	<input type="submit" value="수정">
 </form>
-
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
