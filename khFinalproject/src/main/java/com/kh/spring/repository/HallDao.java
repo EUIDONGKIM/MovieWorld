@@ -8,6 +8,8 @@ import com.kh.spring.entity.HallTypePriceDto;
 public interface HallDao {
 	List<HallDto> list();
 	List<HallTypePriceDto> getHallTypeList();
+	
+	//영화관별 극장목록
 	List<HallDto> list(int theaterNo);
 	
 	void insert(HallDto hallDto);
@@ -16,4 +18,7 @@ public interface HallDao {
 
 	int getSeq();
 	HallDto get(int hallNo);
+	
+	//극장별 상영관 개수
+	int hallCount (int theaterNo);
 }

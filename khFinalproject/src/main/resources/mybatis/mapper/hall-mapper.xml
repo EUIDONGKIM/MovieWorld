@@ -47,8 +47,13 @@
 		select * from hall where hall_no = #{hallNo}
 	</select>
 	
-	<select id="listByheaterNo" parameterType="int" resultType="HallDto">
-		select * from hall where theater_no = #{theaterNo}
+	<select id="listByTheaterNo" parameterType="int" resultType="HallDto">
+		select * from hall where theater_no = #{theaterNo} order by hall_name asc
+	</select>
+	
+	<!-- 상영관 개수 구하기 -->
+	<select id="hallCount" parameterType="int" resultType="int">
+		select count(*) from hall where theater_no = #{theaterNo}
 	</select>
 
 </mapper>
