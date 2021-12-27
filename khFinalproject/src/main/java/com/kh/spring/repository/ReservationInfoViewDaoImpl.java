@@ -41,4 +41,13 @@ public class ReservationInfoViewDaoImpl implements ReservationInfoViewDao{
 		return sqlSession.selectList("reservationInfoView.getTheaterNames",param);
 	}
 
+	@Override
+	public List<MovieCountVO> listMoiveComplexSearch(String theaterSido, int theaterNo) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("theaterNo",theaterNo);
+		param.put("theaterSido",theaterSido);
+		
+		return sqlSession.selectList("reservationInfoView.listMoiveComplexSearch",param);
+	}
+
 }
