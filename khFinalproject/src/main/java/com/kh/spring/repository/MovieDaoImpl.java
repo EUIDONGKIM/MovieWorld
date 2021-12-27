@@ -24,4 +24,14 @@ public class MovieDaoImpl implements MovieDao{
 		return sqlSession.selectOne("movie.get", movieNo);
 	}
 
+	@Override
+	public int getSequence() {
+		return sqlSession.selectOne("movie.getSequence");
+	}
+
+	@Override
+	public void insert(MovieDto movieDto) {
+		sqlSession.insert("movie.insert",movieDto);
+	}
+
 }

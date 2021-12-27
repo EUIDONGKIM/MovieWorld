@@ -7,12 +7,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.ReservationDetailDto;
+import com.kh.spring.entity.RoleDto;
 import com.kh.spring.entity.ScheduleTimeDto;
 import com.kh.spring.entity.SeatDto;
 import com.kh.spring.entity.TheaterDto;
@@ -50,7 +53,10 @@ public class DataController {
 	@Autowired
 	private ReservationDetailDao reservationDetailDao;
 	
-	
+	@PostMapping("/addRole")
+	public void addRole(@ModelAttribute RoleDto roleDto) {
+		
+	}
 	
 	@GetMapping("/getHalls")
 	public List<TheaterDto> getHalls(@RequestParam String city) throws UnsupportedEncodingException {
