@@ -60,7 +60,16 @@ public class MemberController {
 		if(findDto !=null) {
 		 session.setAttribute("ses",findDto.getMemberEmail());
 		 session.setAttribute("grade", findDto.getMemberGrade());
-			if(saveId !=null) {
+		 //임시 비밀번호로 변경하여 로그인할시 세션에 저장되어있는 값이 있다면 비밀번호
+		 //변경 페이지로 리다이렉트
+		 String redirectPassword= (String)session.getAttribute("temparayPassword");
+		 	if(redirectPassword != null) {
+		 		//넘어 왔으면 세션을 삭제한다
+		 		session.removeAttribute("temparayPassword");
+		 		return "redirect:changePw";
+		 	}
+			
+		 	if(saveId !=null) {
 				Cookie c = new Cookie("saveId",findDto.getMemberEmail());
 				c.setMaxAge(4*7*24 *60 *60); //2주간 저장
 				response.addCookie(c);
@@ -119,7 +128,7 @@ public class MemberController {
 	}
 	@PostMapping("/pwScan")
 	public String pwScan(@RequestParam String memberEmail,@RequestParam String memberName,@RequestParam String memberPhone
-			,Model model ,@ModelAttribute MemberDto memberDto) {
+			,Model model ,@ModelAttribute MemberDto memberDto ,HttpSession session) {
 		MemberDto isPass=memberDao.findPw(memberName, memberEmail, memberPhone);
 		//6자리의 랜덤숫자생성
 		String number = randomUtil.generateRandomNumber(6);
@@ -127,15 +136,39 @@ public class MemberController {
 		if(isPass!=null) {
 			//6자리의 난수 비밀번호 생성
 			isPass.setMemberPw(number);
-
+			
 			String chagePw = isPass.getMemberPw();
 		
 			memberDao.temporayPassword(memberDto,chagePw);
 			model.addAttribute("memberPw",chagePw);
-			
+			//임시 비밀번호로 바뀌면 세션에 아이디를 저장
+			session.setAttribute("temparayPassword", memberDto.getMemberEmail());
+			System.out.println(memberDto.getMemberEmail());
 			return "member/PwScanSuccess";
 		}else {
 			return "redirect:pwScan?error";
 		}
 	}
+	
+	@GetMapping("/changePw")
+	public String changePw() {
+		return "member/changePw";
+	}
+	
+	@PostMapping("/changePw")
+	public String changePw(
+			@RequestParam String memberPw, 
+			@RequestParam String changePw, 
+			HttpSession session) {
+		String memberId = (String) session.getAttribute("ses");
+		boolean result = memberDao.changePassword(memberId, memberPw, changePw);
+
+		if(result) {
+			return "redirect:/";
+		}
+		else {
+			return "redirect:changePw?error";
+		}
+	}
+	
 }

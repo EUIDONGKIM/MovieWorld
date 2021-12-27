@@ -41,9 +41,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
-//		System.err.println(memberDto.getMemberPw());
 		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
-//		System.err.println(findDto.getMemberPw());
 		//해당 아이디의 회원정보가 존재 && 입력 비밀번호와 조회된 비밀번호가 같다면 => 로그인 성공(객체를 반환)
 		if(findDto != null && encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
 			return findDto;
@@ -53,13 +51,24 @@ public class MemberDaoImpl implements MemberDao {
 		}
 		
 	}
-
+	//비밀번호 변경
 	@Override
-	public boolean changePassword(String memberId, String memberPw, String changePw) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean changePassword(String memberEmail, String memberPw, String changePw) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberEmail", memberEmail);
+		param.put("memberPw", memberPw);
+		//암호화 하여 바꿀비밀번호입력 
+		String origin = changePw;
+		String encrypt = encoder.encode(origin);
+		String updatePw=encrypt;
+		param.put("changePw", updatePw);
+	
+		
+		int count = sqlSession.update("member.changePassword", param);
+		return count > 0;
+	
 	}
-
+	
 	@Override
 	public boolean changeInformation(MemberDto memberDto) {
 		// TODO Auto-generated method stub
@@ -99,7 +108,7 @@ public class MemberDaoImpl implements MemberDao {
 		String origin =	ChangePw;
 		String encrypt = encoder.encode(origin);
 		memberDto.setMemberPw(encrypt);
-		System.out.println(memberDto.getMemberPw());
+
 		
 		param.put("memberEmail", memberDto.getMemberEmail());
 		param.put("memberName", memberDto.getMemberName());
