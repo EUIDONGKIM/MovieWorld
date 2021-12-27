@@ -83,7 +83,6 @@ public class TheaterController {
 		
 	}
 	
-	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int theaterNo) {
 		boolean success = theaterService.delete(theaterNo);
