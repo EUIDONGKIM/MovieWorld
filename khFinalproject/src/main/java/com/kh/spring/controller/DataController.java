@@ -13,19 +13,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.spring.entity.ActorDto;
 import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.ReservationDetailDto;
 import com.kh.spring.entity.RoleDto;
 import com.kh.spring.entity.ScheduleTimeDto;
 import com.kh.spring.entity.SeatDto;
 import com.kh.spring.entity.TheaterDto;
+import com.kh.spring.entity.VideoDto;
+import com.kh.spring.repository.ActorDao;
 import com.kh.spring.repository.HallDao;
 import com.kh.spring.repository.ReservationDetailDao;
 import com.kh.spring.repository.ReservationInfoViewDao;
+import com.kh.spring.repository.RoleDao;
 import com.kh.spring.repository.ScheduleDao;
 import com.kh.spring.repository.ScheduleTimeDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
+import com.kh.spring.repository.VideoDao;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
 import com.kh.spring.vo.TheaterCityVO;
@@ -52,10 +57,26 @@ public class DataController {
 	private SeatDao seatDao;
 	@Autowired
 	private ReservationDetailDao reservationDetailDao;
+	@Autowired
+	private ActorDao actorDao;
+	@Autowired
+	private VideoDao videoDao;
+	@Autowired
+	private RoleDao roleDao;
+	
+	@PostMapping("/addVideo")
+	public void addVideo(@ModelAttribute VideoDto videoDto) {
+		videoDao.insert(videoDto);
+	}
+	
+	@GetMapping("/actorList")
+	public List<ActorDto> actorList() {
+		return actorDao.list();
+	}
 	
 	@PostMapping("/addRole")
 	public void addRole(@ModelAttribute RoleDto roleDto) {
-		
+		roleDao.insert(roleDto);
 	}
 	
 	@GetMapping("/getHalls")
