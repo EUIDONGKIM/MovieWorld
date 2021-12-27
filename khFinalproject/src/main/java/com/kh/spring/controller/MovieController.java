@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.MovieDto;
+import com.kh.spring.repository.ActorDao;
 import com.kh.spring.repository.MovieDao;
 import com.kh.spring.service.MovieService;
 
@@ -25,6 +26,8 @@ public class MovieController {
 	private MovieDao movieDao;
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private ActorDao actorDao;
 	
 	@GetMapping("/list")
 	public String list() {//리스트를 찍으려면 뭔가가 필요합니다잉
@@ -49,10 +52,15 @@ public class MovieController {
 	}
 	
 	@GetMapping("/insert_actor")
-	public String insertACtor(Model model,@RequestParam int movieNo) {
+	public String insertActor(Model model,@RequestParam int movieNo) {
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor";
 	}
 	
+	@RequestMapping("/insert_popup")
+	public String insertPopup(Model model) {
+		model.addAttribute("actorList",actorDao.list());
+		return "movie/insert_actor_popup";
+	}
 	
 }
