@@ -42,7 +42,8 @@ public class HallController {
 	public String hallCreate2(@RequestParam int theaterNo, Model model) {
 		
 		TheaterDto theaterDto = theaterDao.get(theaterNo);
-		
+		int hallCount = hallDao.hallCount(theaterNo);
+		model.addAttribute("hallCount",hallCount);
 		model.addAttribute("theaterDto",theaterDto);
 		model.addAttribute("hallTypeList", hallTypePriceDao.list());
 		

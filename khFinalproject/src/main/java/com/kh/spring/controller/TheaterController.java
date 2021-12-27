@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.TheaterDto;
+import com.kh.spring.repository.HallDao;
 import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.vo.TheaterCityVO;
 
@@ -24,6 +26,9 @@ public class TheaterController {
 
 	@Autowired
 	private TheaterDao theaterDao;
+	
+	@Autowired
+	private HallDao hallDao;
 	
 	@GetMapping("/create")
 	public String create() {
@@ -47,8 +52,10 @@ public class TheaterController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int theaterNo, Model model) {
+		List<HallDto> hallList = hallDao.list(theaterNo);
 		TheaterDto theaterDto = theaterDao.get(theaterNo);
 		model.addAttribute("theaterDto",theaterDto);
+		model.addAttribute("hallList",hallList);
 		
 		return "theater/detail";
 	}

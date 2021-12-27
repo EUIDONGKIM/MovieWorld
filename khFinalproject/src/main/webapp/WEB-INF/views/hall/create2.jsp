@@ -16,6 +16,7 @@ $(function(){
 
 	<div class="row">
 		<h3>지점명 : ${theaterDto.theaterName }</h3>
+		<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo}">
 	</div>
 
 
@@ -32,7 +33,7 @@ $(function(){
 	
 	<div class="row">
 		<label>상영관 이름</label>
-		<input type="text" name="hallName" required>
+		<input type="text" name="hallName" value="${hallCount + 1}관"required>
 	</div>
 	
 	

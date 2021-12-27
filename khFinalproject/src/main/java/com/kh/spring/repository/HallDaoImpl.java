@@ -52,7 +52,12 @@ public class HallDaoImpl implements HallDao{
 
 	@Override
 	public List<HallDto> list(int theaterNo) {
-		return sqlSession.selectList("hall.listByheaterNo",theaterNo);
+		return sqlSession.selectList("hall.listByTheaterNo",theaterNo);
+	}
+
+	@Override
+	public int hallCount(int theaterNo) {
+		return sqlSession.selectOne("hall.hallCount",theaterNo);
 	}
 	
 	

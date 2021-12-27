@@ -13,4 +13,9 @@ public class HallDto {
 	private int hallRows;
 	private int hallCols;
 	private int hallSeat;
+	
+	//1관[아이맥스] 형식으로 보여주는 메소드
+	public String getFullName() {
+		return hallName + "[" + hallType + "]" ;
+	}
 }
