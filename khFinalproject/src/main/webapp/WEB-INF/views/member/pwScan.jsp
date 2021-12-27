@@ -28,7 +28,13 @@
 	</div>
 	
 	<div class="row">
-		<input type="submit" value="아이디찾기" class="form-btn">
+		<input type="submit" value="비밀번호찾기" class="form-btn">
 	</div>
+	
+	<c:if test="${param.error != null}">
+		<div class="row center">
+			<h4 class="error">입력하신 정보가 일치하지 않습니다</h4>
+		</div>
+	</c:if>
   </form>
 </div>

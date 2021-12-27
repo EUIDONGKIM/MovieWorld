@@ -19,6 +19,9 @@ public interface MemberDao {
 	
 	//비밀번호 변경
 	boolean changePassword(String membeEmail, String memberPw, String changePw);
+	//임시 비빌번호 변경
+//	boolean temporayPassword(String memberEmail , String memberName , String memberPhone , String temporayPassword);
+	boolean temporayPassword(MemberDto memberDto,String ChangePw);
 	//개인정보 변경
 	boolean changeInformation(MemberDto memberDto);
 

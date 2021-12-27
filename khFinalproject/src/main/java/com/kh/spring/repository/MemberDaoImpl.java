@@ -41,8 +41,9 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
+//		System.err.println(memberDto.getMemberPw());
 		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
-		
+//		System.err.println(findDto.getMemberPw());
 		//해당 아이디의 회원정보가 존재 && 입력 비밀번호와 조회된 비밀번호가 같다면 => 로그인 성공(객체를 반환)
 		if(findDto != null && encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
 			return findDto;
@@ -88,6 +89,26 @@ public class MemberDaoImpl implements MemberDao {
 		param.put("memberPhone",memberPhone);
 		
 		return sqlSession.selectOne("member.findPw",param);
+	}
+
+	
+	@Override
+	public boolean temporayPassword(MemberDto memberDto,String ChangePw) {
+		Map<String ,Object> param = new HashMap<>();
+		//받은 난수를 암호화 하여 업데이트 진행
+		String origin =	ChangePw;
+		String encrypt = encoder.encode(origin);
+		memberDto.setMemberPw(encrypt);
+		System.out.println(memberDto.getMemberPw());
+		
+		param.put("memberEmail", memberDto.getMemberEmail());
+		param.put("memberName", memberDto.getMemberName());
+		param.put("memberPhone",memberDto.getMemberPhone());
+		param.put("memberPw",memberDto.getMemberPw());
+		
+		//원래 비밀번호를 암호화 하여서 비밀번호 업데이트 
+		int result=sqlSession.update("member.temporayPassword",param);
+		return result>0;
 	}
 
 }

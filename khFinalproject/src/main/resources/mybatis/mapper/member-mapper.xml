@@ -37,12 +37,18 @@
 	
 	<!-- 아이디찾기 -->
 	<select id="findId" parameterType="map" resultType="MemberDto">
-		select member_email from member where member_name=#{memberName} and member_phone=#{memberPhone};
+		select member_email from member where member_name=#{memberName} and member_phone=#{memberPhone}
 	</select>
 	
 	<!-- 비밀번호찾기 -->
 	<select id="findPw" parameterType="map" resultType="MemberDto">
-		select member_pw from member where member_name=#{memberName} and member_emial=#{memberEmail} and member_phone=#{memberPhone} 
+		select member_pw from member where member_name=#{memberName} and member_email=#{memberEmail} and member_phone=#{memberPhone} 
 	</select>
 	
+	<!-- 임시비밀번호로  변경 -->
+	<update id="temporayPassword" parameterType="map">
+		update member set member_pw=#{memberPw} 
+		where 
+		member_email=#{memberEmail} and member_name=#{memberName} and member_phone=#{memberPhone}
+	</update>
 </mapper>
