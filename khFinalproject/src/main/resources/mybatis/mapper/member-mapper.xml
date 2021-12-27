@@ -51,4 +51,10 @@
 		where 
 		member_email=#{memberEmail} and member_name=#{memberName} and member_phone=#{memberPhone}
 	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePassword" parameterType="map">
+		update member set member_pw = #{changePw}
+		where member_email = #{memberEmail}
+	</update>
 </mapper>
