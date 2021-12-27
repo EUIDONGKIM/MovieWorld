@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.spring.entity.CertificationDto;
+import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.repository.CertificationDao;
 import com.kh.spring.service.EmailService;
 
@@ -33,12 +35,22 @@ public class CertificationController {
 // 	public String root() {
 // 		return "root";
 // 	}
-// 	@PostMapping("/")
-// 	public String cert(@RequestParam String email ,Model model) {
-// 		emailService.sendCertificationNumber(email);
-// 		model.addAttribute("email",email);
-// 		return "";
-// 	}
+ 	@GetMapping("/send")
+ 	public String send() {
+ 		return "member/join";
+ 	}
+ 	@PostMapping("/send")
+ 	public String sned(@RequestParam String memberEmail) {
+ 		emailService.sendCertificationNumber(memberEmail);
+ 		return "member/join";
+ 	}
+ 
+ 	@PostMapping("/")
+ 	public String cert(@RequestParam String email ,Model model) {
+ 		emailService.sendCertificationNumber(email);
+ 		model.addAttribute("email",email);
+ 		return "";
+ 	}
  	@PostMapping("/check")
  	public String check(@ModelAttribute CertificationDto certificationDto) {
  		boolean success=certificationDao.check(certificationDto);

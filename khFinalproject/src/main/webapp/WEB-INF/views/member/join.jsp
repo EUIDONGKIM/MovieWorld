@@ -2,16 +2,24 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
-setInterval(function(){ alert("Popup window!"); }, 500);
-var timeleft = 10;
-var downloadTimer = setInterval(function(){
-  if(timeleft <= 0){
-    clearInterval(downloadTimer);
-  }
-  document.getElementById("progressBar").value = 10 - timeleft;
-  timeleft -= 1;
-}, 1000);
-<progress value="0" max="10" id="progressBar"></progress>
+$(function(){
+	$("button").click(function(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/send/",
+			type:"post",
+			dataType:"text",
+			success:function(resp){
+				console.log("성공",resp);
+//					$("#result").html(resp);
+				$("#result").append(resp);
+			},
+			error:function(e){
+				console.log("실패",e);
+//					alert("통신실패");
+			}
+		});
+	});
+});
 </script>
 
 <div class="container-800 container-center">
@@ -27,7 +35,15 @@ var downloadTimer = setInterval(function(){
 				 <button id="email" type="button">이메일인증</button>
 	    	</div> 
 	    </div>
-    
+	    
+	    <div class="row">
+	    	<div class="col">
+		    	 <label>인증번호</label>
+				 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2">
+				 
+	    	</div> 
+	    </div>
+        
 	   
 	    <div class="row">
 	    	<div class="col">

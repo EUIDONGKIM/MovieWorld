@@ -1,4 +1,4 @@
-package com.kh.spring.entity;
+package com.kh.spring.entity.member;
 
 import java.sql.Date;
 

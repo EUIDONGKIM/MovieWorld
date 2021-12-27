@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.HallDto;
-import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ReservationDetailDto;
 import com.kh.spring.entity.ReservationDto;
 import com.kh.spring.entity.ReservationInfoViewDto;
 import com.kh.spring.entity.SeatDto;
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.repository.AgeDiscountDao;
 import com.kh.spring.repository.HallDao;
 import com.kh.spring.repository.HallTypePriceDao;
