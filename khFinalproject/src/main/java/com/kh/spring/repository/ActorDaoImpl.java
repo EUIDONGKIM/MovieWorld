@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.spring.entity.ActorDto;
+import com.kh.spring.entity.RoleDto;
 
 public class ActorDaoImpl implements ActorDao{
 	
@@ -24,6 +25,6 @@ public class ActorDaoImpl implements ActorDao{
 		
 		return sqlSession.selectOne("actor.get", actorNo);
 	}
-	
+
 	
 }

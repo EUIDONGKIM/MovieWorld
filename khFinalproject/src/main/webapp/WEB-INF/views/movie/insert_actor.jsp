@@ -10,7 +10,7 @@
 	$(function(){
 
         $("input[name=actorName]").focus(function(){
-            window.open("test10.html", "popup", "width=500 , height=500");
+            window.open("insert_actor_propup.jsp", "popup", "width=500 , height=500");
         });
 
 
