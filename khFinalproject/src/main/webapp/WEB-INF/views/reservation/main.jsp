@@ -59,16 +59,35 @@
 
 <script>
 $(function(){
-	//상영 번호를 얻은 순간부터 다른 뷰로 사용하기.
+		var movieNo;
+		var theaterSido;
+		var theaterNo;
+		var scheduleTimeDate;
+		var scheduleTimeDateTime;
+		var scheduleTimeNo;
+		var hallRows;
+		var hallCols;
+		
+		var ageNormal=0;
+		var ageYoung=0;
+		var ageOld=0;
+		var ageTotal=0;
+		var seatNames;
+		var seatTotal;
+		
 		$(".page").hide();
         $(".page").eq(0).show();
 		
         var p = 0;
         
+        
         $(".btn-next").click(function(e){
             e.preventDefault();
-
-
+			if(!scheduleTimeNo||!hallRows||!hallCols||!scheduleTimeDateTime) {
+				alert("항목을 선택하세요!");
+				return;
+			}
+			
                 var cinema = new Hacademy.Reservation("#cinema");
                 cinema.addChangeListener(function(seat){
                     print(this);
@@ -91,29 +110,149 @@ $(function(){
              $(".page").hide();
              $(".page").eq(p).show();
          });
-		var movieNo;
-		var theaterSido;
-		var theaterNo;
-		var scheduleTimeDate;
-		var scheduleTimeDateTime;
-		var scheduleTimeNo;
-		var hallRows;
-		var hallCols;
+
+	loadList();
 	
-	$("input[name=theaterSido]").on("input",function(){
-		theaterSido = $(this).val();
-		theaterNameList(theaterSido);
+	function loadList(){
+		//첫 화면바로 띄워주기
+		movieNo = null;
+		theaterSido = null;
+		theaterNo = null;
+		scheduleTimeDate = null;
+		scheduleTimeDateTime = null;
+		scheduleTimeNo = null;
+		hallRows = null;
+		hallCols = null;
+		//seat / age 정보 초기화 ?
+		$(".movie-list").empty();
+		$(".theater-sido-list").empty();
+		
+		$(".theater-name-list").empty();
+		$(".theater-name-list").text('영화 또는 지점을 선택하세요.');
+		
+		$(".schedule-time-date-list").empty();
+		$(".schedule-time-date-list").text('영화와 지점을 먼저 선택하세요.');
+		
+		$(".schedule-time-date-time-list").empty();
+		$(".schedule-time-date-time-list").text('상영 날짜를 선택해주세요.');
+		
+		$(".seat-box").empty();
+		
+		movieLoadList();
+		sidoLoadList();
+	}
+	
+	$(".btn-init").click(function(e){
+		e.preventDefault();
 		loadList();
 	});
-	$("input:radio[name=theaterSido]").eq(0).attr("checked", true);
-	theaterNameList($("input:radio[name=theaterSido]").val());
 	
-
+	function sidoLoadList(){	
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getSido",
+			type:"get",
+			dataType : "json",
+			success:function(resp){
+				$(".theater-sido-list").empty();
+				
+				for(var i = 0 ; i < resp.length ; i++){
+					var template = $("#list-template").html();
+					template = template.replace("{{key}}","theaterSido");
+					template = template.replace("{{name}}",resp[i].theaterSido);
+					template = template.replace("{{value}}",resp[i].theaterSido);
+					
+					var tag = $(template);
+					tag.find("input[name=theaterSido]").on("input",function(){
+						theaterSido = $(this).attr("value");
+						theaterNameList(theaterSido);
+						
+						$("input[name=movieNo]").prop("disabled",true);
+						$("input[name=theaterSido]").each(function(){				
+							if(theaterSido != $(this).val()){
+									$(this).prop("disabled",true);
+							}
+						});
+					});
+					
+					$(".theater-sido-list").append(tag);
+				}	
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
 	
-	$("input[name=movieNo]").on("input",function(){
-		movieNo = $(this).val();
-		movieList(movieNo);
-	});
+	function movieLoadList(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getMovie",
+			type:"get",
+			dataType : "json",
+			success:function(resp){
+				$(".movie-list").empty();
+				for(var i = 0 ; i < resp.length ; i++){
+					var template = $("#movie-list-template").html();
+					template = template.replace("{{grade}}",resp[i].movieGrade);
+					template = template.replace("{{name}}",resp[i].movieTitle);
+					template = template.replace("{{value}}",resp[i].movieNo);
+					
+					var tag = $(template);
+					tag.find("input[name=movieNo]").on("input",function(){
+						movieNo = $(this).attr("value");	
+						
+						$("input[name=movieNo]").each(function(){
+							if(movieNo != $(this).val()){
+									$(this).prop("disabled",true);
+							}
+						});
+						if(!theaterSido){			
+							sidoList(movieNo);
+							}
+					});
+					$(".movie-list").append(tag);
+				}
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
+	
+	function movieSearchList(theaterSido,theaterNo){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getTotal11",
+			type:"get",
+			data : {
+				theaterSido:theaterSido,
+				theaterNo:theaterNo
+			},
+			dataType : "json",
+			success:function(resp){
+				$(".movie-list").empty();
+				if(resp.length > 0){
+				for(var i = 0 ; i < resp.length ; i++){
+					
+					var template = $("#movie-list-template").html();
+					template = template.replace("{{grade}}",resp[i].movieGrade);
+					template = template.replace("{{name}}",resp[i].movieTitle);
+					template = template.replace("{{value}}",resp[i].movieNo);
+					
+					var tag = $(template);
+					tag.find("input[name=movieNo]").on("input",function(){
+						movieNo = $(this).attr("value");
+						scheduleDateList(movieNo,theaterNo);
+					});
+					$(".movie-list").append(tag);
+				}
+				}else{
+					$(".movie-list").text('해당 상영관의 상영 영화가 없습니다.처음부터 다시 해주세요 죄송합니다 ㅠㅠ');
+				}
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
 	
 	function theaterNameList(theaterSido){
 		$.ajax({
@@ -124,41 +263,38 @@ $(function(){
 			},
 			dataType : "json",
 			success:function(resp){
-				console.log("성공", resp);
-				
 				$(".theater-name-list").empty();
-				
 				for(var i = 0 ; i < resp.length ; i++){
 					var template = $("#list-template").html();
 					template = template.replace("{{key}}","theaterNo");
 					template = template.replace("{{name}}",resp[i].theaterName);
 					template = template.replace("{{value}}",resp[i].theaterNo);
-					
 					var tag = $(template);
 					
 					tag.find("input[type=radio]").on("input",function(){
 						theaterNo = $(this).attr("value");
+
+						$("input[name=theaterNo]").each(function(){
+							if(theaterNo != $(this).val()){
+									$(this).prop("disabled",true);
+							}
+						});
 						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
-						//추후에 한번에 검색 처리(다중 검색)하는 로직으로 만들어보기...!!
-					});
-					
+						$(".movie-list").show();
+						if(!movieNo){
+							movieSearchList(theaterSido,theaterNo);
+						}				
+					});	
 					$(".theater-name-list").append(tag);
 				}
-				
 			},
 			error:function(e){
 				console.log("실패", e);
 			}
-		});
-		
+		});	
 	}
 	
-	function movieList(movieNo){	
+	function sidoList(movieNo){	
 		$.ajax({
 			url:"${pageContext.request.contextPath}/data/getTotal1",
 			type:"get",
@@ -167,8 +303,6 @@ $(function(){
 			},
 			dataType : "json",
 			success:function(resp){
-				console.log("성공", resp);
-				
 				$(".theater-sido-list").empty();
 				
 				for(var i = 0 ; i < resp.length ; i++){
@@ -181,11 +315,12 @@ $(function(){
 					tag.find("input[name=theaterSido]").on("input",function(){
 						theaterSido = $(this).attr("value");
 						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
+						$("input[name=theaterSido]").each(function(){
+							if(theaterSido != $(this).val()){
+									$(this).prop("disabled",true);
+							}
+							
+						});
 						
 						theaterNoList(movieNo,theaterSido);
 						
@@ -211,7 +346,6 @@ $(function(){
 			dataType : "json",
 			success:function(resp){
 				console.log("성공", resp);
-				
 				$(".theater-name-list").empty();
 				
 				for(var i = 0 ; i < resp.length ; i++){
@@ -224,13 +358,6 @@ $(function(){
 					
 					tag.find("input[type=radio]").on("input",function(){
 						theaterNo = $(this).attr("value");
-						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
-						
 						scheduleDateList(movieNo,theaterNo);
 					});
 					
@@ -269,14 +396,7 @@ $(function(){
 					
 					tag.find("input[type=radio]").on("input",function(){
 						scheduleTimeDate = $(this).attr("value");
-						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
-						console.log(scheduleTimeNo);
-						
+
 						scheduleDateTimeDateList(scheduleTimeDate);
 					});
 					
@@ -290,7 +410,6 @@ $(function(){
 		});
 	}
 	
-	
 	function scheduleDateTimeDateList(scheduleTimeDate){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/data/getTotal4",
@@ -302,8 +421,6 @@ $(function(){
 			},
 			dataType : "json",
 			success:function(resp){
-				console.log("성공", resp);
-				
 				$(".schedule-time-date-time-list").empty();
 				
 				for(var i = 0 ; i < resp.length ; i++){
@@ -318,62 +435,6 @@ $(function(){
 					
 					tag.find("input[type=radio]").on("input",function(){
 						scheduleTimeNo = $(this).attr("value");
-						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
-						console.log(scheduleTimeNo);
-						
-						
-					});
-					
-					$(".schedule-time-date-time-list").append(tag);
-				}
-				
-			},
-			error:function(e){
-				console.log("실패", e);
-			}
-		});
-	}
-	
-	function scheduleDateTimeDateList(scheduleTimeDate){
-		$.ajax({
-			url:"${pageContext.request.contextPath}/data/getTotal4",
-			type:"get",
-			data : {
-				movieNo:movieNo,
-				theaterNo:theaterNo,
-				scheduleTimeDate:scheduleTimeDate
-			},
-			dataType : "json",
-			success:function(resp){
-				console.log("성공", resp);
-				
-				$(".schedule-time-date-time-list").empty();
-				
-				for(var i = 0 ; i < resp.length ; i++){
-					var template = $("#list-template").html();
-					template = template.replace("{{key}}","scheduleTimeNo");
-					scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11);
-					
-					template = template.replace("{{name}}",scheduleTimeDateTime);
-					template = template.replace("{{value}}",resp[i].scheduleTimeNo);
-					
-					var tag = $(template);
-					
-					tag.find("input[type=radio]").on("input",function(){
-						scheduleTimeNo = $(this).attr("value");
-						
-						console.log(movieNo);
-						console.log(theaterSido);
-						console.log(theaterNo);
-						console.log(scheduleTimeDate);
-						console.log(scheduleTimeDateTime);
-						console.log(scheduleTimeNo);
-						
 						getHallRowsAndCols(scheduleTimeNo);
 					});
 					
@@ -396,18 +457,9 @@ $(function(){
 			},
 			dataType : "json",
 			success:function(resp){
-				console.log("성공", resp);
 				hallRows = resp.hallRows;
 				hallCols = resp.hallCols;
 				
-				console.log(movieNo);
-				console.log(theaterSido);
-				console.log(theaterNo);
-				console.log(scheduleTimeDate);
-				console.log(scheduleTimeDateTime);
-				console.log(scheduleTimeNo);
-				console.log(hallRows);
-				console.log(hallCols);
 				getSeat(scheduleTimeNo);
 			},
 			error:function(e){
@@ -426,6 +478,8 @@ $(function(){
 			dataType : "json",
 			success:function(resp){
 				console.log("성공", resp);
+				$(".seat-box").empty();
+				
 				var template = $("#seat-list-template").html();
 				template = template.replace("{{hallRows}}",hallRows);
 				template = template.replace("{{hallCols}}",hallCols);
@@ -433,16 +487,59 @@ $(function(){
 				
 				var tag = $(template);
 
+				tag.find("input[name=ageNormal]").on("input",function(){
+					ageNormal = $(this).val();
+					$("input[name=ageTotal]")
+					.val(parseInt($("input[name=ageNormal]").val())
+					+parseInt($("input[name=ageYoung]").val())
+					+parseInt($("input[name=ageOld]").val()));
+				}); 
+					
+				tag.find("input[name=ageYoung]").on("input",function(){
+					ageYoung = $(this).val();
+					$("input[name=ageTotal]")
+					.val(parseInt($("input[name=ageNormal]").val())
+					+parseInt($("input[name=ageYoung]").val())
+					+parseInt($("input[name=ageOld]").val()));
+				}); 	
+				tag.find("input[name=ageOld]").on("input",function(){
+					ageOld = $(this).val();
+					$("input[name=ageTotal]")
+					.val(parseInt($("input[name=ageNormal]").val())
+					+parseInt($("input[name=ageYoung]").val())
+					+parseInt($("input[name=ageOld]").val()));
+				}); 
+				
+				tag.find(".btn-pay").click(function(e){
+		            p++;
+		            $(".page").hide();
+		            $(".page").eq(p).show();
+		        });
+					
+				tag.find(".seat-send-form").submit(function(e){
+		        	e.preventDefault();
+		        	var seatData = $(".result").text();
+					TempReservation(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld);
+		        });
+				
 				for(var i=0 ; i<resp.length ; i++){
 					var addDiv = $("<div>").addClass("cinema-seat").attr("data-row", resp[i].seatRows).attr("data-col",resp[i].seatCols)
 					.attr("data-state",resp[i].seatStatus).attr("data-direction","up");
-					$("<input type='checkbox' name='seat' value='"+resp[i].seatRows+"-"+resp[i].seatCols+"' style='display: none;'>").appendTo(addDiv);
+					$("<input type='checkbox' name='seat' class='chk-seat' value='"+resp[i].seatRows+"-"+resp[i].seatCols+"' style='display: none;'>").appendTo(addDiv);
 					var spanTemplate = $("#span-template").html();
 					spanTemplate = spanTemplate.replace("{{row}}",resp[i].seatRows);
 					spanTemplate = spanTemplate.replace("{{col}}",resp[i].seatCols);
 					addDiv.append(spanTemplate);
-
+					
+					addDiv.find(".chk-seat").on("input",function(){
+						if(!ageTotal){
+							alert("인원수를 선택해주세요!");
+							return;
+						}
+					});
+					
 					tag.find(".cinema-seat-area").append(addDiv);
+					
 				}
 
 				$(".seat-box").append(tag);
@@ -453,7 +550,25 @@ $(function(){
 		});
 	}
 	
-	
+	function TempReservation(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/TempReservation",
+			type:"post",
+			data : {
+				seatData:seatData,
+				scheduleTimeNo:scheduleTimeNo,
+				ageNormal:ageNormal,
+				ageYoung:ageYoung,
+				ageOld:ageOld
+			},
+			success:function(resp){
+				console.log("성공", resp);
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	};
 	
 });
 </script>
@@ -463,7 +578,7 @@ $(function(){
 <template id="movie-list-template">
 	<div>
 		<label>
-		<input type="radio" name="moveiNo" value="{{value}}">
+		<input type="radio" name="movieNo" value="{{value}}">
 		<span>{{grade}} {{name}}</span>		
 		</label>
 	</div>	
@@ -478,37 +593,23 @@ $(function(){
 	</div>	
 </template>
 
-
-
 <div class="container-1000 container-center page">
-// 영화로 부터 순차적으로 고를 수 있게 진행(이후화면 노터치 / 현재 고를 순서만 터치)
+
+	<div class="row center">
+		<button type="button" class="btn-init"><h1>다시 선택</h1></button>
+	</div>
+	
 	<div class="row float-container">
 		
 		<div class="float-item-left">
 			<div class="row"><h2>영화</h2></div>
 				<div class="movie-list">
-						<c:forEach var="movieCountVO" items="${movieCountVOList}">
-						<div class="flex-container">
-							<label>
-								<input type="radio" name="movieNo" value="${movieCountVO.movieNo }">
-								<span>${movieCountVO.movieGrade } ${movieCountVO.movieTitle }</span>
-							</label>
-						</div>
-						</c:forEach>
 				</div>
 		</div>
 
 		<div class="float-item-left">
 			<div class="row"><h2>지역</h2></div>
 				<div class="theater-sido-list">
-						<c:forEach var="theaterCityVO" items="${theaterCityVOList}">
-						<div class="flex-container">
-							<label>
-								<input type="radio" name="theaterSido" value="${theaterCityVO.theaterSido }">
-								<span>${theaterCityVO.theaterSido }</span>
-							</label>
-						</div>
-						</c:forEach>
 				</div>
 		</div>
 		
@@ -548,7 +649,7 @@ $(function(){
 	</div>
 	
 	<div class="row center">
-		<button class="btn btn-next">다음 단계</button>
+		<button class="btn-next"><h1>다음 단계</h1></button>
 	</div>
 </div>
 
@@ -556,18 +657,24 @@ $(function(){
 <div class="page">
 
 <template id="seat-list-template">
-	<div class="float-box">
+	<div class="float-box center">
 		<div>
-		<form action="${pageContext.request.contextPath}/reservation/insert" method="post">
+		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
+		
+			<span>일반:</span><input type="number" name="ageNormal" value="0" min="0" data-age-no="1">
+			<span>청소년:</span><input type="number" name="ageYoung" value="0" min="0" data-age-no="2">
+			<span>경로:</span><input type="number" name="ageOld" value="0" min="0" data-age-no="3">  
+			<span>총 명:</span><input type="number" name="ageTotal" value="0" min="0" data-age-no="4"> 
+			
 			<div id="cinema" class="cinema-wrap" data-name="seat">
-				<div class="cinema-screen">상단 구조물 또는 제목 영역</div>
+				<div class="cinema-screen"><h3>스크린</h3></div>
 					
 					<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-mode="client" data-fill="manual" data-seatno="visible">
 						
 					</div>
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-	<input type="submit" value="선택">
+	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay">
 		</div>
 		</form>
 	</div>
@@ -577,19 +684,28 @@ $(function(){
 <span>{{row}}-{{col}}</span>
 </template>
   		 
-	<div class="seat-box"></div>
+  		 
+  		 
+  		 
+	<div class="seat-box">
+		
+	</div>
 
 
-    <h2 align="center">전송되는 데이터 형태</h2>
+    <h1 align="center">전송되는 데이터 형태</h1>
 
     <div class="result">         
     </div>
 
 	
 	<div class="row center">
-		<button class="btn btn-prev">이전 단계</button>
-		<button class="submit">제출</button>
+		<button class="btn-prev"><h1>이전 단계</h1></button>
 	</div>
+</div>
+
+
+<div>
+
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -37,4 +37,14 @@
 		where movie_no=#{movieNo} and theater_sido=#{theaterSido}
  	</select>
  	
+	<select id="listMoiveComplexSearch" parameterType="map" resultType="MovieCountVO">
+	 	select movie_no,movie_title,movie_grade,sum(schedule_time_count) count from
+		(select * from reservation_info_view
+		where 
+		theater_sido=#{theaterSido} and
+		theater_no=#{theaterNo}
+		)
+		group by movie_no,movie_title,movie_grade
+		order by count
+	</select>
 </mapper>

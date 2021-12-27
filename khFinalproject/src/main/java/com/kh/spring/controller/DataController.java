@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.HallDto;
 import com.kh.spring.entity.ReservationDetailDto;
-import com.kh.spring.entity.ReservationInfoViewDto;
 import com.kh.spring.entity.ScheduleTimeDto;
 import com.kh.spring.entity.SeatDto;
 import com.kh.spring.entity.TheaterDto;
@@ -25,7 +23,9 @@ import com.kh.spring.repository.ScheduleDao;
 import com.kh.spring.repository.ScheduleTimeDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
+import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
+import com.kh.spring.vo.TheaterCityVO;
 import com.kh.spring.vo.TheaterNameBySidoVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +57,24 @@ public class DataController {
 		String cityName = URLDecoder.decode(city, "UTF-8"); //디코딩을 해야 값이 들어간다.
 		
 		return theaterDao.listByCity(cityName);
+	}
+	
+	@GetMapping("/getMovie")
+	public List<MovieCountVO> getMovie(){
+		return reservationInfoViewDao.listMoiveByCount();
+	}
+	
+	@GetMapping("/getSido")
+	public List<TheaterCityVO> getSido(){
+		return theaterDao.cityList();
+	}
+	
+	@GetMapping("/getTotal11")
+	public List<MovieCountVO> getTotal11(
+			@RequestParam String theaterSido,
+			@RequestParam int theaterNo) throws UnsupportedEncodingException{
+		String cityName = URLDecoder.decode(theaterSido, "UTF-8");
+		return reservationInfoViewDao.listMoiveComplexSearch(cityName,theaterNo);
 	}
 	
 	@GetMapping("/getTotal")
@@ -103,7 +121,6 @@ public class DataController {
 	@GetMapping("/seat")
 	public List<ReservationVO> getSeat(@RequestParam int scheduleTimeNo) {
 		//길기때문에 추후 서비스로 넘기거나 레스트 컨트롤러에서 처리하는 부분
-		
 		ScheduleTimeDto scheduleTimeDto = scheduleTimeDao.get(scheduleTimeNo);
 
 		List<SeatDto> seatList = seatDao.list(scheduleTimeDto.getHallNo());
@@ -127,19 +144,10 @@ public class DataController {
 					}
 				}
 			}
-			
-			
 			reservationVOList.add(reservationVO);
 		}
-		
-
-		log.debug("reservationVOList는!!==========================={}",reservationVOList);
-		
-		//여기서 VO만드는 작업해서 VO를 넘긴다.
 		return reservationVOList;
 	}
-	
-	
 	
 	
 	@GetMapping("/getTheaters")
