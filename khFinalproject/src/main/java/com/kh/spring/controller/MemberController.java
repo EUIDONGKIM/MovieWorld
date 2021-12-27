@@ -200,14 +200,11 @@ public class MemberController {
 		System.out.println(memberPw);
 		System.out.println(memberEmail);
 		boolean result =memberDao.quit(memberEmail, memberPw);
-		System.out.println("1");
 		if(result) {
 			session.removeAttribute("ses");
 			session.removeAttribute("grade");
-			System.out.println("2");
 			return "redirect:quit_success";
 		}else {
-			System.out.println("3");
 			return "redirect:quit?error";
 		
 	}
