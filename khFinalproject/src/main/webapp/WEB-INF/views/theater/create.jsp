@@ -53,11 +53,12 @@ $(function(){
 	<br>
 	상세주소 : <input type="text" name="theaterDetailAddress">
 	<!-- 여기도 api쓰면 자동으로 들어감 나중에 hidden으로 바꿔주기 -->	
-	시도 : <input type="text" name="theaterSido" required>
+	시도 : <input type="hidden" name="theaterSido" required>
 	<br>
 	
 	<!-- textarea로 바꿔주기 -->
-	설명 : <input type="text" name="theaterInfo">
+	
+	설명 : <textarea name="theaterInfo"></textarea> 
 	<br>
 	<input type="submit" value="생성">
 
