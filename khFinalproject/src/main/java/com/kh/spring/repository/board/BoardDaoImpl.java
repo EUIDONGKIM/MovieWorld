@@ -14,8 +14,8 @@ public class BoardDaoImpl implements BoardDao{
 	@Autowired
 	private SqlSession sqlsession;
 	@Override
-	public void write(BoardDto boardDto) {
-		sqlsession.insert("board.write",boardDto);
+	public int write(BoardDto boardDto) {
+		return sqlsession.insert("board.write",boardDto);
 	}
 	
 	@Override
@@ -26,6 +26,11 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public BoardDto get(int boardNo) {
 		return sqlsession.selectOne("board.get",boardNo);
+	}
+
+	@Override
+	public int getSequence() {
+		return sqlsession.selectOne("board.getSeq");
 	}
 
 }

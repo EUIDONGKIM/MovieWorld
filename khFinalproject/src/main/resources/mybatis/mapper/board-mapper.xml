@@ -27,8 +27,14 @@
 	<!-- 게시판 글작성 -->
 	<insert id="write">
 		insert into board values(
-		 board_no_seq.nextval,1,#{memberEmail},#{boardTitle},sysdate,#{boardContent},
-		 0,board_no_seq.nextval,#{boardGroupNo},#{boardDepth}
+			#{boardNo},1,#{memberEmail},#{boardTitle},
+		 sysdate,#{boardContent},
+		 0,#{boardNo},#{boardGroupNo},#{boardDepth}
 		)
 	</insert>
+	
+	<!-- 시퀸스 미리뽑아오기  -->
+	<select id="getSeq" resultType="int">
+		select board_no_seq.nextval from dual
+	</select>
 </mapper>
