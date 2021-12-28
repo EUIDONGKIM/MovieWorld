@@ -17,5 +17,6 @@ public class ReservationDetailDto {
 	private int ageDiscountPrice;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
+	private int reservationDetailPrice;
 	private String reservationDetailStatus;
 }

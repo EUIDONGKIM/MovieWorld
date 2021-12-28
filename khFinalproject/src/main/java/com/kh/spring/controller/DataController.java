@@ -17,6 +17,8 @@ import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
 import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.entity.movie.VideoDto;
+import com.kh.spring.entity.reservation.ReservationDetailDto;
+import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
@@ -24,6 +26,7 @@ import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.movie.VideoDao;
+import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
@@ -71,7 +74,23 @@ public class DataController {
 	private EmailService emailService;
 	@Autowired
 	private CertificationDao certificationDao;
+	@Autowired
+	private ReservationDao reservationDao;
 	
+	@GetMapping("/getReservation")
+	public ReservationDto getReservation(@RequestParam int reservationKey) {
+		return reservationDao.get(reservationKey);
+	}
+	
+	@GetMapping("/getReservationDetail")
+	public List<ReservationDetailDto> getReservationDetail(@RequestParam int reservationKey) {
+		return reservationDetailDao.get(reservationKey);
+	}
+	
+	@GetMapping("/getReservationKey")
+	public int getReservationKey() {
+		return reservationDao.getSequence();
+	}
 	
 	@GetMapping("/serialCheck")
 	public String serialCheck(@RequestParam String to,@RequestParam String check) {
@@ -92,14 +111,15 @@ public class DataController {
 	@PostMapping("/TempReservation")
 	public void TempReservation(
 			@RequestParam String seatData,
+			@RequestParam int reservationKey,
 			@RequestParam int scheduleTimeNo,
-			@RequestParam int ageNormal,
-			@RequestParam int ageYoung,
-			@RequestParam int ageOld,
+			@RequestParam(required = false,defaultValue = "0") int ageNormal,
+			@RequestParam(required = false,defaultValue = "0") int ageYoung,
+			@RequestParam(required = false,defaultValue = "0") int ageOld,
 			HttpSession session
 			) {
 		int memberNo = (int)session.getAttribute("memberNo");
-		reservationService.insert(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld,memberNo);
+		reservationService.insert(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld,memberNo);
 	}
 	
 	@PostMapping("/addVideo")

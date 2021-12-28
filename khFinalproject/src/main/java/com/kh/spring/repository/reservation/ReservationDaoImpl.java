@@ -1,5 +1,8 @@
 package com.kh.spring.repository.reservation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +23,20 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Override
 	public void insert(ReservationDto reservationDto) {
 		sqlSession.insert("reservation.insert",reservationDto);
+	}
+
+	@Override
+	public ReservationDto get(int reservationNo) {
+		return sqlSession.selectOne("reservation.get",reservationNo);
+	}
+
+	@Override
+	public void updatePrice(int reservationNo, int totalReservationPice) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("reservationNo",reservationNo);
+		param.put("totalAmount",totalReservationPice);
+		
+		sqlSession.update("reservation.updatePrice",param);
 	}
 
 }

@@ -31,7 +31,12 @@
 			#{ageDiscountPrice},
 			#{scheduleTimeDiscountType},
 			#{scheduleTimeDiscountPrice},
+			#{reservationDetailPrice},
 			#{reservationDetailStatus}
 		)
 	</insert>
+	<select id="get" parameterType="int" resultType="ReservationDetailDto">
+		select * from reservation_detail where reservation_no = #{reservationNo};
+	</select>
+	
 </mapper>

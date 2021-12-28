@@ -10,4 +10,6 @@ public interface ReservationDetailDao {
 
 	void insert(ReservationDetailDto reservationDetailDto);
 
+	List<ReservationDetailDto> get(int reservationNo);
+
 }
