@@ -44,6 +44,14 @@ public class BoardDaoImpl implements BoardDao{
 		return count>0;
 	}
 
+	@Override
+	public boolean edit(BoardDto boardDto) {
+		System.out.println("dao1");
+		int count = sqlsession.update("board.edit",boardDto);
+		System.out.println("dao2");
+		return count>0;
+	}
+
 
 
 }
