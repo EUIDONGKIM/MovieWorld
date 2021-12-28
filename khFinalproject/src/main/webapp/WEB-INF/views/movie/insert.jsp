@@ -69,6 +69,7 @@
 		</div>
 		
 		<button type="submit">역할 선택(동영상 추가 포함)</button>
+		<button type="submit">등록</button>
 	</div>
 </form>
 
