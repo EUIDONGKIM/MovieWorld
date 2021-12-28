@@ -1,5 +1,7 @@
 package com.kh.spring.repository.board;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,8 +15,17 @@ public class BoardDaoImpl implements BoardDao{
 	private SqlSession sqlsession;
 	@Override
 	public void write(BoardDto boardDto) {
+		sqlsession.insert("board.write",boardDto);
+	}
 	
-		sqlsession.insert("board.wirte",boardDto);
+	@Override
+	public List<BoardDto> list() {
+		return sqlsession.selectList("board.list");
+	}
+
+	@Override
+	public BoardDto get(int boardNo) {
+		return sqlsession.selectOne("board.get",boardNo);
 	}
 
 }
