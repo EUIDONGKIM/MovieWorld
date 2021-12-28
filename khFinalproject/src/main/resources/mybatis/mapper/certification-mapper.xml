@@ -19,17 +19,17 @@
 	get을 통한 발송 여부 확인후 insert또는 update를 수행
 	 -->
 	<insert id="insert" parameterType="CertificationDto">
-	  insert into certification values(#{email},#{serial},sysdate)
+	  insert into certification values(#{serial},#{memberEmail},sysdate)
 	</insert>
 	
 	<select id="get" parameterType="String" resultType="CertificationDto">
-		select * from certification  where email=#{email}
+		select * from certification where member_email=#{memberEmail}
 	</select>
 	
 	<update id="update" parameterType="CertificationDto">
 		update certification
 		set serial = #{serial},when=sysdate
-		where email=#{email}
+		where member_email=#{memberEmail}
 	</update>
 	
 	<!--
@@ -43,18 +43,18 @@
 	 -->
 	 <insert id="allInOneInsert" parameterType="CertificationDto">
 		merge into certification C
-			using dual on (C.email = #{email})
+			using dual on (C.member_email = #{memberEmail})
 		when matched then
 			update set serial = #{serial}, when = sysdate
 		when not matched then
-			insert(email, serial, when) values(#{email}, #{serial}, sysdate)
+			insert(serial, member_email, when) values(#{serial}, #{memberEmail}, sysdate)
 	</insert>
 	
 	<!-- 인증번호 검사(5분이내) -->
 	<select id="check" parameterType="CertificationDto" resultType="CertificationDto">
 		select * from certification 
 		where 
-		email = #{email} and serial = #{serial}
+		member_email = #{memberEmail} and serial = #{serial}
 		<!-- 인증시간 관련 조건 -->
 		and
 		<![CDATA[
@@ -64,7 +64,7 @@
 	
 	<!-- 인증 성공시 인증 번호를 삭제하는 구문 -->
 	<select id="delete" parameterType="String">
-		delete certification where email=#{email}
+		delete certification where member_email=#{memberEmail}
 	</select>
 	
 	<!-- 인증 시간이 만료된 정보들을 삭제 하는 구문 -->

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.spring.entity.HallDto;
-import com.kh.spring.entity.MemberDto;
 import com.kh.spring.entity.ReservationDetailDto;
 import com.kh.spring.entity.ReservationDto;
 import com.kh.spring.entity.ScheduleTimeDto;
