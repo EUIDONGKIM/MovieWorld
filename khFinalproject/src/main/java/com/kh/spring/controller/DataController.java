@@ -2,7 +2,6 @@ package com.kh.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
+import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.entity.movie.VideoDto;
-import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
-import com.kh.spring.entity.theater.SeatDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
+import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.movie.VideoDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
@@ -32,6 +31,7 @@ import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
+import com.kh.spring.service.EmailService;
 import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
@@ -67,6 +67,27 @@ public class DataController {
 	private RoleDao roleDao;
 	@Autowired
 	private ReservationService reservationService;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private CertificationDao certificationDao;
+	
+	
+	@GetMapping("/serialCheck")
+	public String serialCheck(@RequestParam String to,@RequestParam String check) {
+		CertificationDto certificationDto = new CertificationDto();
+		certificationDto.setMemberEmail(to);
+		certificationDto.setSerial(check);
+		String result = "NNNNN";
+		if(certificationDao.check(certificationDto)) result = "NNNNO";
+		else result = "NNNNN";
+		return result;
+	}
+	
+	@PostMapping("/emailSend")
+	public void emailSend(@RequestParam String to) {
+		emailService.sendCertificationNumber(to);
+	}
 	
 	@PostMapping("/TempReservation")
 	public void TempReservation(

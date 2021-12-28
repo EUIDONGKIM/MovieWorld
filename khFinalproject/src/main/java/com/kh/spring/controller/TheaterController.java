@@ -15,7 +15,6 @@ import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
-import com.kh.spring.service.TheaterService;
 import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
