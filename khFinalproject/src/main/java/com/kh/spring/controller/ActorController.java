@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.spring.entity.ScheduleDto;
+import com.kh.spring.entity.schedule.ScheduleDto;
 
 import oracle.jdbc.proxy.annotation.GetProxy;
 

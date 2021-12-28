@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.MovieDto;
-import com.kh.spring.repository.ActorDao;
-import com.kh.spring.repository.MovieDao;
+import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.repository.actor.ActorDao;
+import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.service.MovieService;
 
 @Controller

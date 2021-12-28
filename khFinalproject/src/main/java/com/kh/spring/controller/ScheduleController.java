@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.spring.entity.ScheduleDto;
-import com.kh.spring.entity.ScheduleTimeDto;
-import com.kh.spring.entity.TotalInfoViewDto;
-import com.kh.spring.repository.HallDao;
-import com.kh.spring.repository.MovieDao;
-import com.kh.spring.repository.ScheduleDao;
-import com.kh.spring.repository.ScheduleTimeDao;
-import com.kh.spring.repository.ScheduleTimeDiscountDao;
-import com.kh.spring.repository.TheaterDao;
-import com.kh.spring.repository.TotalInfoViewDao;
+import com.kh.spring.entity.schedule.ScheduleDto;
+import com.kh.spring.entity.schedule.ScheduleTimeDto;
+import com.kh.spring.entity.schedule.TotalInfoViewDto;
+import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.schedule.ScheduleDao;
+import com.kh.spring.repository.schedule.ScheduleTimeDao;
+import com.kh.spring.repository.schedule.ScheduleTimeDiscountDao;
+import com.kh.spring.repository.schedule.TotalInfoViewDao;
+import com.kh.spring.repository.theater.HallDao;
+import com.kh.spring.repository.theater.TheaterDao;
 
 import lombok.extern.slf4j.Slf4j;
 

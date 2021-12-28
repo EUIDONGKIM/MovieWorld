@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.spring.entity.member.CertificationDto;
-import com.kh.spring.repository.CertificationDao;
+import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.service.EmailService;
 
 @Controller

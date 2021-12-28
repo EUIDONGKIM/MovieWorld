@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.spring.entity.SeatDto;
-import com.kh.spring.repository.HallDao;
-import com.kh.spring.repository.SeatDao;
+import com.kh.spring.entity.theater.SeatDto;
+import com.kh.spring.repository.theater.HallDao;
+import com.kh.spring.repository.theater.SeatDao;
 
 import lombok.extern.slf4j.Slf4j;
 
