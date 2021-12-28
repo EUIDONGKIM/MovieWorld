@@ -41,22 +41,18 @@ $(function() {
         if(to){
         	emailSender(to);
         	 $("#userinput_email2").prop("disabled",false);
-        	 $(".success").text('인증번호를 확인하여 입력해주세요.').css("color","blue");
+        	 $(".check-fail").text('인증번호를 확인하여 입력해주세요.').css("color","blue");
         	 $(this).prop("disabled",true);
         }
     });
     
     $(".email-confirm-btn").click(function(e){
-    	console.log("확인1!");
     	var to = $("input[name=memberEmail]").val();
         var check = $("#userinput_email2").val();
-        console.log(to);
-        console.log(check);
         if(to&&check){
         	serialChecker(to,check);
-        	console.log("확인2!");
         }else{
-        	$(".check-success").text("인증부터 해주세요..").css("color","red");
+        	$(".check-success").text("인증번호를 입력하시지 않앗습니다.").css("color","red");
         }
     });
 
@@ -88,9 +84,11 @@ $(function() {
 			success:function(resp){
 				console.log("성공", resp);
 					if(resp=="NNNNO"){
+						$(".check-fail").remove();
 						$(".check-success").text("인증이 완료되었습니다.").css("color","blue");
 						$(".email-confirm-btn").prop("disabled",true);
 						
+						$("input[name=serial]").prop("disabled",true);					
 						$("input[name=memberPw]").prop("disabled",false);
 						$("input[name=memberPw2]").prop("disabled",false);
 						$("input[name=memberName]").prop("disabled",false);
@@ -215,6 +213,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 		    	 <label>인증번호</label>
 				 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2">
 	    		 <span class="check-success"></span>
+	    		 <span class="check-fail"></span>
 	    		 <input type="button" value="인증번호 확인" class="form-btn email-confirm-btn">	
 	    	</div> 
 	    </div>
