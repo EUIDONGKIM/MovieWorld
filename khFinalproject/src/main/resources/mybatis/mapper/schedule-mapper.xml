@@ -29,7 +29,25 @@
 		select * from schedule
 	</select>
 	
-	 <select id="getByMovieTheater" parameterType="map" resultType="int">
+	<select id="getByMovieTheater" parameterType="map" resultType="int">
  		select * from schedule where movie_no = #{movieNo} and theater_no = #{theaterNo}
  	</select>
+ 	
+ 	<!-- 극장에 상영영화있는지 조회(수정, 삭제용도) -->
+ 	<select id="getByTheater" parameterType="int" resultType="ScheduleDto">
+		select * from schedule where theater_no=#{theaterNo} 	
+ 	</select>
+ 	
+ 	<delete id="delete" parameterType="int">
+ 		delete schedule where schedule_no = #{scheduleNo}
+ 	</delete>
+ 	
+ 	<update id="edit" parameterType="ScheduleDto">
+ 		update schedule set
+ 			schedule_start = #{scheduleStart},
+ 			schedule_end = #{scheduleEnd}
+ 		where schedule_no = #{scheduleNo}
+ 	</update>
+ 	
+ 	
 </mapper>
