@@ -2,7 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<style>
+.form-inline{
 
+ width: auto;
+}
+</style>
 <%-- 번외 : 수정 버튼을 눌렀을 때 처리되도록 구현하는 스크립트(나중에 배움) --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -22,6 +27,7 @@
 </script>    
 
 <c:set var="owner" value="${boardDto.memberEmail == memberEmail}"></c:set>
+
 
 
 <style>
@@ -66,13 +72,13 @@
 	</div>
 	
 	<div class="row right">
-		<a href="write" class="link-btn">글쓰기</a>
-		<a href="write?boardSuperno=${boardDto.boardNo}" class="link-btn">답글쓰기</a>
-		<a href="main" class="link-btn">목록보기</a>
+		<a href="write" class="link-btn form-inline">글쓰기</a>
+		<a href="write?boardSuperno=${boardDto.boardNo}" class="link-btn form-inline"  >답글쓰기</a>
+		<a href="main" class="link-btn form-inline">목록보기</a>
 		
 		<c:if test="${owner}">
-		<a href="edit?boardNo=${boardDto.boardNo}" class="link-btn">수정하기</a>
-		<a href="delete?boardNo=${boardDto.boardNo}" class="link-btn">삭제하기</a>
+		<a href="edit?boardNo=${boardDto.boardNo}" class="link-btn form-inline">수정하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}" class="link-btn form-inline">삭제하기</a>
 		</c:if>
 		
 	</div>

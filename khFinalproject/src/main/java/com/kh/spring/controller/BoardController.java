@@ -42,14 +42,10 @@ public class BoardController {
 		//맴버 아이디를 세션에서 받아서 주기
 		String mebmerEmail = (String)session.getAttribute("ses");
 		boardDto.setMemberEmail(mebmerEmail);
-		//작성을하고
-		//번호를 뽑아서
-		boardDto.setBoardNo(boardDao.getSequence());
-		boardDao.write(boardDto);
-		int boardNo=boardDto.getBoardNo();
-	
-		System.out.println(boardNo);
-		return "redirect:detail?boardNo="+boardNo;	
+		
+		int boardNo = boardDao.write(boardDto);
+		
+		return "redirect:/board/detail?boardNo="+boardNo;
 	}
 	
 	
@@ -63,7 +59,7 @@ public class BoardController {
 //		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
 		
 		model.addAttribute("boardNo",boardNo);
-		model.addAttribute("memberId",(String)session.getAttribute("ses"));
+		model.addAttribute("memberEmail",(String)session.getAttribute("ses"));
 		model.addAttribute("boardDto",boardDto);
 //		model.addAttribute("replyList",replyList);
 //		model.addAttribute("boardFileList",boardFileList);

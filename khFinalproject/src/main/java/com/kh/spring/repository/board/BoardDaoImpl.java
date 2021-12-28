@@ -15,7 +15,10 @@ public class BoardDaoImpl implements BoardDao{
 	private SqlSession sqlsession;
 	@Override
 	public int write(BoardDto boardDto) {
-		return sqlsession.insert("board.write",boardDto);
+		int boardNo = sqlsession.selectOne("board.getSeq");
+		boardDto.setBoardNo(boardNo);
+		sqlsession.insert("board.write",boardDto);
+		return boardNo;
 	}
 	
 	@Override
