@@ -23,10 +23,10 @@
 		insert into reservation values(
 			#{reservationNo},
 			#{memberNo},
-			0,
+			#{tid},
 			'0',
 			#{scheduleTimeNo},
-			#{scheduleTimeDateTime},
+			to_date(#{scheduleTimeDateTime},'YYYY-MM-DD HH24:MI:SS'),
 			#{reservationTotalNumber},
 			sysdate,
 			0,
@@ -34,5 +34,14 @@
 			#{reservationStatus}
 		)
 	</insert>
+	
+	<select id="get" parameterType="int" resultType="ReservationDto">
+		select * from reservation where reservation_no = #{reservationNo}
+	</select>
+	
+	<update id="updatePrice" parameterType="map">
+		update reservation set total_amount = #{totalAmount}
+		where reservation_no = #{reservationNo}
+	</update>
 	
 </mapper>

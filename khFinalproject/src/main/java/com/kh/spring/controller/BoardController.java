@@ -1,7 +1,6 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardDto;
 import com.kh.spring.repository.board.BoardDao;
@@ -30,32 +27,48 @@ public class BoardController {
 	
 	@RequestMapping("/main")
 	public String main(Model model) {
-//		model.addAttribute("list",boardDao.list());
+		model.addAttribute("list",boardDao.list());
 		return "board/main";
 	}
 	@GetMapping("/write")
 	public String write() {
 		return "board/write";
 	}
+	
+	//@RequestParam List<MultipartFile> attach
 	@PostMapping("/write")
 	public String write(@ModelAttribute BoardDto boardDto,
-			@RequestParam List<MultipartFile> attach,
 			HttpSession session) throws IllegalStateException, IOException {
+		//맴버 아이디를 세션에서 받아서 주기
+		String mebmerEmail = (String)session.getAttribute("ses");
+		boardDto.setMemberEmail(mebmerEmail);
 		
-		boardDto.setMemberEmail((String)session.getAttribute("ses"));
+		int boardNo = boardDao.write(boardDto);
 		
-		int boardNo = boardDto.getBoardNo();
-		
-		return "redirect:detail?boardNo="+boardNo;
+		return "redirect:/board/detail?boardNo="+boardNo;
 	}
 	
-	@RequestMapping("/detail")
-	public String detail(@RequestPart int boardNo ,HttpSession session,Model model) {
-		String memberEmail = (String)session.getAttribute("ses");
+	
+	@GetMapping("/detail")
+	public String detail(@RequestParam int boardNo,
+			HttpSession session,
+			Model model) {
+		
+		BoardDto boardDto = boardDao.get(boardNo);
+//		List<ReplyDto> replyList = replyDao.list(boardDto.getBoardNo());
+//		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
 		
 		model.addAttribute("boardNo",boardNo);
-		model.addAttribute("memberEmail",memberEmail);
-//		model.addAttribute("boardDto",boardDao.get(boardNo));
+		model.addAttribute("memberEmail",(String)session.getAttribute("ses"));
+		model.addAttribute("boardDto",boardDto);
+//		model.addAttribute("replyList",replyList);
+//		model.addAttribute("boardFileList",boardFileList);
+		
 		return "board/detail";
+	}
+	@RequestMapping("/delete")
+	public String delete(int boardNo) {
+		boardDao.delete(boardNo);
+		return "redirect:/board/main";
 	}
 }

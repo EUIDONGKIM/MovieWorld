@@ -6,4 +6,8 @@ public interface ReservationDao {
 	int getSequence();
 
 	void insert(ReservationDto reservationDto);
+
+	ReservationDto get(int reservationNo);
+
+	void updatePrice(int reservationNo, int totalReservationPice);
 }

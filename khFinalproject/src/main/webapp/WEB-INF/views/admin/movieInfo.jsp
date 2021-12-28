@@ -8,8 +8,8 @@
 <h1> 영화 정보 관리 페이지 </h1>
 
 <%-- 영화 리스트에서 영화 수정 및 삭제 처리 하기! --%>
-<h3><a href="${root}/movie/list">영화 리스트(상영작/상영예정작)</a></h3>
-
 <h3><a href="${root}/movie/insert">영화 추가</a></h3>
+
+<h3><a href="${root}/movie/list">영화 리스트(상영작/상영예정작)</a></h3>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

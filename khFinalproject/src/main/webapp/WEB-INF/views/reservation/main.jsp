@@ -60,6 +60,7 @@
 <script>
 $(function(){
 		var movieNo;
+		var movieName;
 		var theaterSido;
 		var theaterNo;
 		var scheduleTimeDate;
@@ -67,6 +68,7 @@ $(function(){
 		var scheduleTimeNo;
 		var hallRows;
 		var hallCols;
+
 		
 		var ageNormal=0;
 		var ageYoung=0;
@@ -74,6 +76,8 @@ $(function(){
 		var ageTotal=0;
 		var seatNames;
 		var seatTotal;
+		
+		var reservationKey;
 		
 		$(".page").hide();
         $(".page").eq(0).show();
@@ -194,12 +198,13 @@ $(function(){
 					var template = $("#movie-list-template").html();
 					template = template.replace("{{grade}}",resp[i].movieGrade);
 					template = template.replace("{{name}}",resp[i].movieTitle);
+					template = template.replace("{{name}}",resp[i].movieTitle);
 					template = template.replace("{{value}}",resp[i].movieNo);
 					
 					var tag = $(template);
 					tag.find("input[name=movieNo]").on("input",function(){
 						movieNo = $(this).attr("value");	
-						
+						movieName = $(this).data("name");
 						$("input[name=movieNo]").each(function(){
 							if(movieNo != $(this).val()){
 									$(this).prop("disabled",true);
@@ -235,11 +240,13 @@ $(function(){
 					var template = $("#movie-list-template").html();
 					template = template.replace("{{grade}}",resp[i].movieGrade);
 					template = template.replace("{{name}}",resp[i].movieTitle);
+					template = template.replace("{{name}}",resp[i].movieTitle);
 					template = template.replace("{{value}}",resp[i].movieNo);
 					
 					var tag = $(template);
 					tag.find("input[name=movieNo]").on("input",function(){
 						movieNo = $(this).attr("value");
+						movieName = $(this).data("name");
 						scheduleDateList(movieNo,theaterNo);
 					});
 					$(".movie-list").append(tag);
@@ -478,6 +485,7 @@ $(function(){
 			dataType : "json",
 			success:function(resp){
 				console.log("성공", resp);
+				getReservationKey();
 				$(".seat-box").empty();
 				
 				var template = $("#seat-list-template").html();
@@ -519,7 +527,7 @@ $(function(){
 				tag.find(".seat-send-form").submit(function(e){
 		        	e.preventDefault();
 		        	var seatData = $(".result").text();
-					TempReservation(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld);
+					TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld);
 		        });
 				
 				for(var i=0 ; i<resp.length ; i++){
@@ -550,12 +558,29 @@ $(function(){
 		});
 	}
 	
-	function TempReservation(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld){
+	function getReservationKey(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getReservationKey",
+			type:"get",
+			dataType : "text",
+			success:function(resp){
+				console.log("성공 번호 얻어오기.", resp);
+				reservationKey = resp;
+				console.log("성공 번호 변경.", reservationKey);
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	};
+	
+	function TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/data/TempReservation",
 			type:"post",
 			data : {
 				seatData:seatData,
+				reservationKey:reservationKey,
 				scheduleTimeNo:scheduleTimeNo,
 				ageNormal:ageNormal,
 				ageYoung:ageYoung,
@@ -571,7 +596,56 @@ $(function(){
 	};
 	
 	
+	function getReservation(reservationKey){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getReservation",
+			type:"get",
+			data : {
+				reservationKey:reservationKey
+			},
+			dataType : "json",
+			success:function(resp){
+				console.log("성공", resp);
+				var template = $("#reservation-template").html();
+				template = template.replace("{{movieName}}",movieName);
+				template = template.replace("{{theaterName}}",theaterName);
+				template = template.replace("{{scheduleTimeDateTime}}",scheduleTimeDateTime);
+				template = template.replace("{{reservationTotalNumber}}",resp.reservationTotalNumber);
+				template = template.replace("{{totalAmount}}",reservationTotalNumber.totalAmount);
+
+				$("pay-result-show").append(template);
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
 	
+	function getReservationDetail(reservationKey){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/getReservationDetail",
+			type:"get",
+			data : {
+				reservationKey:reservationKey
+			},
+			dataType : "json",
+			success:function(resp){
+				console.log("성공", resp);
+				for(var i = 0 ; i<resp.length ; i++){
+					var template = $("#reservation-detail-template").html();
+					template = template.replace("{{row}}",resp[i].seatRows);
+					template = template.replace("{{col}}",resp[i].seatCols);
+					template = template.replace("{{hallType}}",resp[i].hallType);
+					template = template.replace("{{ageName}}",resp[i].ageName);
+					template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
+					template = template.replace("{{totalPrice}}",resp[i].totalPrice);
+				}
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
 	
 });
 </script>
@@ -581,7 +655,7 @@ $(function(){
 <template id="movie-list-template">
 	<div>
 		<label>
-		<input type="radio" name="movieNo" value="{{value}}">
+		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}">
 		<span>{{grade}} {{name}}</span>		
 		</label>
 	</div>	
@@ -719,10 +793,6 @@ $(function(){
 			<span>{{theaterName}}</span>
 		</div>
 		<div class="row center">
-			<label>상영관</label>
-			<span>{{hallType}}</span>
-		</div>
-		<div class="row center">
 			<label>상영시간</label>
 			<span>{{scheduleTimeDateTime}}</span>
 		</div>
@@ -744,8 +814,8 @@ $(function(){
 			<span>{{row}}행{{col}}열</span>
 		</div>
 		<div class="row center">
-			<label>기본 금액</label>
-			<span>{{ageName}}</span>
+			<label>상영관 종류</label>
+			<span>{{hallType}}</span>
 		</div>
 		<div class="row center">
 			<label>연령 구분</label>
@@ -753,11 +823,11 @@ $(function(){
 		</div>
 		<div class="row center">
 			<label>상영 구분</label>
-			<span>{{ageName}}</span>
+			<span>{{scheduleTimeDiscountType}}</span>
 		</div>
 		<div class="row center">
 			<label>개별 금액</label>
-			<span>{{ageName}}</span>
+			<span>{{totalPrice}}</span>
 		</div>
 	</div>
 </template>	
