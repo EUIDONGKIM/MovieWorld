@@ -20,7 +20,7 @@ public class MovieServiceImpl implements MovieService{
 	private MovieDao movieDao;
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
-	//저장용 폴더
+	//저장용 폴더/
 	private File directory = new File("C:\\Users\\USER\\upload\\movie");
 		
 	@Override
