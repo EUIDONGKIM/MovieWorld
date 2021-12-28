@@ -22,6 +22,7 @@
 			<th>상영 시작일</th>
 			<th>상영 종료일</th>
 			<th>상영 시간 추가</th>
+			<th>관리 메뉴</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -33,6 +34,10 @@
 				<td>${totalInfoViewDto.scheduleStart }</td>
 				<td>${totalInfoViewDto.scheduleEnd }</td>
 				<td><a href="${root}/schedule/time/create?scheduleNo=${totalInfoViewDto.scheduleNo}">추가하기</a></td>
+				<td>
+					<a href="${root}/schedule/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
+					<a href="${root}/schedule/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+				</td>
 			</tr>
 		</c:forEach>	
 	</tbody>

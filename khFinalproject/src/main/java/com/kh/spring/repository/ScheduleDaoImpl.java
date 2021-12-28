@@ -34,4 +34,19 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		return sqlSession.selectOne("schedule.getByMovieTheater", param);
 	}
 
+	@Override
+	public List<ScheduleDto> list(int theaterNo) {
+		return sqlSession.selectList("schedule.getByTheater",theaterNo);
+	}
+
+	@Override
+	public boolean delete(int scheduleNo) {
+		return sqlSession.delete("schedule.delete", scheduleNo) > 0;
+	}
+
+	@Override
+	public boolean edit(ScheduleDto schedulDto) {
+		return sqlSession.update("schedule.edit", schedulDto) > 0;
+	}
+
 }

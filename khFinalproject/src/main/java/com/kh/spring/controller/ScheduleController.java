@@ -82,4 +82,35 @@ public class ScheduleController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int scheduleNo, Model model) {
+		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(scheduleNo);
+		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
+		
+		return "schedule/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute ScheduleDto scheduleDto) {
+		boolean success = scheduleDao.edit(scheduleDto);
+		if(success) {
+			return "redirect:/schedule/list";
+		}
+		else {
+			return "redirect:???"; //실패
+		}
+		
+	}
+	
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam int scheduleNo) {
+		boolean success = scheduleDao.delete(scheduleNo);
+		if(success) {
+			return "redirect:/schedule/list";
+		}
+		else {
+			return "redirect:???"; //실패
+		}
+	}
+	
 }
