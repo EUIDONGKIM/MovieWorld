@@ -36,4 +36,14 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlsession.selectOne("board.getSeq");
 	}
 
+	@Override
+	public boolean delete(int boardNo) {
+		BoardDto boardDto = new BoardDto();
+		boardDto.setBoardNo(boardNo);
+		int count = sqlsession.delete("board.delete",boardDto);
+		return count>0;
+	}
+
+
+
 }
