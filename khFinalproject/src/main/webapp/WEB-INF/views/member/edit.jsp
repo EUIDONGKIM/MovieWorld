@@ -13,12 +13,12 @@
 			<tr>
 				<th>이메일</th>
 				<td><input type="email" name="memberEmail"
-					value="${memberDto.memberEmail} readonly"></td>
+					value="${memberDto.memberEmail}" readonly></td>
 			</tr>
 			<tr>
 				<th>이름</th>
 				<td><input type="text" name="memberName"
-					value="${memberDto.memberName} readonly"></td>
+					value="${memberDto.memberName}" readonly></td>
 			</tr>
 			<tr>
 				<th>비밀번호</th>
@@ -32,7 +32,7 @@
 			<tr>
 				<th>생년월일</th>
 				<td><input type="date" name="memberBirth" required
-					value="${memberDto.getMemBirth()}"></td>
+					value="${memberDto.getMemberBirth()}"></td>
 			</tr>
 			<tr>
 				<th>전화번호</th>
