@@ -75,6 +75,7 @@ public class MemberController {
 						@RequestParam(required = false) String saveId,HttpServletResponse response) {
 		MemberDto findDto = memberDao.login(memberDto);
 		if(findDto !=null) {
+		 session.setAttribute("memberNo", findDto.getMemberNo());
 		 session.setAttribute("ses",findDto.getMemberEmail());
 		 session.setAttribute("grade", findDto.getMemberGrade());
 		 //임시 비밀번호로 변경하여 로그인할시 세션에 저장되어있는 값이 있다면 비밀번호
