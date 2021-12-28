@@ -24,7 +24,7 @@ public interface MemberDao {
 	boolean temporayPassword(MemberDto memberDto,String ChangePw);
 	//개인정보 변경
 	boolean changeInformation(MemberDto memberDto);
-
+	
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);
 
