@@ -31,9 +31,6 @@ public class TheaterController {
 	@Autowired
 	private HallDao hallDao;
 	
-	@Autowired
-	private TheaterService theaterService;
-	
 	@GetMapping("/create")
 	public String create() {
 		return "theater/create";
@@ -85,7 +82,7 @@ public class TheaterController {
 	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int theaterNo) {
-		boolean success = theaterService.delete(theaterNo);
+		boolean success = theaterDao.delete(theaterNo);
 		if(success) {
 			return "redirect:/theater/list";//성공하면 목록으로
 		}
