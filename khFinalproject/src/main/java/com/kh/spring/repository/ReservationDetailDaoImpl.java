@@ -19,4 +19,9 @@ public class ReservationDetailDaoImpl implements ReservationDetailDao{
 		return sqlSession.selectList("reservationDetail.list",scheduleTimeNo);
 	}
 
+	@Override
+	public void insert(ReservationDetailDto reservationDetailDto) {
+		sqlSession.insert("reservationDetail.insert",reservationDetailDto);
+	}
+
 }
