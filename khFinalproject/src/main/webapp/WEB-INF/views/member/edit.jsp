@@ -32,7 +32,7 @@
 			<tr>
 				<th>생년월일</th>
 				<td><input type="date" name="memberBirth" required
-					value="${memberDto.getMemberBirth()}"></td>
+					value="${memberDto.getMemberBirthDay()}"></td>
 			</tr>
 			<tr>
 				<th>전화번호</th>
