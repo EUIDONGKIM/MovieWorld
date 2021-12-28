@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +16,11 @@ import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.TheaterDao;
+import com.kh.spring.vo.TheaterCityVO;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/hall")
 public class HallController {
@@ -34,7 +39,8 @@ public class HallController {
 	@RequestMapping("/create")
 	public String hallCreate(Model model) {
 		model.addAttribute("hallTypeList", hallDao.getHallTypeList());
-		model.addAttribute("theaterList",theaterDao.list());
+		model.addAttribute("theaterCityVOList",theaterDao.cityList());
+		log.debug("theaterCityVOList 확인!!!{}",theaterDao.cityList());
 		return "hall/create";
 	}
 	
