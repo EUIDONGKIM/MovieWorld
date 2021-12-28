@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.spring.entity.SeatDto;
+import com.kh.spring.entity.theater.SeatDto;
 import com.kh.spring.service.SeatService;
 
 import lombok.extern.slf4j.Slf4j;

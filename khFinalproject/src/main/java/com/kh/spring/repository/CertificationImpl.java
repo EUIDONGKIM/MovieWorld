@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.member.CertificationDto;
+import com.kh.spring.repository.member.CertificationDao;
 
 @Repository
 public class CertificationImpl implements CertificationDao{

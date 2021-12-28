@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.member.MemberDto;
-import com.kh.spring.repository.MemberDao;
+import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.util.RandomUtil;
 

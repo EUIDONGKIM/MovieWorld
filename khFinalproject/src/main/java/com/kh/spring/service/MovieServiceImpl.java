@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.MovieDto;
-import com.kh.spring.entity.MoviePhotoDto;
-import com.kh.spring.repository.MovieDao;
-import com.kh.spring.repository.MoviePhotoDao;
+import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
+import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
 
 @Service
 public class MovieServiceImpl implements MovieService{

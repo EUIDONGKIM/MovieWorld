@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.spring.entity.HallDto;
-import com.kh.spring.entity.TheaterDto;
-import com.kh.spring.repository.HallDao;
-import com.kh.spring.repository.TheaterDao;
+import com.kh.spring.entity.theater.HallDto;
+import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.repository.theater.HallDao;
+import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
