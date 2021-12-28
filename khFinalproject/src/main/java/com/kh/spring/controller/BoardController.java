@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.BoardDto;
-import com.kh.spring.repository.BoardDao;
+import com.kh.spring.entity.board.BoardDto;
+import com.kh.spring.repository.board.BoardDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +30,7 @@ public class BoardController {
 	
 	@RequestMapping("/main")
 	public String main(Model model) {
-		model.addAttribute("list",boardDao.list());
+//		model.addAttribute("list",boardDao.list());
 		return "board/main";
 	}
 	@GetMapping("/write")
@@ -55,7 +55,7 @@ public class BoardController {
 		
 		model.addAttribute("boardNo",boardNo);
 		model.addAttribute("memberEmail",memberEmail);
-		model.addAttribute("boardDto",boardDao.get(boardNo));
+//		model.addAttribute("boardDto",boardDao.get(boardNo));
 		return "board/detail";
 	}
 }
