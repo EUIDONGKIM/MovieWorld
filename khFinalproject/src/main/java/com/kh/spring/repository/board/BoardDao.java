@@ -14,4 +14,7 @@ public interface BoardDao {
 	int getSequence();
 	//목록
 	List<BoardDto> list();
+	
+	//게시글삭제
+	boolean delete (int boardNo);
 }

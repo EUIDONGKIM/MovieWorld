@@ -66,4 +66,9 @@ public class BoardController {
 		
 		return "board/detail";
 	}
+	@RequestMapping("/delete")
+	public String delete(int boardNo) {
+		boardDao.delete(boardNo);
+		return "redirect:/board/main";
+	}
 }
