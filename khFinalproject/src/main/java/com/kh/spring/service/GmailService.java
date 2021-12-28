@@ -33,7 +33,7 @@ public class GmailService implements EmailService{
 		
 		//기록은 항상 나중에
 		CertificationDto certificationDto =new CertificationDto();
-		certificationDto.setEmail(to);
+		certificationDto.setMemberEmail(to);
 		certificationDto.setSerial(number);
 		
 		certificationDao.insert(certificationDto);

@@ -21,6 +21,8 @@
         }
 </style>
 <script>
+
+
 //이메일 정규표현식
 $(function() {
 	$("input[name=memberEmail]").on("input",function() {
@@ -33,6 +35,82 @@ $(function() {
 			$("input[name=memberEmail]").addClass("fail");
 		}
 	});
+	
+    $(".email-send-btn").click(function(e){
+        var to = $("input[name=memberEmail]").val();
+        if(to){
+        	emailSender(to);
+        	 $("#userinput_email2").prop("disabled",false);
+        	 $(".success").text('인증번호를 확인하여 입력해주세요.').css("color","blue");
+        	 $(this).prop("disabled",true);
+        }
+    });
+    
+    $(".email-confirm-btn").click(function(e){
+    	console.log("확인1!");
+    	var to = $("input[name=memberEmail]").val();
+        var check = $("#userinput_email2").val();
+        console.log(to);
+        console.log(check);
+        if(to&&check){
+        	serialChecker(to,check);
+        	console.log("확인2!");
+        }else{
+        	$(".check-success").text("인증부터 해주세요..").css("color","red");
+        }
+    });
+
+	 function emailSender(to){
+	            $.ajax({
+				url:"${pageContext.request.contextPath}/data/emailSend",
+				type:"post",
+	            data : {
+					to:to
+				},   
+				success:function(resp){
+					console.log("성공", resp);
+				},
+				error:function(e){
+					console.log("실패", e);
+				}
+			    });
+	    }
+	 
+	 function serialChecker(to,check){
+	         $.ajax({
+				url:"${pageContext.request.contextPath}/data/serialCheck",
+				type:"get",
+	         data : {
+					to:to,
+					check:check
+				},   
+	        dataType : "text",  
+			success:function(resp){
+				console.log("성공", resp);
+					if(resp=="NNNNO"){
+						$(".check-success").text("인증이 완료되었습니다.").css("color","blue");
+						$(".email-confirm-btn").prop("disabled",true);
+						
+						$("input[name=memberPw]").prop("disabled",false);
+						$("input[name=memberPw2]").prop("disabled",false);
+						$("input[name=memberName]").prop("disabled",false);
+						$("input[name=memberNick]").prop("disabled",false);
+						$("input[name=memberBirth]").prop("disabled",false);
+						$("input[name=memberPhone]").prop("disabled",false);
+						$("input[name=memberGender]").prop("disabled",false);
+						$("input[type=submit]").prop("disabled",false);
+					}else if(resp=="NNNNN"){
+						$(".check-success").text("인증번호가 일치하지 않거나 시간이 경과되었습니다.").css("color","red");
+						$(".email-send-btn").prop("disabled",false);
+					}
+				
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		    });
+ }
+
 });
 //비밀번호 정규표현식
 $(function() {
@@ -112,6 +190,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 });
 });
 
+
 </script>
 
 <div class="container-800 container-center">
@@ -127,7 +206,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 				 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input" id="id">
 				 <span class="success"></span>
            		 <span class="fail">이메일 형식이 올바르지 않습니다.</span>
-				 <input type="submit" value="이메일 인증" class="form-btn">
+				 <input type="button" value="이메일 인증" class="form-btn email-send-btn">
 	    	</div> 
 	    </div>
 	    
@@ -135,6 +214,8 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    	<div class="col">
 		    	 <label>인증번호</label>
 				 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2">
+	    		 <span class="check-success"></span>
+	    		 <input type="button" value="인증번호 확인" class="form-btn email-confirm-btn">	
 	    	</div> 
 	    </div>
         
@@ -142,7 +223,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>비밀번호</label>
-				 <input type="password" name="memberPw" required placeholder="password" class="form-input" id="pw">
+				 <input type="password" name="memberPw" disabled required placeholder="password" class="form-input" id="pw">
 				 <span class="success"></span>
            		 <span class="fail">8~16자 이내 영문,숫자,특수문자로 작성하세요!</span>
 	    	</div> 
@@ -151,7 +232,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	      <div class="col">
 			<label for="memberPw2">비밀번호 확인</label>
-			<input type="password" name="memberPw2" required class="form-input" id="memberPw2">
+			<input type="password" name="memberPw2" required disabled class="form-input" id="memberPw2">
 			<span class="success"></span>
             <span class="fail">비밀번호가 일치하지 않습니다.</span>
 	      </div>
@@ -160,7 +241,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>이름</label>
-				 <input type="text" name="memberName" required placeholder="이름" class="form-input" id="name">
+				 <input type="text" name="memberName" required disabled placeholder="이름" class="form-input" id="name">
 				 <span class="success"></span>
            		 <span class="fail">2~17자 이내 한글로 작성하세요!</span>
 	    	</div> 
@@ -170,7 +251,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>닉네임</label>
-				 <input type="text" name="memberNick" required placeholder="이름" class="form-input" id="nickName">
+				 <input type="text" name="memberNick" required disabled placeholder="이름" class="form-input" id="nickName">
 				 <span class="success"></span>
            		 <span class="fail">2~17자 이내 한글로 작성하세요!</span>
 	    	</div> 
@@ -180,7 +261,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>생년월일</label>
-				 <input type="date" name="memberBirth" required  class="form-input" id="birth">
+				 <input type="date" name="memberBirth" required disabled class="form-input" id="birth">
 				 <span class="success"></span>
                  <span class="fail">생년월일 형식이 올바르지 않습니다.</span>
 	    	</div> 
@@ -189,7 +270,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	        <div class="col">
 		    	 <label>핸드폰번호</label>
-				 <input type="tel" name="memberPhone" required placeholder="010-0000-0000" class="form-input">
+				 <input type="tel" name="memberPhone" required disabled placeholder="010-0000-0000" class="form-input">
 				 <span class="success"></span>
         	     <span class="fail">(-)포함  11자리로 작성하세요!</span>
 	    	</div> 
@@ -199,8 +280,8 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 		<div class="row">
 			<div class="col">
 				<label>성별</label>
-				<input type="radio" name="memberGender" value="남자"  checked> 남자
-				<input type="radio" name="memberGender" value="여자"  > 여자
+				<input type="radio" name="memberGender" disabled value="남자"  checked> 남자
+				<input type="radio" name="memberGender" disabled value="여자"  > 여자
 			</div>
 		</div>
 	
@@ -208,7 +289,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	 
 	    <div class="row">
 	        <div class="col">
-				 <input type="submit" value="회원가입" class="form-btn">
+				 <input type="submit" disabled value="회원가입" class="form-btn">
 	    	</div> 
 	    </div>  
 	
