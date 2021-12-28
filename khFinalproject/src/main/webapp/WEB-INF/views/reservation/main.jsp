@@ -570,6 +570,9 @@ $(function(){
 		});
 	};
 	
+	
+	
+	
 });
 </script>
 
@@ -704,8 +707,75 @@ $(function(){
 </div>
 
 
-<div>
+<div class="page">
+<template id="reservation-template">
+	<div class="row center">
+		<div class="row center">
+			<label>영화</label>
+			<span>{{movieName}}</span>
+		</div>
+		<div class="row center">
+			<label>영화관</label>
+			<span>{{theaterName}}</span>
+		</div>
+		<div class="row center">
+			<label>상영관</label>
+			<span>{{hallType}}</span>
+		</div>
+		<div class="row center">
+			<label>상영시간</label>
+			<span>{{scheduleTimeDateTime}}</span>
+		</div>
+		<div class="row center">
+			<label>인원수</label>
+			<span>{{reservationTotalNumber}} 명</span>
+		</div>
+		<div class="row center">
+			<label>총 예매 금액</label>
+			<span>{{totalAmount}}원</span>
+		</div>
+	</div>
+</template>	
 
+<template id="reservation-detail-template">
+	<div class="row center">
+		<div class="row center">
+			<label>좌석</label>
+			<span>{{row}}행{{col}}열</span>
+		</div>
+		<div class="row center">
+			<label>기본 금액</label>
+			<span>{{ageName}}</span>
+		</div>
+		<div class="row center">
+			<label>연령 구분</label>
+			<span>{{ageName}}</span>
+		</div>
+		<div class="row center">
+			<label>상영 구분</label>
+			<span>{{ageName}}</span>
+		</div>
+		<div class="row center">
+			<label>개별 금액</label>
+			<span>{{ageName}}</span>
+		</div>
+	</div>
+</template>	
+
+	<h1>결제 내역 확인</h1>
+	<div id="pay-result-show"></div>
+	
+	<hr>
+	
+	<h1>결제 상세 내역 확인</h1>
+	<div id="pay-detail-show"></div>
+	
+	<div class="row center">
+		<button class="btn-pay-confirm"><h1>결제 진행(카카오 페이)</h1></button>
+	</div>
+	<div class="row center">
+		<button class="btn-prev"><h1>이전 단계</h1></button>
+	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

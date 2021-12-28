@@ -215,4 +215,32 @@ public class MemberController {
 	public String quit_success() {
 		return "member/quit_success";
 	}
+	//회원 수정
+	@GetMapping("/edit")
+	public String edit(HttpSession session, Model model) {
+		String memberEmail = (String) session.getAttribute("ses");
+		MemberDto memberDto = memberDao.get(memberEmail);
+
+		model.addAttribute("memberDto", memberDto);
+		return "member/edit";
+	}
+
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute MemberDto memberDto, HttpSession session) {
+//		String memberEmail = (String) session.getAttribute("ses");
+//		memberDto.setMemberEmail(memberEmail);
+
+		boolean result = memberDao.changeInformation(memberDto);
+		if (result) {
+			return "redirect:edit_success";
+		} else {
+			return "redirect:edit?error";
+		}
+	}
+
+	@RequestMapping("/edit_success")
+	public String editSuccess() {
+
+		return "member/edit_success";
+	}
 }

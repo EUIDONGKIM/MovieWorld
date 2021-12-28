@@ -16,14 +16,25 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 	<select id="list" resultType="BoardDto">
-		select * from board;
+		select * from board order by board_no desc
+	</select>
+	
+	<!-- 단일조회 -->
+	<select id="get" parameterType="int" resultType="BoardDto">
+		select * from board where board_no=#{boardNo}
 	</select>
 	
 	<!-- 게시판 글작성 -->
 	<insert id="write">
-		insert into boar values(
-		 board_no_seq.nextval,#{boardTypeNo},#{memberEmail},#{boardTitle},sysdate,#{boardContent},
-		 0,#{boardSuperNo},#{boardGroupNo},#{boardDepth}
+		insert into board values(
+			#{boardNo},1,#{memberEmail},#{boardTitle},
+		 sysdate,#{boardContent},
+		 0,#{boardNo},#{boardGroupNo},#{boardDepth}
 		)
 	</insert>
+	
+	<!-- 시퀸스 미리뽑아오기  -->
+	<select id="getSeq" resultType="int">
+		select board_no_seq.nextval from dual
+	</select>
 </mapper>
