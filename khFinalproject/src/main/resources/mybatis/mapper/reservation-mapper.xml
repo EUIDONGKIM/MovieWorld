@@ -20,7 +20,19 @@
 	</select>
 	
 	<insert id="insert" parameterType="ReservationDto">
-		insert into reservation(reservation_no) values(#{reservationNo});
+		insert into reservation values(
+			#{reservationNo},
+			#{memberNo},
+			0,
+			'0',
+			#{scheduleTimeNo},
+			#{scheduleTimeDateTime},
+			#{reservationTotalNumber},
+			sysdate,
+			0,
+			0,
+			#{reservationStatus}
+		)
 	</insert>
 	
 </mapper>

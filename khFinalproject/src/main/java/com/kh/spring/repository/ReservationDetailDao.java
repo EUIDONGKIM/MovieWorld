@@ -8,4 +8,6 @@ public interface ReservationDetailDao {
 
 	List<ReservationDetailDto> list(int scheduleTimeNo);
 
+	void insert(ReservationDetailDto reservationDetailDto);
+
 }

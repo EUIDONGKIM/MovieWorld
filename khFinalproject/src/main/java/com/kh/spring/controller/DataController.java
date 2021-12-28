@@ -5,9 +5,10 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +32,7 @@ import com.kh.spring.repository.ScheduleTimeDao;
 import com.kh.spring.repository.SeatDao;
 import com.kh.spring.repository.TheaterDao;
 import com.kh.spring.repository.VideoDao;
+import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
 import com.kh.spring.vo.TheaterCityVO;
@@ -63,6 +65,21 @@ public class DataController {
 	private VideoDao videoDao;
 	@Autowired
 	private RoleDao roleDao;
+	@Autowired
+	private ReservationService reservationService;
+	
+	@PostMapping("/TempReservation")
+	public void TempReservation(
+			@RequestParam String seatData,
+			@RequestParam int scheduleTimeNo,
+			@RequestParam int ageNormal,
+			@RequestParam int ageYoung,
+			@RequestParam int ageOld,
+			HttpSession session
+			) {
+		int memberNo = (int)session.getAttribute("memberNo");
+		reservationService.insert(seatData,scheduleTimeNo,ageNormal,ageYoung,ageOld,memberNo);
+	}
 	
 	@PostMapping("/addVideo")
 	public void addVideo(
@@ -168,33 +185,7 @@ public class DataController {
 	
 	@GetMapping("/seat")
 	public List<ReservationVO> getSeat(@RequestParam int scheduleTimeNo) {
-		//길기때문에 추후 서비스로 넘기거나 레스트 컨트롤러에서 처리하는 부분
-		ScheduleTimeDto scheduleTimeDto = scheduleTimeDao.get(scheduleTimeNo);
-
-		List<SeatDto> seatList = seatDao.list(scheduleTimeDto.getHallNo());
-		List<ReservationDetailDto> reservationDetailList = reservationDetailDao.list(scheduleTimeNo);
-
-		List<ReservationVO> reservationVOList = new ArrayList<>();
-		
-		for(SeatDto seatDto : seatList) {
-			ReservationVO reservationVO = new ReservationVO();
-			
-			reservationVO.setSeatNo(seatDto.getSeatNo());
-			reservationVO.setSeatRows(seatDto.getSeatRows());
-			reservationVO.setSeatCols(seatDto.getSeatCols());
-			reservationVO.setSeatStatus(seatDto.getSeatStatus());
-			
-			if(!reservationDetailList.isEmpty()) {		
-				for(ReservationDetailDto reservationDetailDto : reservationDetailList) {
-					if(seatDto.getSeatNo() == reservationDetailDto.getSeatNo()) {
-						reservationVO.setSeatStatus("disabled");
-						break;
-					}
-				}
-			}
-			reservationVOList.add(reservationVO);
-		}
-		return reservationVOList;
+		return reservationService.getSeatVOList(scheduleTimeNo);
 	}
 	
 	

@@ -10,7 +10,7 @@ public class AgeDiscountDaoImpl implements AgeDiscountDao{
 	private SqlSession sqlSession;
 
 	@Override
-	public int getPrice(int ageName) {
+	public int getPrice(String ageName) {
 		return sqlSession.selectOne("ageDiscount.getPrice",ageName);
 	}
 	

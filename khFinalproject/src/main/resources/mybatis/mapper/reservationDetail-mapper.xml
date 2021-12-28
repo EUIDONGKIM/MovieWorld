@@ -18,5 +18,20 @@
 	<select id="list" parameterType="int" resultType="ReservationDetailDto">
 		select * from reservation_detail where schedule_time_no = ${scheduleTimeNo}
 	</select>
-
+	<insert id="insert" parameterType="ReservationDetailDto">
+		insert into reservation_detail values(
+			#{reservationNo},
+			#{seatNo},
+			#{seatRows},
+			#{seatCols},
+			#{scheduleTimeNo},
+			#{hallType},
+			#{hallPrice},
+			#{ageName},
+			#{ageDiscountPrice},
+			#{scheduleTimeDiscountType},
+			#{scheduleTimeDiscountPrice},
+			#{reservationDetailStatus}
+		)
+	</insert>
 </mapper>
