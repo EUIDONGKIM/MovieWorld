@@ -13,7 +13,7 @@ public class BoardDaoImpl implements BoardDao{
 	private SqlSession sqlsession;
 	@Override
 	public void write(BoardDto boardDto) {
-		System.err.println("1");
+	
 		sqlsession.insert("board.wirte",boardDto);
 	}
 
