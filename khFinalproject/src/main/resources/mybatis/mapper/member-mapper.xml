@@ -61,4 +61,55 @@
 	<delete id="quit" parameterType="String">
 		delete member where member_email = #{memberEmail}
 	</delete>
+	
+	<!-- 회원정보 수정 -->
+	<update id="changeInformation1" parameterType="MemberDto">
+		update member 
+		set
+			member_nick = #{memberNick},
+			member_birth = to_date(#{memberBirth}, 'YYYY-MM-DD'),
+			member_email = #{memberEmail},
+			member_phone = #{memberPhone}
+		where
+			member_email = #{memberEmail}
+	</update>
+	
+	<update id="changeInformation2" parameterType="MemberDto">
+		update member
+		set
+			member_nick = #{memberNick},
+			member_birth = to_date(#{memberBirth}, 'YYYY-MM-DD'),
+			member_email = #{memberEmail},
+			member_phone = #{memberPhone},
+			member_point = #{memberPoint},
+			member_grade = #{memberGrade}
+		where
+			member_email = #{memberEmail}
+	</update>
+	
+	<update id="changeInformation" parameterType="MemberDto">
+		update member
+		
+		<set>
+			<if test="memberNick != null">
+				member_nick = #{memberNick},
+			</if>
+			<if test="memberBirth != null">
+				member_birth = #{memberBirth},
+			</if>
+			<if test="memberEmail != null">
+				member_email = #{memberEmail},
+			</if>
+			<if test="memberPhone != null">
+				member_phone = #{memberPhone},
+			</if>
+			<if test="memberPoint != null">
+				member_point = #{memberPoint},
+			</if>
+			<if test="memberGrade != null">
+				member_grade = #{memberGrade},
+			</if>
+		</set>
+		where member_email = #{memberEmail}
+	</update>
 </mapper>

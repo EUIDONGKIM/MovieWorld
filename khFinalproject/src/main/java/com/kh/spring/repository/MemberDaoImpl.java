@@ -71,8 +71,8 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public boolean changeInformation(MemberDto memberDto) {
-		// TODO Auto-generated method stub
-		return false;
+		int count = sqlSession.update("member.changeInformation", memberDto);
+		return count > 0;
 	}
 
 	@Override

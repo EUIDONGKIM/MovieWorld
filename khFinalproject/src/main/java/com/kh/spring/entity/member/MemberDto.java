@@ -19,7 +19,9 @@ public class MemberDto {
 	private Date memberJoin;
 	
 
-
+	public String getMemberBirth() {
+		return this.memberBirth.substring(0, 10);
+	}
 
 
 }
