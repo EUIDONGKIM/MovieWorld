@@ -30,7 +30,7 @@ public class CertificationImpl implements CertificationDao{
 	public boolean check(CertificationDto certificationDto) {
 		CertificationDto findDto =sqlSession.selectOne("certification.check",certificationDto);
 		if(findDto !=null) { //인증 성공시
-			sqlSession.delete("certification.delete",certificationDto.getEmail());
+			sqlSession.delete("certification.delete",certificationDto.getMemberEmail());
 			return true;
 		}else { //인증실패시
 			return false;
