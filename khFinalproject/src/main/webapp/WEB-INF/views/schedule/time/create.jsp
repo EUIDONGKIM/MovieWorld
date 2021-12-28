@@ -24,7 +24,7 @@
 
 <h1> 상영 영화 생성 </h1>
 <h2>영화명 :${totalInfoViewDto.movieTitle }</h2>
-<h2>극장명 :${totalInfoViewDto.theaterName } </h3>
+<h2>극장명 :${totalInfoViewDto.theaterName } </h2>
 <h2>상영 시작일 :${totalInfoViewDto.scheduleStart } </h2>
 <h2>상영 종료일 :${totalInfoViewDto.scheduleEnd } </h2>
 <form method="post">
