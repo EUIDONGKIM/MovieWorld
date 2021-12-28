@@ -12,6 +12,7 @@ import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
+import com.kh.spring.entity.theater.HallTypePriceDto;
 import com.kh.spring.entity.theater.SeatDto;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.ReservationDao;
@@ -98,7 +99,9 @@ public class ReservationServiceImpl implements ReservationService {
 				reservationDetailDto.setScheduleTimeNo(scheduleTimeNo);
 				reservationDetailDto.setSeatRows(row);
 				reservationDetailDto.setSeatCols(col);
+				reservationDetailDto.setSeatNo(seatNo);
 				reservationDetailDto.setHallType(hallType);
+				reservationDetailDto.setHallPrice(hallPrice);
 				if(ageNormal > 0) {
 					int ageDicountPrice = ageDiscountDao.getPrice("일반");	
 					reservationDetailDto.setAgeName("일반");
@@ -119,12 +122,12 @@ public class ReservationServiceImpl implements ReservationService {
 				reservationDetailDto.setScheduleTimeDiscountPrice(ScheduleTimeDto.getScheduleTimeDiscountPrice());
 				reservationDetailDto.setReservationDetailStatus("미결제");
 				
-				int totalDetailReservationPice = reservationDetailDto.getHallPrice() +
-						reservationDetailDto.getAgeDiscountPrice() + reservationDetailDto.getScheduleTimeDiscountPrice();
+				int totalDetailReservationPice = reservationDetailDto.getHallPrice() -
+						reservationDetailDto.getAgeDiscountPrice() - reservationDetailDto.getScheduleTimeDiscountPrice();
 				reservationDetailDto.setReservationDetailPrice(totalDetailReservationPice);
 				
 				totalReservationPice += totalDetailReservationPice;
-				
+				log.debug("reservationDetailDto!!!!!!!!!!!!!!{}",reservationDetailDto);
 				reservationDetailDao.insert(reservationDetailDto);
 			}
 			
