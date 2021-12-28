@@ -71,4 +71,16 @@ public class BoardController {
 		boardDao.delete(boardNo);
 		return "redirect:/board/main";
 	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int boardNo , Model model) {
+		model.addAttribute("boardDto",boardDao.get(boardNo));
+		return "board/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(@ModelAttribute BoardDto boardDto) {	
+		boardDao.edit(boardDto);
+		int boardNo=boardDto.getBoardNo();
+		return "redirect:/board/detail?boardNo="+boardNo;
+	}
 }

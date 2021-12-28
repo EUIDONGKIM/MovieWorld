@@ -17,4 +17,5 @@ public interface BoardDao {
 	
 	//게시글삭제
 	boolean delete (int boardNo);
+	boolean edit (BoardDto boardDto);
 }

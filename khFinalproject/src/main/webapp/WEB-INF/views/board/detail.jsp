@@ -72,13 +72,13 @@
 	</div>
 	
 	<div class="row right">
-		<a href="write" class="link-btn form-inline">글쓰기</a>
-		<a href="write?boardSuperno=${boardDto.boardNo}" class="link-btn form-inline"  >답글쓰기</a>
-		<a href="main" class="link-btn form-inline">목록보기</a>
+		<a href="write" class="link-btn form-inline right">글쓰기</a>
+		<a href="write?boardSuperno=${boardDto.boardNo}" class="link-btn form-inline right"  >답글쓰기</a>
+		<a href="main" class="link-btn form-inline right">목록보기</a>
 		
 		<c:if test="${owner}">
-		<a href="edit?boardNo=${boardDto.boardNo}" class="link-btn form-inline">수정하기</a>
-		<a href="delete?boardNo=${boardDto.boardNo}" class="link-btn form-inline">삭제하기</a>
+		<a href="edit?boardNo=${boardDto.boardNo}" class="link-btn form-inline right">수정하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}" class="link-btn form-inline right">삭제하기</a>
 		</c:if>
 		
 	</div>
