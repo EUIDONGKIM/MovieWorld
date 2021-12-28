@@ -6,7 +6,7 @@ import com.kh.spring.vo.ReservationVO;
 
 public interface ReservationService {
 
-	void insert(String seatData, int scheduleTimeNo, int ageNormal, int ageYoung, int ageOld, int memberNo);
+	void insert(String seatData,int reservationKey , int scheduleTimeNo, int ageNormal, int ageYoung, int ageOld, int memberNo);
 
 	List<ReservationVO> getSeatVOList(int scheduleTimeNo);
 
