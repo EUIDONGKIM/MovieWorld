@@ -23,5 +23,10 @@ public class HallTypePriceDaoImpl implements HallTypePriceDao{
 	public List<HallTypePriceDto> list() {
 		return sqlSession.selectList("hallTypePrice.list");
 	}
+
+	@Override
+	public void insert(HallTypePriceDto hallTypePriceDto) {
+		sqlSession.insert("hallTypePrice.insert",hallTypePriceDto);
+	}
 	
 }

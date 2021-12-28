@@ -22,5 +22,9 @@
 	<select id="list" resultType="HallTypePriceDto">
 		select * from hall_type_price order by hall_price asc
 	</select>
+	
+	<insert id="insert" parameterType="HallTypePriceDto">
+		insert into hall_type_price values(hall_type_seq.nextval,#{hallType},#{hallPrice})
+	</insert>
 
 </mapper>

@@ -6,4 +6,6 @@ import com.kh.spring.entity.schedule.ScheduleTimeDiscountDto;
 
 public interface ScheduleTimeDiscountDao {
 	List<ScheduleTimeDiscountDto> list();
+	
+	void insert(ScheduleTimeDiscountDto scheduleTimeDiscountDto);
 }

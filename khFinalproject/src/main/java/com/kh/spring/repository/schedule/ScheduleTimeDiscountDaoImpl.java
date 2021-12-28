@@ -18,5 +18,10 @@ public class ScheduleTimeDiscountDaoImpl implements ScheduleTimeDiscountDao{
 	public List<ScheduleTimeDiscountDto> list() {
 		return sqlSession.selectList("scheduleTimeDiscount.list");
 	}
+
+	@Override
+	public void insert(ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
+		sqlSession.insert("scheduleTimeDiscount.insert",scheduleTimeDiscountDto);
+	}
 	
 }

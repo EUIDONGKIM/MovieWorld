@@ -10,5 +10,7 @@ public interface HallTypePriceDao {
 	
 	//상영관 만들 때 종류 목록 조회
 	List<HallTypePriceDto> list();
+	
+	void insert(HallTypePriceDto hallTypePriceDto);
 
 }

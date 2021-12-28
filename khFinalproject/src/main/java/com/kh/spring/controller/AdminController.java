@@ -37,4 +37,9 @@ public class AdminController {
 	public String adminActorInfo() {
 		return "admin/actorInfo";
 	}
+	
+	@GetMapping("/price")
+	public String adminPrice() {
+		return "admin/price";
+	}
 }

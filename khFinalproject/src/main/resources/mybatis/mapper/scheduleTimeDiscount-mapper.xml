@@ -18,6 +18,10 @@
 	<select id="list" resultType="ScheduleTimeDiscountDto">
 		select * from schedule_time_discount
 	</select>
+	
+	<insert id="insert" parameterType="ScheduleTimeDiscountDto">
+		insert into schedule_time_discount values(schedule_time_discount_seq.nextval, #{scheduleTimeDiscountType},#{scheduleTimeDiscountPrice})
+	</insert>
 
 	
 
