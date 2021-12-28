@@ -59,6 +59,11 @@ public class HallDaoImpl implements HallDao{
 	public int hallCount(int theaterNo) {
 		return sqlSession.selectOne("hall.hallCount",theaterNo);
 	}
+
+	@Override
+	public boolean delete(int hallNo) {
+		return sqlSession.delete("hall.delete",hallNo) > 0;
+	}
 	
 	
 }

@@ -21,4 +21,7 @@ public interface HallDao {
 	
 	//극장별 상영관 개수
 	int hallCount (int theaterNo);
+	
+	//상영관 삭제
+	boolean delete(int hallNo);
 }

@@ -55,5 +55,10 @@
 	<select id="hallCount" parameterType="int" resultType="int">
 		select count(*) from hall where theater_no = #{theaterNo}
 	</select>
+	
+	<!-- 상영관 삭제 -->
+	<delete id="delete">
+		delete hall where hall_no = #{hallNo}
+	</delete>
 
 </mapper>

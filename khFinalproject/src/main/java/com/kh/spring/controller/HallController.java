@@ -65,4 +65,18 @@ public class HallController {
 		model.addAttribute("hallDto", hallDto);		
 		return "hall/create_seat";
 	}
+	
+	@GetMapping("/delete")
+	public String hallDelete(@RequestParam int hallNo) {
+		HallDto hallDto = hallDao.get(hallNo);
+		int theaterNo = hallDto.getTheaterNo(); //리다이렉트용 
+		
+		boolean success = hallDao.delete(hallNo);
+		if(success) {
+			return "redirect:/theater/detail?theaterNo="+theaterNo;
+		}
+		else {
+			return "redirect:/???"; //실패
+		}
+	}
 }
