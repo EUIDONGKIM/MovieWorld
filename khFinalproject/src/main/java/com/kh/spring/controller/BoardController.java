@@ -1,6 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,9 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardDto;
+import com.kh.spring.entity.board.BoardFileDto;
 import com.kh.spring.repository.board.BoardDao;
+import com.kh.spring.repository.board.BoardFileDao;
+import com.kh.spring.service.BoardService;
+import com.kh.spring.vo.BoardSearchVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,25 +31,45 @@ public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
 	
+	@Autowired
+	private BoardFileDao boardFileDao;
+	
+	@Autowired
+	private BoardService boardService;	
+	
 	@RequestMapping("/main")
-	public String main(Model model) {
+	public String main(Model model, @RequestParam(required = false) String column,
+     @RequestParam(required = false) String keyword,@RequestParam(required = false, defaultValue = "0") int p) throws Exception {
+		BoardSearchVO vo = new BoardSearchVO();
+		vo.setColumn(column);
+		vo.setKeyword(keyword);
+		vo.setP(p);
+		BoardSearchVO param = boardService.searchNPaging(vo);
+		model.addAttribute("boardSearchVO",param);
+
 		model.addAttribute("list",boardDao.list());
 		return "board/main";
 	}
+	
 	@GetMapping("/write")
-	public String write() {
+	public String write(@RequestParam(required = false,defaultValue = "0") int boardSuperno,Model model) {
+		if(boardSuperno != 0) {
+			model.addAttribute("boardSuperno",boardSuperno);
+		}
 		return "board/write";
 	}
 	
-	//@RequestParam List<MultipartFile> attach
+	
 	@PostMapping("/write")
 	public String write(@ModelAttribute BoardDto boardDto,
+						@RequestParam List<MultipartFile> attach,
 			HttpSession session) throws IllegalStateException, IOException {
 		//맴버 아이디를 세션에서 받아서 주기
 		String mebmerEmail = (String)session.getAttribute("ses");
 		boardDto.setMemberEmail(mebmerEmail);
 		
-		int boardNo = boardDao.write(boardDto);
+		int boardNo = boardService.write(boardDto, attach);
+//		int boardNo = boardDao.write(boardDto);
 		
 		return "redirect:/board/detail?boardNo="+boardNo;
 	}
@@ -51,20 +77,23 @@ public class BoardController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int boardNo,
+			@RequestParam List<MultipartFile> attach,
 			HttpSession session,
 			Model model) {
-		
+		System.out.println("1");
 		BoardDto boardDto = boardDao.get(boardNo);
-//		List<ReplyDto> replyList = replyDao.list(boardDto.getBoardNo());
-//		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
+		System.out.println("2");
+		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
+		System.out.println("3");
 		String memberEmail=(String)session.getAttribute("ses");
 		model.addAttribute("boardNo",boardNo);
 		model.addAttribute("memberEmail",memberEmail);
 		model.addAttribute("boardDto",boardDto);
-//		model.addAttribute("replyList",replyList);
-//		model.addAttribute("boardFileList",boardFileList);
+		System.out.println("4");
+		model.addAttribute("boardFileList",boardFileList);
+		System.out.println("5");
 		
-		//게시글 상세페이지로 오면 조회수증가 
+		 
 
 		
 		return "board/detail";
@@ -72,7 +101,8 @@ public class BoardController {
 	
 	@RequestMapping("/viewUp")
 	public String viewUp(@RequestParam int boardNo) {
-		boardDao.viewUp(boardNo);
+		//제목 누르면 viweUp을 통해 들어와서 리다이렉트
+		boardDao.viewUp(boardNo);	
 		return "redirect:detail?boardNo="+boardNo;
 	}
 	
