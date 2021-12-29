@@ -6,8 +6,8 @@
 
 <h1> 관리자 메뉴 </h1>
 
-<h2>회원 목록(관리)</h2>
 
+<h2><a href="${root}/admin/memberlist">회원 목록(관리)</a></h2>
 <h2><a href="${root}/admin/movieInfo">영화 정보 관리</a></h2>
 <h2><a href="${root}/admin/actorInfo">영화인 정보 관리</a></h2>
 

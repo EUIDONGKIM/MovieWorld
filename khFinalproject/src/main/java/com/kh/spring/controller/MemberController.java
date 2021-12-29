@@ -198,8 +198,6 @@ public class MemberController {
 	@PostMapping("/quit")
 	public String quit(String memberPw,HttpSession session) {
 		String memberEmail = (String)session.getAttribute("ses");
-		System.out.println(memberPw);
-		System.out.println(memberEmail);
 		boolean result =memberDao.quit(memberEmail, memberPw);
 		if(result) {
 			session.removeAttribute("ses");

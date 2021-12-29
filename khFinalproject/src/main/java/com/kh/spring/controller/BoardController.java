@@ -43,7 +43,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;	
 	
-	//@GetMapping("/main")
+	@GetMapping("/main")
 	public String main(Model model, @RequestParam(required = false) String column,
      @RequestParam(required = false) String keyword,@RequestParam(required = false, defaultValue = "0") int p) throws Exception {
 		BoardSearchVO vo = new BoardSearchVO();
