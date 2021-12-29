@@ -22,5 +22,20 @@
 	<select id="list" resultType="HallTypePriceDto">
 		select * from hall_type_price order by hall_price asc
 	</select>
+	
+	<insert id="insert" parameterType="HallTypePriceDto">
+		insert into hall_type_price values(hall_type_seq.nextval,#{hallType},#{hallPrice})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete hall_type_price where hall_type_no = #{hallTypeNo}
+	</delete>
+	
+	<update id="edit" parameterType="HallTypePriceDto">
+		update hall_type_price set
+			hall_type = #{hallType},
+			hall_price = #{hallPrice}
+		where hall_type_no = #{hallTypeNo}
+	</update>
 
 </mapper>
