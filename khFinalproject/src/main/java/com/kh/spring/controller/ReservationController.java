@@ -20,13 +20,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
+import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
+import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
+import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
@@ -35,6 +38,7 @@ import com.kh.spring.vo.KakaoPayApproveRequestVO;
 import com.kh.spring.vo.KakaoPayApproveResponseVO;
 import com.kh.spring.vo.KakaoPayReadyRequestVO;
 import com.kh.spring.vo.KakaoPayReadyResponseVO;
+import com.kh.spring.vo.KakaoPaySearchResponseVO;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.TheaterCityVO;
 
@@ -64,6 +68,8 @@ public class ReservationController {
 	private KakaoPayService kakaoPayService;
 	@Autowired
 	private ScheduleTimeDao scheduleTimeDao;
+	@Autowired
+	private HallDao hallDao;
 	
 		@RequestMapping("/")
 		public String main(Model model) {
@@ -153,11 +159,40 @@ public class ReservationController {
 			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 			scheduleTimeDao.reservationUpdate(scheduleTimeDto);
 			
-			return "redirect:success_result";
+			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
 		}
 		
 		@GetMapping("/success_result")
-		public String successResult() {
+		public String successResult(
+				@RequestParam int reservationNo,
+				Model model
+				) {
+			ReservationDto reservationDto = reservationDao.get(reservationNo);
+			ReservationInfoViewDto reservationInfoViewDto = reservationInfoViewDao.get(reservationDto.getScheduleTimeNo());
+			HallDto hallDto = hallDao.get(reservationInfoViewDto.getHallNo());
+			
+			model.addAttribute("reservationDto",reservationDto);
+			model.addAttribute("reservationInfoViewDto",reservationInfoViewDto);
+			model.addAttribute("hallDto",hallDto);
+			
 			return "reservation/success_result";
 		}
+		
+		@GetMapping("/history_detail")
+		public String historyDetail(
+				@RequestParam int reservationNo,
+				Model model
+				) throws URISyntaxException {
+			ReservationDto reservationDto = reservationDao.get(reservationNo);
+			List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
+			KakaoPaySearchResponseVO responseVO = kakaoPayService.search(reservationDto.getTid());
+			
+
+			model.addAttribute("reservationDto",reservationDto);
+			model.addAttribute("rList",rList);
+			model.addAttribute("responseVO",responseVO);
+			
+			return "reservation/history_detail";
+		}
+		
 }

@@ -65,6 +65,7 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 				
 				return responseVO;
 	}
+	
 	@Override
 	public KakaoPayApproveResponseVO approve(KakaoPayApproveRequestVO requestVO) throws URISyntaxException {
 			//1. 요청 도구 생성
