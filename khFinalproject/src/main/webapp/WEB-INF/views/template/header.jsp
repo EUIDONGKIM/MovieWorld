@@ -141,6 +141,7 @@
 						<li><a href="${root}/theater/list">극장</a></li>
 						<li><a href="${root}/reservation/">예매</a></li>
 						<li><a href="${root}/admin/">관리메뉴</a></li>
+						<li><a href="${root}/store/storeMain">스토어</a></li>
 				<c:choose>
 					<c:when test="${login}">
 								<c:choose>
