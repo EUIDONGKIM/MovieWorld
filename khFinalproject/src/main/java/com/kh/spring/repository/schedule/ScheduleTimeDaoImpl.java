@@ -50,4 +50,10 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 	public void reservationUpdate(ScheduleTimeDto scheduleTimeDto) {
 		sqlSession.update("scheduleTime.reservationUpdate",scheduleTimeDto);
 	}
+
+
+	@Override
+	public void reservationMinusUpdate(ScheduleTimeDto scheduleTimeDto) {
+		sqlSession.update("scheduleTime.reservationMinusUpdate",scheduleTimeDto);
+	}
 }

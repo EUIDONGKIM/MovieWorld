@@ -16,4 +16,6 @@ public interface ReservationDao {
 	void clean();
 
 	void approve(ReservationDto reservationDto);
+
+	void cancel(int reservationNo);
 }
