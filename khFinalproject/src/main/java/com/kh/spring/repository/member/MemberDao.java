@@ -27,6 +27,7 @@ public interface MemberDao {
 	
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);
+	boolean adminDrop(int memberNo);
 
 	
 	
