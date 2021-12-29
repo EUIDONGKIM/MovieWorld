@@ -29,10 +29,6 @@ public class MovieController {
 	@Autowired
 	private ActorDao actorDao;
 	
-	@GetMapping("/list")
-	public String list() {//리스트를 찍으려면 뭔가가 필요합니다잉
-		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
-	}
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -62,5 +58,14 @@ public class MovieController {
 		model.addAttribute("actorList",actorDao.list());
 		return "movie/insert_actor_popup";
 	}
+	
+	@GetMapping("/list")
+	public String list(Model model) {//리스트를 찍으려면 뭔가가 필요합니다잉
+		model.addAttribute("list", movieDao.list());
+		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
+	}
+	
+	
+	
 	
 }
