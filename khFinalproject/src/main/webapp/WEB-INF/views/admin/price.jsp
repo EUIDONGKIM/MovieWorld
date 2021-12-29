@@ -160,7 +160,6 @@
 		
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
 <template id="hallTypePriceDto-template">
 	<tr>
 		<td>{{hallType}}</td>
@@ -220,7 +219,8 @@
 	</tbody>
 </table>
 
-<hr>
+<hr> 
+
 <h1>연령대별 할인금액 <button type="button">추가</button></h1>
 <table class="age-discount table table-border table-hover">
 	<thead>
