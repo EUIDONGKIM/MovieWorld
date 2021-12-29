@@ -3,8 +3,10 @@ package com.kh.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.reservation.AgeDiscountDto;
@@ -44,5 +46,19 @@ public class PriceController {
 	public List<ScheduleTimeDiscountDto> scheduleTimeDiscountList(){
 		return scheduleTimeDiscountDao.list();
 	}
+	
+	@DeleteMapping("/deleteAgeDiscount")
+	public boolean deleteAgeDiscount(@RequestParam int ageNo) {
+		return ageDiscountDao.delete(ageNo);
+	}
+	@DeleteMapping("/deleteHallTypePrice")
+	public boolean deleteHallTypePrice(@RequestParam int hallTypeNo) {
+		return hallTypePriceDao.delete(hallTypeNo);
+	}
+	@DeleteMapping("/deleteScheduleTimeDiscount")
+	public boolean deleteSceduleTimeDiscount(@RequestParam int scheduleTimeDiscountNo) {
+		return scheduleTimeDiscountDao.delete(scheduleTimeDiscountNo);
+	}
+
 	
 }
