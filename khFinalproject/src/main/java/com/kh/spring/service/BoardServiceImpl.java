@@ -47,12 +47,10 @@ public class BoardServiceImpl  implements BoardService {
 			boardDto.setBoardGroupNo(parent.getBoardGroupNo());
 			boardDto.setBoardDepth(parent.getBoardDepth()+1);
 			boardDao.write(boardDto);
-			System.out.println("어디야2");
 		}else {
 			boardDto.setBoardGroupNo(sequence);
 			boardDto.setBoardDepth(0);
 			boardDao.write(boardDto);
-			System.out.println("어디야3");
 		}
 		
 		//파일도 저장해야한다.
@@ -64,10 +62,8 @@ public class BoardServiceImpl  implements BoardService {
 				boardFileDto.setBoardFileType(file.getContentType());
 				boardFileDto.setBoardFileSize(file.getSize());
 				boardFileDao.save(boardFileDto,file);
-				System.out.println("어디야4");
 			}
 		}
-		System.out.println("어디야5");
 		return sequence;
 	}
 

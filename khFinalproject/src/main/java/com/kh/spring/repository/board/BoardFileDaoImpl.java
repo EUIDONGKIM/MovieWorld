@@ -32,9 +32,7 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		
 		boardFileDto.setBoardFileNo(sequence);
 		boardFileDto.setBoardFileSaveName(String.valueOf(sequence));
-		
-		log.debug("값확인2!!!!!!!!!!!{}",boardFileDto);
-		
+	
 		sqlSession.insert("boardFile.save",boardFileDto);
 	}
 
