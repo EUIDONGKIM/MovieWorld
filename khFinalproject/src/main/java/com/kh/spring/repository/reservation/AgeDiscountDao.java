@@ -12,6 +12,8 @@ public interface AgeDiscountDao {
 	
 	void insert(AgeDiscountDto ageDiscountDto);
 	
-	int delete(int ageNo);
+	boolean delete(int ageNo);
+	
+	boolean edit(AgeDiscountDto ageDiscountDto);
 	
 }

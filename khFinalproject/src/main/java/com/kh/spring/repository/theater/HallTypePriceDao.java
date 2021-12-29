@@ -12,5 +12,9 @@ public interface HallTypePriceDao {
 	List<HallTypePriceDto> list();
 	
 	void insert(HallTypePriceDto hallTypePriceDto);
+	
+	boolean delete(int hallTypeNo);
+	
+	boolean edit(HallTypePriceDto hallTypePriceDto);
 
 }

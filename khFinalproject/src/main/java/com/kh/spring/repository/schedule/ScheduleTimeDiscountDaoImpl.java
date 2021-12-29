@@ -23,5 +23,15 @@ public class ScheduleTimeDiscountDaoImpl implements ScheduleTimeDiscountDao{
 	public void insert(ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
 		sqlSession.insert("scheduleTimeDiscount.insert",scheduleTimeDiscountDto);
 	}
+
+	@Override
+	public boolean delete(int scheduleTimeDiscountNo) {
+		return sqlSession.delete("scheduleTimeDiscount.delete", scheduleTimeDiscountNo) > 0;
+	}
+
+	@Override
+	public boolean edit(ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
+		return sqlSession.update("scheduleTimeDiscount.edit", scheduleTimeDiscountDto) > 0;
+	}
 	
 }

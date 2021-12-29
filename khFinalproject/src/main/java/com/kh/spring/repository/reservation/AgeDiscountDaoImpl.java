@@ -29,8 +29,13 @@ public class AgeDiscountDaoImpl implements AgeDiscountDao{
 	}
 
 	@Override
-	public int delete(int ageNo) {
-		return sqlSession.delete("ageDiscount.delete",ageNo);
+	public boolean delete(int ageNo) {
+		return sqlSession.delete("ageDiscount.delete",ageNo) > 0;
+	}
+
+	@Override
+	public boolean edit(AgeDiscountDto ageDiscountDto) {
+		return sqlSession.update("ageDiscount.edit",ageDiscountDto) > 0;
 	}
 	
 	

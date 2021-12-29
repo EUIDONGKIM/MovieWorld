@@ -28,5 +28,15 @@ public class HallTypePriceDaoImpl implements HallTypePriceDao{
 	public void insert(HallTypePriceDto hallTypePriceDto) {
 		sqlSession.insert("hallTypePrice.insert",hallTypePriceDto);
 	}
+
+	@Override
+	public boolean delete(int hallTypeNo) {
+		return sqlSession.delete("hallTypePrice.delete", hallTypeNo) > 0;
+	}
+
+	@Override
+	public boolean edit(HallTypePriceDto hallTypePriceDto) {
+		return sqlSession.update("hallTypePrice.edit", hallTypePriceDto) > 0;
+	}
 	
 }

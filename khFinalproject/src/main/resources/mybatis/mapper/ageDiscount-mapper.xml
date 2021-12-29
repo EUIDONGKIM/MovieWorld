@@ -30,4 +30,11 @@
 	<delete id="delete" parameterType="int">
 		delete age_discount where age_no = #{ageNo}
 	</delete>
+	
+	<update id="edit" parameterType="AgeDiscountDto">
+		update age_discount set 
+			age_name = #{ageName},
+			age_discount_price = #{ageDiscountPrice}
+		where age_no = #{ageNo}
+	</update>
 </mapper>
