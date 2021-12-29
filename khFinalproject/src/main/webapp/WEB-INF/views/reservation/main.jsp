@@ -62,6 +62,7 @@ $(function(){
 		var movieNo;
 		var movieName;
 		var theaterSido;
+		var theaterName;
 		var theaterNo;
 		var scheduleTimeDate;
 		var scheduleTimeDateTime;
@@ -78,6 +79,7 @@ $(function(){
 		var seatTotal;
 		
 		var reservationKey;
+		var checkPay;
 		
 		$(".page").hide();
         $(".page").eq(0).show();
@@ -114,7 +116,33 @@ $(function(){
              $(".page").hide();
              $(".page").eq(p).show();
          });
-
+	
+		 $(".btn-seat-cancel").click(function(){
+			 loadList();
+			//강사님 좌석 체크박스 컨트롤 하는 법 및 좌석 체크들 해제하기.
+		 });		
+				
+		 $(".btn-pay-cancel").click(function(){
+			 $("#pay-result-show").empty();
+			 $("#pay-detail-show").empty();
+			 checkPay=null;
+			 cancelTempReservation(reservationKey);
+			 getReservationKey();
+		 });
+		
+		$(".btn-pay-confirm").click(function(){
+			console.log(reservationKey);
+			console.log(checkPay);
+			if(reservationKey&&checkPay){
+			var form = $("<form>").attr("action", "${pageContext.request.contextPath}/reservation/confirm")
+			.attr("method", "post").addClass("send-form");
+			$("body").append(form);
+			
+			$("<input type='hidden' name='reservationNo'>").val(reservationKey).appendTo(".send-form");
+			form.submit();
+			}
+		});
+		 
 	loadList();
 	
 	function loadList(){
@@ -127,6 +155,16 @@ $(function(){
 		scheduleTimeNo = null;
 		hallRows = null;
 		hallCols = null;
+		 ageNormal=0;
+		 ageYoung=0;
+		 ageOld=0;
+		 ageTotal=0;
+		seatNames = null;
+		seatTotal = null;
+		reservationKey = null;
+		checkPay = null;
+		 $(".seat-box").empty();
+		 $(".result").empty();
 		//seat / age 정보 초기화 ?
 		$(".movie-list").empty();
 		$(".theater-sido-list").empty();
@@ -275,12 +313,13 @@ $(function(){
 					var template = $("#list-template").html();
 					template = template.replace("{{key}}","theaterNo");
 					template = template.replace("{{name}}",resp[i].theaterName);
+					template = template.replace("{{name}}",resp[i].theaterName);
 					template = template.replace("{{value}}",resp[i].theaterNo);
 					var tag = $(template);
 					
 					tag.find("input[type=radio]").on("input",function(){
 						theaterNo = $(this).attr("value");
-
+						theaterName = $(this).data("name");
 						$("input[name=theaterNo]").each(function(){
 							if(theaterNo != $(this).val()){
 									$(this).prop("disabled",true);
@@ -359,12 +398,14 @@ $(function(){
 					var template = $("#list-template").html();
 					template = template.replace("{{key}}","theaterNo");
 					template = template.replace("{{name}}",resp[i].theaterName);
+					template = template.replace("{{name}}",resp[i].theaterName);
 					template = template.replace("{{value}}",resp[i].theaterNo);
 					
 					var tag = $(template);
 					
 					tag.find("input[type=radio]").on("input",function(){
 						theaterNo = $(this).attr("value");
+						theaterName = $(this).data("name");
 						scheduleDateList(movieNo,theaterNo);
 					});
 					
@@ -588,6 +629,8 @@ $(function(){
 			},
 			success:function(resp){
 				console.log("성공", resp);
+				getReservation(reservationKey);
+				getReservationDetail(reservationKey);
 			},
 			error:function(e){
 				console.log("실패", e);
@@ -611,9 +654,9 @@ $(function(){
 				template = template.replace("{{theaterName}}",theaterName);
 				template = template.replace("{{scheduleTimeDateTime}}",scheduleTimeDateTime);
 				template = template.replace("{{reservationTotalNumber}}",resp.reservationTotalNumber);
-				template = template.replace("{{totalAmount}}",reservationTotalNumber.totalAmount);
+				template = template.replace("{{totalAmount}}",resp.totalAmount);
 
-				$("pay-result-show").append(template);
+				$("#pay-result-show").append(template);
 			},
 			error:function(e){
 				console.log("실패", e);
@@ -638,12 +681,27 @@ $(function(){
 					template = template.replace("{{hallType}}",resp[i].hallType);
 					template = template.replace("{{ageName}}",resp[i].ageName);
 					template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
-					template = template.replace("{{totalPrice}}",resp[i].totalPrice);
+					template = template.replace("{{reservationDetailPrice}}",resp[i].reservationDetailPrice);
+					checkPay=1;
+					$("#pay-detail-show").append(template);
 				}
 			},
 			error:function(e){
 				console.log("실패", e);
 			}
+		});
+	}
+	
+	function cancelTempReservation(reservationKey){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/cancelTempReservation?"+$.param({"reservationNo":reservationKey}),
+			type:"delete",
+			dataType:"text",
+			success:function(resp){
+				console.log("성공", resp);
+				console.log("삭제????");
+			},
+			error:function(e){}
 		});
 	}
 	
@@ -665,7 +723,7 @@ $(function(){
 	<div>
 		<label>
 		<span>{{name}}</span>
-		<input type="radio" name="{{key}}" value="{{value}}">
+		<input type="radio" name="{{key}}" value="{{value}}" data-name="{{name}}">
 		</label>
 	</div>	
 </template>
@@ -776,7 +834,7 @@ $(function(){
 
 	
 	<div class="row center">
-		<button class="btn-prev"><h1>이전 단계</h1></button>
+		<button class="btn-prev btn-seat-cancel"><h1>이전 단계</h1></button>
 	</div>
 </div>
 
@@ -808,6 +866,7 @@ $(function(){
 </template>	
 
 <template id="reservation-detail-template">
+	<hr>
 	<div class="row center">
 		<div class="row center">
 			<label>좌석</label>
@@ -827,7 +886,7 @@ $(function(){
 		</div>
 		<div class="row center">
 			<label>개별 금액</label>
-			<span>{{totalPrice}}</span>
+			<span>{{reservationDetailPrice}}</span>
 		</div>
 	</div>
 </template>	
@@ -843,8 +902,10 @@ $(function(){
 	<div class="row center">
 		<button class="btn-pay-confirm"><h1>결제 진행(카카오 페이)</h1></button>
 	</div>
+	
+	
 	<div class="row center">
-		<button class="btn-prev"><h1>이전 단계</h1></button>
+		<button class="btn-prev btn-pay-cancel"><h1>이전 단계</h1></button>
 	</div>
 </div>
 

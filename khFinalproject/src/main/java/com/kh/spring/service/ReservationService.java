@@ -10,4 +10,8 @@ public interface ReservationService {
 
 	List<ReservationVO> getSeatVOList(int scheduleTimeNo);
 
+	boolean remove(int reservationNo);
+
+	void clean();
+
 }

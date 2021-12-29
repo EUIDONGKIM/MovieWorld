@@ -47,7 +47,8 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public void insert(String seatData,int reservationKey ,int scheduleTimeNo, int ageNormal, int ageYoung, int ageOld, int memberNo) {
-
+			//총 인원
+			int total = ageNormal + ageYoung + ageOld;
 			//임시 예약 테이블 생성.
 			ReservationDto reservationDto = new ReservationDto();
 			
@@ -58,6 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
 			reservationDto.setTid(UUID.randomUUID().toString());
 			reservationDto.setScheduleTimeNo(scheduleTimeNo);
 			reservationDto.setScheduleTimeDateTime(ScheduleTimeDto.getScheduleTimeDateTime());
+			reservationDto.setReservationTotalNumber(total);
 			reservationDto.setReservationStatus("미결제");
 			//임시 예약 테이블 등록
 			reservationDao.insert(reservationDto);
@@ -73,7 +75,6 @@ public class ReservationServiceImpl implements ReservationService {
 			String hallType = hallDto.getHallType();
 			int hallPrice = hallTypePriceDao.getPrice(hallType);
 					
-			int total = ageNormal + ageYoung + ageOld;
 			String[] seat = new String[total];
 			
 			StringTokenizer seatTotal = new StringTokenizer(seatData,"&");
@@ -81,7 +82,6 @@ public class ReservationServiceImpl implements ReservationService {
 			while(seatTotal.hasMoreTokens()) {
 				seat[count] = seatTotal.nextToken();
 				seat[count] = seat[count].substring(5);
-				log.debug("행열{}",seat[count]);
 				count++;
 			}
 			
@@ -90,10 +90,8 @@ public class ReservationServiceImpl implements ReservationService {
 				
 				int row = Integer.parseInt(seatRowsCols.nextToken());
 				int col = Integer.parseInt(seatRowsCols.nextToken());
-				log.debug("행{}",row);
-				log.debug("열{}",col);
 				int seatNo = seatDao.getSeatNo(hallDto.getHallNo(), row, col);
-				log.debug("좌석 번호{}",seatNo);
+
 				ReservationDetailDto reservationDetailDto = new ReservationDetailDto();
 				reservationDetailDto.setReservationNo(reservationDto.getReservationNo());
 				reservationDetailDto.setScheduleTimeNo(scheduleTimeNo);
@@ -127,7 +125,6 @@ public class ReservationServiceImpl implements ReservationService {
 				reservationDetailDto.setReservationDetailPrice(totalDetailReservationPice);
 				
 				totalReservationPice += totalDetailReservationPice;
-				log.debug("reservationDetailDto!!!!!!!!!!!!!!{}",reservationDetailDto);
 				reservationDetailDao.insert(reservationDetailDto);
 			}
 			
@@ -165,6 +162,21 @@ public class ReservationServiceImpl implements ReservationService {
 					reservationVOList.add(reservationVO);
 				}
 				return reservationVOList;
+	}
+
+
+	@Override
+	public boolean remove(int reservationNo) {
+		boolean main = reservationDao.remove(reservationNo);
+		boolean detail = reservationDetailDao.remove(reservationNo);
+		
+		return main&&detail;
+	}
+
+
+	@Override
+	public void clean() {
+		reservationDao.clean();
 	}
 
 

@@ -10,4 +10,10 @@ public interface ReservationDao {
 	ReservationDto get(int reservationNo);
 
 	void updatePrice(int reservationNo, int totalReservationPice);
+
+	boolean remove(int reservationNo);
+
+	void clean();
+
+	void approve(ReservationDto reservationDto);
 }

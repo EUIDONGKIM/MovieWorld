@@ -35,8 +35,18 @@
 			#{reservationDetailStatus}
 		)
 	</insert>
+	
 	<select id="get" parameterType="int" resultType="ReservationDetailDto">
-		select * from reservation_detail where reservation_no = #{reservationNo};
+		select * from reservation_detail where reservation_no = #{reservationNo}
 	</select>
+	
+	<delete id="remove" parameterType="int">
+		delete reservation_detail where reservation_no = #{reservationNo}
+	</delete>
+	
+	<update id="approve" parameterType="int">
+		update reservation_detail set reservation_detail_status = '결제완료'
+		where reservation_no = #{reservationNo}
+	</update>
 	
 </mapper>

@@ -44,4 +44,10 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 	public ScheduleTimeDto get(int scheduleTimeNo) {
 		return sqlSession.selectOne("scheduleTime.get",scheduleTimeNo);
 	}
+
+
+	@Override
+	public void reservationUpdate(ScheduleTimeDto scheduleTimeDto) {
+		sqlSession.update("scheduleTime.reservationUpdate",scheduleTimeDto);
+	}
 }
