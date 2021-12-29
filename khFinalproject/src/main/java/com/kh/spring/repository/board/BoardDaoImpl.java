@@ -16,11 +16,8 @@ public class BoardDaoImpl implements BoardDao{
 	@Autowired
 	private SqlSession sqlsession;
 	@Override
-	public int write(BoardDto boardDto) {
-		int boardNo = sqlsession.selectOne("board.getSeq");
-		boardDto.setBoardNo(boardNo);
+	public void write(BoardDto boardDto) {
 		sqlsession.insert("board.write",boardDto);
-		return boardNo;
 	}
 	
 	@Override
@@ -74,6 +71,16 @@ public class BoardDaoImpl implements BoardDao{
 		param.put("column",column);
 		param.put("keyword",keyword);
 		return sqlsession.selectOne("board.count",param);
+	}
+
+	@Override
+	public void write1(BoardDto boardDto) {
+		sqlsession.insert("board.write1",boardDto);
+	}
+
+	@Override
+	public void write2(BoardDto boardDto) {
+		sqlsession.insert("board.write2",boardDto);
 	}
 
 

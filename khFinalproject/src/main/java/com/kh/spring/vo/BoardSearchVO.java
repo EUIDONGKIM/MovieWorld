@@ -1,10 +1,9 @@
 package com.kh.spring.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.kh.spring.entity.board.BoardDto;
-
-import lombok.Data;
 
 import lombok.Data;
 @Data
@@ -17,7 +16,7 @@ public class BoardSearchVO {
 	private int blockSize = 10;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
-	private List<BoardDto> list;
+	private List<BoardDto> list = new ArrayList<>();
 
 	
 	public void calculate() throws Exception {

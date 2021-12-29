@@ -45,7 +45,7 @@
 
 	</select>
 		
-	<select id="count" parameterType="BoardSearchVO" resultType="int">
+	<select id="count" parameterType="map" resultType="int">
 		select count(*) from board
 		<where>
 			<if test="column != null and keyword != null">	
@@ -58,17 +58,40 @@
 	
 	
 	<!-- 게시판 글작성 -->
-	<insert id="write">
+	<insert id="write1" parameterType="BoardDto">
 		insert into board values(
-			#{boardNo},1,#{memberEmail},#{boardTitle},
-		 sysdate,#{boardContent},
-		 0,#{boardNo},#{boardGroupNo},#{boardDepth}
+			#{boardNo},
+			1,
+			#{memberEmail},
+			#{boardTitle},
+			 sysdate,
+			 #{boardContent},
+		 	0,
+		 	#{boardSuperno},
+		 	#{boardGroupno},
+		 	#{boardDepth}
+		)
+	</insert>
+	
+		<!-- 게시판 글작성 -->
+	<insert id="write2" parameterType="BoardDto">
+		insert into board values(
+			#{boardNo},
+			1,
+			#{memberEmail},
+			#{boardTitle},
+			 sysdate,
+			 #{boardContent},
+		 	0,
+			null,
+			#{boardNo},
+			0
 		)
 	</insert>
 	
 	
 	<!-- 게시글 삭제 -->
-	<delete id="delete">
+	<delete id="delete" parameterType="int">
 	   delete board where board_no=#{boardNo}
 	</delete>
 	
