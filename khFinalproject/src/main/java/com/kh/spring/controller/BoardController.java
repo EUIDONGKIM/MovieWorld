@@ -71,7 +71,8 @@ public class BoardController {
 		int boardNo = boardService.write(boardDto, attach);
 //		int boardNo = boardDao.write(boardDto);
 		
-		return "redirect:/board/detail?boardNo="+boardNo;
+		//return "redirect:/board/detail?boardNo="+boardNo;
+		return "redirect:/";
 	}
 	
 	
