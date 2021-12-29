@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="Store">
+
+	<insert id = "productEnroll">
+	insert into product(product_name,product_price,
+	product_quantity,product_origin,product_validity,
+	product_intro,product_content)
+	values(#{productName},#{productPrice},#{productQuantity},
+	#{productOrigin},#{productValidity},#{productIntro},
+	#{productContent})
+	
+	</insert>
+
+
+  </mapper>
