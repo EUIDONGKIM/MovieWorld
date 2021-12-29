@@ -83,6 +83,12 @@ public class MemberDaoImpl implements MemberDao {
 		int count = sqlSession.delete("member.quit", memberDto);
 		return count > 0;
 	}
+	
+	@Override
+	public boolean adminDrop(int memberNo) {
+		int result = sqlSession.delete("member.adminDrop",memberNo);
+		return result>0;
+	}
 
 	@Override
 	public MemberDto findId(String memberName, String memberPhone) {
@@ -122,5 +128,7 @@ public class MemberDaoImpl implements MemberDao {
 		int result=sqlSession.update("member.temporayPassword",param);
 		return result>0;
 	}
+
+
 
 }
