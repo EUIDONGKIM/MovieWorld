@@ -47,7 +47,7 @@
 	}
 </style>
 
-<div class="container-800 container-center">
+<div class="container-1200 container-center">
 
 	<div class="row center">
 		<h2>${boardDto.boardNo}번 게시글</h2>		

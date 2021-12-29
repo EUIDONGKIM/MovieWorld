@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<div class="container-800 container-center">
+<div class="container-1200 container-center">
 	<div class="row center">
 		<h2>게시판</h2>
 	</div>
@@ -38,7 +38,7 @@
 							<img src="${root}/resources/image/reply.png" width="15" height="15">
 						</c:if>
 					
-						<a href="${root}/board/detail?boardNo=${boardDto.boardNo}">
+						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}">
 							${boardDto.boardTitle}
 						</a>
 				

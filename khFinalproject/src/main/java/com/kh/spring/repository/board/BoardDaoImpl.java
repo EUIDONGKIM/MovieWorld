@@ -50,6 +50,12 @@ public class BoardDaoImpl implements BoardDao{
 		return count>0;
 	}
 
+	@Override
+	public boolean viewUp(int boardNo) {
+		int result =sqlsession.update("board.viewUp",boardNo);
+		return result>0;
+	}
+
 
 
 }

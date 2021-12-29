@@ -48,4 +48,9 @@
 		update board set board_title = #{boardTitle}, board_content = #{boardContent}
 		where board_no = #{boardNo}
 	</update>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="viewUp" parameterType="int">
+		update board set board_views=board_views+1 where board_no=#{boardNo}
+	</update>
 </mapper>

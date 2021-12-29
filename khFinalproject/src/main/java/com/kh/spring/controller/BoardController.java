@@ -57,15 +57,25 @@ public class BoardController {
 		BoardDto boardDto = boardDao.get(boardNo);
 //		List<ReplyDto> replyList = replyDao.list(boardDto.getBoardNo());
 //		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
-		
+		String memberEmail=(String)session.getAttribute("ses");
 		model.addAttribute("boardNo",boardNo);
-		model.addAttribute("memberEmail",(String)session.getAttribute("ses"));
+		model.addAttribute("memberEmail",memberEmail);
 		model.addAttribute("boardDto",boardDto);
 //		model.addAttribute("replyList",replyList);
 //		model.addAttribute("boardFileList",boardFileList);
 		
+		//게시글 상세페이지로 오면 조회수증가 
+
+		
 		return "board/detail";
 	}
+	
+	@RequestMapping("/viewUp")
+	public String viewUp(@RequestParam int boardNo) {
+		boardDao.viewUp(boardNo);
+		return "redirect:detail?boardNo="+boardNo;
+	}
+	
 	@RequestMapping("/delete")
 	public String delete(int boardNo) {
 		boardDao.delete(boardNo);
