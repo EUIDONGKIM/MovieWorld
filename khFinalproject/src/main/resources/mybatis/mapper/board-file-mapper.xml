@@ -35,10 +35,10 @@
 	</select>
 	
 	<select id="get" parameterType="int" resultType="BoardFileDto">
-		select * from boardFile where boardfile_no = #{boardFileNo}
+		select * from boardFile where board_file_no = #{boardFileNo}
 	</select>
 		
 	<delete id="delete" parameterType="int">
-		delete boardFile where boardfile_no = #{boardFileNo}
+		delete boardFile where board_file_no = #{boardFileNo}
 	</delete>	
 </mapper>

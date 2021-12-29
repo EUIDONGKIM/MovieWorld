@@ -24,7 +24,7 @@ public class BoardServiceImpl  implements BoardService {
 	@Autowired
 	private BoardFileDao boardFileDao;
 	//저장용 폴더
-	private File directory = new File("C:\\Users\\82107\\upload");
+	private File directory = new File("C:\\Users\\USER\\upload");
 
 	@Override
 	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
