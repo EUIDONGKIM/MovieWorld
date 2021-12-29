@@ -65,10 +65,8 @@ public class BoardServiceImpl  implements BoardService {
 				boardFileDto.setBoardFileType(file.getContentType());
 				boardFileDto.setBoardFileSize(file.getSize());
 				boardFileDao.save(boardFileDto,file);
-				System.out.println("어디야4");
 			}
 		}
-		System.out.println("어디야5");
 		return sequence;
 	}
 
