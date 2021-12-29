@@ -2,10 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
-		loadList();		
+		loadList();
 	});
 		
 	function loadList(){
@@ -13,13 +14,10 @@
 		$.ajax({
 			url:"${root}/price/getHallTypePriceList",
 			type:"get",
-			//data:{},
 			dataType:"json",
 			success:function(resp){
-				//resp에 들어있는 데이터들을 #examdto-template에 넣어서 추가
 				
 				$(".hall-type-price").find("tbody").empty();//내부영역 청소
-
 				
 				for(var i=0; i < resp.length; i++){
 					var template = $("#hallTypePriceDto-template").html();
@@ -49,7 +47,6 @@
 		$.ajax({
 			url:"${root}/price/getAgeDiscountList",
 			type:"get",
-			//data:{},
 			dataType:"json",
 			success:function(resp){
 				
@@ -83,7 +80,6 @@
 		$.ajax({
 			url:"${root}/price/getScheduleTimeDiscountList",
 			type:"get",
-			//data:{},
 			dataType:"json",
 			success:function(resp){
 				
@@ -237,6 +233,5 @@
 	<tbody>
 	</tbody>
 </table>
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
