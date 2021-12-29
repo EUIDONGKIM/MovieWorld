@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 
 <div class="container-1200 container-center">
 	<div class="row center">
@@ -26,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="boardDto" items="${list}">
+				<c:forEach var="boardDto" items="${searchList}">
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					
@@ -41,11 +43,6 @@
 						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}">
 							${boardDto.boardTitle}
 						</a>
-				
-						<!-- 제목 뒤에 댓글 개수를 출력한다 -->
-						<c:if test="${boardDto.isReplyExist()}">
-							[${boardDto.boardReply}]
-						</c:if>
 					</td>
 					
 					<td>${boardDto.memberEmail}</td>
@@ -66,11 +63,11 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="list?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="list?p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -84,11 +81,11 @@
 			<c:choose>
 				<c:when test="${boardSearchVO.isSearch()}">
 					<!-- 검색용 링크 -->
-					<a href="list?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
+					<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
 				</c:when>
 				<c:otherwise>
 					<!-- 목록용 링크 -->
-					<a href="list?p=${i}">${i}</a>
+					<a href="main?p=${i}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -100,11 +97,11 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="list?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="list?p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?p=${boardSearchVO.getNextBlock()}">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

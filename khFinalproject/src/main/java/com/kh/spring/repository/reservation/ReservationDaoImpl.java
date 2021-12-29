@@ -39,4 +39,19 @@ public class ReservationDaoImpl implements ReservationDao {
 		sqlSession.update("reservation.updatePrice",param);
 	}
 
+	@Override
+	public boolean remove(int reservationNo) {
+		return sqlSession.delete("reservation.remove",reservationNo)>0;
+	}
+
+	@Override
+	public void clean() {
+		sqlSession.delete("reservation.clean");
+	}
+
+	@Override
+	public void approve(ReservationDto reservationDto) {
+		sqlSession.update("reservation.approve",reservationDto);
+	}
+
 }

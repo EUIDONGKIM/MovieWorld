@@ -18,7 +18,20 @@
 	<select id="list" resultType="ScheduleTimeDiscountDto">
 		select * from schedule_time_discount
 	</select>
-
 	
+	<insert id="insert" parameterType="ScheduleTimeDiscountDto">
+		insert into schedule_time_discount values(schedule_time_discount_seq.nextval, #{scheduleTimeDiscountType},#{scheduleTimeDiscountPrice})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete schedule_time_discount where schedule_time_discount_no = #{scheduleTimeDiscountNo}
+	</delete>
+	
+	<update id="edit" parameterType="ScheduleTimeDiscountDto">
+		update schedule_time_discount set
+			schedule_time_discount_type = #{scheduleTimeDiscountType},
+			schedule_time_discount_price = #{scheduleTimeDiscountPrice}
+		where schedule_time_discount_no = #{scheduleTimeDiscountNo}
+	</update>
 
 </mapper>

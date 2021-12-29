@@ -15,7 +15,7 @@
 <h2><a href="${root}/admin/hall">상영관 정보 관리</a></h2>
 <h2><a href="${root}/admin/schedule">상영 영화 관리</a></h2>
 
-<h2>금액 관리(영화 금액 설정/ 할인 금액 설정)</h2>
+<h2><a href="${root}/admin/price">영화관람료 관리</a></h2>
 
 <h2>통계 현황</h2>
 

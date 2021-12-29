@@ -29,4 +29,14 @@ public class ReservationDetailDaoImpl implements ReservationDetailDao{
 		return sqlSession.selectList("reservationDetail.get",reservationNo);
 	}
 
+	@Override
+	public boolean remove(int reservationNo) {
+		return sqlSession.delete("reservationDetail.remove",reservationNo)>0;
+	}
+
+	@Override
+	public void approve(int reservationNo) {
+		sqlSession.update("reservationDetail.approve",reservationNo);
+	}
+
 }

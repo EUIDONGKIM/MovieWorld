@@ -18,4 +18,23 @@
 	<select id="getPrice" parameterType="String" resultType="int">
 		select age_discount_price from age_discount where age_name = #{ageName}
 	</select>
+	
+	<select id="list" resultType="AgeDiscountDto">
+		select * from age_discount
+	</select>
+	
+	<insert id="insert" parameterType="AgeDiscountDto">
+		insert into age_discount values(age_discount_seq.nextval, #{ageName} ,#{ageDiscountPrice})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete age_discount where age_no = #{ageNo}
+	</delete>
+	
+	<update id="edit" parameterType="AgeDiscountDto">
+		update age_discount set 
+			age_name = #{ageName},
+			age_discount_price = #{ageDiscountPrice}
+		where age_no = #{ageNo}
+	</update>
 </mapper>

@@ -24,22 +24,74 @@
 		select * from board where board_no=#{boardNo}
 	</select>
 	
-	<!-- 게시판 글작성 -->
-	<insert id="write">
-		insert into board values(
-			#{boardNo},1,#{memberEmail},#{boardTitle},
-		 sysdate,#{boardContent},
-		 0,#{boardNo},#{boardGroupNo},#{boardDepth}
-		)
-	</insert>
-	
 	<!-- 시퀸스 미리뽑아오기  -->
 	<select id="getSeq" resultType="int">
 		select board_no_seq.nextval from dual
 	</select>
 	
+	<select id="search" parameterType="map" resultType="BoardDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from board
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		connect by prior board_no = board_superno
+		start with board_superno is null
+		order siblings by board_groupno desc, board_no asc
+		)tmp) where rn between #{begin} and #{end}
+
+	</select>
+		
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from board
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>	
+	
+	
+	
+	
+	<!-- 게시판 글작성 -->
+	<insert id="write1" parameterType="BoardDto">
+		insert into board values(
+			#{boardNo},
+			1,
+			#{memberEmail},
+			#{boardTitle},
+			 sysdate,
+			 #{boardContent},
+		 	0,
+		 	#{boardSuperno},
+		 	#{boardGroupno},
+		 	#{boardDepth}
+		)
+	</insert>
+	
+		<!-- 게시판 글작성 -->
+	<insert id="write2" parameterType="BoardDto">
+		insert into board values(
+			#{boardNo},
+			1,
+			#{memberEmail},
+			#{boardTitle},
+			 sysdate,
+			 #{boardContent},
+		 	0,
+			null,
+			#{boardNo},
+			0
+		)
+	</insert>
+	
+	
 	<!-- 게시글 삭제 -->
-	<delete id="delete">
+	<delete id="delete" parameterType="int">
 	   delete board where board_no=#{boardNo}
 	</delete>
 	
