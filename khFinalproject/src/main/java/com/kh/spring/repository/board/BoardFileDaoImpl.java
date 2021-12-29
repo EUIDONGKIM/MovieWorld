@@ -20,7 +20,7 @@ public class BoardFileDaoImpl implements BoardFileDao{
 	private SqlSession sqlSession;
 	
 	//저장용 폴더
-	private File directory = new File("C:\\Users\\USER\\upload");
+	private File directory = new File("C:\\Users\\82107\\upload");
 	
 	@Override
 	public void save(BoardFileDto boardFileDto, MultipartFile file) throws IllegalStateException, IOException {
