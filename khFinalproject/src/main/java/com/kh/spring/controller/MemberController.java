@@ -149,11 +149,11 @@ public class MemberController {
 			,Model model ,@ModelAttribute MemberDto memberDto ,HttpSession session) {
 		MemberDto isPass=memberDao.findPw(memberName, memberEmail, memberPhone);
 		//6자리의 랜덤숫자생성
-		String number = randomUtil.generateRandomNumber(6);
+		String tmpPw = randomUtil.generateRandomPassword(10);
 		
 		if(isPass!=null) {
 			//6자리의 난수 비밀번호 생성
-			isPass.setMemberPw(number);
+			isPass.setMemberPw(tmpPw);
 			
 			String chagePw = isPass.getMemberPw();
 		
