@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,6 +77,11 @@ public class DataController {
 	private CertificationDao certificationDao;
 	@Autowired
 	private ReservationDao reservationDao;
+	
+	@DeleteMapping("/cancelTempReservation")
+	public boolean cancelTempReservation(@RequestParam int reservationNo) {
+		return reservationService.remove(reservationNo);
+	}
 	
 	@GetMapping("/getReservation")
 	public ReservationDto getReservation(@RequestParam int reservationKey) {
