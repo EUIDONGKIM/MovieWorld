@@ -43,7 +43,7 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;	
 	
-	@RequestMapping("/main")
+	//@GetMapping("/main")
 	public String main(Model model, @RequestParam(required = false) String column,
      @RequestParam(required = false) String keyword,@RequestParam(required = false, defaultValue = "0") int p) throws Exception {
 		BoardSearchVO vo = new BoardSearchVO();
@@ -53,7 +53,17 @@ public class BoardController {
 		BoardSearchVO param = boardService.searchNPaging(vo);
 		model.addAttribute("boardSearchVO",param);
 
-		model.addAttribute("list",boardDao.list());
+		//model.addAttribute("list",boardDao.list());
+		return "board/main";
+	}
+	
+	@GetMapping("/main")
+	public String list(
+			@ModelAttribute BoardSearchVO boardSearchVO,
+			Model model) throws Exception {
+		//리스트랑 페이지네이션 정보를 서비스에서 받아온다.
+		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
+		model.addAttribute("boardSearchVO",param);
 		return "board/main";
 	}
 	

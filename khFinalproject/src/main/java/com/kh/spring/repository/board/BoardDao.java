@@ -6,7 +6,7 @@ import com.kh.spring.entity.board.BoardDto;
 
 public interface BoardDao {
 	//게시글작성
-	int write(BoardDto boardDto);
+	void write(BoardDto boardDto);
 	
 	//게시글 단일조회
 	BoardDto get(int boardNo);
@@ -24,4 +24,8 @@ public interface BoardDao {
 	List<BoardDto> search(String column, String keyword, int begin, int end);
 
 	int count(String column, String keyword);
+
+	void write1(BoardDto boardDto);
+
+	void write2(BoardDto boardDto);
 }

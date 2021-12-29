@@ -32,7 +32,9 @@ public class BoardServiceImpl  implements BoardService {
 		boardSearchVO.setCount(count);
 		boardSearchVO.calculate();
 		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd());
+		log.debug("boardSearchVO는?@@@@@@@@{}",boardSearchVO);
 		boardSearchVO.setList(list);
+		log.debug("list는?@@@@@@@@{}",list);
 	
 		return boardSearchVO;
 	}
@@ -42,15 +44,16 @@ public class BoardServiceImpl  implements BoardService {
 		int sequence = boardDao.getSequence();
 		boardDto.setBoardNo(sequence);
 		
-		if(boardDto.getBoardSuperNo() > 0) {
-			BoardDto parent = boardDao.get(boardDto.getBoardSuperNo());
-			boardDto.setBoardGroupNo(parent.getBoardGroupNo());
+		if(boardDto.getBoardSuperno() > 0) {
+			BoardDto parent = boardDao.get(boardDto.getBoardSuperno());
+			boardDto.setBoardGroupno(parent.getBoardGroupno());
 			boardDto.setBoardDepth(parent.getBoardDepth()+1);
-			boardDao.write(boardDto);
+			boardDao.write1(boardDto);
+			System.out.println("어디야2");
 		}else {
-			boardDto.setBoardGroupNo(sequence);
-			boardDto.setBoardDepth(0);
-			boardDao.write(boardDto);
+			boardDto.setBoardGroupno(sequence);
+			boardDao.write2(boardDto);
+			System.out.println("어디야3");
 		}
 		
 		//파일도 저장해야한다.
