@@ -1,11 +1,16 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardDto;
@@ -78,7 +84,6 @@ public class BoardController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int boardNo,
-			@RequestParam List<MultipartFile> attach,
 			HttpSession session,
 			Model model) {
 		System.out.println("1");
@@ -94,9 +99,7 @@ public class BoardController {
 		model.addAttribute("boardFileList",boardFileList);
 		System.out.println("5");
 		
-		 
-
-		
+			
 		return "board/detail";
 	}
 	
@@ -123,5 +126,25 @@ public class BoardController {
 		boardDao.edit(boardDto);
 		int boardNo=boardDto.getBoardNo();
 		return "redirect:/board/detail?boardNo="+boardNo;
+	}
+	
+	@GetMapping("/file")
+	@ResponseBody//이 메소드만큼은 뷰 리졸버를 쓰지 않겠다.
+	public ResponseEntity<ByteArrayResource> file(@RequestParam int boardFileNo) throws IOException {
+		
+		BoardFileDto boardFileDto = boardFileDao.get(boardFileNo);
+		log.debug("boardFileNo@@@@@@@@@@@@@@@={}",boardFileNo);
+		byte[] data = boardFileDao.load(boardFileNo);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		log.debug("boardFileDto.getBoardFileUploadName()@@@@@@@@@@@@@@@={}",boardFileDto.getBoardFileUploadName());
+		String encodeName = URLEncoder.encode(boardFileDto.getBoardFileUploadName(), "UTF-8");
+		encodeName = encodeName.replace("+", "%20");
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
+				.header("Content-Encoding", "UTF-8")
+				.contentLength(boardFileDto.getBoardFileSize())
+				.body(resource);
 	}
 }

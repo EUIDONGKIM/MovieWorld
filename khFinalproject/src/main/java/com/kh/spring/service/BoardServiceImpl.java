@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +24,8 @@ public class BoardServiceImpl  implements BoardService {
 	@Autowired
 	private BoardFileDao boardFileDao;
 	//저장용 폴더
-	private File directory = new File("C:\\Users\\USER\\upload");
-	
+	private File directory = new File("C:\\Users\\82107\\upload");
+
 	@Override
 	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
 		int count = boardDao.count(boardSearchVO.getColumn(),boardSearchVO.getKeyword());
@@ -34,7 +33,7 @@ public class BoardServiceImpl  implements BoardService {
 		boardSearchVO.calculate();
 		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd());
 		boardSearchVO.setList(list);
-		System.out.println("어디야1");
+	
 		return boardSearchVO;
 	}
 
