@@ -22,7 +22,6 @@
 		
 		<hr>
 		
-		reservationInfoViewDto
 		<div class="row center">
 			<label>영화 제목 : ${reservationInfoViewDto.movieTitle }(${reservationInfoViewDto.movieEngTitle })</label>
 		</div>

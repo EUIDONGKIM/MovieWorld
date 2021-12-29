@@ -13,7 +13,7 @@
 </ul>
 	<c:choose>
 		<c:when test="${reservationDto.reservationStatus == '결제완료'}">	
-			<h2><a href="cancel?resrvationNo=${reservationDto.resrvationNo}">예매 취소</a></h2>
+			<h2><a href="cancel?resrvationNo=${reservationDto.reservationNo}">예매 취소</a></h2>
 		</c:when>
 		<c:otherwise>
 			<h2>취소 완료</h2>
@@ -24,10 +24,19 @@
 <ul>
 <c:forEach var="reservationDetailDto" items="${rList}">
 		<li>
-		${buyDetailDto}
-			<c:if test="${buyDetailDto.status != '취소'}">
-			<a href="cancel_part?buyNo=${buyDetailDto.buyNo}&productNo=${buyDetailDto.productNo}">해당항목 취소</a>
-			</c:if>
+		좌석 : ${reservationDetailDto.seatRows}행 ${reservationDetailDto.seatCols}열
+		<br>
+		상영관 종류 : ${reservationDetailDto.hallType}
+		<br>
+		연령 구분 : ${reservationDetailDto.ageName}
+		<br>
+		연령 할인  : ${reservationDetailDto.ageDiscountPrice}
+		<br>
+		상영 구분 : ${reservationDetailDto.scheduleTimeDiscountType}
+		<br>
+		상영 할인 : ${reservationDetailDto.scheduleTimeDiscountPrice} 
+		<br>
+		총 금액 : ${reservationDetailDto.reservationDetailPrice}
 		</li>
 </c:forEach>
 </ul>
