@@ -133,7 +133,7 @@ public class BoardController {
 	public ResponseEntity<ByteArrayResource> file(@RequestParam int boardFileNo) throws IOException {
 		
 		BoardFileDto boardFileDto = boardFileDao.get(boardFileNo);
-		log.debug("boardFileNo@@@@@@@@@@@@@@@={}",boardFileNo);
+		log.debug("boardFileDto@@@@@@@@@@@@@@@={}",boardFileDto);
 		byte[] data = boardFileDao.load(boardFileNo);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
