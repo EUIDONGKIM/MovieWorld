@@ -44,4 +44,27 @@
 		where reservation_no = #{reservationNo}
 	</update>
 	
+	<delete id="remove" parameterType="int">
+		delete reservation where reservation_no = #{reservationNo}
+	</delete>
+	
+	<delete id="clean">
+		delete reservation where 
+		reservation_status = '미결제'
+		and
+		<![CDATA[
+			sysdate - buy_time > 5/24/60
+		]]>
+	</delete>
+	
+	<update id="approve" parameterType="ReservationDto">
+		update reservation set
+		tid = #{tid},
+		item_name = #{itemName},
+		buy_time = sysdate,
+		reservation_status = #{reservationStatus}
+		where reservation_no = #{reservationNo}
+	</update>
+	
+	
 </mapper>

@@ -15,4 +15,6 @@ public interface ScheduleTimeDao {
 
 	ScheduleTimeDto get(int scheduleTimeNo);
 
+	void reservationUpdate(ScheduleTimeDto scheduleTimeDto);
+
 	}
