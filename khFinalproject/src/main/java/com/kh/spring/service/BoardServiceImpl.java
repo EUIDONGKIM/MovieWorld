@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +14,9 @@ import com.kh.spring.entity.board.BoardFileDto;
 import com.kh.spring.repository.board.BoardDao;
 import com.kh.spring.repository.board.BoardFileDao;
 import com.kh.spring.vo.BoardSearchVO;
+
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class BoardServiceImpl  implements BoardService {
 
@@ -21,7 +25,7 @@ public class BoardServiceImpl  implements BoardService {
 	@Autowired
 	private BoardFileDao boardFileDao;
 	//저장용 폴더
-	private File directory = new File("D:\\upload\\board");
+	private File directory = new File("C:\\Users\\USER\\upload");
 	
 	@Override
 	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
@@ -47,6 +51,7 @@ public class BoardServiceImpl  implements BoardService {
 			System.out.println("어디야2");
 		}else {
 			boardDto.setBoardGroupNo(sequence);
+			boardDto.setBoardDepth(0);
 			boardDao.write(boardDto);
 			System.out.println("어디야3");
 		}
@@ -55,7 +60,7 @@ public class BoardServiceImpl  implements BoardService {
 		for(MultipartFile file : attach) {
 			if(!file.isEmpty()) {
 				BoardFileDto boardFileDto = new BoardFileDto();
-				boardFileDto.setBoardNo(sequence);
+				boardFileDto.setBoardNo(boardDto.getBoardNo());
 				boardFileDto.setBoardFileUploadName(file.getOriginalFilename());
 				boardFileDto.setBoardFileType(file.getContentType());
 				boardFileDto.setBoardFileSize(file.getSize());

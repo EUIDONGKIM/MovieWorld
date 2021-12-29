@@ -11,13 +11,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardFileDto;
+
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Repository
 public class BoardFileDaoImpl implements BoardFileDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
 	//저장용 폴더
-	private File directory = new File("D:\\upload\\board");
+	private File directory = new File("C:\\Users\\USER\\upload");
 	
 	@Override
 	public void save(BoardFileDto boardFileDto, MultipartFile file) throws IllegalStateException, IOException {
@@ -29,6 +32,9 @@ public class BoardFileDaoImpl implements BoardFileDao{
 		
 		boardFileDto.setBoardFileNo(sequence);
 		boardFileDto.setBoardFileSaveName(String.valueOf(sequence));
+		
+		log.debug("값확인2!!!!!!!!!!!{}",boardFileDto);
+		
 		sqlSession.insert("boardFile.save",boardFileDto);
 	}
 
