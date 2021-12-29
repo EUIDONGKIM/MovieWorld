@@ -86,18 +86,14 @@ public class BoardController {
 	public String detail(@RequestParam int boardNo,
 			HttpSession session,
 			Model model) {
-		System.out.println("1");
+
 		BoardDto boardDto = boardDao.get(boardNo);
-		System.out.println("2");
 		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
-		System.out.println("3");
 		String memberEmail=(String)session.getAttribute("ses");
 		model.addAttribute("boardNo",boardNo);
 		model.addAttribute("memberEmail",memberEmail);
 		model.addAttribute("boardDto",boardDto);
-		System.out.println("4");
 		model.addAttribute("boardFileList",boardFileList);
-		System.out.println("5");
 		
 			
 		return "board/detail";
