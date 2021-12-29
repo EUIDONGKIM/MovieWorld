@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +21,8 @@ public class BoardFileDaoImpl implements BoardFileDao{
 	private SqlSession sqlSession;
 	
 	//저장용 폴더
-	private File directory = new File("C:\\Users\\USER\\upload");
+	@Value("${config.rootpath}")
+	public String directory;
 	
 	@Override
 	public void save(BoardFileDto boardFileDto, MultipartFile file) throws IllegalStateException, IOException {

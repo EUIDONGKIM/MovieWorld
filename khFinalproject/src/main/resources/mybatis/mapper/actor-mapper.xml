@@ -31,4 +31,8 @@
 	<select id="list" resultType="ActorDto">
 		select * from actor
 	</select>
+	
+	<select id="listByJob" parameterType="String" resultType="ActorDto">
+		select * from actor where actor_job=#{actorJob}
+	</select>
 </mapper>

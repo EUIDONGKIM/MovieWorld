@@ -17,4 +17,6 @@ public interface ScheduleTimeDao {
 
 	void reservationUpdate(ScheduleTimeDto scheduleTimeDto);
 
+	void reservationMinusUpdate(ScheduleTimeDto scheduleTimeDto);
+
 	}

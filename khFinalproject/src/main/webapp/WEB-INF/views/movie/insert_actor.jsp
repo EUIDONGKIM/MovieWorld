@@ -1,56 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="movieNo" value="${movieNo}"></c:set>  
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
-	#actorNo{
+	#actorNo,
+	#directorNo,
+	#staffNo{
 		display: none;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
-
-        $("input[name=actorName]").click(function(){
-            window.open("${pageContext.request.contextPath}/movie/insert_popup", "popup", "width=500 , height=500");
+		var movieNo = '${movieNo}';
+		
+        $("#director").click(function(){
+        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=director';
+            window.open(target, "popup", "width=500 , height=500");
         });
+        $("#actor").click(function(){
+        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=actor';
+            window.open(target, "popup", "width=500 , height=500");
+        });
+        $("#staff").click(function(){
+        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=staff';
+            window.open(target, "popup", "width=500 , height=500");
+        });
+
+        $(".btn-director").click(function(){
+        	var actorName =  $("#director").val();
+        	var actorNo = $("#directorNo").val();
+        	
+        	if(!actorName || !actorNo) {
+				alert("값을 입력하세요!!");        		
+        		return;
+        	}
+        	
+			var template = $("#add-role-template").html();
+            template = template.replace("{{actorName}}",actorName);
+            template = template.replace("{{actorNo}}",actorNo);
+            
+			$("#result-director").append(template);
+            
+			addRole(movieNo,actorNo);
+			
+			$("#director").val("");
+			$("#directorNo").val("");
+        });
+        $(".btn-actor").click(function(){
+        	var actorName =  $("#actor").val();
+        	var actorNo = $("#actorNo").val();
+        	
+        	if(!actorName || !actorNo) {
+				alert("값을 입력하세요!!");        		
+        		return;
+        	}
+        	
+			var template = $("#add-role-template").html();
+            template = template.replace("{{actorName}}",actorName);
+            template = template.replace("{{actorNo}}",actorNo);
+            
+			$("#result-actor").append(template);
+            
+			addRole(movieNo,actorNo);
+			
+			$("#actor").val("");
+			$("#actorNo").val("");
+        });
+        $(".btn-staff").click(function(){
+        	var actorName =  $("#staff").val();
+        	var actorNo = $("#staffNo").val();
+        	
+        	if(!actorName || !actorNo) {
+				alert("값을 입력하세요!!");        		
+        		return;
+        	}
+        	
+			var template = $("#add-role-template").html();
+            template = template.replace("{{actorName}}",actorName);
+            template = template.replace("{{actorNo}}",actorNo);
+            
+			$("#result-staff").append(template);
+            
+			addRole(movieNo,actorNo);
+			
+			$("#staff").val("");
+			$("#staffNo").val("");
+        });
+        
 		$(".exit-btn").click(function(){
 			location.href = "${pageContext.request.contextPath}/movie/list";
 			console.log(actorNo);
 			console.log(actorName);
 		});
-
-		$(".role-add-btn").click(function(){
-            var movieNo = $("input[name=movieNo]").val();
-            var roleType = $("select[name=roleType]").val();
-            var actorNo = $("input[name=actorNo]").val();
-            var actorName = $("input[name=actorName]").val();
-            var roleName = $("input[name=roleName]").val();
-			console.log(movieNo);
-			console.log(roleType);
-			console.log(actorNo);
-			console.log(actorName);
-			console.log(roleName);
-            if(!roleType||!actorNo||!roleName){
-                return;
-            }
-
-			var template = $("#add-role-template").html();
-            template = template.replace("{{roleType}}",roleType);
-            template = template.replace("{{actorName}}",actorName);
-            template = template.replace("{{roleName}}",roleName);
-
-			$(".role-result").append(template);
-            
-			addRole(movieNo,roleType,actorNo,roleName);
-
-            $("select[name=roleType]").val("");
-            $("input[name=actorNo]").val("");
-            $("input[name=actorName]").val("");
-            $("input[name=roleName]").val("");
-		});
-
 
         $(".video-add-btn").click(function(){
             var movieNo = $("input[name=movieNo]").val();
@@ -78,15 +121,13 @@
 
         });
 
-        function addRole(movieNo,roleType,actorNo,roleName){
+        function addRole(movieNo,actorNo){
             $.ajax({
 			url:"${pageContext.request.contextPath}/data/addRole",
 			type:"post",
             data : {
 				movieNo:movieNo,
-                roleType:roleType,
-                actorNo:actorNo,
-                roleName:roleName
+                actorNo:actorNo
 			},
 			success:function(resp){
 				console.log("성공", resp);
@@ -121,12 +162,10 @@
    
     <template id="add-role-template">
         <div class="row center">
-            <label>역할 : </label>    
-            <span>{{roleType}}</span>
+            <label>영화인 번호 : </label>    
+            <span>{{actorNo}}</span>
             <label>/ 영화인 : </label>
             <span>{{actorName}}</span>
-            <label>/ 역이름 : </label>
-            <span>{{roleName}}</span>
         </div>
     </template>
 
@@ -139,32 +178,33 @@
         </div>
     </template>
     
+    <h1>영화인 검색</h1>
 
-    <h1> 역할 추가 </h1>
+    <h1> 역할 추가(확인용으로 보여주기(템플릿으로) / 실제로 데이터가 추가되지만 리스트를 실시간으로 보여주는것 추후 구현) </h1>
+    <br>
+	
+	<h2> - 감독 - </h2>
+	<input type="text" name="directorNo" id="directorNo" readonly>
+	<input type="text" name="director" id="director" readonly placeholder="여기를 눌러 감독을 넣으세요">
+	<button class="btn-director">감독 추가</button>
+	<div id="result-director"></div>
+	 <br>
+	 
+	<h2> - 배우 - </h2>
+	<input type="text" name="actorNo" id="actorNo" readonly>
+	<input type="text" name="actor" id="actor" readonly placeholder="여기를 눌러 배우를 넣으세요">
+	<button class="btn-actor">배우 추가</button>
+	<div id="result-actor"></div>
+	 <br>
+	 
+	<h2> - 스태프 - </h2>
+	<input type="text" name="staffNo" id="staffNo" readonly>
+	<input type="text" name="staff" id="staff" readonly placeholder="여기를 눌러 스태프를 넣으세요">
+	<button class="btn-staff">스태프 추가</button>
+	<div id="result-staff"></div>
+	
 
-    <div class="row role-item">
-        <label>역할 선택</label>
-        <select name="roleType" class="form-input form-inline">
-            <option value="">역할 선택</option>
-            <option>감독</option>
-            <option>스태프</option>
-            <option>배우</option>
-        </select>
-        
-        <label>영화인 선택</label>
-        <input type="text" name="actorName" id="actorName" class="form-input form-inline" readonly>
-        <input type="number" name="actorNo" id="actorNo">
-
-        <label>역이름</label>
-        <input type="text" name="roleName" class="form-input form-inline">
-        <input type="hidden" name="movieNo" value="${movieNo}">
-    </div>
-
-    <div class="role-result"></div>
-    <button class="role-add-btn">역할 추가</button>
-    
-
-    <h1> 비디오 추가 </h1>
+    <h1> 비디오 추가(확인용으로 보여주기(템플릿으로) / 실제로 데이터가 추가되지만 리스트를 실시간으로 보여주는것 추후 구현) </h1>
 
     <div class="row video-item">
         <div class="row center">
