@@ -7,7 +7,7 @@ public class BoardFileDto {
 	private int boardFileNo;
 	private int boardNo;
 	private String boardFileUploadName;
-	private String boardFileServerName;
+	private String boardFileSaveName;
 	private long boardFileSize;
 	private String boardFileType;
 }
