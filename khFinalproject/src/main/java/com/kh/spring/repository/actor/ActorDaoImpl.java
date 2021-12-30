@@ -33,5 +33,11 @@ public class ActorDaoImpl implements ActorDao{
 		return sqlSession.selectList("actor.listByJob",actorJob);
 	}
 
+	@Override
+	public void insert(ActorDto actorDto) {
+		sqlSession.insert("actor.insert", actorDto);
+		
+	}
+
 	
 }
