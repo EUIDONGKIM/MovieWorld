@@ -9,7 +9,10 @@ public interface ActorDao {
 	List<ActorDto> list();
 		
 	ActorDto get(int actorNo);
+	
+//	int getSequence();
 
 	List<ActorDto> listByJob(String actorJob);
 
+	void insert(ActorDto actorDto);
 }
