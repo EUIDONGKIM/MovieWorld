@@ -120,19 +120,19 @@
 					<c:when test="${boardSearchVO.columnIs('board_title')}">
 						<option value="board_title" selected>제목</option>
 						<option value="board_content">내용</option>
-						<option value="board_writer">작성자</option>
+						<option value="member_email">작성자</option>
 					</c:when>
 					
 					<c:when test="${boardSearchVO.columnIs('board_content')}">
 						<option value="board_title">제목</option>
 						<option value="board_content" selected>내용</option>
-						<option value="board_writer">작성자</option>
+						<option value="member_email">작성자</option>
 					</c:when>
 					
 					<c:otherwise>
 						<option value="board_title">제목</option>
 						<option value="board_content">내용</option>
-						<option value="board_writer" selected>작성자</option>
+						<option value="member_email" selected>작성자</option>
 					</c:otherwise>
 				</c:choose>
 			</select>

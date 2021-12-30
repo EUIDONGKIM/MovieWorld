@@ -149,6 +149,24 @@ public class MemberDaoImpl implements MemberDao {
 		return result>0;
 	}
 
+	@Override
+	public int count(String column, String keyword) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		return sqlSession.selectOne("member.count",param);
+	}
+
+	@Override
+	public List<MemberDto> search(String column, String keyword, int begin, int end) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		param.put("begin",begin);
+		param.put("end",end);
+		return sqlSession.selectList("member.search",param);
+	}
+
 
 
 

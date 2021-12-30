@@ -9,6 +9,7 @@ public interface MemberDao {
 	void join(MemberDto memberDto);
 	//단일 조회
 	MemberDto get(String memberEmail);
+	//관리자용 단일조회
 	MemberDto get2(int memberNo);
 	//로그인
 	MemberDto login(MemberDto memberDto);
@@ -32,9 +33,10 @@ public interface MemberDao {
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);
 	boolean adminDrop(int memberNo);
-
-	
+	//검색
+	int count(String column, String keyword);
+	List<MemberDto> search(String column, String keyword, int begin, int end);
 	
 	List<MemberDto> list();
-//	boolean changeInformation(MemberDto memberDto);
+
 }

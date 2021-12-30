@@ -52,7 +52,7 @@ public class BoardController {
 		vo.setP(p);
 		BoardSearchVO param = boardService.searchNPaging(vo);
 		model.addAttribute("boardSearchVO",param);
-
+	
 		//model.addAttribute("list",boardDao.list());
 		return "board/main";
 	}

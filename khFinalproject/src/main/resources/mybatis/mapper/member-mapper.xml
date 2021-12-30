@@ -17,7 +17,7 @@
 <mapper namespace="member">
 	<!-- 조회 -->
 	<select id="list" resultType="MemberDto">
-		select * from member
+		select * from member order by member_no desc
 	</select>
 	
 	<!-- 회원가입 -->
@@ -48,6 +48,29 @@
 	<select id="findPw" parameterType="map" resultType="MemberDto">
 		select member_pw from member where member_name=#{memberName} and member_email=#{memberEmail} and member_phone=#{memberPhone} 
 	</select>
+	
+	<!-- 검색 및 페이지네이션 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from member
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="MemberDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from member
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		order by member_no desc
+		)tmp) where rn between #{begin} and #{end}
+	</select>	
 	
 	<!-- 임시비밀번호로  변경 -->
 	<update id="temporayPassword" parameterType="map">
