@@ -74,7 +74,7 @@ public class ReservationController {
 	private HallDao hallDao;
 	
 		@RequestMapping("/")
-		public String main(Model model) {
+		public String main(Model model,HttpSession session) {
 			//초기화면 10일치 날짜 생성.
 			List<String> dateList = new ArrayList<>();
 			Format f = new SimpleDateFormat("yyyy-MM-dd");
@@ -88,11 +88,10 @@ public class ReservationController {
 			
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
+			String memberEmail = (String)session.getAttribute("ses");
 			
-			model.addAttribute("movieCountVOList",movieList);
-			model.addAttribute("theaterCityVOList",theaterList);
-			model.addAttribute("dateList",dateList);
 			
+			model.addAttribute("memberEmail",memberEmail);
 			return "reservation/main";
 		}
 		

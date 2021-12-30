@@ -65,6 +65,8 @@
 
 <script>
 $(function(){
+	var memberEmail = '${memberEmail}';
+	console.log(memberEmail);
 	var movieNo;
 	var movieName;
 	var theaterSido;
@@ -87,6 +89,9 @@ $(function(){
 	var reservationKey;
 	var checkPay;
 	
+	var movieRuntime;
+	
+	
 	$(".page").hide();
     $(".page").eq(0).show();
 	
@@ -96,7 +101,7 @@ $(function(){
     $(".btn-next").click(function(e){
         e.preventDefault();
         
-        if(${login}==false) {
+        if(!memberEmail) {
 			var confirm = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?")
         	if(confirm){
         		location.href = "${root}/member/login";
@@ -492,7 +497,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 			for(var i = 0 ; i < resp.length ; i++){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
-				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,5);
+				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
 				
 				template = template.replace("{{name}}",scheduleTimeDateTime);
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
