@@ -13,6 +13,12 @@
 
 <form method="post">
 	<div class= "container-400">
+	
+	<div class="row">
+			<label>프로필 이미지(한장)</label>
+				<input type="file" name="actorPhoto">
+		</div>
+	
 		<div class="row">
 			<label>영화인 이름(한국어)</label>
 				<input type="text" name="actorName" required>
@@ -24,23 +30,18 @@
 		</div>
 		
 		<div class="row">
-			<label>생년월일</label>
-				<input type="date" name="actorBirth" required>
+			<label>출생</label>
+				<input type="date" name="actorBirth">
+		</div>
+		
+		<div class="row">
+			<label>국적</label>
+				<input type="text" name="actorNationality">
 		</div>
 		
 		<div class="row">
 			<label>직업</label>
 				<input type="text" name="actorJob">
-		</div>
-		
-		<div class="row">
-			<label>국적</label>
-				<input type="text" name="actorJob">
-		</div>
-		
-		<div class="row">
-			<label>프로필 이미지(한장)</label>
-				<input type="file" name="actorPhoto">
 		</div>
 		
 		<button type="submit">등록</button>
