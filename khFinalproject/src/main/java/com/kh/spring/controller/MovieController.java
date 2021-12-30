@@ -34,15 +34,7 @@ public class MovieController {
 	public String insert() {
 		return "movie/insert";
 	}
-	
-	@PostMapping("/insert")
-    public String insert (@ModelAttribute MovieDto movieDto) {
-        movieDao.insert(movieDto);
-
-        return "movie/insert";
-    }
-	
-	
+		
 	@PostMapping("/insert")
 	public String insert(
 			@ModelAttribute MovieDto movieDto,
