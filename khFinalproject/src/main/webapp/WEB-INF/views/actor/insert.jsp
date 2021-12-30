@@ -40,8 +40,12 @@
 		</div>
 		
 		<div class="row">
-			<label>직업</label>
-				<input type="text" name="actorJob">
+			<label>직업 선택</label>
+				<select name="actorJob">
+					<option>actor</option>
+					<option>director</option>
+					<option>staff</option>
+				</select>
 		</div>
 		
 		<button type="submit">등록</button>

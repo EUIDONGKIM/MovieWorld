@@ -6,6 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 
+
 <div class="container-1200 container-center">
 	<div class="row center">
 		<h2>게시판</h2>
@@ -32,7 +33,7 @@
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					
-					<td class="left">
+					<td class="left" style="text-align: left;">
 						<c:if test="${boardDto.hasDepth()}">
 							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1">
 										&nbsp;&nbsp;&nbsp;&nbsp;
