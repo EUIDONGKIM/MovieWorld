@@ -7,7 +7,7 @@
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '관리자'}"></c:set>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.css">
 <style>
 .float-container > .float-item-left:nth-child(1) {
 		width:35%;	
@@ -60,7 +60,7 @@
 </style>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
@@ -492,7 +492,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 			for(var i = 0 ; i < resp.length ; i++){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
-				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11);
+				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,5);
 				
 				template = template.replace("{{name}}",scheduleTimeDateTime);
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
