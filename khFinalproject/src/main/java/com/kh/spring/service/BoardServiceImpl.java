@@ -48,11 +48,9 @@ public class BoardServiceImpl  implements BoardService {
 			boardDto.setBoardGroupno(parent.getBoardGroupno());
 			boardDto.setBoardDepth(parent.getBoardDepth()+1);
 			boardDao.write1(boardDto);
-			System.out.println("어디야2");
 		}else {
 			boardDto.setBoardGroupno(sequence);
 			boardDao.write2(boardDto);
-			System.out.println("어디야3");
 		}
 		
 		//파일도 저장해야한다.
