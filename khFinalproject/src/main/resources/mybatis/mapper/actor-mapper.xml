@@ -18,7 +18,7 @@
 
 <insert id="insert" parameterType="ActorDto">
 	insert into actor values(
-	#{actorNo},
+	actor_seq.nextval,
 	#{actorName},
 	#{actorEngName},
 	#{actorBirth},
