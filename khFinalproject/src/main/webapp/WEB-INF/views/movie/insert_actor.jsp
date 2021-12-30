@@ -159,8 +159,8 @@
 
 	});
 </script>
-   
-    <template id="add-role-template">
+   <%-- 현재 template으로 되어있어서, 추가할 때 확인용으로 달아두신거, (추가가 실패해도 추가가 뜨도록 되어있음, db에서 실패되어도),,에이작스를 쓰면 --%>
+    <template id="add-role-template"> 
         <div class="row center">
             <label>영화인 번호 : </label>    
             <span>{{actorNo}}</span>
