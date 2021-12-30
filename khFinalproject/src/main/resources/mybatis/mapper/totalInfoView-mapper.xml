@@ -20,11 +20,15 @@
 	</select>
 	
 	<select id="listByMovie" parameterType="int" resultType="TotalInfoViewDto">
-		select * from total_info_view where movie_no = ${movieNo}
+		select * from total_info_view where movie_no = #{movieNo}
 	</select>
 
 	<select id="getByscheduleNo" parameterType="int" resultType="TotalInfoViewDto">
 		select * from total_info_view where schedule_no = #{scheduleNo}
+	</select>
+	
+	<select id="listByTheater" parameterType="int" resultType="TotalInfoViewDto">
+		select * from total_info_view where theater_no = #{theaterNo} 
 	</select>
 
 
