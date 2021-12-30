@@ -36,6 +36,14 @@ public class MovieController {
 	}
 	
 	@PostMapping("/insert")
+    public String insert (@ModelAttribute MovieDto movieDto) {
+        movieDao.insert(movieDto);
+
+        return "movie/insert";
+    }
+	
+	
+	@PostMapping("/insert")
 	public String insert(
 			@ModelAttribute MovieDto movieDto,
 			@RequestParam MultipartFile photo,
