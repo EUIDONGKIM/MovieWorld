@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<c:set var="grade" value="${grade}"></c:set>
+<c:set var="admin" value="${grade eq '운영자'}"></c:set>
 
 <h2>회원 정보 수정</h2>
 
@@ -39,6 +40,35 @@
 				<td><input type="tel" name="memberPhone"
 					value="${memberDto.memberPhone}"></td>
 			</tr>
+			<%--관리자 등급만 수정가능 구역  --%>
+			<c:if test="${admin}">
+				<tr>
+					<th>회원등급<th>
+					<td>
+						<select name="memberGrade" >
+							<option value="브론즈" >브론즈</option>
+							<option value="실버">실버</option>
+							<option value="다이아">다이아</option>
+							<option value="운영자">운영자</option>
+							<option value="정지">정지</option>
+					    </select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>포인트</th>
+					<td><input type="number" name="memberPoint" value="${memberDto.memberPoint}"></td>
+				</tr>
+					
+				<tr>
+					<th>가입일</th>
+					<td><input type="date" name="memberJoin" value="${memberDto.getMemberJoinDay()}" readonly></td>
+				</tr>
+				
+					
+			</c:if>
+	
+			
 
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="수정">

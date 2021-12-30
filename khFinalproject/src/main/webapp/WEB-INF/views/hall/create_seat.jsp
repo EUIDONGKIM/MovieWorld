@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.css"> -->
 <!-- 이미지가 안바껴서 강사님 코드 css에 넣어둠 (허락맡아야함) 현재는 테스트 이미지 -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.css">
     <style>
         *{
             box-sizing: border-box;
@@ -20,7 +20,7 @@
             padding:0.5rem;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.js"></script>
     <script>
         window.addEventListener("load", function(){
             var cinema = new Hacademy.Reservation("#cinema");

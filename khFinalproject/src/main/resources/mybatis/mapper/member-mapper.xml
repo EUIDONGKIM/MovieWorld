@@ -57,10 +57,16 @@
 		update member set member_pw = #{changePw}
 		where member_email = #{memberEmail}
 	</update>
-	
+	<!-- 회원삭제 -->
 	<delete id="quit" parameterType="String">
 		delete member where member_email = #{memberEmail}
 	</delete>
+	
+	<!-- 관리자회원탈퇴 -->
+	<delete id="adminDrop" parameterType="String">
+		delete member where member_no = #{memberNo}
+	</delete>
+	
 	<!-- 회원 수정 -->
 	
 	<update id="changeInformation" parameterType="MemberDto">
@@ -83,6 +89,7 @@
 			<if test="memberGrade != null">
 				member_grade = #{memberGrade},
 			</if>
+			
 		</set>
 		where member_email = #{memberEmail}
 	</update>

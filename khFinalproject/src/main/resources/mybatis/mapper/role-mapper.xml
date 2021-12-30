@@ -17,11 +17,8 @@
 <mapper namespace="role">
 	<insert id="insert" parameterType="RoleDto">
 		insert into role values(
-			role_seq.nextval,
 			#{actorNo},
-			#{movieNo},
-			#{roleType},
-			#{roleName}
+			#{movieNo}
 		)
 	</insert>
 </mapper>

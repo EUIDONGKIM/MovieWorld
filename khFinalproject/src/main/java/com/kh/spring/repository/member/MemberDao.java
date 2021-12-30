@@ -23,12 +23,14 @@ public interface MemberDao {
 //	boolean temporayPassword(String memberEmail , String memberName , String memberPhone , String temporayPassword);
 	boolean temporayPassword(MemberDto memberDto,String ChangePw);
 	//개인정보 변경
-	boolean changeInformation(MemberDto memberDto);
+	boolean changeInformation(MemberDto memberDto , String memberPw);
 	
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);
+	boolean adminDrop(int memberNo);
 
 	
 	
 	List<MemberDto> list();
+//	boolean changeInformation(MemberDto memberDto);
 }

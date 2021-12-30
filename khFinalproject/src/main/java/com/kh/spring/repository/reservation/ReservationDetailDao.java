@@ -16,4 +16,6 @@ public interface ReservationDetailDao {
 
 	void approve(int reservationNo);
 
+	void cancel(int reservationNo);
+
 }

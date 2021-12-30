@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>대표 결제 정보</h1>
 
 <ul>
@@ -13,7 +13,7 @@
 </ul>
 	<c:choose>
 		<c:when test="${reservationDto.reservationStatus == '결제완료'}">	
-			<h2><a href="cancel?resrvationNo=${reservationDto.reservationNo}">예매 취소</a></h2>
+			<h2><a href="cancel?reservationNo=${reservationDto.reservationNo}">예매 취소</a></h2>
 		</c:when>
 		<c:otherwise>
 			<h2>취소 완료</h2>
@@ -69,3 +69,4 @@
 		</ul>
 	</li>
 </ul>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

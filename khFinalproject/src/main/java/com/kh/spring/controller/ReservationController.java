@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
@@ -36,6 +37,7 @@ import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.KakaoPayService;
 import com.kh.spring.vo.KakaoPayApproveRequestVO;
 import com.kh.spring.vo.KakaoPayApproveResponseVO;
+import com.kh.spring.vo.KakaoPayCancelResponseVO;
 import com.kh.spring.vo.KakaoPayReadyRequestVO;
 import com.kh.spring.vo.KakaoPayReadyResponseVO;
 import com.kh.spring.vo.KakaoPaySearchResponseVO;
@@ -72,7 +74,7 @@ public class ReservationController {
 	private HallDao hallDao;
 	
 		@RequestMapping("/")
-		public String main(Model model) {
+		public String main(Model model,HttpSession session) {
 			//초기화면 10일치 날짜 생성.
 			List<String> dateList = new ArrayList<>();
 			Format f = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,11 +88,10 @@ public class ReservationController {
 			
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
+			String memberEmail = (String)session.getAttribute("ses");
 			
-			model.addAttribute("movieCountVOList",movieList);
-			model.addAttribute("theaterCityVOList",theaterList);
-			model.addAttribute("dateList",dateList);
 			
+			model.addAttribute("memberEmail",memberEmail);
 			return "reservation/main";
 		}
 		
@@ -193,6 +194,32 @@ public class ReservationController {
 			model.addAttribute("responseVO",responseVO);
 			
 			return "reservation/history_detail";
+		}
+		
+		@GetMapping("/cancel")
+		public String cancel(@RequestParam int reservationNo, RedirectAttributes attr) throws URISyntaxException {
+			//(1) 요청한 결제내역이 전체취소라면 더이상 진행하면 안된다
+			ReservationDto reservationDto = reservationDao.get(reservationNo);
+
+			//(2) 취소 가능한 금액을 계산해야 한다
+			long amount = reservationDto.getTotalAmount();
+
+			//(3) 취소 처리를 수행한다
+			KakaoPayCancelResponseVO responseVO = kakaoPayService.cancel(reservationDto.getTid(), amount);
+
+			//(4) DB를 갱신
+			reservationDao.cancel(reservationNo);
+			reservationDetailDao.cancel(reservationNo);
+
+			//(5) 상영회차의 금액 변경(통계 차감)
+			ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
+			scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
+			scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
+			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
+			scheduleTimeDao.reservationMinusUpdate(scheduleTimeDto);
+			
+			attr.addAttribute("reservationNo", reservationNo);
+			return "redirect:history_detail";
 		}
 		
 }

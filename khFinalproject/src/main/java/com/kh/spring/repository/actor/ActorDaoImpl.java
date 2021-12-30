@@ -28,5 +28,10 @@ public class ActorDaoImpl implements ActorDao{
 		return sqlSession.selectOne("actor.get", actorNo);
 	}
 
+	@Override
+	public List<ActorDto> listByJob(String actorJob) {
+		return sqlSession.selectList("actor.listByJob",actorJob);
+	}
+
 	
 }

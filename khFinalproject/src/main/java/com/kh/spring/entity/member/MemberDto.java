@@ -1,7 +1,5 @@
 package com.kh.spring.entity.member;
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data
@@ -16,10 +14,14 @@ public class MemberDto {
 	private String memberPhone;
 	private String memberGrade;
 	private int memberPoint;
-	private Date memberJoin;
+	private String memberJoin;
 	
 	public String getMemberBirthDay() {
 			return this.memberBirth.substring(0,10);
+	}
+	
+	public String getMemberJoinDay() {
+		return this.memberJoin.substring(0,10);
 	}
 
 

@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/store")
-
 public class StoreController {
-	@GetMapping("/store")
-	public String store() {
-		return "store/storeMain";
+	
+	@GetMapping("/storemain")
+	public String storemain() {
+		return "store/storemain";
 	}
+
 }

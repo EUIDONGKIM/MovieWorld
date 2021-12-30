@@ -1,6 +1,9 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.service.MovieService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/movie")
 public class MovieController {
@@ -54,8 +60,13 @@ public class MovieController {
 	}
 	
 	@RequestMapping("/insert_popup")
-	public String insertPopup(Model model) {
-		model.addAttribute("actorList",actorDao.list());
+	public String insertPopup(
+			@RequestParam String actorJob,
+			Model model) throws UnsupportedEncodingException {
+
+		model.addAttribute("actorList",actorDao.listByJob(actorJob));
+		model.addAttribute("actorJob",actorJob);
+		
 		return "movie/insert_actor_popup";
 	}
 	

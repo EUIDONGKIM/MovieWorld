@@ -51,5 +51,11 @@
  		schedule_time_sum =  schedule_time_sum + #{scheduleTimeSum}
  		where schedule_time_no = #{scheduleTimeNo}
  	</update>
- 	
+
+ 	 <update id="reservationMinusUpdate" parameterType="ScheduleTimeDto">
+ 		update schedule_time set
+ 		schedule_time_count = schedule_time_count - #{scheduleTimeCount},
+ 		schedule_time_sum =  schedule_time_sum - #{scheduleTimeSum}
+ 		where schedule_time_no = #{scheduleTimeNo}
+ 	</update>
 </mapper>

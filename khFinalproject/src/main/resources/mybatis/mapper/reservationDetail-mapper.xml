@@ -49,4 +49,8 @@
 		where reservation_no = #{reservationNo}
 	</update>
 	
+	<update id="cancel" parameterType="int">
+		update reservation_detail set reservation_detail_status = '결제취소'
+		where reservation_no = #{reservationNo}
+	</update>
 </mapper>
