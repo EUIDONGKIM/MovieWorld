@@ -89,6 +89,7 @@
 			<if test="memberGrade != null">
 				member_grade = #{memberGrade},
 			</if>
+			
 		</set>
 		where member_email = #{memberEmail}
 	</update>

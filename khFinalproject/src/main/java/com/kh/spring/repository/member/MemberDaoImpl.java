@@ -69,10 +69,19 @@ public class MemberDaoImpl implements MemberDao {
 	
 	}
 	
+
 	@Override
-	public boolean changeInformation(MemberDto memberDto) {
-		int count = sqlSession.update("member.changeInformation", memberDto);
-		return count > 0;
+	public boolean changeInformation(MemberDto memberDto,String memberPw) {
+		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
+		int count;
+		//단일조회된 비밀번호와 입력된 비밀번호가 맞다면 업데이트를 진행.
+		if(findDto !=null && encoder.matches(memberPw, findDto.getMemberPw())) {
+			count = sqlSession.update("member.changeInformation", memberDto);
+			return count > 0;			
+		}else {
+			return false;
+		}
+				
 	}
 
 	@Override
@@ -128,6 +137,8 @@ public class MemberDaoImpl implements MemberDao {
 		int result=sqlSession.update("member.temporayPassword",param);
 		return result>0;
 	}
+
+
 
 
 

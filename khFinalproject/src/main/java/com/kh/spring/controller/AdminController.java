@@ -78,4 +78,9 @@ public class AdminController {
 		}	
 	}
 	
+//	@GetMapping("/detail")
+//	public String memberDetail() {
+//		return "member/edit?memberNo";
+//	}
+	
 }
