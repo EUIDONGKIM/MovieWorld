@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.vo.TheaterCityVO;
@@ -29,6 +30,9 @@ public class TheaterController {
 	
 	@Autowired
 	private HallDao hallDao;
+	
+	@Autowired
+	private TotalInfoViewDao totalInfoViewDao;
 	
 	@GetMapping("/create")
 	public String create() {
@@ -52,10 +56,9 @@ public class TheaterController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int theaterNo, Model model) {
-		List<HallDto> hallList = hallDao.list(theaterNo);
-		TheaterDto theaterDto = theaterDao.get(theaterNo);
-		model.addAttribute("theaterDto",theaterDto);
-		model.addAttribute("hallList",hallList);
+		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
+		model.addAttribute("hallList",hallDao.list(theaterNo));
+		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));
 		
 		return "theater/detail";
 	}
