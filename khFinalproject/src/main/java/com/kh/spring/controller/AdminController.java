@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.repository.member.MemberDao;
@@ -63,24 +63,32 @@ public class AdminController {
 		model.addAttribute("list",list);
 		return "admin/memberlist";
 	}
-
-	@RequestMapping("/memberDrop")
-	@ResponseBody
+	
+	//관리자가 회원 요청에 의해서 회원 탈퇴를 시켜줘야 할경우
+	@GetMapping("/memberDrop")
 	public String memberDrop(@RequestParam int memberNo) {
-		System.out.println("탈퇴2");
-		boolean result=memberDao.adminDrop(memberNo);
-		if(result) {
-			System.out.println("탈퇴3");
-			return "admin/main";
-		}else {
-			System.out.println("탈퇴4");
-			return "admin/main?error?";
-		}	
+			boolean result=memberDao.adminDrop(memberNo);
+			if(result) {
+				return "admin/main";
+			}else {
+				return "admin/main?error?";
+			}	
 	}
 	
-//	@GetMapping("/detail")
-//	public String memberDetail() {
-//		return "member/edit?memberNo";
-//	}
+
+	
+	//관리자가 회원정보 수정
+	@GetMapping("/member/edit")
+	public String adminMemberEdit(@RequestParam int memberNo,Model model) {
+		model.addAttribute("memberDto",memberDao.get2(memberNo));
+		return "member/edit";
+	}
+	@PostMapping("/member/edit")
+	public String adminMemberEdit(@ModelAttribute MemberDto memberDto) {
+		memberDao.changeInformationAdmin(memberDto);
+		return "member/edit";
+	}
+	
+
 	
 }

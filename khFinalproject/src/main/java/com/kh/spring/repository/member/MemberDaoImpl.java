@@ -38,6 +38,11 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto get(String membeEmail) {
 		return sqlSession.selectOne("member.get", membeEmail);
 	}
+	
+	@Override
+	public MemberDto get2(int memberNo) {
+		return sqlSession.selectOne("member.get2", memberNo);
+	}
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
@@ -82,6 +87,12 @@ public class MemberDaoImpl implements MemberDao {
 			return false;
 		}
 				
+	}
+	
+	@Override
+	public boolean changeInformationAdmin(MemberDto memberDto) {
+		int count = sqlSession.update("member.changeInformation", memberDto);
+		return count > 0;			
 	}
 
 	@Override
@@ -137,6 +148,10 @@ public class MemberDaoImpl implements MemberDao {
 		int result=sqlSession.update("member.temporayPassword",param);
 		return result>0;
 	}
+
+
+
+
 
 
 
