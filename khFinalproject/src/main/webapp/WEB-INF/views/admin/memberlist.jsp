@@ -17,8 +17,8 @@
 	 		<th>회원등급</th>
 	 		<th>회원포인트</th>
 	 		<td>상세보기</td>
- 			<td>수정</td>
- 			<td>탈퇴</td>
+<!--  			<td>수정</td> -->
+<!--  			<td>탈퇴</td> -->
 	 	</tr>
  	</thead>
  	<tbody>
@@ -29,9 +29,9 @@
 	 			<td>${memberDto.memberNick}</td>
 	 			<td>${memberDto.memberGrade}</td>
 	 			<td>${memberDto.memberPoint}</td>
-	 			<td><a href="#">상세</a></td>
-	 			<td><a href="${root}/member/eidt?memberNo="${memberDto.memberNo}>수정</a></td>
-	 			<td><a href="memberDrop">탈퇴</a></td>
+	 			<td><a href="${root}/admin/member/edit?memberNo=${memberDto.memberNo}">상세</a></td>
+<%-- 	 			<td><a href="${root}/member/eidt?memberNo="${memberDto.memberNo}>수정</a></td> --%>
+<!-- 	 			<td><a href="memberDrop">탈퇴</a></td> -->
 	 		</tr>
  		</c:forEach>
  	</tbody>
