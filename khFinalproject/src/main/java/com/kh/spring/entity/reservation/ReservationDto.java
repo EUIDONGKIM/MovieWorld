@@ -11,7 +11,7 @@ public class ReservationDto {
 	private String tid;
 	private String itemName;
 	private int scheduleTimeNo;
-	private String scheduleTimeDateTime;
+	private Date scheduleTimeDateTime;
 	private int reservationTotalNumber;
 	private String buyTime;
 	private int pointUse;

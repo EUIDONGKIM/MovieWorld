@@ -170,6 +170,7 @@ loadList();
 
 function loadList(){
 	//첫 화면바로 띄워주기
+	movieRuntime = null;
 	movieNo = null;
 	theaterSido = null;
 	theaterNo = null;
@@ -261,9 +262,11 @@ function movieLoadList(){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
-				
+				template = template.replace("{{runtime}}",resp[i].movieRuntime);
+
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
+					movieRuntime = $(this).data("runtime");
 					movieNo = $(this).attr("value");	
 					movieName = $(this).data("name");
 					$("input[name=movieNo]").each(function(){
@@ -303,9 +306,11 @@ function movieSearchList(theaterSido,theaterNo){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
-				
+				template = template.replace("{{runtime}}",resp[i].movieRuntime);
+
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
+					movieRuntime = $(this).data("runtime");
 					movieNo = $(this).attr("value");
 					movieName = $(this).data("name");
 					scheduleDateList(movieNo,theaterNo);
@@ -497,9 +502,12 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 			for(var i = 0 ; i < resp.length ; i++){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
-				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
-				
-				template = template.replace("{{name}}",scheduleTimeDateTime);
+				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
+				console.log("일자 나오는거 확인",resp[i].scheduleTimeDateTime);
+				var checkDate = new Date(resp[i].scheduleTimeDateTime);
+				template = template.replace("{{name}}",checkDate);
+				checkDate.setMinutes(checkDate.getMinutes()+100);
+				console.log("일자 변경 확인",checkDate);
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
 				
 				var tag = $(template);
@@ -736,7 +744,7 @@ function cancelTempReservation(reservationKey){
 <template id="movie-list-template">
 	<div>
 		<label>
-		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}">
+		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}">
 		<span>{{grade}} {{name}}</span>		
 		</label>
 	</div>	
