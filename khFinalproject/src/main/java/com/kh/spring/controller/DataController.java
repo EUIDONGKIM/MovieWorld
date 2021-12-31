@@ -268,14 +268,13 @@ public class DataController {
 	}
 	
 	@GetMapping("/idcheck")
-	public String idCheck(@RequestParam String memberEmail,@RequestParam String check) {
-		MemberDto memberDto = new MemberDto();
-		memberDto.setMemberEmail(memberEmail);
-		memberDto.setMemberEmail(check);
-		
-		String result = "NNNNN";
-		if(memberDao.check(memberDto)) result = "NNNNO";
-		else result = "NNNNN";
-		return result;
+	public boolean idCheck(@RequestParam String memberEmail) {
+		MemberDto memberDto = memberDao.get(memberEmail);
+		if(memberDto == null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
