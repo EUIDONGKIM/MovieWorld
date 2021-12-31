@@ -32,4 +32,8 @@ public interface BoardDao {
 	void write1(BoardDto boardDto);
 
 	void write2(BoardDto boardDto);
+
+	int count1(String column, String keyword, String memberEmail);
+
+	List<BoardDto> search1(String column, String keyword, int begin, int end, String memberEmail);
 }
