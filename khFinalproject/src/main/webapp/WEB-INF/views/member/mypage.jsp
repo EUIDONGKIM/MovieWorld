@@ -20,11 +20,6 @@
         .b{
             border:1px solid black;
         }
-    </style>
-    <script>
-
-    
-    </script>     
 </head>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
@@ -75,7 +70,10 @@
                     <a href="mypage" class="list-group-item list-group-item-action active" style="text-align: center;">MY PAGE</a>
                     <a href="edit" class="list-group-item list-group-item-action ">회원정보수정하러가기</a>
                     <a href="quit" class="list-group-item list-group-item-action disabled ">회원탈퇴하기</a>
+
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action ">내가 작성한 게시글보기</a>
+
+
                     <a href="#" class="list-group-item list-group-item-action ">ㅇㅇ 하러가기</a>
                     <a href="#" class="list-group-item list-group-item-action ">ㅇㅇ 하러가기</a>
                     <a href="#" class="list-group-item list-group-item-action ">ㅇㅇ 하러가기</a>
@@ -89,8 +87,10 @@
                   </div>
             </div>
             <div class="col-md-10 b" style="height: 600px">
+
                 <div id="page">
                 </div>
+  
                 여기가 해당 벙보를 보여주는곳입니다.
                 여기가 해당 벙보를 보여주는곳입니다.
                 여기가 해당 벙보를 보여주는곳입니다.
