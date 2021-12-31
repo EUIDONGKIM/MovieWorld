@@ -521,8 +521,13 @@ function scheduleDateList(movieNo,theaterNo){
 
 			for(var i = 0 ; i < resp.length ; i++){
 				var checkDate = new Date(resp[i]);
+				console.log("목록날짜",checkDate);
 				console.log(checkDate>=date);
-				if(checkDate>=date){
+				date1 = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+				date2 = new Date(checkDate.getFullYear(),checkDate.getMonth(),checkDate.getDate());
+				console.log("현재날짜1",date1);
+				console.log("목록날짜2",date2);
+				if(date2>=date1){
 					
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeDate");
@@ -568,6 +573,11 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 			$(".schedule-time-date-time-list").empty();
 
 			for(var i = 0 ; i < resp.length ; i++){
+				var now = new Date().getTime();
+				var date = resp[i].scheduleTimeDateTime;
+				console.log("now",now);
+				console.log("date",date);
+				if(date>now){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
@@ -600,6 +610,8 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				});
 				
 				$(".schedule-time-date-time-list").append(tag);
+				
+				}
 			}
 			
 		},
