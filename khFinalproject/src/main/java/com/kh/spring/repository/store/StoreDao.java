@@ -1,8 +1,14 @@
 package com.kh.spring.repository.store;
 
-import com.kh.spring.entity.store.ProductDto;
+import java.util.List;
+
+import com.kh.spring.entity.store.StoreDto;
 
 public interface StoreDao {
+	void insert(StoreDto storeDto);
+	
+	boolean changeInformation(StoreDto storeDto);
 
-	public void productEnroll(ProductDto product);
+	List<StoreDto> list();
+	
 }

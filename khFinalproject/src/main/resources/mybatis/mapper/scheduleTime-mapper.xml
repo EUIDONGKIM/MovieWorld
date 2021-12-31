@@ -36,9 +36,11 @@
 		order by sdate
  	</select>
  
- 	 <select id="listByDate" parameterType="map" resultType="ScheduleTimeDto">
- 		select * from schedule_time where schedule_no=#{scheduleNo} and
- 		to_char(schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
+ 	 <select id="listByDate" parameterType="map" resultType="HallByScheduleTimeVO">
+ 	 	select * from schedule_time st
+        left outer join hall using(hall_no)
+        where st.schedule_no=#{scheduleNo} and
+ 		to_char(st.schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
  	</select>
  	
  	<select id="get" parameterType="int" resultType="ScheduleTimeDto">
