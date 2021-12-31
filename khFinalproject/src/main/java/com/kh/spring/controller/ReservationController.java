@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
@@ -89,14 +90,16 @@ public class ReservationController {
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
 			String memberEmail = (String)session.getAttribute("ses");
+			MemberDto memberDto = memberDao.get(memberEmail);
 			
-			
-			model.addAttribute("memberEmail",memberEmail);
+			model.addAttribute("memberDto",memberDto);
 			return "reservation/main";
 		}
 		
 		@PostMapping("/confirm")
-		public String confirm(@RequestParam int reservationNo,HttpSession session) throws URISyntaxException {
+		public String confirm(@RequestParam int reservationNo,@RequestParam int memberPoint,HttpSession session) throws URISyntaxException {
+			session.setAttribute("memberPoint", memberPoint);
+			
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
 			List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
 			
@@ -132,10 +135,12 @@ public class ReservationController {
 			String partner_order_id = (String) session.getAttribute("partner_order_id");
 			String partner_user_id = (String) session.getAttribute("partner_user_id");
 			String tid = (String) session.getAttribute("tid");
-		
+			int memberPoint = (int)session.getAttribute("memberPoint");
+			
 			session.removeAttribute("partner_order_id");
 			session.removeAttribute("partner_user_id");
 			session.removeAttribute("tid");
+			session.removeAttribute("memberPoint");
 			
 			KakaoPayApproveRequestVO requestVO = new KakaoPayApproveRequestVO();
 			requestVO.setTid(tid);
@@ -150,15 +155,20 @@ public class ReservationController {
 			reservationDto.setTid(tid);
 			reservationDto.setItemName(responseVO.getItem_name());
 			reservationDto.setReservationStatus("결제완료");
-			reservationDao.approve(reservationDto);
+			reservationDto.setPointUse(memberPoint);
 			
+			reservationDao.approve(reservationDto);
 			reservationDetailDao.approve(reservationDto.getReservationNo());
-			//모두 완료되면 해당 회차의 총 인원과 총 금액을 업데이트 시켜준다.
+			
+			//모두 완료되면 해당 회차의 총 인원과 총 금액을 업데이트 시켜준다. / 포인트 사용내역
 			ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
 			scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
 			scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
 			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 			scheduleTimeDao.reservationUpdate(scheduleTimeDto);
+			
+			int memberNo = (int)session.getAttribute("memberNo");
+			memberDao.usePoint(memberNo,memberPoint);
 			
 			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
 		}
@@ -197,7 +207,7 @@ public class ReservationController {
 		}
 		
 		@GetMapping("/cancel")
-		public String cancel(@RequestParam int reservationNo, RedirectAttributes attr) throws URISyntaxException {
+		public String cancel(@RequestParam int reservationNo, RedirectAttributes attr,HttpSession session) throws URISyntaxException {
 			//(1) 요청한 결제내역이 전체취소라면 더이상 진행하면 안된다
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
 
@@ -217,6 +227,9 @@ public class ReservationController {
 			scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
 			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 			scheduleTimeDao.reservationMinusUpdate(scheduleTimeDto);
+			
+			int memberNo = (int)session.getAttribute("memberNo");
+			memberDao.returnPoint(memberNo,reservationDto.getPointUse());
 			
 			attr.addAttribute("reservationNo", reservationNo);
 			return "redirect:history_detail";

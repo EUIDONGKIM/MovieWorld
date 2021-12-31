@@ -43,6 +43,7 @@
  		to_char(st.schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
  	</select>
  	
+ 	
  	<select id="get" parameterType="int" resultType="ScheduleTimeDto">
  		select * from schedule_time where schedule_time_no=#{scheduleTimeNo}
  	</select>
