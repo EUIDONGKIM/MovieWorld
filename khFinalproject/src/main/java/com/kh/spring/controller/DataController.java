@@ -2,6 +2,7 @@ package com.kh.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -42,6 +43,7 @@ import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.HallByScheduleTimeVO;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
+import com.kh.spring.vo.ShowRealTimeVO;
 import com.kh.spring.vo.TheaterCityVO;
 import com.kh.spring.vo.TheaterNameBySidoVO;
 
@@ -214,12 +216,34 @@ public class DataController {
 	}
 
 	@GetMapping("/getTotal4")
-	public List<HallByScheduleTimeVO> getTotal4(@RequestParam int movieNo,
+	public List<ShowRealTimeVO> getTotal4(@RequestParam int movieNo,
 			@RequestParam int theaterNo,
 			@RequestParam String scheduleTimeDate){
 		int scheduleNo = scheduleDao.getByMovieTheater(movieNo,theaterNo);
 
-		return scheduleTimeDao.listByDate(scheduleNo,scheduleTimeDate);
+		List<ShowRealTimeVO> list = new ArrayList<>();
+		List<HallByScheduleTimeVO> tempList = scheduleTimeDao.listByDate(scheduleNo,scheduleTimeDate);
+		
+
+		for(HallByScheduleTimeVO vo : tempList) {
+			ShowRealTimeVO showRealTimeVO = new ShowRealTimeVO();
+			
+			showRealTimeVO.setHallNo(vo.getHallNo());
+			showRealTimeVO.setHallType(vo.getHallType());
+			showRealTimeVO.setHallName(vo.getHallName());
+			showRealTimeVO.setHallSeat(vo.getHallSeat());
+			showRealTimeVO.setScheduleTimeNo(vo.getScheduleTimeNo());
+			showRealTimeVO.setScheduleNo(vo.getScheduleNo());
+			showRealTimeVO.setScheduleTimeDateTime(vo.getScheduleTimeDateTime());
+			showRealTimeVO.setScheduleTimeDiscountType(vo.getScheduleTimeDiscountType());
+			
+			int disabledSeat = reservationService.getSeatRest(vo.getScheduleTimeNo());
+			showRealTimeVO.setDisabledSeat(disabledSeat);
+			
+			list.add(showRealTimeVO);
+		}
+				
+		return list;
 	}
 	
 	@GetMapping("/getTotal5")

@@ -125,4 +125,16 @@
 		</set>
 		where member_email = #{memberEmail}
 	</update>
+	
+	<update id="updatePoint">
+		update member set member_point = member_point - #{memberPoint}
+		where member_no = #{memberNo}
+	</update>
+	
+	<update id="returnPoint">
+		update member set member_point = member_point + #{memberPoint}
+		where member_no = #{memberNo}
+	</update>
+	
+	
 </mapper>

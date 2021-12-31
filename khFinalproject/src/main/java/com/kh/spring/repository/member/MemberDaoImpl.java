@@ -168,6 +168,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
 	public boolean check(MemberDto memberDto) {
 		MemberDto findDto =sqlSession.selectOne("member.check",memberDto);
 		if(findDto !=null) { //인증성공시
@@ -178,6 +179,24 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	
+
+	public void usePoint(int memberNo, int memberPoint) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberNo",memberNo);
+		param.put("memberPoint",memberPoint);
+		
+		sqlSession.update("member.updatePoint",param);
+	}
+
+	@Override
+	public void returnPoint(int memberNo, int memberPoint) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberNo",memberNo);
+		param.put("memberPoint",memberPoint);
+		
+		sqlSession.update("member.returnPoint",param);
+	}
+
 
 
 
