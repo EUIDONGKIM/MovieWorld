@@ -20,4 +20,6 @@ public interface ScheduleTimeDao {
 
 	void reservationMinusUpdate(ScheduleTimeDto scheduleTimeDto);
 
+	List<Integer> getTimeNoByNoAndTimeDate(int scheduleNo, String scheduleTimeDate);
+
 	}
