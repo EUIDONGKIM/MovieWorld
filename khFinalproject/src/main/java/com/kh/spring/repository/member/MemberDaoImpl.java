@@ -167,6 +167,24 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.search",param);
 	}
 
+	@Override
+	public void usePoint(int memberNo, int memberPoint) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberNo",memberNo);
+		param.put("memberPoint",memberPoint);
+		
+		sqlSession.update("member.updatePoint",param);
+	}
+
+	@Override
+	public void returnPoint(int memberNo, int memberPoint) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("memberNo",memberNo);
+		param.put("memberPoint",memberPoint);
+		
+		sqlSession.update("member.returnPoint",param);
+	}
+
 
 
 

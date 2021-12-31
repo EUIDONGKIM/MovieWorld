@@ -3,8 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="login" value="${memberNo != null}"></c:set>
-<c:set var="grade" value="${grade}"></c:set>
+<c:set var="grade" value="${memberDto.memberGrade}"></c:set>
 <c:set var="admin" value="${grade eq '관리자'}"></c:set>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
@@ -65,7 +64,9 @@
 
 <script>
 $(function(){
-	var memberEmail = '${memberEmail}';
+	var memberEmail = '${memberDto.memberEmail}';
+	var memberPoint = '${memberDto.memberPoint}';
+	var usePoint=0;
 	console.log(memberEmail);
 	var movieNo;
 	var movieName;
@@ -97,6 +98,17 @@ $(function(){
     $(".page").eq(0).show();
 	
     var p = 0;
+    
+	$("input[name=memberPoint]").on("input",function(){
+		var point = $(this).val();
+		if(parseInt(point)>parseInt(memberPoint)){
+			alert("포인트가 부족합니다.");
+			$(this).val(parseInt(0));
+			return;
+		}else{
+			usePoint = point;
+		}
+	});
     
     $(".btn-next").click(function(e){
         e.preventDefault();
@@ -165,7 +177,7 @@ $(function(){
 		var form = $("<form>").attr("action", "${pageContext.request.contextPath}/reservation/confirm")
 		.attr("method", "post").addClass("send-form");
 		$("body").append(form);
-		
+		$("<input type='hidden' name='memberPoint'>").val(usePoint).appendTo(".send-form");
 		$("<input type='hidden' name='reservationNo'>").val(reservationKey).appendTo(".send-form");
 		form.submit();
 		}
@@ -225,7 +237,7 @@ function loadList(){
 	checkPay = null;
 	hallType = null;
 	scheduleTimeDiscountType = null;
-	
+	usePoint = 0;
 	 $(".seat-box").empty();
 	 $(".result").empty();
 	//seat / age 정보 초기화 ?
@@ -1025,6 +1037,17 @@ function cancelTempReservation(reservationKey){
 	
 	<h1>결제 상세 내역 확인</h1>
 	<div id="pay-detail-show"></div>
+	
+	<h1>포인트 사용</h1>
+	<div class="row">
+		<label>내 현재 포인트</label>
+		<span>${memberDto.memberPoint } 점</span>
+	</div>
+	
+	<div class="row">
+		<label>포인트 사용하기</label>
+		<input type="number" name="memberPoint" min="1000" value="0" step="100">
+	</div>
 	
 	<div class="row center">
 		<button class="btn-pay-confirm"><h1>결제 진행(카카오 페이)</h1></button>

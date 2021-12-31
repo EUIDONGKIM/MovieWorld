@@ -38,5 +38,7 @@ public interface MemberDao {
 	List<MemberDto> search(String column, String keyword, int begin, int end);
 	
 	List<MemberDto> list();
+	void usePoint(int memberNo, int memberPoint);
+	void returnPoint(int memberNo, int memberPoint);
 
 }
