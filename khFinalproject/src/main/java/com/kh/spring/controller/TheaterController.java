@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,12 @@ public class TheaterController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int theaterNo, Model model) {
+		LocalDate today = LocalDate.now();
+		List<LocalDate> dateList = new ArrayList<>();	
+		for(int i = 0 ; i < 7 ; i++) {
+			dateList.add(today.plusDays(i));
+		}
+		model.addAttribute("dateList",dateList);
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
 		model.addAttribute("hallList",hallDao.list(theaterNo));
 		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));

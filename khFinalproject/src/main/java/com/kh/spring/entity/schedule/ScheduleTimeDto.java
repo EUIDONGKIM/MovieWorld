@@ -2,13 +2,17 @@ package com.kh.spring.entity.schedule;
 
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
 public class ScheduleTimeDto {
 	private int scheduleTimeNo;
 	private int scheduleNo;
-	private Date scheduleTimeDateTime;
+	
+	//@DateTimeFormat(pattern = "yyyy-MM-dd't'HH:mm:ss")
+	private String scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
 	private int hallNo;
