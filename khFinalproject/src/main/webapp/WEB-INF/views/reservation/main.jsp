@@ -580,10 +580,9 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				
 				checkDate.setMinutes(checkDate.getMinutes()+movieRuntime);
 				
-				template = template.replace("{{name}}",resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes());
+				template = template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes());
 				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
-				template = template.replace("{{hallNo}}",resp[i].hallNo);
-
+				template = template.replace("{{hallType}}",resp[i].hallName+"["+resp[i].hallType+"]");
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
 				
 				var tag = $(template);
@@ -739,7 +738,8 @@ function getReservation(reservationKey){
 			var template = $("#reservation-template").html();
 			template = template.replace("{{movieName}}",movieName);
 			template = template.replace("{{theaterName}}",theaterName);
-			template = template.replace("{{scheduleTimeDateTime}}",scheduleTimeDateTime);
+			var date = new Date(scheduleTimeDateTime).toString();
+			template = template.replace("{{scheduleTimeDateTime}}",date);
 			template = template.replace("{{reservationTotalNumber}}",resp.reservationTotalNumber);
 			template = template.replace("{{totalAmount}}",resp.totalAmount);
 
