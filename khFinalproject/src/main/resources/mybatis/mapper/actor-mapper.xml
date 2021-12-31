@@ -18,7 +18,7 @@
 
 <insert id="insert" parameterType="ActorDto">
 	insert into actor values(
-	#{actorNo},
+	actor_seq.nextval,
 	#{actorName},
 	#{actorEngName},
 	#{actorBirth},
@@ -30,5 +30,9 @@
 
 	<select id="list" resultType="ActorDto">
 		select * from actor
+	</select>
+	
+	<select id="listByJob" parameterType="String" resultType="ActorDto">
+		select * from actor where actor_job=#{actorJob}
 	</select>
 </mapper>

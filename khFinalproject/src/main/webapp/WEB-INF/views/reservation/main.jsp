@@ -7,7 +7,7 @@
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '관리자'}"></c:set>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
 <style>
 .float-container > .float-item-left:nth-child(1) {
 		width:35%;	
@@ -60,11 +60,13 @@
 </style>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.16/cinema/hacademy-cinema.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
 $(function(){
+	var memberEmail = '${memberEmail}';
+	console.log(memberEmail);
 	var movieNo;
 	var movieName;
 	var theaterSido;
@@ -87,43 +89,52 @@ $(function(){
 	var reservationKey;
 	var checkPay;
 	
+	var movieRuntime;
+	var hallType;
+	var scheduleTimeDiscountType;
+	
 	$(".page").hide();
     $(".page").eq(0).show();
 	
     var p = 0;
     
-    
     $(".btn-next").click(function(e){
         e.preventDefault();
-        
-        if(${login}==false) {
+
+        if(!memberEmail) {
 			var confirm = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?")
         	if(confirm){
         		location.href = "${root}/member/login";
         	}
         	return;
         }
-        	
         
-		if(!scheduleTimeNo||!hallRows||!hallCols||!scheduleTimeDateTime) {
+		if(!scheduleTimeNo||!hallRows||!hallCols||!scheduleTimeDateTime||ageTotal==0) {
 			alert("항목을 선택하세요!");
 			return;
 		}
 		
-            var cinema = new Hacademy.Reservation("#cinema");
-            cinema.addChangeListener(function(seat){
-                print(this);
-            });
-            print(cinema);
-            function print(app){
-                document.querySelector(".result").textContent = app.getQueryString();
+		var cinema = new Hacademy.Reservation("#cinema");
+		
+		cinema.addBeforeChangeListener(function(seat){
+            if(this.getSelectedCount() == ageTotal){
+                alert("인원이 초과하였습니다.")
+                return false;//이벤트 진행 차단
             }
-
+        });
+		
+	    cinema.addChangeListener(function(seat){
+	        //this == cinema 앱
+	        seatTotal = this.getQueryString();
+	        console.log(seatTotal);
+	    });
 
         p++;
         $(".page").hide();
         $(".page").eq(p).show();
     });
+    
+    
 	
 	 $(".btn-prev").click(function(e){
          e.preventDefault();
@@ -160,11 +171,44 @@ $(function(){
 		}
 		
 	});
-	 
+	
+	$(".ageNormal").on("input",function(){
+		ageNormal = $(this).val();
+		ageTotal = 0;
+		ageTotal = parseInt(ageNormal)+parseInt(ageYoung)+parseInt(ageOld);
+		$(".ageTotal").val(ageTotal);
+		console.log(ageNormal);
+		console.log(ageYoung);
+		console.log(ageOld);
+		console.log(ageTotal);
+	}); 
+		
+	$(".ageYoung").on("input",function(){
+		ageYoung = $(this).val();
+		ageTotal = 0;
+		ageTotal = parseInt(ageNormal)+parseInt(ageYoung)+parseInt(ageOld);
+			$(".ageTotal").val(ageTotal);
+			console.log(ageNormal);
+			console.log(ageYoung);
+			console.log(ageOld);
+			console.log(ageTotal);
+	}); 	
+	
+	$(".ageOld").on("input",function(){
+		ageOld = $(this).val();
+		ageTotal = 0;
+		ageTotal = parseInt(ageNormal)+parseInt(ageYoung)+parseInt(ageOld);
+		$(".ageTotal").val(ageTotal);
+		console.log(ageNormal);
+		console.log(ageYoung);
+		console.log(ageOld);
+		console.log(ageTotal);
+	});
 loadList();
 
 function loadList(){
 	//첫 화면바로 띄워주기
+	movieRuntime = null;
 	movieNo = null;
 	theaterSido = null;
 	theaterNo = null;
@@ -173,14 +217,15 @@ function loadList(){
 	scheduleTimeNo = null;
 	hallRows = null;
 	hallCols = null;
-	 ageNormal=0;
-	 ageYoung=0;
-	 ageOld=0;
-	 ageTotal=0;
+	hallType = null;
+	scheduleTimeDiscountType = null;
 	seatNames = null;
 	seatTotal = null;
 	reservationKey = null;
 	checkPay = null;
+	hallType = null;
+	scheduleTimeDiscountType = null;
+	
 	 $(".seat-box").empty();
 	 $(".result").empty();
 	//seat / age 정보 초기화 ?
@@ -198,6 +243,21 @@ function loadList(){
 	
 	$(".seat-box").empty();
 	
+	var initNo = 0;
+	ageNormal=initNo;
+	ageYoung=initNo;
+	ageOld=initNo;
+	ageTotal=initNo;
+	$('input[name=ageNormal]').eq(0).prop("checked", true);
+	$('input[name=ageYoung]').eq(0).prop("checked", true);
+	$('input[name=ageOld]').eq(0).prop("checked", true);
+	
+	$(".ageTotal").val(initNo);
+	
+	$(".ageNormal").prop("disabled",true);
+	$(".ageYoung").prop("disabled",true);
+	$(".ageOld").prop("disabled",true);
+
 	movieLoadList();
 	sidoLoadList();
 }
@@ -256,9 +316,11 @@ function movieLoadList(){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
-				
+				template = template.replace("{{runtime}}",resp[i].movieRuntime);
+
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
+					movieRuntime = $(this).data("runtime");
 					movieNo = $(this).attr("value");	
 					movieName = $(this).data("name");
 					$("input[name=movieNo]").each(function(){
@@ -298,9 +360,11 @@ function movieSearchList(theaterSido,theaterNo){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
-				
+				template = template.replace("{{runtime}}",resp[i].movieRuntime);
+
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
+					movieRuntime = $(this).data("runtime");
 					movieNo = $(this).attr("value");
 					movieName = $(this).data("name");
 					scheduleDateList(movieNo,theaterNo);
@@ -451,8 +515,15 @@ function scheduleDateList(movieNo,theaterNo){
 			console.log("성공", resp);
 			
 			$(".schedule-time-date-list").empty();
-			
+			var date = new Date();
+			console.log("현재날짜",date);
+			var count = 0;
+
 			for(var i = 0 ; i < resp.length ; i++){
+				var checkDate = new Date(resp[i]);
+				console.log(checkDate>=date);
+				if(checkDate>=date){
+					
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeDate");
 				template = template.replace("{{name}}",resp[i]);
@@ -467,6 +538,13 @@ function scheduleDateList(movieNo,theaterNo){
 				});
 				
 				$(".schedule-time-date-list").append(tag);
+				count++;
+				}
+				
+				}
+				console.log(count);
+				if(count==0){
+					$(".schedule-time-date-list").text('해당 날짜의 상영일이 없습니다.');
 			}
 			
 		},
@@ -488,19 +566,37 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 		dataType : "json",
 		success:function(resp){
 			$(".schedule-time-date-time-list").empty();
-			
+
 			for(var i = 0 ; i < resp.length ; i++){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
-				scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11);
+				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
+
+				scheduleTimeDateTime = resp[i].scheduleTimeDateTime;
+				console.log("scheduleTimeDateTime",scheduleTimeDateTime);
 				
-				template = template.replace("{{name}}",scheduleTimeDateTime);
+				var checkDate = new Date(resp[i].scheduleTimeDateTime);
+				var firstTime = checkDate.getHours()+":"+checkDate.getMinutes();
+				
+				checkDate.setMinutes(checkDate.getMinutes()+movieRuntime);
+				
+				template = template.replace("{{name}}",resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes());
+				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
+				template = template.replace("{{hallNo}}",resp[i].hallNo);
+
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
 				
 				var tag = $(template);
-				
+
 				tag.find("input[type=radio]").on("input",function(){
 					scheduleTimeNo = $(this).attr("value");
+					scheduleTimeDiscountType = $(this).data("scheduleTimeDiscountType");
+					
+					$(".ageNormal").prop("disabled",false);
+					$(".ageYoung").prop("disabled",false);
+					$(".ageOld").prop("disabled",false);
+					
+					
 					getHallRowsAndCols(scheduleTimeNo);
 				});
 				
@@ -514,6 +610,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 	});
 }
 
+
 function getHallRowsAndCols(scheduleTimeNo){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal5",
@@ -525,7 +622,6 @@ function getHallRowsAndCols(scheduleTimeNo){
 		success:function(resp){
 			hallRows = resp.hallRows;
 			hallCols = resp.hallCols;
-			
 			getSeat(scheduleTimeNo);
 		},
 		error:function(e){
@@ -533,6 +629,7 @@ function getHallRowsAndCols(scheduleTimeNo){
 		}
 	});
 }
+
 
 function getSeat(scheduleTimeNo){
 	$.ajax({
@@ -554,29 +651,6 @@ function getSeat(scheduleTimeNo){
 			
 			var tag = $(template);
 
-			tag.find("input[name=ageNormal]").on("input",function(){
-				ageNormal = $(this).val();
-				$("input[name=ageTotal]")
-				.val(parseInt($("input[name=ageNormal]").val())
-				+parseInt($("input[name=ageYoung]").val())
-				+parseInt($("input[name=ageOld]").val()));
-			}); 
-				
-			tag.find("input[name=ageYoung]").on("input",function(){
-				ageYoung = $(this).val();
-				$("input[name=ageTotal]")
-				.val(parseInt($("input[name=ageNormal]").val())
-				+parseInt($("input[name=ageYoung]").val())
-				+parseInt($("input[name=ageOld]").val()));
-			}); 	
-			tag.find("input[name=ageOld]").on("input",function(){
-				ageOld = $(this).val();
-				$("input[name=ageTotal]")
-				.val(parseInt($("input[name=ageNormal]").val())
-				+parseInt($("input[name=ageYoung]").val())
-				+parseInt($("input[name=ageOld]").val()));
-			}); 
-			
 			tag.find(".btn-pay").click(function(e){
 	            p++;
 	            $(".page").hide();
@@ -586,7 +660,7 @@ function getSeat(scheduleTimeNo){
 			tag.find(".seat-send-form").submit(function(e){
 	        	e.preventDefault();
 	        	var seatData = $(".result").text();
-				TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld);
+				TempReservation(seatTotal,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld);
 	        });
 			
 			for(var i=0 ; i<resp.length ; i++){
@@ -598,25 +672,20 @@ function getSeat(scheduleTimeNo){
 				spanTemplate = spanTemplate.replace("{{col}}",resp[i].seatCols);
 				addDiv.append(spanTemplate);
 				
-				addDiv.find(".chk-seat").on("input",function(){
-					if(!ageTotal){
-						alert("인원수를 선택해주세요!");
-						return;
-					}
-				});
 				
 				tag.find(".cinema-seat-area").append(addDiv);
 				
 			}
 
 			$(".seat-box").append(tag);
+			
 		},
 		error:function(e){
 			console.log("실패", e);
 		}
 	});
 }
-
+			
 function getReservationKey(){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getReservationKey",
@@ -731,7 +800,7 @@ function cancelTempReservation(reservationKey){
 <template id="movie-list-template">
 	<div>
 		<label>
-		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}">
+		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
 		<span>{{grade}} {{name}}</span>		
 		</label>
 	</div>	
@@ -799,6 +868,39 @@ function cancelTempReservation(reservationKey){
 				</div>
 		</div>
 		
+		<div class="float-item-left">
+			<div class="row"><h2>인원 선택</h2></div>
+				<div class="flex-container">
+					<div class="row">
+					    <span>일반:</span>
+					    0:<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>
+					    1:<input type="radio" name="ageNormal" class="ageNormal" value="1">
+					    2:<input type="radio" name="ageNormal" class="ageNormal" value="2">
+					    3:<input type="radio" name="ageNormal" class="ageNormal" value="3">
+					    </div>
+					    
+					    <div class="row">
+					    <span>/ 청소년:</span>
+					    0:<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>
+					    1:<input type="radio" name="ageYoung" class="ageYoung" value="1">
+					    2:<input type="radio" name="ageYoung" class="ageYoung" value="2">
+					    3:<input type="radio" name="ageYoung" class="ageYoung" value="3">
+					    </div>
+					    
+					    <div class="row">
+					    <span>/ 경로:</span>
+					    0:<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>
+					    1:<input type="radio" name="ageOld" class="ageOld" value="1">
+					    2:<input type="radio" name="ageOld" class="ageOld" value="2">
+					    3:<input type="radio" name="ageOld" class="ageOld" value="3">
+			    		</div>
+			    		
+					    <div class="row">
+					    	<span>총 명:</span><input type="number" name="ageTotal" class="ageTotal" value="0" readonly> 
+					    </div>	
+				</div>
+		</div>
+		
 	</div>
 	
 	<div class="row center">
@@ -813,12 +915,7 @@ function cancelTempReservation(reservationKey){
 	<div class="float-box center">
 		<div>
 		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
-		
-			<span>일반:</span><input type="number" name="ageNormal" value="0" min="0" data-age-no="1">
-			<span>청소년:</span><input type="number" name="ageYoung" value="0" min="0" data-age-no="2">
-			<span>경로:</span><input type="number" name="ageOld" value="0" min="0" data-age-no="3">  
-			<span>총 명:</span><input type="number" name="ageTotal" value="0" min="0" data-age-no="4"> 
-			
+
 			<div id="cinema" class="cinema-wrap" data-name="seat">
 				<div class="cinema-screen"><h3>스크린</h3></div>
 					
@@ -835,24 +932,18 @@ function cancelTempReservation(reservationKey){
 
 <template id="span-template">
 <span>{{row}}-{{col}}</span>
-</template>
-  		 
-  		 
+</template> 
   		 
   		 
 	<div class="seat-box">
 		
 	</div>
 
-
-    <h1 align="center">전송되는 데이터 형태</h1>
-
-    <div class="result">         
-    </div>
+        <div id="seat-send-result"></div>
 
 	
 	<div class="row center">
-		<button class="btn-prev btn-seat-cancel"><h1>이전 단계</h1></button>
+		<button class="btn-prev btn-seat-cancel"><h1>다시 선택하기</h1></button>
 	</div>
 </div>
 
@@ -908,7 +999,10 @@ function cancelTempReservation(reservationKey){
 		</div>
 	</div>
 </template>	
-
+	<div class="row">
+		<h1>포인트 및 쿠폰 사용 란 추가</h1>
+	</div>
+	
 	<h1>결제 내역 확인</h1>
 	<div id="pay-result-show"></div>
 	

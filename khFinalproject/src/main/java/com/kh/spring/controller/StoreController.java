@@ -52,6 +52,7 @@ public class StoreController {
 	public String main() {
 		return "store/storeMain";
 	}
+
 	@GetMapping("/storeInsert")
 	public String insert() {
 		return "store/storeInsert";
@@ -96,3 +97,4 @@ public class StoreController {
 		return "store/storeEditSuccess";
 	}
 }
+

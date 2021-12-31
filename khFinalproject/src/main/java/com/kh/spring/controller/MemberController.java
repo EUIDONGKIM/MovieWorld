@@ -149,11 +149,11 @@ public class MemberController {
 			,Model model ,@ModelAttribute MemberDto memberDto ,HttpSession session) {
 		MemberDto isPass=memberDao.findPw(memberName, memberEmail, memberPhone);
 		//6자리의 랜덤숫자생성
-		String number = randomUtil.generateRandomNumber(6);
+		String tmpPw = randomUtil.generateRandomPassword(10);
 		
 		if(isPass!=null) {
 			//6자리의 난수 비밀번호 생성
-			isPass.setMemberPw(number);
+			isPass.setMemberPw(tmpPw);
 			
 			String chagePw = isPass.getMemberPw();
 		
@@ -198,8 +198,6 @@ public class MemberController {
 	@PostMapping("/quit")
 	public String quit(String memberPw,HttpSession session) {
 		String memberEmail = (String)session.getAttribute("ses");
-		System.out.println(memberPw);
-		System.out.println(memberEmail);
 		boolean result =memberDao.quit(memberEmail, memberPw);
 		if(result) {
 			session.removeAttribute("ses");
@@ -219,18 +217,22 @@ public class MemberController {
 	@GetMapping("/edit")
 	public String edit(HttpSession session, Model model) {
 		String memberEmail = (String) session.getAttribute("ses");
+		//관리자만 수정가능하게 등급도 같이 보내준다.
+		String grade = (String)session.getAttribute("grade");
 		MemberDto memberDto = memberDao.get(memberEmail);
-
+		
+		model.addAttribute("grade",grade);
 		model.addAttribute("memberDto", memberDto);
 		return "member/edit";
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute MemberDto memberDto, HttpSession session) {
+	public String edit(@ModelAttribute MemberDto memberDto, HttpSession session
+			,@RequestParam String memberPw) {
 //		String memberEmail = (String) session.getAttribute("ses");
-//		memberDto.setMemberEmail(memberEmail);
+//		memberDao.get(memberEmail);
 
-		boolean result = memberDao.changeInformation(memberDto);
+		boolean result = memberDao.changeInformation(memberDto,memberPw);
 		if (result) {
 			return "redirect:edit_success";
 		} else {

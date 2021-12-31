@@ -38,6 +38,11 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto get(String membeEmail) {
 		return sqlSession.selectOne("member.get", membeEmail);
 	}
+	
+	@Override
+	public MemberDto get2(int memberNo) {
+		return sqlSession.selectOne("member.get2", memberNo);
+	}
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
@@ -69,10 +74,25 @@ public class MemberDaoImpl implements MemberDao {
 	
 	}
 	
+
 	@Override
-	public boolean changeInformation(MemberDto memberDto) {
+	public boolean changeInformation(MemberDto memberDto,String memberPw) {
+		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
+		int count;
+		//단일조회된 비밀번호와 입력된 비밀번호가 맞다면 업데이트를 진행.
+		if(findDto !=null && encoder.matches(memberPw, findDto.getMemberPw())) {
+			count = sqlSession.update("member.changeInformation", memberDto);
+			return count > 0;			
+		}else {
+			return false;
+		}
+				
+	}
+	
+	@Override
+	public boolean changeInformationAdmin(MemberDto memberDto) {
 		int count = sqlSession.update("member.changeInformation", memberDto);
-		return count > 0;
+		return count > 0;			
 	}
 
 	@Override
@@ -82,6 +102,12 @@ public class MemberDaoImpl implements MemberDao {
 		memberDto.setMemberPw(memberPw);
 		int count = sqlSession.delete("member.quit", memberDto);
 		return count > 0;
+	}
+	
+	@Override
+	public boolean adminDrop(int memberNo) {
+		int result = sqlSession.delete("member.adminDrop",memberNo);
+		return result>0;
 	}
 
 	@Override
@@ -122,5 +148,31 @@ public class MemberDaoImpl implements MemberDao {
 		int result=sqlSession.update("member.temporayPassword",param);
 		return result>0;
 	}
+
+	@Override
+	public int count(String column, String keyword) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		return sqlSession.selectOne("member.count",param);
+	}
+
+	@Override
+	public List<MemberDto> search(String column, String keyword, int begin, int end) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		param.put("begin",begin);
+		param.put("end",end);
+		return sqlSession.selectList("member.search",param);
+	}
+
+
+
+
+
+
+
+
 
 }

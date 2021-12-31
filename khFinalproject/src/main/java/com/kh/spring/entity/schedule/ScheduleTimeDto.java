@@ -1,12 +1,14 @@
 package com.kh.spring.entity.schedule;
 
+import java.sql.Date;
+
 import lombok.Data;
 
 @Data
 public class ScheduleTimeDto {
 	private int scheduleTimeNo;
 	private int scheduleNo;
-	private String scheduleTimeDateTime;
+	private Date scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;
 	private int hallNo;

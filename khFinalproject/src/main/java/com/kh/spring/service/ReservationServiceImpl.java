@@ -153,7 +153,9 @@ public class ReservationServiceImpl implements ReservationService {
 					
 					if(!reservationDetailList.isEmpty()) {		
 						for(ReservationDetailDto reservationDetailDto : reservationDetailList) {
-							if(seatDto.getSeatNo() == reservationDetailDto.getSeatNo()) {
+							if(!reservationDetailDto.getReservationDetailStatus().equals("결제취소") && 
+								seatDto.getSeatNo() == reservationDetailDto.getSeatNo()) {
+								
 								reservationVO.setSeatStatus("disabled");
 								break;
 							}

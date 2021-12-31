@@ -151,16 +151,11 @@ public class DataController {
 	@PostMapping("/addRole")
 	public void addRole(
 			@RequestParam int movieNo,
-			@RequestParam int actorNo,
-			@RequestParam String roleType,
-			@RequestParam String roleName
+			@RequestParam int actorNo
 			) {
 		RoleDto roleDto = new RoleDto();
 		roleDto.setActorNo(actorNo);
 		roleDto.setMovieNo(movieNo);
-		roleDto.setRoleName(roleName);
-		roleDto.setRoleType(roleType);
-		
 		roleDao.insert(roleDto);
 	}
 	
@@ -229,6 +224,7 @@ public class DataController {
 
 		return hallDao.get(scheduleTimeDto.getHallNo());
 	}
+
 	
 	@GetMapping("/seat")
 	public List<ReservationVO> getSeat(@RequestParam int scheduleTimeNo) {

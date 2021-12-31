@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,8 @@ public class MovieServiceImpl implements MovieService{
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
 	//저장용 폴더/
-	private File directory = new File("C:\\Users\\USER\\upload\\movie");
+	@Value("${config.rootpath}")
+	public String directory;
 		
 	@Override
 	public int insert(MovieDto movieDto, MultipartFile photo, List<MultipartFile> attach) throws IllegalStateException, IOException {

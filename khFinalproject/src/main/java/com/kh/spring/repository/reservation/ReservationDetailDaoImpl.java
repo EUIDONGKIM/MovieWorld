@@ -39,4 +39,9 @@ public class ReservationDetailDaoImpl implements ReservationDetailDao{
 		sqlSession.update("reservationDetail.approve",reservationNo);
 	}
 
+	@Override
+	public void cancel(int reservationNo) {
+		sqlSession.update("reservationDetail.cancel",reservationNo);
+	}
+
 }

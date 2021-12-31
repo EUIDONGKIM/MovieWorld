@@ -17,7 +17,7 @@
 <mapper namespace="member">
 	<!-- 조회 -->
 	<select id="list" resultType="MemberDto">
-		select * from member
+		select * from member order by member_no desc
 	</select>
 	
 	<!-- 회원가입 -->
@@ -35,6 +35,10 @@
 		select * from member where member_email = #{memeberEmail}
 	</select>
 	
+	<!-- PK로 단일조회 -->
+	<select id="get2" parameterType="int" resultType="MemberDto">
+		select * from member where member_no = #{memberNo}
+	</select>
 	<!-- 아이디찾기 -->
 	<select id="findId" parameterType="map" resultType="MemberDto">
 		select member_email from member where member_name=#{memberName} and member_phone=#{memberPhone}
@@ -44,6 +48,29 @@
 	<select id="findPw" parameterType="map" resultType="MemberDto">
 		select member_pw from member where member_name=#{memberName} and member_email=#{memberEmail} and member_phone=#{memberPhone} 
 	</select>
+	
+	<!-- 검색 및 페이지네이션 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from member
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="MemberDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from member
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		order by member_no desc
+		)tmp) where rn between #{begin} and #{end}
+	</select>	
 	
 	<!-- 임시비밀번호로  변경 -->
 	<update id="temporayPassword" parameterType="map">
@@ -57,10 +84,16 @@
 		update member set member_pw = #{changePw}
 		where member_email = #{memberEmail}
 	</update>
-	
+	<!-- 회원삭제 -->
 	<delete id="quit" parameterType="String">
 		delete member where member_email = #{memberEmail}
 	</delete>
+	
+	<!-- 관리자회원탈퇴 -->
+	<delete id="adminDrop" parameterType="int">
+		delete member where member_no = #{memberNo}
+	</delete>
+	
 	<!-- 회원 수정 -->
 	
 	<update id="changeInformation" parameterType="MemberDto">
@@ -83,6 +116,7 @@
 			<if test="memberGrade != null">
 				member_grade = #{memberGrade},
 			</if>
+			
 		</set>
 		where member_email = #{memberEmail}
 	</update>

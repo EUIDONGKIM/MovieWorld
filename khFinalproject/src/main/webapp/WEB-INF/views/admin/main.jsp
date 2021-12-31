@@ -6,8 +6,8 @@
 
 <h1> 관리자 메뉴 </h1>
 
-<h2>회원 목록(관리)</h2>
 
+<h2><a href="${root}/admin/memberlist">회원 목록(관리)</a></h2>
 <h2><a href="${root}/admin/movieInfo">영화 정보 관리</a></h2>
 <h2><a href="${root}/admin/actorInfo">영화인 정보 관리</a></h2>
 
@@ -15,7 +15,7 @@
 <h2><a href="${root}/admin/hall">상영관 정보 관리</a></h2>
 <h2><a href="${root}/admin/schedule">상영 영화 관리</a></h2>
 
-<h2>금액 관리(영화 금액 설정/ 할인 금액 설정)</h2>
+<h2><a href="${root}/admin/price">영화관람료 관리</a></h2>
 
 <h2>통계 현황</h2>
 

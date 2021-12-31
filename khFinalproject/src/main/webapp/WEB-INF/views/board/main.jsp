@@ -6,6 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 
+
 <div class="container-1200 container-center">
 	<div class="row center">
 		<h2>게시판</h2>
@@ -32,7 +33,7 @@
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					
-					<td class="left">
+					<td class="left" style="text-align: left;">
 						<c:if test="${boardDto.hasDepth()}">
 							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1">
 										&nbsp;&nbsp;&nbsp;&nbsp;
@@ -120,19 +121,19 @@
 					<c:when test="${boardSearchVO.columnIs('board_title')}">
 						<option value="board_title" selected>제목</option>
 						<option value="board_content">내용</option>
-						<option value="board_writer">작성자</option>
+						<option value="member_email">작성자</option>
 					</c:when>
 					
 					<c:when test="${boardSearchVO.columnIs('board_content')}">
 						<option value="board_title">제목</option>
 						<option value="board_content" selected>내용</option>
-						<option value="board_writer">작성자</option>
+						<option value="member_email">작성자</option>
 					</c:when>
 					
 					<c:otherwise>
 						<option value="board_title">제목</option>
 						<option value="board_content">내용</option>
-						<option value="board_writer" selected>작성자</option>
+						<option value="member_email" selected>작성자</option>
 					</c:otherwise>
 				</c:choose>
 			</select>

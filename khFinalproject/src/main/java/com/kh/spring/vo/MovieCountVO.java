@@ -7,5 +7,6 @@ public class MovieCountVO {
 	private int movieNo;
 	private String movieTitle;
 	private String movieGrade;
+	private int movieRuntime;
 	private int count;
 }

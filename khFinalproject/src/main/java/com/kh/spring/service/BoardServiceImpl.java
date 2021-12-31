@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,8 @@ public class BoardServiceImpl  implements BoardService {
 	@Autowired
 	private BoardFileDao boardFileDao;
 	//저장용 폴더
-	private File directory = new File("C:\\Users\\USER\\upload");
+	@Value("${config.rootpath}")
+	public String directory;
 
 	@Override
 	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
@@ -32,10 +34,7 @@ public class BoardServiceImpl  implements BoardService {
 		boardSearchVO.setCount(count);
 		boardSearchVO.calculate();
 		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd());
-		log.debug("boardSearchVO는?@@@@@@@@{}",boardSearchVO);
 		boardSearchVO.setList(list);
-		log.debug("list는?@@@@@@@@{}",list);
-	
 		return boardSearchVO;
 	}
 
@@ -49,11 +48,9 @@ public class BoardServiceImpl  implements BoardService {
 			boardDto.setBoardGroupno(parent.getBoardGroupno());
 			boardDto.setBoardDepth(parent.getBoardDepth()+1);
 			boardDao.write1(boardDto);
-			System.out.println("어디야2");
 		}else {
 			boardDto.setBoardGroupno(sequence);
 			boardDao.write2(boardDto);
-			System.out.println("어디야3");
 		}
 		
 		//파일도 저장해야한다.

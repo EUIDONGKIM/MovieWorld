@@ -9,6 +9,8 @@ public interface MemberDao {
 	void join(MemberDto memberDto);
 	//단일 조회
 	MemberDto get(String memberEmail);
+	//관리자용 단일조회
+	MemberDto get2(int memberNo);
 	//로그인
 	MemberDto login(MemberDto memberDto);
 	
@@ -22,13 +24,19 @@ public interface MemberDao {
 	//임시 비빌번호 변경
 //	boolean temporayPassword(String memberEmail , String memberName , String memberPhone , String temporayPassword);
 	boolean temporayPassword(MemberDto memberDto,String ChangePw);
+	
 	//개인정보 변경
-	boolean changeInformation(MemberDto memberDto);
+	boolean changeInformation(MemberDto memberDto , String memberPw);
+	//관리자자용 개인정보변경
+	boolean changeInformationAdmin(MemberDto memberDto);
 	
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);
-
-	
+	boolean adminDrop(int memberNo);
+	//검색
+	int count(String column, String keyword);
+	List<MemberDto> search(String column, String keyword, int begin, int end);
 	
 	List<MemberDto> list();
+
 }

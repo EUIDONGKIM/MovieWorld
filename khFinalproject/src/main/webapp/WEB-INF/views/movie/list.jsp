@@ -30,16 +30,20 @@
 	</thead>
 	
 	<tbody>
-		<c:forEach var="movieDto" items="${movieDto}">
+		<c:forEach var="movieListDetailDto" items="${movieListDetailDto}">
 			<tr>
-				<td>${movieDto.movieTitle}</td>
-				<td>${movieDto.movieEngTitle}</td>
-				<td>${movieDto.movieGrade}</td>
-				<td>${movieDto.movieType}</td>
-				<td>${movieDto.movieCountry}</td>
-				<td>${movieDto.movieOpening}</td>
-				<td>${movieDto.movieRuntime}</td>
-				<td>${movieDto.photo}</td>
+				<td>${movieListDetailDto.movieTitle}</td>
+				<td>${movieListDetailDto.movieEngTitle}</td>
+				<td>${movieListDetailDto.movieGrade}</td>
+				<td>${movieListDetailDto.movieType}</td>
+				<td>${movieListDetailDto.movieContry}</td>
+				<td>${movieListDetailDto.movieOpening}</td>
+				<td>${movieListDetailDto.movieRuntime}</td>
+				<td>${movieListDetailDto.moviePhotoNo}</td> <%--..? --%>
+				<%--vo로 빼버려~!! 
+				수정, 삭제 스케줄꺼 훔쳐오기ㅎㅅㅎ
+				--%>
+			
 				
 		</c:forEach>	
 	</tbody>
