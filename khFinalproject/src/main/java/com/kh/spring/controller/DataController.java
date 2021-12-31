@@ -37,6 +37,7 @@ import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.ReservationService;
+import com.kh.spring.vo.HallByScheduleTimeVO;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
 import com.kh.spring.vo.TheaterCityVO;
@@ -210,7 +211,7 @@ public class DataController {
 	}
 
 	@GetMapping("/getTotal4")
-	public List<ScheduleTimeDto> getTotal4(@RequestParam int movieNo,
+	public List<HallByScheduleTimeVO> getTotal4(@RequestParam int movieNo,
 			@RequestParam int theaterNo,
 			@RequestParam String scheduleTimeDate){
 		int scheduleNo = scheduleDao.getByMovieTheater(movieNo,theaterNo);
