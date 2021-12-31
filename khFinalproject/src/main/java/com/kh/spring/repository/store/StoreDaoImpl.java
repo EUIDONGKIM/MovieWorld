@@ -21,6 +21,18 @@ public class StoreDaoImpl implements StoreDao{
 		System.out.println("2");
 	}
 
+	@Override
+	public boolean changeInformation(StoreDto storeDto) {
+		int count = sqlSession.update("product.changeInformation", storeDto);
+		return count > 0;
+	}
+
+	@Override
+	public List<StoreDto> list() {
+		List<StoreDto> list = sqlSession.selectList("store.list");
+		return list;
+	}
+
 	
 
 
