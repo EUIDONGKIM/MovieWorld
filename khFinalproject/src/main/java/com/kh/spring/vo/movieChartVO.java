@@ -1,9 +1,9 @@
-package com.kh.spring.entity.movie;
+package com.kh.spring.vo;
 
 import lombok.Data;
 
 @Data
-public class movieListDto {
+public class movieChartVO {
 	private int movieNo;
 	private String movieTitle;
 	private String movieGrade;

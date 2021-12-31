@@ -25,13 +25,13 @@
 	</thead>
 	
 	<tbody>
-		<c:forEach var="movieListDto" items="${list}">
+		<c:forEach var="movieDto" items="${list}">
 			<tr>
-				<td>${movieListDto.movieNo}</td>
-				<td>${movieListDto.movieTitle}</td>
-				<td>${movieListDto.movieGrade}</td>
-				<td>${movieListDto.movieType}</td>
-				<td>${movieListDto.movieOpening}</td>
+				<td>${movieDto.movieNo}</td>
+				<td>${movieDto.movieTitle}</td>
+				<td>${movieDto.movieGrade}</td>
+				<td>${movieDto.movieType}</td>
+				<td>${movieDto.movieOpening}</td>
 				<td><a href="#">수정 및 삭제</a></td>
 			</tr>	
 		</c:forEach>	
