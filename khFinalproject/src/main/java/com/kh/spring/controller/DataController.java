@@ -215,7 +215,9 @@ public class DataController {
 			@RequestParam int theaterNo,
 			@RequestParam String scheduleTimeDate){
 		int scheduleNo = scheduleDao.getByMovieTheater(movieNo,theaterNo);
-
+		List<Integer> scheduleTimeNoList = scheduleTimeDao.getTimeNoByNoAndTimeDate(scheduleNo,scheduleTimeDate);
+		
+				
 		return scheduleTimeDao.listByDate(scheduleNo,scheduleTimeDate);
 	}
 	

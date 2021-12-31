@@ -8,10 +8,9 @@ import lombok.Data;
 
 @Data
 public class ScheduleTimeDto {
+
 	private int scheduleTimeNo;
 	private int scheduleNo;
-	
-	//@DateTimeFormat(pattern = "yyyy-MM-dd't'HH:mm:ss")
 	private String scheduleTimeDateTime;
 	private String scheduleTimeDiscountType;
 	private int scheduleTimeDiscountPrice;

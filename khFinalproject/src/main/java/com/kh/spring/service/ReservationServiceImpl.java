@@ -165,7 +165,32 @@ public class ReservationServiceImpl implements ReservationService {
 				}
 				return reservationVOList;
 	}
+	
+	@Override
+	public int getSeatRest(int scheduleTimeNo) {
+		//길기때문에 추후 서비스로 넘기거나 레스트 컨트롤러에서 처리하는 부분
+				ScheduleTimeDto scheduleTimeDto = scheduleTimeDao.get(scheduleTimeNo);
+				List<SeatDto> seatList = seatDao.list(scheduleTimeDto.getHallNo());
+				List<ReservationDetailDto> reservationDetailList = reservationDetailDao.list(scheduleTimeNo);
+				int count = 0;
+				for(SeatDto seatDto : seatList) {
 
+					
+					if(!reservationDetailList.isEmpty()) {		
+						for(ReservationDetailDto reservationDetailDto : reservationDetailList) {
+							if(!reservationDetailDto.getReservationDetailStatus().equals("결제취소") && 
+								seatDto.getSeatNo() == reservationDetailDto.getSeatNo()) {
+								
+								count++;
+								break;
+							}
+						}
+					}
+
+				}
+				return count;
+	}
+	
 
 	@Override
 	public boolean remove(int reservationNo) {
