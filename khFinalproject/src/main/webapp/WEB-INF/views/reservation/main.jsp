@@ -573,6 +573,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 			$(".schedule-time-date-time-list").empty();
 
 			for(var i = 0 ; i < resp.length ; i++){
+				console.log("잔여좌석!!!!!!!!!!",resp[i].disabledSeat);
 				var now = new Date().getTime();
 				var date = resp[i].scheduleTimeDateTime;
 				console.log("now",now);
@@ -589,8 +590,10 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				var firstTime = checkDate.getHours()+":"+checkDate.getMinutes();
 				
 				checkDate.setMinutes(checkDate.getMinutes()+movieRuntime);
-				
-				template = template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes());
+				var sellCheck = resp[i].hallSeat-resp[i].disabledSeat;
+				if(sellCheck==0) sellCheck='매진';
+				template = 
+					template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
 				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
 				template = template.replace("{{hallType}}",resp[i].hallName+"["+resp[i].hallType+"]");
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
