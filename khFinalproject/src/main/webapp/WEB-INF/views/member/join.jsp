@@ -29,7 +29,6 @@ $(function() {
 	$("input[name=memberEmail]").on("blur",function() {
 		var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 		var email = $(this).val();
-		console.log(email);
 ;
 		$(this).removeClass("success").removeClass("fail");
 		
@@ -64,7 +63,7 @@ $(function() {
 
 	 function emailSender(to){
 	            $.ajax({
-				url:"${pageContext.request.contextPath}/data/emailSend",
+				url:"${pageContext.request.contextPath}/member/emailSend",
 				type:"post",
 	            data : {
 					to:to
@@ -80,7 +79,7 @@ $(function() {
 	 
 	 function serialChecker(to,check){
 	         $.ajax({
-				url:"${pageContext.request.contextPath}/data/serialCheck",
+				url:"${pageContext.request.contextPath}/member/serialCheck",
 				type:"get",
 	         data : {
 					to:to,
@@ -112,20 +111,20 @@ $(function() {
 			error:function(e){
 				console.log("실패", e);
 			}
-		    });
+	     });
 	         
  	}
 	 
 	function idcheck(email){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/idcheck",
+			url:"${pageContext.request.contextPath}/member/idcheck",
 			type : "get",
-			dataType : "json",
+			dataType : "text",
 			data : {
 				memberEmail : email
 			},	
 			success:function(resp){
-				console.log(resp);				
+				console.log("성공",resp);				
 			},
 			error:function(e){
 				console.log("실패", e);

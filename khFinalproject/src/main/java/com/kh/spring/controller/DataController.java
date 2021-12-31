@@ -53,8 +53,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/data")
 public class DataController {
-	@Autowired
-	private MemberDao memberDao;
+
 	@Autowired
 	private TheaterDao theaterDao;
 	@Autowired
@@ -104,21 +103,7 @@ public class DataController {
 		return reservationDao.getSequence();
 	}
 	
-	@GetMapping("/serialCheck")
-	public String serialCheck(@RequestParam String to,@RequestParam String check) {
-		CertificationDto certificationDto = new CertificationDto();
-		certificationDto.setMemberEmail(to);
-		certificationDto.setSerial(check);
-		String result = "NNNNN";
-		if(certificationDao.check(certificationDto)) result = "NNNNO";
-		else result = "NNNNN";
-		return result;
-	}
-	
-	@PostMapping("/emailSend")
-	public void emailSend(@RequestParam String to) {
-		emailService.sendCertificationNumber(to);
-	}
+
 	
 	@PostMapping("/TempReservation")
 	public void TempReservation(
@@ -267,14 +252,5 @@ public class DataController {
 		return theaterDao.listByCity2(cityName);
 	}
 	
-	@GetMapping("/idcheck")
-	public boolean idCheck(@RequestParam String memberEmail) {
-		MemberDto memberDto = memberDao.get(memberEmail);
-		if(memberDto == null) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+
 }
