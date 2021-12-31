@@ -3,10 +3,10 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div class="container-600 container-center">
 	<div class="row center">
-		<h2>일시적인 서버 오류가 발생하였습니다</h2>
+		<h2>페이지를 찾을 수 없습니다</h2>
 	</div>
 	<div class="row">
-		<img src="${pageContext.request.contextPath}/resources/image/error/500.jpg" width="100%">		
+		<img src="${pageContext.request.contextPath}/resources/image/error/404.jpg" width="100%">		
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
