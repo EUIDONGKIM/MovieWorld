@@ -59,12 +59,4 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 	}
 
 
-	@Override
-	public List<Integer> getTimeNoByNoAndTimeDate(int scheduleNo, String scheduleTimeDate) {
-		Map<String,Object> param = new HashMap<>();
-		param.put("scheduleNo",scheduleNo);
-		param.put("scheduleTimeDate",scheduleTimeDate);
-		
-		return sqlSession.selectList("scheduleTime.getTimeNoByNoAndTimeDate", param);
-	}
 }

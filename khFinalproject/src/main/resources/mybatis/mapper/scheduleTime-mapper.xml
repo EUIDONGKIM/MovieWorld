@@ -42,12 +42,6 @@
         where st.schedule_no=#{scheduleNo} and
  		to_char(st.schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
  	</select>
-
- 	 <select id="getTimeNoByNoAndTimeDate" parameterType="map" resultType="int">
- 	 	select schedule_time_no from schedule_time
-        where schedule_no=#{scheduleNo} and
- 		to_char(schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
- 	</select>
  	
  	
  	<select id="get" parameterType="int" resultType="ScheduleTimeDto">
