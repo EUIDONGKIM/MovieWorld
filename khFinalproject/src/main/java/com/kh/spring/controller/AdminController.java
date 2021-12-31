@@ -55,7 +55,7 @@ public class AdminController {
 	
 	@GetMapping("/review")
 	public String adminReview() {
-		return"admon/review";
+		return"admin/review";
 	}
 	
 	

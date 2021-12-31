@@ -3,15 +3,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<c:set var="answer" value="${boardDto.boardSuperno}"></c:set>
+<c:set var="answer" value="${boardDto.boardSuperno != null}"></c:set>
 
 <form method="post"  enctype="multipart/form-data">
 
-<c:if test="${answer !=null}">
-	<input type="hidden" name="boardSuperno" value="${boardSuperno}">
-</c:if>
+	<c:if test="${answer}">
+		<input type="hidden" name="boardSuperno" value="${boardSuperNo}">
+	</c:if>
 
 <div class="container-1000 container-center">
+
 
 	<!-- 제목 -->
 	<div class="row">

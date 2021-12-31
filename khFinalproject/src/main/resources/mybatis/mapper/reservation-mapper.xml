@@ -62,7 +62,8 @@
 		tid = #{tid},
 		item_name = #{itemName},
 		buy_time = sysdate,
-		reservation_status = #{reservationStatus}
+		reservation_status = #{reservationStatus},
+		point_use = #{pointUse}
 		where reservation_no = #{reservationNo}
 	</update>
 	
