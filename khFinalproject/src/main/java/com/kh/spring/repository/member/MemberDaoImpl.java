@@ -167,6 +167,17 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.search",param);
 	}
 
+	@Override
+	public boolean check(MemberDto memberDto) {
+		MemberDto findDto =sqlSession.selectOne("member.check",memberDto);
+		if(findDto !=null) { //인증성공시
+			return true;
+		}else {
+			return false;	
+		}
+	}
+
+	
 
 
 

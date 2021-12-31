@@ -71,7 +71,11 @@
 		order by member_no desc
 		)tmp) where rn between #{begin} and #{end}
 	</select>	
-	
+	<!-- 해당 아이디가 있는지 체크 -->
+	<select id="check" parameterType="map" resultType="MemberDto">
+	  select * from member where member_Email=#{memberEmail};
+	</select>
+
 	
 	<!-- 임시비밀번호로  변경 -->
 	<update id="temporayPassword" parameterType="map">

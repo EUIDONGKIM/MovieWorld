@@ -38,5 +38,7 @@ public interface MemberDao {
 	List<MemberDto> search(String column, String keyword, int begin, int end);
 	
 	List<MemberDto> list();
+	
+	boolean check(MemberDto memberDto);
 
 }

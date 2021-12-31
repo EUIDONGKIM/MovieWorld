@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
 import com.kh.spring.entity.member.CertificationDto;
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
@@ -26,6 +27,7 @@ import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
 import com.kh.spring.repository.member.CertificationDao;
+import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.movie.VideoDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
@@ -49,7 +51,8 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/data")
 public class DataController {
-	
+	@Autowired
+	private MemberDao memberDao;
 	@Autowired
 	private TheaterDao theaterDao;
 	@Autowired
@@ -238,5 +241,17 @@ public class DataController {
 		String cityName = URLDecoder.decode(city, "UTF-8"); //디코딩을 해야 값이 들어간다.
 
 		return theaterDao.listByCity2(cityName);
+	}
+	
+	@GetMapping("/idcheck")
+	public String idCheck(@RequestParam String memberEmail,@RequestParam String check) {
+		MemberDto memberDto = new MemberDto();
+		memberDto.setMemberEmail(memberEmail);
+		memberDto.setMemberEmail(check);
+		
+		String result = "NNNNN";
+		if(memberDao.check(memberDto)) result = "NNNNO";
+		else result = "NNNNN";
+		return result;
 	}
 }
