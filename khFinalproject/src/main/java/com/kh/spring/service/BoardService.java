@@ -16,4 +16,6 @@ public interface BoardService {
 	void delete(int boardNo);
 
 	void edit(BoardDto boardDto, List<MultipartFile> attach) throws IllegalStateException, IOException;
+
+	BoardSearchVO searchNPagingByMember(BoardSearchVO boardSearchVO, String memberEmail) throws Exception;
 }

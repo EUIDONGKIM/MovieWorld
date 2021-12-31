@@ -35,7 +35,7 @@
 		<select name="hallNo" required>
 			<option value="">상영관 선택</option>
 				<c:forEach var="hallDto" items="${hallList}">
-					<option value="${hallDto.hallNo}">${hallDto.hallName}</option>
+					<option value="${hallDto.hallNo}">${hallDto.hallName} / ${hallDto.hallType}</option>
 				</c:forEach>
 		</select>
 	</div>

@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<c:set var="answer" value="${boardDto.superNo}"></c:set>
+<c:set var="answer" value="${boardDto.boardSuperno}"></c:set>
 
 <form method="post"  enctype="multipart/form-data">
 

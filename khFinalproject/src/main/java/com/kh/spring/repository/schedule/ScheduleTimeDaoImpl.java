@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
+import com.kh.spring.vo.HallByScheduleTimeVO;
 
 @Repository
 public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
@@ -31,7 +32,7 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 
 
 	@Override
-	public List<ScheduleTimeDto> listByDate(int scheduleNo, String scheduleTimeDate) {
+	public List<HallByScheduleTimeVO> listByDate(int scheduleNo, String scheduleTimeDate) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("scheduleNo",scheduleNo);
 		param.put("scheduleTimeDate",scheduleTimeDate);
