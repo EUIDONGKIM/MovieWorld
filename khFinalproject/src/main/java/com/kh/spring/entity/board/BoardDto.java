@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class BoardDto {
 	private int boardNo;
-	private int boardtypeNo;
+	private int boardtypeName;
 	private String memberEmail;
 	private String boardTitle;
 	private Date boardDate;

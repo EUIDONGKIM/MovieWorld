@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> --%>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
@@ -27,9 +27,10 @@
 	
 	
 </script>
+<div class="container">
 <h2>회원 정보 수정</h2>
 
-<form method="post">
+<form action="edit" method="post">
 
 	<table class="table">
 		<tbody>
@@ -111,4 +112,5 @@
 <c:if test="${param.error != null}">
 <h4><font color="red">비밀번호가 일치하지 않습니다</font></h4>
 </c:if>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+</div>
+<%-- <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> --%>

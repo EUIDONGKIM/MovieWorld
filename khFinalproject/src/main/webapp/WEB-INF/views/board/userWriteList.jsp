@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 <div class="container-1200 container-center">
 	<div class="row center">
 		<h2>내가 작성한 게시글</h2>
@@ -19,19 +20,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="boardDto" items="${list}">
+				<c:forEach var="boardDto" items="${searchList}">
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					
 					<td class="left" style="text-align: left;">
-<%-- 						<c:if test="${boardDto.hasDepth()}"> --%>
-<%-- 							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1"> --%>
-<!-- 										&nbsp;&nbsp;&nbsp;&nbsp; -->
-<%-- 							</c:forEach> --%>
-<%-- 							<img src="${root}/resources/image/reply.png" width="15" height="15"> --%>
-<%-- 						</c:if> --%>
-					
-						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}">
+						<c:if test="${boardDto.hasDepth()}">
+							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1">
+										&nbsp;&nbsp;&nbsp;&nbsp;
+							</c:forEach>
+							<img src="${root}/resources/image/reply.png" width="15" height="15">
+						</c:if>
+			
+						<a href="${root}/spring/board/detail?boardNo=${boardDto.boardNo}">
 							${boardDto.boardTitle}
 						</a>
 					</td>
@@ -70,11 +71,11 @@
 			<c:choose>
 				<c:when test="${boardSearchVO.isSearch()}">
 					<!-- 검색용 링크 -->
-					<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
+					<a href="userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
 				</c:when>
 				<c:otherwise>
 					<!-- 목록용 링크 -->
-					<a href="main?p=${i}">${i}</a>
+					<a href="userWriteList?p=${i}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -86,11 +87,11 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="main?p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="userWriteList?p=${boardSearchVO.getNextBlock()}">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

@@ -57,7 +57,7 @@
 			 and instr(${column},#{keyword}) > 0
 			</if>
 		</where>
-		order by board_no asc
+		order by board_no desc
 		)tmp) where rn between #{begin} and #{end}
 	</select>
 		

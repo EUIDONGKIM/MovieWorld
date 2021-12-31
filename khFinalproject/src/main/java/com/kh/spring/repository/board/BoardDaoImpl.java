@@ -98,7 +98,7 @@ public class BoardDaoImpl implements BoardDao{
 		param.put("column",column);
 		param.put("keyword",keyword);
 		param.put("memberEmail",memberEmail);
-		log.debug("값확인1 검색어 @@@@@@@@{}",param);
+	
 		return sqlsession.selectOne("board.count1",param);
 	}
 
@@ -110,7 +110,7 @@ public class BoardDaoImpl implements BoardDao{
 		param.put("begin",begin);
 		param.put("end",end);
 		param.put("memberEmail",memberEmail);
-		log.debug("값확인2 리스트 @@@@@@@@{}",param);
+
 		return sqlsession.selectList("board.search1",param);
 	}
 

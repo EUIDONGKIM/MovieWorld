@@ -20,6 +20,7 @@
         .b{
             border:1px solid black;
         }
+     </style>
 </head>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
@@ -69,7 +70,7 @@
                   <div class="list-group">
                     <a href="mypage" class="list-group-item list-group-item-action active" style="text-align: center;">MY PAGE</a>
                     <a href="edit" class="list-group-item list-group-item-action ">회원정보수정하러가기</a>
-                    <a href="quit" class="list-group-item list-group-item-action disabled ">회원탈퇴하기</a>
+                    <a href="quit" class="list-group-item list-group-item-action ">회원탈퇴하기</a>
 
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action ">내가 작성한 게시글보기</a>
 
@@ -87,21 +88,13 @@
                   </div>
             </div>
             <div class="col-md-10 b" style="height: 600px">
-
-                <div id="page">
-                </div>
-  
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
-                여기가 해당 벙보를 보여주는곳입니다.
 			
+                <div id="page">
+					<jsp:include page="/WEB-INF/views/member/edit.jsp">
+					    <jsp:param value="${memberDto}" name="memberDto"/>
+					</jsp:include>
+                </div>
+  			여기야잉 !
              </div>
         </div>
 
