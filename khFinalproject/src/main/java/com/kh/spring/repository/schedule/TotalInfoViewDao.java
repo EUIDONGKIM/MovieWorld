@@ -9,4 +9,6 @@ public interface TotalInfoViewDao {
 	//추후에 리스트들을 <where>로 통합.
 	TotalInfoViewDto get(int scheduleNo);
 	List<TotalInfoViewDto> list(int movieNo);
+	
+	List<TotalInfoViewDto> listByTheater(int theaterNo);
 }

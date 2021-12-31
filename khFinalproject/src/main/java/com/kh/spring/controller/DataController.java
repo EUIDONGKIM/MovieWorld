@@ -224,6 +224,7 @@ public class DataController {
 
 		return hallDao.get(scheduleTimeDto.getHallNo());
 	}
+
 	
 	@GetMapping("/seat")
 	public List<ReservationVO> getSeat(@RequestParam int scheduleTimeNo) {

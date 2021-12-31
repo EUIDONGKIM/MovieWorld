@@ -30,6 +30,10 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	public List<TotalInfoViewDto> list(int movieNo) {
 		return sqlSession.selectList("totalInfoView.listByMovie");
 	}
+	@Override
+	public List<TotalInfoViewDto> listByTheater(int theaterNo) {
+		return sqlSession.selectList("totalInfoView.listByTheater", theaterNo);
+	}
 	
 	
 }

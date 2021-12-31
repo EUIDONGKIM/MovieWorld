@@ -58,6 +58,20 @@ public class ScheduleController {
 		return "redirect:list";
 	}
 	
+	//영화관 상세페이지에서 상영 영화 생성
+	@GetMapping("/create2")
+	public void create2(@RequestParam int theaterNo, Model model) {
+		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
+		model.addAttribute("movieList", movieDao.list());
+	}
+	@PostMapping("/create2")
+	public String create2(@ModelAttribute ScheduleDto scheduleDto) {
+		scheduleDao.insert(scheduleDto);
+		
+		return "redirect:/theater/detail?theaterNo="+scheduleDto.getTheaterNo();
+	}
+	
+	
 	@RequestMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("totalInfoViewList", totalInfoViewDao.list());
@@ -81,6 +95,7 @@ public class ScheduleController {
 		scheduleTimeDao.insert(scheduleTimeDto);
 		return "redirect:/";
 	}
+	
 	
 	@GetMapping("/edit")
 	public String edit(@RequestParam int scheduleNo, Model model) {
