@@ -1,10 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 $(function(){
+	
+    $("button").on("click",function(e){
+		e.preventDefault();
+
+    	var operation = $(this).data("oper");
+    	
+    	if(operation == "delete"){
+    		$("form").attr("action","${root}/theater/delete");
+    	}
+    	else if(operation == "cancel"){
+    		self.location = "${root}/theater/detail?theaterNo=${theaterDto.theaterNo}";
+    		return;
+    	}
+    	$("form").submit();
+
+    	
+    	
+    });
+	
     $(".find-address-btn").click(function(){
         findAddress();
     });
@@ -45,7 +65,7 @@ $(function(){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>${theaterDto.theaterName}점 정보 수정</h1>
 
-<form method="post">
+<form action="${root}/theater/edit" method="post">
 	<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo }">
 	극장명 : <input type="text" name="theaterName" value="${theaterDto.theaterName}"required>
 	<br>
@@ -59,7 +79,9 @@ $(function(){
 	
 	설명 : <textarea name=theaterInfo>${theaterDto.theaterInfo }</textarea> 
 	<br>
-	<input type="submit" value="수정">
+	<button type="submit" data-oper="edit">수정</button>
+	<button type="submit" data-oper="delete">삭제</button>
+	<button type="submit" data-oper="cancel">취소</button>
 </form>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
