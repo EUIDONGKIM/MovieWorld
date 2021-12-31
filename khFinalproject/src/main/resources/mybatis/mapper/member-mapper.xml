@@ -72,6 +72,7 @@
 		)tmp) where rn between #{begin} and #{end}
 	</select>	
 	
+	
 	<!-- 임시비밀번호로  변경 -->
 	<update id="temporayPassword" parameterType="map">
 		update member set member_pw=#{memberPw} 

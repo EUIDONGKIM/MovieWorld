@@ -34,6 +34,12 @@ public class BoardDaoImpl implements BoardDao{
 	public int getSequence() {
 		return sqlsession.selectOne("board.getSeq");
 	}
+	
+	@Override
+	public List<BoardDto> getUserWrite(String memberEmail) {
+	
+		return sqlsession.selectList("board.myWrite",memberEmail);
+	}
 
 	@Override
 	public boolean delete(int boardNo) {
@@ -82,6 +88,8 @@ public class BoardDaoImpl implements BoardDao{
 	public void write2(BoardDto boardDto) {
 		sqlsession.insert("board.write2",boardDto);
 	}
+
+
 
 
 

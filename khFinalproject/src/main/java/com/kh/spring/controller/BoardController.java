@@ -43,19 +43,19 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;	
 	
-	//@GetMapping("/main")
-	public String main(Model model, @RequestParam(required = false) String column,
-     @RequestParam(required = false) String keyword,@RequestParam(required = false, defaultValue = "0") int p) throws Exception {
-		BoardSearchVO vo = new BoardSearchVO();
-		vo.setColumn(column);
-		vo.setKeyword(keyword);
-		vo.setP(p);
-		BoardSearchVO param = boardService.searchNPaging(vo);
-		model.addAttribute("boardSearchVO",param);
-	
-		//model.addAttribute("list",boardDao.list());
-		return "board/main";
-	}
+//	//@GetMapping("/main")
+//	public String main(Model model, @RequestParam(required = false) String column,
+//     @RequestParam(required = false) String keyword,@RequestParam(required = false, defaultValue = "0") int p) throws Exception {
+//		BoardSearchVO vo = new BoardSearchVO();
+//		vo.setColumn(column);
+//		vo.setKeyword(keyword);
+//		vo.setP(p);
+//		BoardSearchVO param = boardService.searchNPaging(vo);
+//		model.addAttribute("boardSearchVO",param);
+//	
+//		//model.addAttribute("list",boardDao.list());
+//		return "board/main";
+//	}
 	
 	@GetMapping("/main")
 	public String list(
@@ -132,6 +132,17 @@ public class BoardController {
 		boardDao.edit(boardDto);
 		int boardNo=boardDto.getBoardNo();
 		return "redirect:/board/detail?boardNo="+boardNo;
+	}
+	
+	@RequestMapping("userWriteList")
+	public String userWriteList(HttpSession session,Model model
+			,@ModelAttribute BoardSearchVO boardSearchVO) throws Exception  {
+//		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
+		String memberEmail = (String)session.getAttribute("ses");
+//		List<BoardDto> list =boardDao.getUserWrite(memberEmail);
+//		model.addAttribute("list",list);
+
+		return "board/userWriteList";
 	}
 	
 	@GetMapping("/file")
