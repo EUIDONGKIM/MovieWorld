@@ -7,13 +7,18 @@
 <h1>극장 상세 정보(이 페이지에서 지도, 상영시간표까지 보여주기)</h1>
 
 <h3>극장명 : ${theaterDto.theaterName}</h3>
-<h3>주소 : ${theaterDto.getTheaterFullAddress()}</h3>
 <pre>${theaterDto.theaterInfo}</pre>
 
 <hr>
 <h2>지도 영역</h2>
+<h3>주소 : ${theaterDto.getTheaterFullAddress()}</h3>
+
 <hr>
 <h2>상영시간표 영역</h2>
+<c:forEach var="LocalDate" items="${dateList }">
+<li>${LocalDate}</li>
+</c:forEach>
+
 <hr>
 
 <div>

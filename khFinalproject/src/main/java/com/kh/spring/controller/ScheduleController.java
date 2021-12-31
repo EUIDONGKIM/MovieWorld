@@ -92,6 +92,7 @@ public class ScheduleController {
 	
 	@PostMapping("/time/create")
 	public String timeCreate(@ModelAttribute ScheduleTimeDto scheduleTimeDto) {
+		log.debug("디티오 ==== {}",scheduleTimeDto);
 		scheduleTimeDao.insert(scheduleTimeDto);
 		return "redirect:/";
 	}
