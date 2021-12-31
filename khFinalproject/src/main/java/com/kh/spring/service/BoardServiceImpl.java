@@ -131,7 +131,7 @@ public class BoardServiceImpl  implements BoardService {
 	}
 
 	@Override
-	public BoardSearchVO searchNPagingByMember(BoardSearchVO boardSearchVO, String memberEmail) throws Exception {
+		public BoardSearchVO searchNPagingByMember(BoardSearchVO boardSearchVO, String memberEmail) throws Exception {
 
 		int count1 = boardDao.count1(boardSearchVO.getColumn(),boardSearchVO.getKeyword(),memberEmail);
 		boardSearchVO.setCount(count1);
@@ -143,6 +143,9 @@ public class BoardServiceImpl  implements BoardService {
 		log.debug("값확인4 boardSearchVO @@@@@@@@{}",boardSearchVO);
 		return boardSearchVO;
 	}
+
+
+	
 	
 	
 }

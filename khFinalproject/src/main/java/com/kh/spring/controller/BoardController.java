@@ -87,8 +87,8 @@ public class BoardController {
 		int boardNo = boardService.write(boardDto, attach);
 //		int boardNo = boardDao.write(boardDto);
 		
-		//return "redirect:/board/detail?boardNo="+boardNo;
-		return "redirect:/";
+		return "redirect:/board/detail?boardNo="+boardNo;
+//		return "redirect:/";
 	}
 	
 	
@@ -109,7 +109,7 @@ public class BoardController {
 		return "board/detail";
 	}
 	
-	@RequestMapping("/viewUp")
+	@GetMapping("/viewUp")
 	public String viewUp(@RequestParam int boardNo) {
 		//제목 누르면 viweUp을 통해 들어와서 리다이렉트
 		boardDao.viewUp(boardNo);	
@@ -139,15 +139,13 @@ public class BoardController {
 	@GetMapping("userWriteList")
 	public String userWriteList(HttpSession session,Model model
 			,@ModelAttribute BoardSearchVO boardSearchVO) throws Exception  {
-//		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
+
 		String memberEmail = (String)session.getAttribute("ses");
-		log.debug("멤버이메일 확인!!@@@@@@@@@@{}",memberEmail);
-//		List<BoardDto> list =boardDao.getUserWrite(memberEmail);
-//		model.addAttribute("list",list);
 		
 		BoardSearchVO param = boardService.searchNPagingByMember(boardSearchVO,memberEmail);
 		model.addAttribute("boardSearchVO",param);
-		
+
+
 		return "board/userWriteList";
 	}
 	
@@ -156,11 +154,8 @@ public class BoardController {
 	public ResponseEntity<ByteArrayResource> file(@RequestParam int boardFileNo) throws IOException {
 		
 		BoardFileDto boardFileDto = boardFileDao.get(boardFileNo);
-		log.debug("boardFileDto@@@@@@@@@@@@@@@={}",boardFileDto);
 		byte[] data = boardFileDao.load(boardFileNo);
 		ByteArrayResource resource = new ByteArrayResource(data);
-		
-		log.debug("boardFileDto.getBoardFileUploadName()@@@@@@@@@@@@@@@={}",boardFileDto.getBoardFileUploadName());
 		String encodeName = URLEncoder.encode(boardFileDto.getBoardFileUploadName(), "UTF-8");
 		encodeName = encodeName.replace("+", "%20");
 		return ResponseEntity.ok()
