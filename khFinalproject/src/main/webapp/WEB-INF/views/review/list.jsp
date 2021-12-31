@@ -9,34 +9,6 @@
 
 </script>
 
-<%-- 모달로 띄워주기 --%>
-<h1> 관람평 작성 </h1>
-<form>
-	<div class="container-400 container-center">
-		<div class="row center">
-			<label>영화 제목자리~!</label>
-		</div>
-		
-		<div class="row">
-			<label>별점자리</label>
-		
-		</div>
-		
-		<div class="row">
-			<textarea
-				style="width:400px; height:400px"
-				name="reviewContent"
-				placeholder="실관람평을 남겨주세요."
-				required
-			></textarea>
-		
-		</div>
-		
-		<button type="submit">취소</button>
-		<button type="submit">등록</button>
-
-	</div>
-
-</form>
+<h2>리뷰 리스트</h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
