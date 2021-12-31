@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.board.BoardDto;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class BoardDaoImpl implements BoardDao{
 	
@@ -87,6 +90,28 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public void write2(BoardDto boardDto) {
 		sqlsession.insert("board.write2",boardDto);
+	}
+
+	@Override
+	public int count1(String column, String keyword, String memberEmail) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		param.put("memberEmail",memberEmail);
+		log.debug("값확인1 검색어 @@@@@@@@{}",param);
+		return sqlsession.selectOne("board.count1",param);
+	}
+
+	@Override
+	public List<BoardDto> search1(String column, String keyword, int begin, int end, String memberEmail) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column",column);
+		param.put("keyword",keyword);
+		param.put("begin",begin);
+		param.put("end",end);
+		param.put("memberEmail",memberEmail);
+		log.debug("값확인2 리스트 @@@@@@@@{}",param);
+		return sqlsession.selectList("board.search1",param);
 	}
 
 
