@@ -42,12 +42,40 @@
 		start with board_superno is null
 		order siblings by board_groupno desc, board_no asc
 		)tmp) where rn between #{begin} and #{end}
-
+	</select>
+	
+	
+	<select id="search1" parameterType="map" resultType="BoardDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from board
+		<where>
+			<if test="memberEmail != null">	
+			 and member_email = #{memberEmail}
+			</if>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		order by board_no asc
+		)tmp) where rn between #{begin} and #{end}
 	</select>
 		
 	<select id="count" parameterType="map" resultType="int">
 		select count(*) from board
 		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="count1" parameterType="map" resultType="int">
+		select count(*) from board
+		<where>
+			<if test="memberEmail != null">	
+			 and member_email = #{memberEmail}
+			</if>
 			<if test="column != null and keyword != null">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
