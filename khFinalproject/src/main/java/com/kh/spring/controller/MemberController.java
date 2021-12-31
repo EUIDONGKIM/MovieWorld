@@ -111,7 +111,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		String memberEmail = (String)session.getAttribute("ses");
+		
+		model.addAttribute("memberDto",memberDao.get(memberEmail));
 		return "member/mypage";
 	}
 	

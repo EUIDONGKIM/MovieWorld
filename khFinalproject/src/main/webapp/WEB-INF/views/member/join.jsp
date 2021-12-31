@@ -107,9 +107,34 @@ $(function() {
 				console.log("실패", e);
 			}
 		    });
- }
+	         
+ 	}
+	
 
 });
+$(function(){
+	$("input[name=Email]").on("blur", function(){
+		var inputEmail = $("input[name=Email]").val();
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/idCheck",
+			type : "get",
+			data : {//전송 시 첨부할 파라미터 정보
+				email : inputEmail
+			},
+			success:function(resp){
+				if(resp =="NNNNO"){ //사용가능
+					console.log("성공", resp);
+				}else if(resp =="NNNNN"){ //사용불가능
+					$("input[name=memberEmail]").next().text("아이디가 이미 사용중입니다.");
+				}
+			},
+			error : function(err) {//통신이 실패했다.
+			}
+		});
+	});
+});
+
+
 //비밀번호 정규표현식
 $(function() {
 	$("input[name=memberPw]").on("input", function() {
