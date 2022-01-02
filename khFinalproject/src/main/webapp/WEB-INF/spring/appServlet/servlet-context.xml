@@ -86,6 +86,7 @@
 			<mvc:exclude-mapping path="/member/idcheck"/>
 			<mvc:exclude-mapping path="/member/serialCheck"/>
 			<mvc:exclude-mapping path="/member/emailSend"/>
+			<mvc:exclude-mapping path="/member/quit_success"/>
 			<bean class="com.kh.spring.interceptor.MemberInterCeptor"></bean>
 	 	</mvc:interceptor>
 	 </mvc:interceptors>

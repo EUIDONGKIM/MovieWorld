@@ -34,6 +34,16 @@ public class MemberDataCotroller {
 			return "nono";
 		}
 	}
+	
+	@GetMapping("/nickCheck")
+	public String nickCheck(@RequestParam String memberNick) {
+		MemberDto memberDto = memberDao.get3(memberNick);
+		if(memberDto == null) { //사용가능
+			return "gogo";
+		}else { //사용 불가능
+			return "nono";
+		}
+	}
 	@GetMapping("/serialCheck")
 	public String serialCheck(@RequestParam String to,@RequestParam String check) {
 		CertificationDto certificationDto = new CertificationDto();
