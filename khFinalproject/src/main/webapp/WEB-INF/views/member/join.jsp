@@ -204,7 +204,7 @@ $(function() {
 		}
 	});
 	
-	function nickCheck(memberNick){
+	function nickCheck(name){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/member/nickCheck",
 			type : "get",
@@ -214,10 +214,11 @@ $(function() {
 			},	
 			success:function(resp){
 				if(resp=="nonono"){
-					console.log(resp,"닉네임 중복있습니다");
-					$("input[name=memberNick]").next().text("이미 사용중인 닉네임 입니다.");
+					consolo.log("사용중인닉네임",resp);
+					$("input[name=memberNick]").next().text("이미사용중인 닉네임입니다.");
+		
 				}else{
-					console.log(resp,"닉네임을 사용할수있습니다");
+					consolo.log("사용가능닉네임",resp);
 					$("input[name=memberNick]").next().text("");
 				}	
 			},
