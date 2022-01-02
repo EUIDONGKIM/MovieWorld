@@ -43,6 +43,12 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto get2(int memberNo) {
 		return sqlSession.selectOne("member.get2", memberNo);
 	}
+	
+
+	@Override
+	public MemberDto get3(String memberNick) {
+		return sqlSession.selectOne("member.get3",memberNick);
+	}
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
@@ -201,6 +207,7 @@ public class MemberDaoImpl implements MemberDao {
 	public void updateGrade() {
 		sqlSession.update("member.updateGrade");
 	}
+
 
 
 

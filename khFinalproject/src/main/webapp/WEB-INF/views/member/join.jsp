@@ -46,7 +46,7 @@ $(function() {
         if(to){
         	emailSender(to);
         	 $("#userinput_email2").prop("disabled",false);
-        	 $(".check-fail").text('인증번호를 확인하여 입력해주세요.').css("color","blue");
+        	 $(".check-fail").text('이메일로 인증번호를 전송하였습니다.').css("color","blue");
         	 $(this).prop("disabled",true);
         }
     });
@@ -92,6 +92,7 @@ $(function() {
 						$(".check-fail").remove();
 						$(".check-success").text("인증이 완료되었습니다.").css("color","blue");
 						$(".email-confirm-btn").prop("disabled",true);
+					
 						
 						$("input[name=serial]").prop("disabled",true);					
 						$("input[name=memberPw]").prop("disabled",false);
@@ -104,6 +105,7 @@ $(function() {
 						$("input[type=submit]").prop("disabled",false);
 					}else if(resp=="NNNNN"){
 						$(".check-success").text("인증번호가 일치하지 않거나 시간이 경과되었습니다.").css("color","red");
+						$(".check-fail").remove();
 						$(".email-send-btn").prop("disabled",false);
 					}
 				
@@ -124,7 +126,35 @@ $(function() {
 				memberEmail : email
 			},	
 			success:function(resp){
-				console.log("성공",resp);	
+				if(resp=="nono"){
+					$("input[name=memberEmail]").next().text("이미사용중인 이메일 입니다.");
+					$(".email-send-btn").prop("disabled",true);
+					remove();
+				}else{
+					$("input[name=memberEmail]").next().text("");
+					$(".email-send-btn").prop("disabled",false);
+				}	
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
+	
+	function nickCheck(memberNick){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/nickCheck",
+			type : "get",
+			dataType : "text",
+			data : {
+				memberNick : memberNick
+			},	
+			success:function(resp){
+				if(resp=="nono"){
+					$("input[name=memberNick]").next().text("이미 사용중인 닉네임 입니다.");
+				}else{
+					$("input[name=memberNick]").next().text("");
+				}	
 			},
 			error:function(e){
 				console.log("실패", e);
@@ -144,8 +174,11 @@ $(function() {
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(pw)) {
 			$("input[name=memberPw]").addClass("success");
+			$("#join-btn").prop("disabled",false);
+		
 		} else {
 			$("input[name=memberPw]").addClass("fail");
+			$("#join-btn").prop("disabled",true);
 		}
 	});
 });
@@ -157,34 +190,40 @@ $(function(){
 		$(this).removeClass("success").removeClass("fail");
 		if (pwInput.length > 0 && pwInput == pw2Input) {
 			$("input[name=memberPw2]").addClass("success");
+			$("#join-btn").prop("disabled",false);
 		} else {
 			$("input[name=memberPw2]").addClass("fail");
+			$("#join-btn").prop("disabled",true);
 		}
 	});
 });
 //이름 정규표현식
 $(function() {
-	$("input[name=name]").on("input", function() {
+	$("input[name=memberName]").on("input", function() {
 		var regex = /^[가-힣]{2,17}$/;
 		var name = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(name)) {
 			$("input[name=memberName]").addClass("success");
+			$("#join-btn").prop("disabled",false);
 		} else {
 			$("input[name=memberName]").addClass("fail");
+			$("#join-btn").prop("disabled",true);
 		}
 	});
 });
 //닉네임 정규표현식
 $(function() {
-	$("input[name=name]").on("input", function() {
+	$("input[name=memberNick]").on("input", function() {
 		var regex = /^[가-힣]{2,17}$/;
 		var name = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(name)) {
-			$("input[name=nickName]").addClass("success");
+			
+			$("input[name=memberNick]").addClass("success");
 		} else {
-			$("input[name=nickName]").addClass("fail");
+			$("input[name=memberNick]").addClass("fail");
+			$("#join-btn").prop("disabled",true);
 		}
 	});
 });
@@ -196,8 +235,10 @@ $(function() {
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(phone)) {
 			$("input[name=memberPhone]").addClass("success");
+			$("#join-btn").prop("disabled",false);
 		} else {
 			$("input[name=memberPhone]").addClass("fail");
+			$("#join-btn").prop("disabled",true);
 		}
 	});
 });
@@ -208,8 +249,10 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	$(this).removeClass("success").removeClass("fail");
 	if (regex.test(birth)) {
 		$("input[name=memberBirth]").addClass("success");
+		$("#join-btn").prop("disabled",false);
 	} else {
 		$("input[name=memberBirth]").addClass("fail");
+		$("#join-btn").prop("disabled",true);
 	}
 });
 });
@@ -314,7 +357,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	 
 	    <div class="row">
 	        <div class="col">
-				 <input type="submit" disabled value="회원가입" class="form-btn">
+				 <input type="submit" disabled value="회원가입" class="form-btn" id="join-btn">
 	    	</div> 
 	    </div>  
 	
