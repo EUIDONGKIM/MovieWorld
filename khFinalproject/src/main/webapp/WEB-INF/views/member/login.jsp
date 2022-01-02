@@ -4,6 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+
  <div class="container-500 container-center">
  	<div class="row">
  		<div class="col center">
@@ -37,6 +38,12 @@
  	 <div class="row">
  			<input type="submit" value="login" class="form-btn">
  	 </div>
+ 	 
+	<c:if test="${param.error != null}">
+		<div class="row center">
+			<h4 class="error">입력하신 정보가 일치하지 않습니다</h4>
+		</div>
+	</c:if>
  	 
  	 <div class="row" >
 	  	<ul class="snapsync-member-nav">

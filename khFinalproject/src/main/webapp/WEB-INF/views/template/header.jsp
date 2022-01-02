@@ -55,7 +55,7 @@
 
 </style>
 <script>
-// //form이 전송되면 input[type=password]가 자동 암호화되도록 설정
+//form이 전송되면 input[type=password]가 자동 암호화되도록 설정
 // $(function(){
 // 	$("form").submit(function(e){
 // 		e.preventDefault();//form 기본 전송 이벤트 방지
