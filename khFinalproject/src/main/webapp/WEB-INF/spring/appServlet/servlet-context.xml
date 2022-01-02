@@ -88,6 +88,10 @@
 			<mvc:exclude-mapping path="/member/serialCheck"/>
 			<mvc:exclude-mapping path="/member/emailSend"/>
 			<mvc:exclude-mapping path="/member/quit_success"/>
+			<mvc:exclude-mapping path="/member/pwScan"/>
+			<mvc:exclude-mapping path="/member/PwScanSuccess"/>
+			<mvc:exclude-mapping path="/member/idScan"/>
+			<mvc:exclude-mapping path="/member/idScanSuccess"/>
 			<bean class="com.kh.spring.interceptor.MemberInterCeptor"></bean>
 	 	</mvc:interceptor>
 	 </mvc:interceptors>

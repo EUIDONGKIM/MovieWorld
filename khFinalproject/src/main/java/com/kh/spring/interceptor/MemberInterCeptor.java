@@ -19,6 +19,7 @@ public class MemberInterCeptor implements HandlerInterceptor{
 		boolean login = memberEmail != null;
 		
 		if(login) {
+			
 			return true;
 		}else {
 //			System.out.println("회원이 아닌데 접근한다잉 차단!");

@@ -1,6 +1,7 @@
 package com.kh.spring.controller;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -66,13 +67,20 @@ public class MemberController {
 	
 	//로그인
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpServletRequest request,Model model) {
+	 	String referer = request.getHeader("Referer");
+	 	if(referer !=null) {
+	 		System.out.println("어디까지왓니");
+	 		model.addAttribute("referer",referer);
+	 		
+	 	}
 		return "member/login";
+		
 	}
 	
 	@PostMapping("/login")
-	public String login(@ModelAttribute MemberDto memberDto,HttpSession session,
-						@RequestParam(required = false) String saveId,HttpServletResponse response) {
+	public String login(@ModelAttribute MemberDto memberDto,HttpSession session,HttpServletRequest request,
+						@RequestParam(required = false) String saveId,HttpServletResponse response,Model model) {
 		MemberDto findDto = memberDao.login(memberDto);
 		if(findDto !=null) {
 		 session.setAttribute("memberNo", findDto.getMemberNo());
@@ -96,6 +104,7 @@ public class MemberController {
 				c.setMaxAge(0);//쿠키삭제
 				response.addCookie(c);
 			}
+	
 			return "redirect:/";
 		}else {
 			return "redirect:login?error";	
