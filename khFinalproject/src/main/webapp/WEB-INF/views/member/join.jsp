@@ -124,7 +124,7 @@ $(function() {
 				memberEmail : email
 			},	
 			success:function(resp){
-				console.log("성공",resp);				
+				console.log("성공",resp);	
 			},
 			error:function(e){
 				console.log("실패", e);
