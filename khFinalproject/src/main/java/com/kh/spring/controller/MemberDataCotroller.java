@@ -39,9 +39,9 @@ public class MemberDataCotroller {
 	public String nickCheck(@RequestParam String memberNick) {
 		MemberDto memberDto = memberDao.get3(memberNick);
 		if(memberDto == null) { //사용가능
-			return "gogo";
+			return "gogogo";
 		}else { //사용 불가능
-			return "nono";
+			return "nonono";
 		}
 	}
 	@GetMapping("/serialCheck")

@@ -84,6 +84,7 @@
 			<mvc:exclude-mapping path="/member/join_success"/>
 			<mvc:exclude-mapping path="/member/login"/>
 			<mvc:exclude-mapping path="/member/idcheck"/>
+			<mvc:exclude-mapping path="/member/nickCheck"/>
 			<mvc:exclude-mapping path="/member/serialCheck"/>
 			<mvc:exclude-mapping path="/member/emailSend"/>
 			<mvc:exclude-mapping path="/member/quit_success"/>
