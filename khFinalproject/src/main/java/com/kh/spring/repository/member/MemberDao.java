@@ -42,6 +42,7 @@ public interface MemberDao {
 	boolean check(MemberDto memberDto);
 	void usePoint(int memberNo, int memberPoint);
 	void returnPoint(int memberNo, int memberPoint);
+	void updateGrade();
 
 
 }

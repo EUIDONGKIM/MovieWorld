@@ -1,7 +1,13 @@
 package com.kh.spring.controller;
 
-import java.time.LocalDate;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.spring.entity.theater.HallDto;
+import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.repository.reservation.ReservationInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
@@ -36,7 +43,8 @@ public class TheaterController {
 	
 	@Autowired
 	private TotalInfoViewDao totalInfoViewDao;
-	
+	@Autowired
+	private ReservationInfoViewDao reservationInfoViewDao;
 	@GetMapping("/create")
 	public String create() {
 		return "theater/create";
@@ -68,6 +76,30 @@ public class TheaterController {
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
 		model.addAttribute("hallList",hallDao.list(theaterNo));
 		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));
+		int count = 100;
+
+		Calendar c = Calendar.getInstance();
+
+		//c.add(Calendar.DATE, 1);
+
+		Date d = c.getTime();
+
+		Format f = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String today = f.format(d);
+		
+		List<ReservationInfoViewDto> reservationInfoViewList1 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList2 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList3 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList4 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList5 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList6 = new ArrayList<>();
+		List<ReservationInfoViewDto> reservationInfoViewList7 = new ArrayList<>();
+		
+		List<ReservationInfoViewDto> reservationInfoViewList = reservationInfoViewDao.getByTheater(theaterNo);
+		for(ReservationInfoViewDto reservationInfoViewDto : reservationInfoViewList) {
+			reservationInfoViewDto.getScheduleTimeDateTime().equals(today);
+		}
 		
 		return "theater/detail";
 	}

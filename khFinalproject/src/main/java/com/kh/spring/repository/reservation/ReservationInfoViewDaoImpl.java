@@ -50,4 +50,9 @@ public class ReservationInfoViewDaoImpl implements ReservationInfoViewDao{
 		return sqlSession.selectList("reservationInfoView.listMoiveComplexSearch",param);
 	}
 
+	@Override
+	public List<ReservationInfoViewDto> getByTheater(int theaterNo) {
+		return sqlSession.selectList("reservationInfoView.getByTheater",theaterNo);
+	}
+
 }

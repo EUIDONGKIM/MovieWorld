@@ -14,7 +14,13 @@
 			<label>인원 수 : ${reservationDto.reservationTotalNumber }</label>
 		</div>
 		<div class="row center">
-			<label>총 금액 : ${reservationDto.totalAmount }</label>
+			<label>예매 금액 : ${reservationDto.totalAmount }</label>
+		</div>
+		<div class="row center">
+			<label>포인트 사용 금액 : ${reservationDto.pointUse }</label>
+		</div>
+		<div class="row center">
+			<label>최종 결제 금액 : ${resultAmount}</label>
 		</div>
 		<div class="row center">
 			<label>결제 상태 : ${reservationDto.reservationStatus }</label>
