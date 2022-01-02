@@ -185,6 +185,11 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update("member.returnPoint",param);
 	}
 
+	@Override
+	public void updateGrade() {
+		sqlSession.update("member.updateGrade");
+	}
+
 
 
 

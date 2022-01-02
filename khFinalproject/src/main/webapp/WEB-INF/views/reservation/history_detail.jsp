@@ -8,7 +8,9 @@
 	<li>고유번호 : ${reservationDto.reservationNo}</li>
 	<li>거래번호 : ${reservationDto.tid}</li>
 	<li>거래명 : ${reservationDto.itemName}</li>
-	<li>거래금액 : ${reservationDto.totalAmount}</li>
+	<li>예매금액 : ${reservationDto.totalAmount}</li>
+	<li>포인트 사용 금액 : ${reservationDto.pointUse}</li>
+	<li>총 결제 금액 : ${resultAmount}</li>
 	<li>거래시각 : ${reservationDto.buyTime}</li>
 </ul>
 	<c:choose>

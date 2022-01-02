@@ -32,7 +32,7 @@
 	
 	<!-- 단일조회 -->
 	<select id="get" parameterType="String" resultType="MemberDto">
-		select * from member where member_email = #{memeberEmail}
+		select * from member where member_email = #{memberEmail}
 	</select>
 	
 	<!-- PK로 단일조회 -->
@@ -132,5 +132,16 @@
 		where member_no = #{memberNo}
 	</update>
 	
-	
+	<update id="updateGrade">
+		update member
+		set member_grade = 
+		    case
+		       <![CDATA[ when member_point < 10000]]>
+		            then '브론즈'
+		        when member_point between 10000 and 12000
+		            then '실버'
+		        else '골드'
+		    end
+		where member_grade not in('운영자','정지');
+	</update>
 </mapper>

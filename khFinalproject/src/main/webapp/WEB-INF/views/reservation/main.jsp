@@ -3,17 +3,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="grade" value="${memberDto.memberGrade}"></c:set>
+<c:set var="grade" value="${memberGrade}"></c:set>
 <c:set var="admin" value="${grade eq '관리자'}"></c:set>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
 <style>
 .float-container > .float-item-left:nth-child(1) {
-		width:35%;	
+		width:25%;	
 		padding:0.5rem;
 	}
 .float-container > .float-item-left:nth-child(2) {
-    width:10%;
+    width:7%;
     padding:0.5rem;
 }
 .float-container > .float-item-left:nth-child(3) {
@@ -25,6 +25,10 @@
     padding:0.5rem;
 }
 .float-container > .float-item-left:nth-child(5) {
+    width:15%;
+    padding:0.5rem;
+}
+.float-container > .float-item-left:nth-child(6) {
     width:25%;
     padding:0.5rem;
 }
@@ -64,8 +68,8 @@
 
 <script>
 $(function(){
-	var memberEmail = '${memberDto.memberEmail}';
-	var memberPoint = '${memberDto.memberPoint}';
+	var memberEmail = '${memberEmail}';
+	var memberPoint = '${memberPoint}';
 	var usePoint=0;
 	console.log(memberEmail);
 	var movieNo;
@@ -107,8 +111,36 @@ $(function(){
 			return;
 		}else{
 			usePoint = point;
+			console.log("사용 포인트 입력 후 금액",usePoint);
 		}
 	});
+	
+	 $(".btn-use-point").click(function(e){
+
+		 var price = $("input[name=total-amount]").val();
+
+		 e.preventDefault();
+
+		 if(usePoint==0){
+			 alert("사용할 포인트를 입력해주세요!");
+			 return;
+		 }
+		 $("input[name=use-amount]").val(usePoint);
+		 $("input[name=result-amount]").val(
+				parseInt(price)-
+				usePoint
+				 );
+	 });
+	
+	 $(".btn-init-point").click(function(e){
+		 console.log("초기화 버튼!");
+		 e.preventDefault();
+		 usePoint=0;
+		 $("input[name=memberPoint]").val('0');
+		 $("input[name=use-amount]").val('0');
+		 $("input[name=result-amount]").val($("input[name=total-amount]").val());
+	 });
+	 
     
     $(".btn-next").click(function(e){
         e.preventDefault();
@@ -172,12 +204,14 @@ $(function(){
 	$(".btn-pay-confirm").click(function(){
 		console.log(reservationKey);
 		console.log(checkPay);
+		var point = parseInt($("input[name=use-amount]").val());
+		console.log("사용 포인트?",point);
 		
 		if(reservationKey&&checkPay){
 		var form = $("<form>").attr("action", "${pageContext.request.contextPath}/reservation/confirm")
 		.attr("method", "post").addClass("send-form");
 		$("body").append(form);
-		$("<input type='hidden' name='memberPoint'>").val(usePoint).appendTo(".send-form");
+		$("<input type='hidden' name='memberPoint'>").val(point).appendTo(".send-form");
 		$("<input type='hidden' name='reservationNo'>").val(reservationKey).appendTo(".send-form");
 		form.submit();
 		}
@@ -605,7 +639,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				var sellCheck = resp[i].hallSeat-resp[i].disabledSeat;
 				if(sellCheck==0) sellCheck='매진';
 				template = 
-					template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
+				template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + "\n" + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
 				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
 				template = template.replace("{{hallType}}",resp[i].hallName+"["+resp[i].hallType+"]");
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
@@ -702,7 +736,37 @@ function getSeat(scheduleTimeNo){
 				tag.find(".cinema-seat-area").append(addDiv);
 				
 			}
-
+			
+			$(".seat-box").removeClass("container-1500").removeClass("container-1330")
+			.removeClass("container-1200").removeClass("container-1050").removeClass("container-915")
+			.removeClass("container-777").removeClass("container-628").removeClass("container-490")
+			.removeClass("container-center");
+			
+			if(hallCols==10){
+				$(".seat-box").addClass("container-1500").addClass("container-center");
+			}
+			if(hallCols==9){
+				$(".seat-box").addClass("container-1330").addClass("container-center");
+			}
+			if(hallCols==8){
+				$(".seat-box").addClass("container-1200").addClass("container-center");
+			}
+			if(hallCols==7){
+				$(".seat-box").addClass("container-1050").addClass("container-center");
+			}
+			if(hallCols==6){
+				$(".seat-box").addClass("container-915").addClass("container-center");
+			}
+			if(hallCols==5){
+				$(".seat-box").addClass("container-777").addClass("container-center");
+			}
+			if(hallCols==4){
+				$(".seat-box").addClass("container-628").addClass("container-center");
+			}
+			if(hallCols==3){
+				$(".seat-box").addClass("container-490").addClass("container-center");
+			}
+			
 			$(".seat-box").append(tag);
 			
 		},
@@ -769,7 +833,10 @@ function getReservation(reservationKey){
 			template = template.replace("{{scheduleTimeDateTime}}",date);
 			template = template.replace("{{reservationTotalNumber}}",resp.reservationTotalNumber);
 			template = template.replace("{{totalAmount}}",resp.totalAmount);
-
+			
+			$("input[name=total-amount]").val(resp.totalAmount);
+			$("input[name=result-amount]").val(resp.totalAmount);
+			
 			$("#pay-result-show").append(template);
 		},
 		error:function(e){
@@ -842,7 +909,7 @@ function cancelTempReservation(reservationKey){
 	</div>	
 </template>
 
-<div class="container-1000 container-center page">
+<div class="container-1500 container-center page">
 
 	<div class="row center">
 		<button type="button" class="btn-init"><h1>다시 선택</h1></button>
@@ -899,41 +966,43 @@ function cancelTempReservation(reservationKey){
 			<div class="row"><h2>인원 선택</h2></div>
 				<div class="flex-container">
 					<div class="row">
-					    <span>일반:</span>
-					    0:<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>
-					    1:<input type="radio" name="ageNormal" class="ageNormal" value="1">
-					    2:<input type="radio" name="ageNormal" class="ageNormal" value="2">
-					    3:<input type="radio" name="ageNormal" class="ageNormal" value="3">
+					    <span>[일반]</span>
+					    	<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>선택
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="1">1명
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="2">2명
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="3">3명
 					    </div>
-					    
+					 </div>
+					<div class="flex-container">    
 					    <div class="row">
-					    <span>/ 청소년:</span>
-					    0:<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>
-					    1:<input type="radio" name="ageYoung" class="ageYoung" value="1">
-					    2:<input type="radio" name="ageYoung" class="ageYoung" value="2">
-					    3:<input type="radio" name="ageYoung" class="ageYoung" value="3">
+					    <span>[청소년]</span>
+					    	<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>선택
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="1">1명
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="2">2명
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="3">3명
 					    </div>
-					    
+					  </div>
+					<div class="flex-container">   
 					    <div class="row">
-					    <span>/ 경로:</span>
-					    0:<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>
-					    1:<input type="radio" name="ageOld" class="ageOld" value="1">
-					    2:<input type="radio" name="ageOld" class="ageOld" value="2">
-					    3:<input type="radio" name="ageOld" class="ageOld" value="3">
+					    <span>[경로]</span>
+					    	<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>선택
+					    	<input type="radio" name="ageOld" class="ageOld" value="1">1명
+					    	<input type="radio" name="ageOld" class="ageOld" value="2">2명
+					    	<input type="radio" name="ageOld" class="ageOld" value="3">3명
 			    		</div>
-			    		
+			    	</div>	
+			    	<div class="flex-container">  
 					    <div class="row">
-					    	<span>총 명:</span><input type="number" name="ageTotal" class="ageTotal" value="0" readonly> 
+					    	<span>총 인원</span><input type="number" name="ageTotal" class="ageTotal" value="0" readonly> 
 					    </div>	
+					</div>    
 				</div>
 		</div>
 		
-	</div>
-	
 	<div class="row center">
 		<button class="btn-next"><h1>다음 단계</h1></button>
 	</div>
-</div>
+	</div>
 
 
 <div class="page">
@@ -946,7 +1015,7 @@ function cancelTempReservation(reservationKey){
 			<div id="cinema" class="cinema-wrap" data-name="seat">
 				<div class="cinema-screen"><h3>스크린</h3></div>
 					
-					<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-mode="client" data-fill="manual" data-seatno="visible">
+					<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple">
 						
 					</div>
 			</div>
@@ -1026,11 +1095,9 @@ function cancelTempReservation(reservationKey){
 		</div>
 	</div>
 </template>	
-	<div class="row">
-		<h1>포인트 및 쿠폰 사용 란 추가</h1>
-	</div>
 	
 	<h1>결제 내역 확인</h1>
+	<hr>
 	<div id="pay-result-show"></div>
 	
 	<hr>
@@ -1038,15 +1105,32 @@ function cancelTempReservation(reservationKey){
 	<h1>결제 상세 내역 확인</h1>
 	<div id="pay-detail-show"></div>
 	
+	<hr>
+	
 	<h1>포인트 사용</h1>
+	
+	<hr>
+	
 	<div class="row">
 		<label>내 현재 포인트</label>
-		<span>${memberDto.memberPoint } 점</span>
+		<span>${memberPoint } 점</span>
 	</div>
 	
 	<div class="row">
 		<label>포인트 사용하기</label>
 		<input type="number" name="memberPoint" min="1000" value="0" step="100">
+	</div>
+	
+	<div class="row">
+		<button class="btn-use-point">포인트 사용</button>
+		<button class="btn-init-point">포인트 다시 선택</button>
+	</div>
+	
+	<div class="row">
+		<label>최종 결제 금액</label>
+		총 금액  :<input type="text" name="total-amount" readonly> -
+		포인트 사용 금액  :<input type="text" name="use-amount" value="0" readonly> =
+		최종 결제 금액  :<input type="text" name="result-amount" value="0" readonly>
 	</div>
 	
 	<div class="row center">

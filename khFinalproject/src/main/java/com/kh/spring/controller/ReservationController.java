@@ -25,6 +25,7 @@ import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
+import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.ReservationDao;
@@ -73,6 +74,8 @@ public class ReservationController {
 	private ScheduleTimeDao scheduleTimeDao;
 	@Autowired
 	private HallDao hallDao;
+	@Autowired
+	private GradeDao gradeDao;
 	
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
@@ -90,9 +93,14 @@ public class ReservationController {
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
 			String memberEmail = (String)session.getAttribute("ses");
-			MemberDto memberDto = memberDao.get(memberEmail);
+			int memberPoint = 0;
+			if(memberEmail != null){				
+				MemberDto memberDto = memberDao.get(memberEmail);
+				memberPoint = memberDto.getMemberPoint();
+			}
 			
-			model.addAttribute("memberDto",memberDto);
+			model.addAttribute("memberEmail",memberEmail);
+			model.addAttribute("memberPoint",memberPoint);
 			return "reservation/main";
 		}
 		
@@ -109,7 +117,7 @@ public class ReservationController {
 			if(rList.size()>1)
 			item_name += " 외 "+(rList.size()-1)+"건";
 			
-			long total = (long)reservationDto.getTotalAmount();
+			long total = (long)(reservationDto.getTotalAmount()-memberPoint);
 			
 			KakaoPayReadyRequestVO requestVO = new KakaoPayReadyRequestVO();
 			requestVO.setPartner_order_id(String.valueOf(reservationDto.getReservationNo()));
@@ -170,6 +178,12 @@ public class ReservationController {
 			int memberNo = (int)session.getAttribute("memberNo");
 			memberDao.usePoint(memberNo,memberPoint);
 			
+			MemberDto memberDto = memberDao.get2(memberNo);
+			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
+			
+			int pointByPay = ((int)reservationDto.getTotalAmount() - memberPoint) * pointPercent / 100;
+			memberDao.returnPoint(memberNo, pointByPay);
+			
 			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
 		}
 		
@@ -181,10 +195,12 @@ public class ReservationController {
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
 			ReservationInfoViewDto reservationInfoViewDto = reservationInfoViewDao.get(reservationDto.getScheduleTimeNo());
 			HallDto hallDto = hallDao.get(reservationInfoViewDto.getHallNo());
+			int resultAmount = (int) (reservationDto.getTotalAmount() - reservationDto.getPointUse());
 			
 			model.addAttribute("reservationDto",reservationDto);
 			model.addAttribute("reservationInfoViewDto",reservationInfoViewDto);
 			model.addAttribute("hallDto",hallDto);
+			model.addAttribute("resultAmount",resultAmount);
 			
 			return "reservation/success_result";
 		}
@@ -197,22 +213,24 @@ public class ReservationController {
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
 			List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
 			KakaoPaySearchResponseVO responseVO = kakaoPayService.search(reservationDto.getTid());
+			int resultAmount = (int) (reservationDto.getTotalAmount() - reservationDto.getPointUse());
 			
 
 			model.addAttribute("reservationDto",reservationDto);
 			model.addAttribute("rList",rList);
 			model.addAttribute("responseVO",responseVO);
+			model.addAttribute("resultAmount",resultAmount);
 			
 			return "reservation/history_detail";
 		}
 		
 		@GetMapping("/cancel")
 		public String cancel(@RequestParam int reservationNo, RedirectAttributes attr,HttpSession session) throws URISyntaxException {
-			//(1) 요청한 결제내역이 전체취소라면 더이상 진행하면 안된다
+			//(1)
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
 
 			//(2) 취소 가능한 금액을 계산해야 한다
-			long amount = reservationDto.getTotalAmount();
+			long amount = (reservationDto.getTotalAmount()-reservationDto.getPointUse());
 
 			//(3) 취소 처리를 수행한다
 			KakaoPayCancelResponseVO responseVO = kakaoPayService.cancel(reservationDto.getTid(), amount);
@@ -230,6 +248,12 @@ public class ReservationController {
 			
 			int memberNo = (int)session.getAttribute("memberNo");
 			memberDao.returnPoint(memberNo,reservationDto.getPointUse());
+			
+			MemberDto memberDto = memberDao.get2(memberNo);
+			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
+			
+			int pointByPay = ((int)reservationDto.getTotalAmount() - reservationDto.getPointUse()) * pointPercent / 100;
+			memberDao.usePoint(memberNo, pointByPay);
 			
 			attr.addAttribute("reservationNo", reservationNo);
 			return "redirect:history_detail";

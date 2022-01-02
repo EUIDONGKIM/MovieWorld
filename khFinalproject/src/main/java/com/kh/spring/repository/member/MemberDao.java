@@ -40,5 +40,6 @@ public interface MemberDao {
 	List<MemberDto> list();
 	void usePoint(int memberNo, int memberPoint);
 	void returnPoint(int memberNo, int memberPoint);
+	void updateGrade();
 
 }

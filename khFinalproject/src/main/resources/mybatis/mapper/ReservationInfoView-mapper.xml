@@ -47,4 +47,9 @@
 		group by movie_no,movie_title,movie_grade
 		order by count
 	</select>
+	
+	<select id="getByTheater" parameterType="int" resultType="ReservationInfoViewDto">
+		select * from reservation_info_view where theater_no = #{theaterNo}
+        and schedule_time_date_time between sysdate and (sysdate+7);
+	</select>
 </mapper>
