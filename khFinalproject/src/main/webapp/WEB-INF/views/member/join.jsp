@@ -191,7 +191,7 @@ $(function() {
 });
 //닉네임 정규표현식
 $(function() {
-	$("input[name=memberNick]").on("input", function() {
+	$("input[name=memberNick]").on("blur", function() {
 		var regex = /^[가-힣]{2,17}$/;
 		var name = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
@@ -204,7 +204,7 @@ $(function() {
 		}
 	});
 	
-	function nickCheck(memberNick){
+	function nickCheck(name){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/member/nickCheck",
 			type : "get",
@@ -213,13 +213,12 @@ $(function() {
 				memberNick : name
 			},	
 			success:function(resp){
+				console.log(resp)
 				if(resp=="nonono"){
-					console.log(resp,"닉네임 중복있습니다");
-					$("input[name=memberNick]").next().text("이미 사용중인 닉네임 입니다.");
+					$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
 				}else{
-					console.log(resp,"닉네임을 사용할수있습니다");
 					$("input[name=memberNick]").next().text("");
-				}	
+				}
 			},
 			error:function(e){
 				console.log("실패", e);
@@ -319,7 +318,7 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	    <div class="row">
 	    	<div class="col">
 		    	 <label>닉네임</label>
-				 <input type="text" name="memberNick" required disabled placeholder="이름" class="form-input" id="nickName">
+				 <input type="text" name="memberNick" required placeholder="이름" class="form-input" id="nickName">
 				 <span class="success"></span>
            		 <span class="fail">2~17자 이내 한글로 작성하세요!</span>
 	    	</div> 
