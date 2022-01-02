@@ -29,7 +29,7 @@ $(function() {
 	$("input[name=memberEmail]").on("blur",function() {
 		var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 		var email = $(this).val();
-;
+
 		$(this).removeClass("success").removeClass("fail");
 		
 		if (regex.test(email)) {
@@ -116,7 +116,7 @@ $(function() {
 	     });
 	         
  	}
-	 
+	 //아이디 중복확인 
 	function idcheck(email){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/member/idcheck",
@@ -140,35 +140,12 @@ $(function() {
 			}
 		});
 	}
-	
-	function nickCheck(memberNick){
-		$.ajax({
-			url:"${pageContext.request.contextPath}/member/nickCheck",
-			type : "get",
-			dataType : "text",
-			data : {
-				memberNick : memberNick
-			},	
-			success:function(resp){
-				if(resp=="nono"){
-					$("input[name=memberNick]").next().text("이미 사용중인 닉네임 입니다.");
-				}else{
-					$("input[name=memberNick]").next().text("");
-				}	
-			},
-			error:function(e){
-				console.log("실패", e);
-			}
-		});
-	}
-	 
-	
 
 });
 
 //비밀번호 정규표현식
 $(function() {
-	$("input[name=memberPw]").on("input", function() {
+	$("input[name=memberPw]").on("blur", function() {
 		var regex = /^[A-Za-z0-9!@#$\s_-]{8,16}$/;
 		var pw = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
@@ -219,13 +196,36 @@ $(function() {
 		var name = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(name)) {
-			
 			$("input[name=memberNick]").addClass("success");
+			nickCheck(name)
 		} else {
 			$("input[name=memberNick]").addClass("fail");
 			$("#join-btn").prop("disabled",true);
 		}
 	});
+	
+	function nickCheck(memberNick){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/nickCheck",
+			type : "get",
+			dataType : "text",
+			data : {
+				memberNick : name
+			},	
+			success:function(resp){
+				if(resp=="nonono"){
+					console.log(resp,"닉네임 중복있습니다");
+					$("input[name=memberNick]").next().text("이미 사용중인 닉네임 입니다.");
+				}else{
+					console.log(resp,"닉네임을 사용할수있습니다");
+					$("input[name=memberNick]").next().text("");
+				}	
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
 });
 //전화번호 정규표현식
 $(function() {
