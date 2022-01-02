@@ -214,9 +214,9 @@ $(function() {
 			},	
 			success:function(resp){
 				console.log(resp)
-				if(resp=="nonono"){
+				if(resp=="nonono"){		
 					$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
-				}else{
+				}else{				
 					$("input[name=memberNick]").next().text("");
 				}
 			},
