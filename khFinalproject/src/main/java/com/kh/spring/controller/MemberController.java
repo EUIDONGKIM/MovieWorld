@@ -111,7 +111,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		//세션에서 아이디를 꺼내와서 해당 아이디로 조회후 값이 있다면 마이페이지로 이동
+		String memberEmail = (String)session.getAttribute("ses");
+		model.addAttribute("memberDto",memberDao.get(memberEmail));
+	
 		return "member/mypage";
 	}
 	

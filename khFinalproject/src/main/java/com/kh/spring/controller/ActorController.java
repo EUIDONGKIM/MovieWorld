@@ -38,7 +38,8 @@ public class ActorController {
 	}
 	
 	@GetMapping("/list")
-	public String list() {//리스트를 찍으려면 뭔가가 필요합니다잉
+	public String list(Model model) {
+		model.addAttribute("list", actorDao.list());
 		return "actor/list";
 	}
 	

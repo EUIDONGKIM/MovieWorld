@@ -1,10 +1,13 @@
 package com.kh.spring.controller;
 
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.theater.TheaterDto;
@@ -63,6 +67,12 @@ public class TheaterController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int theaterNo, Model model) {
+		LocalDate today = LocalDate.now();
+		List<LocalDate> dateList = new ArrayList<>();	
+		for(int i = 0 ; i < 7 ; i++) {
+			dateList.add(today.plusDays(i));
+		}
+		model.addAttribute("dateList",dateList);
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
 		model.addAttribute("hallList",hallDao.list(theaterNo));
 		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));
@@ -102,25 +112,22 @@ public class TheaterController {
 		return "theater/edit";
 	}
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute TheaterDto theaterDto) {
+	public String edit(@ModelAttribute TheaterDto theaterDto, RedirectAttributes redirectAttributes) {
 		boolean success = theaterDao.edit(theaterDto);
 		if(success) {
-			return "redirect:/theater/detail?theaterNo="+theaterDto.getTheaterNo();
+			redirectAttributes.addAttribute("theaterNo", theaterDto.getTheaterNo());
+			redirectAttributes.addFlashAttribute("editResult","editSuccess");
 		}
-		else {
-			return "redirect:edit?error"; //실패
-		}
+		return "redirect:/theater/detail";
 		
 	}
 	
-	@GetMapping("/delete")
-	public String delete(@RequestParam int theaterNo) {
+	@PostMapping("/delete")
+	public String delete(@RequestParam int theaterNo, RedirectAttributes redirectAttributes) {
 		boolean success = theaterDao.delete(theaterNo);
 		if(success) {
-			return "redirect:/theater/list";//성공하면 목록으로
+			redirectAttributes.addFlashAttribute("deleteResult","deleteSuccess");
 		}
-		else {
-			return "redirect:/theater/detail?error"; //실패
-		}
+		return "redirect:/theater/list";//성공하면 목록으로
 	}
 }

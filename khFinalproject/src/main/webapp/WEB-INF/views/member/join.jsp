@@ -25,12 +25,17 @@
 
 //이메일 정규표현식
 $(function() {
-	$("input[name=memberEmail]").on("input",function() {
+	
+	$("input[name=memberEmail]").on("blur",function() {
 		var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 		var email = $(this).val();
+;
 		$(this).removeClass("success").removeClass("fail");
+		
 		if (regex.test(email)) {
 			$("input[name=memberEmail]").addClass("success");
+			idcheck(email);
+			
 		} else {
 			$("input[name=memberEmail]").addClass("fail");
 		}
@@ -58,7 +63,7 @@ $(function() {
 
 	 function emailSender(to){
 	            $.ajax({
-				url:"${pageContext.request.contextPath}/data/emailSend",
+				url:"${pageContext.request.contextPath}/member/emailSend",
 				type:"post",
 	            data : {
 					to:to
@@ -74,7 +79,7 @@ $(function() {
 	 
 	 function serialChecker(to,check){
 	         $.ajax({
-				url:"${pageContext.request.contextPath}/data/serialCheck",
+				url:"${pageContext.request.contextPath}/member/serialCheck",
 				type:"get",
 	         data : {
 					to:to,
@@ -106,10 +111,31 @@ $(function() {
 			error:function(e){
 				console.log("실패", e);
 			}
-		    });
- }
+	     });
+	         
+ 	}
+	 
+	function idcheck(email){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/member/idcheck",
+			type : "get",
+			dataType : "text",
+			data : {
+				memberEmail : email
+			},	
+			success:function(resp){
+				console.log("성공",resp);				
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
+	 
+	
 
 });
+
 //비밀번호 정규표현식
 $(function() {
 	$("input[name=memberPw]").on("input", function() {

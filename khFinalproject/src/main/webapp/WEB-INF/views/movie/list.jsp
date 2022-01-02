@@ -12,44 +12,30 @@
 
 <h2>영화 리스트(상영작/ 상영예정작) </h2>
 
-<table>
+<table class="table">
 	<thead>
 		<tr>
-			<th>제목</th>
-			<th>Title</th>
+			<th>번호</th>
+			<th>제목</th>		
 			<th>등급</th>
 			<th>장르</th>
-			<th>국가</th>
 			<th>개봉일</th>
-			<th>런타임</th>
-			<th>메인 포스터</th>
-			<th>스틸컷</th>
-			<th>역할 선택</th>
-			<th>관리 메뉴</th>
+			<td>수정및삭제</td>
 		</tr>
 	</thead>
 	
 	<tbody>
-		<c:forEach var="movieListDetailDto" items="${movieListDetailDto}">
+		<c:forEach var="movieDto" items="${list}">
 			<tr>
-				<td>${movieListDetailDto.movieTitle}</td>
-				<td>${movieListDetailDto.movieEngTitle}</td>
-				<td>${movieListDetailDto.movieGrade}</td>
-				<td>${movieListDetailDto.movieType}</td>
-				<td>${movieListDetailDto.movieContry}</td>
-				<td>${movieListDetailDto.movieOpening}</td>
-				<td>${movieListDetailDto.movieRuntime}</td>
-				<td>${movieListDetailDto.moviePhotoNo}</td> <%--..? --%>
-				<%--vo로 빼버려~!! 
-				수정, 삭제 스케줄꺼 훔쳐오기ㅎㅅㅎ
-				--%>
-			
-				
+				<td>${movieDto.movieNo}</td>
+				<td>${movieDto.movieTitle}</td>
+				<td>${movieDto.movieGrade}</td>
+				<td>${movieDto.movieType}</td>
+				<td>${movieDto.movieOpening}</td>
+				<td><a href="#">수정 및 삭제</a></td>
+			</tr>	
 		</c:forEach>	
-	</tbody>
-	
-	
-	
+	</tbody>	
 </table>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

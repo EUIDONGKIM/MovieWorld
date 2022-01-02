@@ -131,18 +131,20 @@ public class BoardServiceImpl  implements BoardService {
 	}
 
 	@Override
-	public BoardSearchVO searchNPagingByMember(BoardSearchVO boardSearchVO, String memberEmail) throws Exception {
+		public BoardSearchVO searchNPagingByMember(BoardSearchVO boardSearchVO, String memberEmail) throws Exception {
 
 		int count1 = boardDao.count1(boardSearchVO.getColumn(),boardSearchVO.getKeyword(),memberEmail);
 		boardSearchVO.setCount(count1);
-		log.debug("값확인3 boardSearchVO@@@@@@@@{}",boardSearchVO);
+	
 		boardSearchVO.calculate();
 		
 		List<BoardDto> list = boardDao.search1(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),memberEmail);
 		boardSearchVO.setList(list);
-		log.debug("값확인4 boardSearchVO @@@@@@@@{}",boardSearchVO);
 		return boardSearchVO;
 	}
+
+
+	
 	
 	
 }

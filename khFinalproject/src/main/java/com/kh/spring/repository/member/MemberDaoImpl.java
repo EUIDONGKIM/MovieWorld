@@ -168,6 +168,18 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+
+	public boolean check(MemberDto memberDto) {
+		MemberDto findDto =sqlSession.selectOne("member.check",memberDto);
+		if(findDto !=null) { //인증성공시
+			return true;
+		}else {
+			return false;	
+		}
+	}
+
+	
+
 	public void usePoint(int memberNo, int memberPoint) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("memberNo",memberNo);

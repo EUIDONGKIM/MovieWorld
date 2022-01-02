@@ -53,6 +53,13 @@ public class AdminController {
 		return "admin/actorInfo";
 	}
 	
+	@GetMapping("/review")
+	public String adminReview() {
+		return"admin/review";
+	}
+	
+	
+	
 	@GetMapping("/price")
 	public String adminPrice() {
 		return "admin/price";
