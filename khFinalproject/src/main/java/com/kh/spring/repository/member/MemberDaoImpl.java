@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.vo.ChartVO;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -211,6 +212,26 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public int getPoint(String memberEmail) {
 		return sqlSession.selectOne("member.getPoint",memberEmail);
+  
+   @Override
+	public List<ChartVO> countByGradeTotal() {
+		return sqlSession.selectList("member.countByGradeTotal");
+	}
+
+	@Override
+	public List<ChartVO> countByGradePoint() {
+		return sqlSession.selectList("member.countByGradePoint");
+	}
+
+	@Override
+	public List<ChartVO> countMemberjoinByYear() {
+		return sqlSession.selectList("member.countMemberjoinByYear");
+	}
+
+	@Override
+	public List<ChartVO> countMemberjoinByYearMonth() {
+		return sqlSession.selectList("member.countMemberjoinByYearMonth");
+
 	}
 
 
