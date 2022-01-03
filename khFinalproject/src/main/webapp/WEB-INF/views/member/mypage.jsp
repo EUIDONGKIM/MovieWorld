@@ -101,7 +101,7 @@
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action ">내가 작성한 게시글보기</a>
 
 
-                    <a href="#" class="list-group-item list-group-item-action ">포인트 적립/사용</a>
+                    <a href="history" class="list-group-item list-group-item-action ">포인트 적립/사용</a>
                     <a href="#" class="list-group-item list-group-item-action ">내가관람한영화</a>
                     <a href="#" class="list-group-item list-group-item-action ">의동님</a>
                     <a href="#" class="list-group-item list-group-item-action ">인태님</a>
