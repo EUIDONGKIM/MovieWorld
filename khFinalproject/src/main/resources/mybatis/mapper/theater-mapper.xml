@@ -81,13 +81,13 @@
 	<select id="search" parameterType="map" resultType="TheaterDto">
 		select * from (
 		select rownum rn, tmp.* from(
-		select * from member
+		select * from theater
 		<where>
 			<if test="column != null and keyword != null">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
 		</where>
-		order by member_no desc
+		order by theater_no asc
 		)tmp) where rn between #{begin} and #{end}
 	</select>
 	
