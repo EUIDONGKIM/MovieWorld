@@ -37,5 +37,15 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	public List<ChartVO> countByAgeForTotal() {
 		return sqlSession.selectList("statisticsInfoView.countByAgeForTotal");
 	}
+
+	@Override
+	public List<ChartVO> totalReservationByTheater() {
+		return sqlSession.selectList("statisticsInfoView.totalReservationByTheater");
+	}
+
+	@Override
+	public List<ChartVO> countByGradeReservation() {
+		return sqlSession.selectList("statisticsInfoView.countByGradeReservation");
+	}
 	
 }

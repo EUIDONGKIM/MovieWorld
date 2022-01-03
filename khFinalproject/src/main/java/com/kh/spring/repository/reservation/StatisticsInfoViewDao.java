@@ -16,4 +16,8 @@ public interface StatisticsInfoViewDao {
 
 	List<ChartVO> countByAgeForTotal();
 
+	List<ChartVO> totalReservationByTheater();
+
+	List<ChartVO> countByGradeReservation();
+
 }

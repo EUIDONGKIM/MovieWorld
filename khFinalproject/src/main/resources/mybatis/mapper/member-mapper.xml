@@ -149,4 +149,15 @@
 		    end
 		where member_grade not in('운영자','정지');
 	</update>
+	
+	<select id="countByGradeTotal" resultType="ChartVO">
+		select member_grade text, count(*) count from member
+		group by member_grade order by count desc
+	</select>
+
+	<select id="countByGradePoint" resultType="ChartVO">
+		select member_grade text, sum(member_point) count from member
+		group by member_grade order by count desc
+	</select>
+
 </mapper>
