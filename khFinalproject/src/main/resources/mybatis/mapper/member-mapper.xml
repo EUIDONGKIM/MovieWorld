@@ -160,4 +160,15 @@
 		group by member_grade order by count desc
 	</select>
 
+	<select id="countMemberjoinByYearMonth" resultType="ChartVO">
+		select extract(month from member_join) text,count(*)count from member 
+		where member_join between 
+		to_date('20210101000000', 'YYYYMMDDHH24MISS') and to_date('20221231235959', 'YYYYMMDDHH24MISS')
+		group by extract(month from member_join) order by count desc
+	</select>
+
+	<select id="countMemberjoinByYear" resultType="ChartVO">
+		select extract(year from member_join) text, count(*) count from member
+		group by extract(year from member_join) order by count desc
+	</select>
 </mapper>

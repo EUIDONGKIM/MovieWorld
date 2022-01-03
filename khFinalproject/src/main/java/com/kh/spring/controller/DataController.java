@@ -90,6 +90,42 @@ public class DataController {
 	@Autowired
 	private MemberDao memberDao;
 	
+	@GetMapping("/countPeopleBySido")
+	public ChartTotalVO countPeopleBySido() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("지역별 관람객 수 현황");
+		vo.setLabel("관람객수");
+		vo.setDataset(lastInfoViewDao.countPeopleBySido());
+		return vo;
+	}
+	
+	@GetMapping("/countReservationBySido")
+	public ChartTotalVO countReservationBySido() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("지역별 예매수 현황");
+		vo.setLabel("예매수");
+		vo.setDataset(statisticsInfoViewDao.countReservationBySido());
+		return vo;
+	}
+	
+	@GetMapping("/countMemberjoinByYear")
+	public ChartTotalVO countMemberjoinByYear() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("년도별 가입자수 현황");
+		vo.setLabel("가입자수");
+		vo.setDataset(memberDao.countMemberjoinByYear());
+		return vo;
+	}
+	
+	@GetMapping("/countMemberjoinByYearMonth")
+	public ChartTotalVO countMemberjoinByYearMonth() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("월별 가입자수 현황");
+		vo.setLabel("가입자수");
+		vo.setDataset(memberDao.countMemberjoinByYearMonth());
+		return vo;
+	}
+
 	@GetMapping("/countByGradeTotal")
 	public ChartTotalVO countByGradeTotal() {
 		ChartTotalVO vo = new ChartTotalVO();

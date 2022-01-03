@@ -20,4 +20,6 @@ public interface StatisticsInfoViewDao {
 
 	List<ChartVO> countByGradeReservation();
 
+	List<ChartVO> countReservationBySido();
+
 }

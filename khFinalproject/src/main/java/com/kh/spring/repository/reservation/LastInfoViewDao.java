@@ -27,4 +27,6 @@ public interface LastInfoViewDao {
 
 	List<ChartVO> totalProfitByTheater();
 
+	List<ChartVO> countPeopleBySido();
+
 }

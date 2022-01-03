@@ -46,6 +46,8 @@ public interface MemberDao {
 	void updateGrade();
 	List<ChartVO> countByGradeTotal();
 	List<ChartVO> countByGradePoint();
+	List<ChartVO> countMemberjoinByYear();
+	List<ChartVO> countMemberjoinByYearMonth();
 
 
 }
