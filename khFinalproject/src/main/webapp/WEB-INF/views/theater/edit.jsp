@@ -7,7 +7,19 @@
 <script>
 $(function(){
 	
-    $("button").on("click",function(e){
+	var scheduleList = "${scheduleList.size()}";
+	if(scheduleList > 0){
+		$("input[name=theaterName]").attr("disabled",true);
+		$("input[name=theaterAddress]").attr("disabled",true);
+		$("input[name=theaterDetailAddress]").attr("disabled",true);
+		$(".find-address-btn").attr("disabled",true);
+		
+		$(".delete-btn").attr("disabled",true);
+	}
+	
+	
+	
+    $("button[type=submit]").on("click",function(e){
 		e.preventDefault();
 
     	var operation = $(this).data("oper");
@@ -25,7 +37,7 @@ $(function(){
     	
     });
 	
-    $(".find-address-btn").click(function(){
+    $(".find-address-btn").click(function(e){
         findAddress();
     });
 
@@ -80,8 +92,16 @@ $(function(){
 	설명 : <textarea name=theaterInfo>${theaterDto.theaterInfo }</textarea> 
 	<br>
 	<button type="submit" data-oper="edit">수정</button>
-	<button type="submit" data-oper="delete">삭제</button>
+	<button type="submit" data-oper="delete" class="delete-btn">폐점</button>
 	<button type="submit" data-oper="cancel">취소</button>
 </form>
+
+<c:if test="${scheduleList.size() > 0}">
+<div>
+	현재 상영중인 영화가 있으면 폐점이 불가능합니다.
+</div>
+</c:if>
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -26,6 +26,7 @@ import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
+import com.kh.spring.service.TheaterService;
 import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,9 @@ public class TheaterController {
 	
 	@Autowired
 	private LastInfoViewDao lastInfoViewDao;
+	
+	@Autowired
+	private TheaterService theaterService;
 	
 	@GetMapping("/create")
 	public String create() {
@@ -121,27 +125,30 @@ public class TheaterController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int theaterNo, Model model) {
 		TheaterDto theaterDto = theaterDao.get(theaterNo);
+		model.addAttribute("scheduleList",totalInfoViewDao.listByTheater(theaterNo));
 		model.addAttribute("theaterDto",theaterDto);
 		
 		return "theater/edit";
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute TheaterDto theaterDto, RedirectAttributes redirectAttributes) {
-		boolean success = theaterDao.edit(theaterDto);
-		if(success) {
-			redirectAttributes.addAttribute("theaterNo", theaterDto.getTheaterNo());
-			redirectAttributes.addFlashAttribute("editResult","editSuccess");
-		}
-		return "redirect:/theater/detail";
-		
+		theaterService.editTheater(theaterDto);
+		redirectAttributes.addAttribute("theaterNo", theaterDto.getTheaterNo());
+		redirectAttributes.addFlashAttribute("editResult","editSuccess");
+		return "redirect:/theater/detail";	
 	}
 	
 	@PostMapping("/delete")
 	public String delete(@RequestParam int theaterNo, RedirectAttributes redirectAttributes) {
-		boolean success = theaterDao.delete(theaterNo);
+		boolean success = theaterService.deleteTheater(theaterNo);
+		log.debug("폐점 성공? = {}",success);
 		if(success) {
-			redirectAttributes.addFlashAttribute("deleteResult","deleteSuccess");
+			redirectAttributes.addFlashAttribute("deleteResult",success);
+			return "redirect:/theater/list";//성공하면 목록으로
 		}
-		return "redirect:/theater/list";//성공하면 목록으로
+		else {
+			redirectAttributes.addAttribute("theaterNo", theaterNo);
+			return "redirect:/theater/edit";
+		}
 	}
 }
