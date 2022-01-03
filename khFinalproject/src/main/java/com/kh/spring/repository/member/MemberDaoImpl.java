@@ -208,6 +208,11 @@ public class MemberDaoImpl implements MemberDao {
 		sqlSession.update("member.updateGrade");
 	}
 
+	@Override
+	public int getPoint(String memberEmail) {
+		return sqlSession.selectOne("member.getPoint",memberEmail);
+	}
+
 
 
 

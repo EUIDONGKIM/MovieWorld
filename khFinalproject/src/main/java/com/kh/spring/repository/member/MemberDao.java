@@ -15,6 +15,8 @@ public interface MemberDao {
 	MemberDto get3(String memberNick);
 	//로그인
 	MemberDto login(MemberDto memberDto);
+	//포인트 조회
+	int getPoint(String memberEmail);
 	
 	//아이디 찾기
 	MemberDto findId(String memberName ,String memberPhone);

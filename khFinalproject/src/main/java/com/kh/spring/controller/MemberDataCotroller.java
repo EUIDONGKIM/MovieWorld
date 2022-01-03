@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.member.CertificationDto;
+import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.repository.member.CertificationDao;
+import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.service.EmailService;
 
@@ -23,6 +27,9 @@ public class MemberDataCotroller {
 	private CertificationDao certificationDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private HistoryDao historyDao;
+
 
 	@GetMapping("/idcheck")
 	public String idCheck(@RequestParam String memberEmail) {
@@ -59,4 +66,17 @@ public class MemberDataCotroller {
 	public void emailSend(@RequestParam String to) {
 		emailService.sendCertificationNumber(to);
 	}
+	
+	
+	//페이지네이션 기능
+	@GetMapping("/historyMore")
+	public List<HistoryDto> historyMore(
+			@RequestParam(required = false, defaultValue = "1") int page, 
+			@RequestParam(required = false, defaultValue = "5") int size) {
+		int endRow = page * size;
+		int startRow = endRow - (size - 1);
+		return historyDao.listByPage(startRow, endRow);
+	}
+	
+	
 }

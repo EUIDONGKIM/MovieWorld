@@ -8,4 +8,5 @@ public interface HistoryDao {
 	void insert(HistoryDto historyDto );
 	List<HistoryDto> list(String memberEmail);
 	HistoryDto get(int historyNo);
+	List<HistoryDto> listByPage(int startRow, int endRow);
 }

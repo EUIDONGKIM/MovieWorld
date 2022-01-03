@@ -30,5 +30,13 @@
 	select * from history where history_no=#{historyNo}
 </select>
 
+	<select id="listByPage" parameterType="map" resultType="HistoryDto">
+		select * from (
+			select rownum rn, TMP.* from (
+				select * from history order by history_no desc
+			)TMP
+		) where rn between #{startRow} and #{endRow}		
+	</select>
+
 
 </mapper>
