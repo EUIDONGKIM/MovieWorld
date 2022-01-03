@@ -42,7 +42,7 @@
 	</div>
 	
 	<div class="row right">
-		<a href="list" class="form-link-btn">목록</a> 
+		<a href="main?boardTypeName=${param.boardTypeName}" class="form-link-btn">목록</a> 
 		<input type="submit" value="등록" class="form-btn form-inline">
 	</div>
 	
