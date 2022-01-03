@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.vo.MemberSearchVO;
+import com.kh.spring.vo.PaginationVO;
 import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -69,20 +70,20 @@ public class TheaterDaoImpl implements TheaterDao{
 	}
 
 	@Override
-	public int count(String column, String keyword) {
-		Map<String,Object> param = new HashMap<>();
-		param.put("column",column);
-		param.put("keyword",keyword);
+	public int count(PaginationVO paginationVO) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("column", paginationVO.getColumn());
+		param.put("keyword",paginationVO.getKeyword());
 		return sqlSession.selectOne("theater.count",param);
 	}
 
 	@Override
-	public List<TheaterDto> search(MemberSearchVO memberSearchVO) {
+	public List<TheaterDto> search(PaginationVO paginationVO) {
 		Map<String,Object> param = new HashMap<>();
-		param.put("column",memberSearchVO.getColumn());
-		param.put("keyword",memberSearchVO.getKeyword());
-		param.put("begin",memberSearchVO.getBegin());
-		param.put("end",memberSearchVO.getEnd());
+		param.put("column",paginationVO.getColumn());
+		param.put("keyword",paginationVO.getKeyword());
+		param.put("begin",paginationVO.getBegin());
+		param.put("end",paginationVO.getEnd());
 		return sqlSession.selectList("theater.search",param);
 	}
 

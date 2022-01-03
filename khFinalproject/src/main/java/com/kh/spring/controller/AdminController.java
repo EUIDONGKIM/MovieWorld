@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.AdminService;
 import com.kh.spring.vo.MemberSearchVO;
+import com.kh.spring.vo.PaginationVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -23,13 +31,26 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@Autowired
+	private TheaterDao theaterDao;
+	
 	@RequestMapping("/")
 	public String adminHome() {
 		return "admin/main";
 	}
 	
-	@RequestMapping("/theater")
-	public String adminTheater() {
+	@GetMapping("/theater")
+	public String adminTheater(@ModelAttribute PaginationVO paginationVO, Model model) throws Exception {
+		paginationVO.setCount(theaterDao.count(paginationVO));
+		paginationVO.setPageSize(1);
+		paginationVO.setBlockSize(5);
+		paginationVO.calculate();
+		
+		log.debug("paginationVO...{}",paginationVO);
+		List<TheaterDto> list = theaterDao.search(paginationVO);
+		model.addAttribute("totalCount",theaterDao.list().size());
+		model.addAttribute("list",list);
+		
 		return "admin/theater";
 	}
 	
