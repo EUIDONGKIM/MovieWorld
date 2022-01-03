@@ -73,7 +73,7 @@ public class BoardController {
 	@GetMapping("/write")
 	public String write(@RequestParam(required = false,defaultValue = "0") int boardSuperno,Model model,@RequestParam int boardTypeName) {
 		
-		if(boardSuperno != 0) {
+		if(boardSuperno !=0) {
 			model.addAttribute("boardSuperno",boardSuperno);
 		}
 		return "board/write";

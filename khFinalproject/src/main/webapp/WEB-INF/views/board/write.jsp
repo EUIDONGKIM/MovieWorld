@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<c:set var="answer" value="${boardDto.boardSuperno != null}"></c:set>
+<c:set var="answer" value="${boardSuperno != null}"></c:set>
 
 <form method="post"  enctype="multipart/form-data">
 
@@ -17,7 +17,7 @@
 	<!-- 제목 -->
 	<div class="row">
 		<c:choose>
-			<c:when test="answer">
+			<c:when test="${answer}">
 				<h2>답글 작성</h2>
 			</c:when>
 			<c:otherwise>
