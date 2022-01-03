@@ -11,7 +11,7 @@
 <%-- 목록에서 수정 및 삭제를 처리 한다. --%>
 <h2><a href="${root}/schedule/list">상영 영화 목록</a></h2> 
 
-<h2><a href="${root}/schedule/create">상영 영화 생성</a></h2>
+<h2><a href="${root}/schedule/create_total">상영 영화 일괄 생성</a></h2>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
