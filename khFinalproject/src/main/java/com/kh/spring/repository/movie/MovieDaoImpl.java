@@ -34,4 +34,9 @@ public class MovieDaoImpl implements MovieDao{
 		sqlSession.insert("movie.insert",movieDto);
 	}
 
+	@Override
+	public List<MovieDto> listByOpening() {
+		return sqlSession.selectList("movie.listByOpening");
+	}
+
 }

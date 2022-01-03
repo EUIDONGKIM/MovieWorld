@@ -46,4 +46,9 @@
 	<select id="get" parameterType="int" resultType="MovieDto">
 		select * from movie where movie_no = #{movieNo}
 	</select>
+	
+	<select id="listByOpening" resultType="MovieDto">
+		select * from movie where sysdate between movie_opening-30 and movie_opening+30
+	</select>
+	
 </mapper>
