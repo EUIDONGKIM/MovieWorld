@@ -9,13 +9,31 @@
 
 <div class="container-1200 container-center">
 	<div class="row center">
-		<h2>게시판</h2>
+		<c:if test="${param.boardTypeName==1}">
+			<h2>공지사항</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==2}">
+			<h2>자주찾는질문</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==3}">
+			<h2>공지/뉴스</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==4}">
+			<h2>문의사항</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==5}">
+			<h2>단체대관/문의</h2>
+		</c:if>
 	</div>
 	<div class="row center">
 		<h6>타인에 대한 무분별한 비판은 제재 대상입니다</h6>
 	</div>
 	<div class="row right">
-		<a href="write" class="form-btn">글쓰기</a>
+		<a href="write?boardTypeName=${param.boardTypeName}" class="form-btn">글쓰기</a>
 	</div>
 	<div class="row">
 		<table class="table table-border table-hover">
@@ -29,7 +47,9 @@
 				</tr>
 			</thead>
 			<tbody>
+
 				<c:forEach var="boardDto" items="${searchList}">
+		
 				<tr>
 					<td>${boardDto.boardNo}</td>
 					
@@ -41,7 +61,7 @@
 							<img src="${root}/resources/image/reply.png" width="15" height="15">
 						</c:if>
 					
-						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}">
+						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}">
 							${boardDto.boardTitle}
 						</a>
 					</td>
@@ -55,7 +75,7 @@
 		</table>
 	</div>
 	<div class="row right">
-		<a href="write" class="form-btn">글쓰기</a>
+		<a href="write?boardTypeName=${param.boardTypeName}" class="form-btn">글쓰기</a>
 	</div>
 	<div class="row pagination">
 		<!-- 이전 버튼 -->
@@ -64,11 +84,12 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}">&lt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+<%-- 						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a> --%>
+						<a href="main?&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -82,11 +103,11 @@
 			<c:choose>
 				<c:when test="${boardSearchVO.isSearch()}">
 					<!-- 검색용 링크 -->
-					<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
+					<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}&boardTypeName=${param.boardTypeName}">${i}</a>
 				</c:when>
 				<c:otherwise>
 					<!-- 목록용 링크 -->
-					<a href="main?p=${i}">${i}</a>
+					<a href="main?p=${i}&boardTypeName=${param.boardTypeName}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -98,11 +119,11 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}&boardTypeName=${param.boardTypeName}}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="main?p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?p=${boardSearchVO.getNextBlock()}&boardTypeName=${param.boardTypeName}">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

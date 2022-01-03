@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class BoardType {
-	private int boardTypeNo;
+	private int boardTypeName;
 	private String boradTypeName;
 }

@@ -65,20 +65,23 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardDto> search(String column, String keyword, int begin, int end) {
+	public List<BoardDto> search(String column, String keyword, int begin, int end,int boardTypeName) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("column",column);
 		param.put("keyword",keyword);
 		param.put("begin",begin);
 		param.put("end",end);
+		param.put("boardTypeName",boardTypeName);
 		return sqlsession.selectList("board.search",param);
 	}
 
 	@Override
-	public int count(String column, String keyword) {
+	public int count(String column, String keyword ,int boardTypeName) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("column",column);
 		param.put("keyword",keyword);
+		param.put("boardTypeName",boardTypeName);
+	
 		return sqlsession.selectOne("board.count",param);
 	}
 
