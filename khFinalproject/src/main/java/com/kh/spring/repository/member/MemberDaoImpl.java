@@ -210,6 +210,10 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public int getPoint(String memberEmail) {
+		return sqlSession.selectOne("member.getPoint",memberEmail);
+  
+   @Override
 	public List<ChartVO> countByGradeTotal() {
 		return sqlSession.selectList("member.countByGradeTotal");
 	}
@@ -227,6 +231,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<ChartVO> countMemberjoinByYearMonth() {
 		return sqlSession.selectList("member.countMemberjoinByYearMonth");
+
 	}
 
 
