@@ -17,6 +17,7 @@ public class BoardSearchVO {
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
 	private List<BoardDto> list = new ArrayList<>();
+	private int boardTypeName;
 
 	
 	public void calculate() throws Exception {

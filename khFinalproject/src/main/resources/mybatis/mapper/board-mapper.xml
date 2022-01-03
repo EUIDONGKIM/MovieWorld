@@ -37,6 +37,10 @@
 			<if test="column != null and keyword != null">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
+			
+			<if test="boardTypeName !=null">	
+			 and boardType_name=#{boardTypeName}
+			</if>
 		</where>
 		connect by prior board_no = board_superno
 		start with board_superno is null
@@ -67,6 +71,10 @@
 			<if test="column != null and keyword != null">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
+			
+			<if test="boardTypeName !=null">	
+			 and boardType_name=#{boardTypeName}
+			</if>
 		</where>
 	</select>
 	
@@ -94,7 +102,7 @@
 	<insert id="write1" parameterType="BoardDto">
 		insert into board values(
 			#{boardNo},
-			1,
+			#{boardtypeName},
 			#{memberEmail},
 			#{boardTitle},
 			 sysdate,
@@ -110,7 +118,7 @@
 	<insert id="write2" parameterType="BoardDto">
 		insert into board values(
 			#{boardNo},
-			1,
+			#{boardtypeName},
 			#{memberEmail},
 			#{boardTitle},
 			 sysdate,

@@ -28,15 +28,26 @@ public class BoardServiceImpl  implements BoardService {
 	@Value("${config.rootpath}")
 	public String directory;
 
+//	@Override
+//	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
+//		int count = boardDao.count(boardSearchVO.getColumn(),boardSearchVO.getKeyword());
+//		boardSearchVO.setCount(count);
+//		boardSearchVO.calculate();
+//		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd());
+//		boardSearchVO.setList(list);
+//		return boardSearchVO;
+//	}
+
 	@Override
 	public BoardSearchVO searchNPaging(BoardSearchVO boardSearchVO) throws Exception {
-		int count = boardDao.count(boardSearchVO.getColumn(),boardSearchVO.getKeyword());
+		int count = boardDao.count(boardSearchVO.getColumn(),boardSearchVO.getKeyword(),boardSearchVO.getBoardTypeName());
 		boardSearchVO.setCount(count);
 		boardSearchVO.calculate();
-		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd());
+		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),boardSearchVO.getBoardTypeName());
 		boardSearchVO.setList(list);
 		return boardSearchVO;
 	}
+
 
 	@Override
 	public int write(BoardDto boardDto, List<MultipartFile> attach) throws IllegalStateException, IOException {

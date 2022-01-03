@@ -68,7 +68,8 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public String write(@RequestParam(required = false,defaultValue = "0") int boardSuperno,Model model) {
+	public String write(@RequestParam(required = false,defaultValue = "0") int boardSuperno,Model model,@RequestParam int boardTypeName) {
+		
 		if(boardSuperno != 0) {
 			model.addAttribute("boardSuperno",boardSuperno);
 		}
@@ -78,22 +79,23 @@ public class BoardController {
 	
 	@PostMapping("/write")
 	public String write(@ModelAttribute BoardDto boardDto,
-						@RequestParam List<MultipartFile> attach,
+						@RequestParam List<MultipartFile> attach,@RequestParam int boardTypeName,
 			HttpSession session) throws IllegalStateException, IOException {
 		//맴버 아이디를 세션에서 받아서 주기
 		String mebmerEmail = (String)session.getAttribute("ses");
 		boardDto.setMemberEmail(mebmerEmail);
-		
+		boardDto.setBoardtypeName(boardTypeName);
 		int boardNo = boardService.write(boardDto, attach);
 //		int boardNo = boardDao.write(boardDto);
 		
-		return "redirect:/board/detail?boardNo="+boardNo;
+		return "redirect:/board/detail?boardNo="+boardNo+"&boardTypeName="+boardTypeName;
+					
 //		return "redirect:/";
 	}
 	
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam int boardNo,
+	public String detail(@RequestParam int boardNo,@RequestParam int boardTypeName,
 			HttpSession session,
 			Model model) {
 
@@ -110,10 +112,10 @@ public class BoardController {
 	}
 	
 	@GetMapping("/viewUp")
-	public String viewUp(@RequestParam int boardNo) {
+	public String viewUp(@RequestParam int boardNo,@RequestParam int boardTypeName) {
 		//제목 누르면 viweUp을 통해 들어와서 리다이렉트
 		boardDao.viewUp(boardNo);	
-		return "redirect:detail?boardNo="+boardNo;
+		return "redirect:detail?boardNo="+boardNo+"&boardTypeName="+boardTypeName;
 	}
 	
 	@RequestMapping("/delete")
@@ -123,15 +125,19 @@ public class BoardController {
 	}
 	
 	@GetMapping("/edit")
-	public String edit(@RequestParam int boardNo , Model model) {
+	public String edit(@RequestParam int boardNo , Model model ) {
 		model.addAttribute("boardDto",boardDao.get(boardNo));
+//		return "board/edit?boardNo="+boardNo+"&boardTypeName="+boardTypeName;
 		return "board/edit";
+		
+		
 	}
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute BoardDto boardDto) {	
+	public String edit(@ModelAttribute BoardDto boardDto ,@RequestParam int boardTypeName) {	
 		boardDao.edit(boardDto);
 		int boardNo=boardDto.getBoardNo();
-		return "redirect:/board/detail?boardNo="+boardNo;
+		return "redirect:/board/detail?boardNo="+boardNo +"&boardTypeName="+boardTypeName;
+		
 	}
 	
 	//1. 멤버 email이 null
