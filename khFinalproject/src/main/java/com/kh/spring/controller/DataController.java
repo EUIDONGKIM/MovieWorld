@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
-import com.kh.spring.entity.member.CertificationDto;
-import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
@@ -28,11 +26,12 @@ import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
 import com.kh.spring.repository.member.CertificationDao;
-import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.movie.VideoDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.theater.HallDao;
@@ -40,6 +39,7 @@ import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.ReservationService;
+import com.kh.spring.vo.ChartTotalVO;
 import com.kh.spring.vo.HallByScheduleTimeVO;
 import com.kh.spring.vo.MovieCountVO;
 import com.kh.spring.vo.ReservationVO;
@@ -82,6 +82,73 @@ public class DataController {
 	private CertificationDao certificationDao;
 	@Autowired
 	private ReservationDao reservationDao;
+	@Autowired
+	private LastInfoViewDao lastInfoViewDao;
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
+	
+	@GetMapping("/countByAgeForMoive")
+	public ChartTotalVO countByAgeForMoive() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("전체 영화에 따른 연령별 예매");
+		vo.setLabel("연령");
+		vo.setDataset(statisticsInfoViewDao.countByAgeForMoive());
+		return vo;
+	}
+	
+	@GetMapping("/countByAgeForTotal")
+	public ChartTotalVO countByAgeForTotal() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("특정 영화에 따른 연령별 예매");
+		vo.setLabel("연령");
+		vo.setDataset(statisticsInfoViewDao.countByAgeForTotal());
+		return vo;
+	}
+	
+	@GetMapping("/countByGenderForTotal")
+	public ChartTotalVO countByGenderForTotal() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("전체 영화에 따른 성별별 예매");
+		vo.setLabel("성별");
+		vo.setDataset(statisticsInfoViewDao.countByGenderForTotal());
+		return vo;
+	}
+	
+	@GetMapping("/countByGenderForMovie")
+	public ChartTotalVO countByGenderForMovie() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("특정 영화에 따른 성별별 예매");
+		vo.setLabel("성별");
+		vo.setDataset(statisticsInfoViewDao.countByGenderForMovie());
+		return vo;
+	}
+
+	@GetMapping("/totalProfit")
+	public ChartTotalVO totalProfit() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("영화별 수익");
+		vo.setLabel("수익");
+		vo.setDataset(lastInfoViewDao.countByProfit());
+		return vo;
+	}
+	
+	@GetMapping("/totalReservation")
+	public ChartTotalVO totalReservation() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("영화별 예매순위");
+		vo.setLabel("예매수");
+		vo.setDataset(statisticsInfoViewDao.countByReservation());
+		return vo;
+	}
+	
+	@GetMapping("/totalPeople")
+	public ChartTotalVO totalPeople() {
+		ChartTotalVO vo = new ChartTotalVO();
+		vo.setTitle("영화별 총 관람객");
+		vo.setLabel("관람객 수");
+		vo.setDataset(lastInfoViewDao.countByTotal());
+		return vo;
+	}
 	
 	@DeleteMapping("/cancelTempReservation")
 	public boolean cancelTempReservation(@RequestParam int reservationNo) {

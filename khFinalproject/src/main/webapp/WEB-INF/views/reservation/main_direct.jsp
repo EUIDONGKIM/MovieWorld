@@ -5,6 +5,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="grade" value="${memberGrade}"></c:set>
 <c:set var="admin" value="${grade eq '관리자'}"></c:set>
+<c:set var="direct" value="${lastInfoViewDto != null}"></c:set>
+<c:set var="initDto" value="${lastInfoViewDto}"></c:set>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
 <style>
@@ -250,7 +252,60 @@ $(function(){
 		console.log(ageOld);
 		console.log(ageTotal);
 	});
-loadList();
+	
+	if(${direct}){
+		movieName = '${initDto.movieTitle}';
+		theaterName = '${initDto.theaterName}';
+		movieRuntime = ${initDto.movieRuntime};
+		movieNo = ${initDto.movieNo};
+		theaterSido = '${initDto.theaterSido}';
+		theaterNo = ${initDto.theaterNo};
+		scheduleTimeDateTime = '${initDto.scheduleTimeDateTime}';
+		var timedate = scheduleTimeDateTime.substring(0,10);
+		scheduleTimeDate = timedate;
+		scheduleTimeNo = ${initDto.scheduleTimeNo};
+		hallType = '${initDto.hallType}';
+		scheduleTimeDiscountType = '${initDto.scheduleTimeDiscountType}';
+		console.log("쳌0",scheduleTimeNo);
+		
+		
+		movieLoadList();
+		sidoList(movieNo);
+		theaterNoList(movieNo,theaterSido);
+		scheduleDateList(movieNo,theaterNo);
+		scheduleDateTimeDateList(scheduleTimeDate);
+		getHallRowsAndCols(scheduleTimeNo);
+		
+	}else{
+		loadList();
+	}
+	
+function directChecked(){
+	$("input[name=movieNo]").each(function(){
+		if($(this).val()==movieNo){
+			$(this).prop("checked",true);
+		}
+	});
+	$("input[name=theaterSido]").each(function(){
+		if($(this).val()==theaterSido){
+			$(this).prop("checked",true);
+		}
+	});
+	$("input[name=theaterNo]").each(function(){
+		if($(this).val()==theaterNo){
+			$(this).prop("checked",true);
+		}
+	});
+	$("input[name=scheduleTimeDate]").each(function(){
+		console.log("쳌1");
+		if($(this).val()==scheduleTimeDate){
+			$(this).prop("checked",true);
+		}
+	});
+	
+	$("input[name=scheduleTimeNo][value='${initDto.scheduleTimeNo}']").prop("checked",true);
+	
+}	
 
 function loadList(){
 	//첫 화면바로 띄워주기
@@ -683,6 +738,7 @@ function getHallRowsAndCols(scheduleTimeNo){
 			hallRows = resp.hallRows;
 			hallCols = resp.hallCols;
 			getSeat(scheduleTimeNo);
+			directChecked();
 		},
 		error:function(e){
 			console.log("실패", e);
@@ -701,6 +757,7 @@ function getSeat(scheduleTimeNo){
 		dataType : "json",
 		success:function(resp){
 			console.log("성공", resp);
+			directChecked();
 			getReservationKey();
 			$(".seat-box").empty();
 			
@@ -791,6 +848,7 @@ function getReservationKey(){
 		type:"get",
 		dataType : "text",
 		success:function(resp){
+			directChecked();
 			console.log("성공 번호 얻어오기.", resp);
 			reservationKey = resp;
 			console.log("성공 번호 변경.", reservationKey);
