@@ -81,4 +81,7 @@
 		) group by theater_sido order by count desc
 	</select>
 	
+	<select id="movieTitleBymemberNo" parameterType="int" resultType="String">
+		select Movie_title from statistics_info_view where member_no=#{memebrNo}
+	</select>
 </mapper>

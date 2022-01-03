@@ -1,6 +1,7 @@
 package com.kh.spring.repository.reservation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -57,6 +58,11 @@ public class ReservationDaoImpl implements ReservationDao {
 	@Override
 	public void cancel(int reservationNo) {
 		sqlSession.update("reservation.cancel",reservationNo);
+	}
+
+	@Override
+	public List<ReservationDto> list(int memberNo) {
+		return sqlSession.selectList("reservation.getMemberNo",memberNo);
 	}
 
 }
