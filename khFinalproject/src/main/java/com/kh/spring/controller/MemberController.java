@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.util.RandomUtil;
@@ -28,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private HistoryDao historyDao;
 
 	@Autowired
 	private RandomUtil randomUtil;
@@ -258,4 +265,16 @@ public class MemberController {
 
 		return "member/edit_success";
 	}
+	
+	@GetMapping("/history")
+	public String history(HttpSession session,Model model,@ModelAttribute HistoryDto historyDto) {		
+		String memberEmail =(String)session.getAttribute("ses");
+		List<HistoryDto> list = historyDao.list(memberEmail);
+		
+		System.out.println(list);
+	
+		model.addAttribute("list",list);	
+			return "member/history";		
+	}
+
 }
