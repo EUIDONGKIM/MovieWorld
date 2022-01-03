@@ -79,4 +79,9 @@
 		) group by theater_name order by count desc
 	</select>
 	
+	<select id="countPeopleBySido" resultType="ChartVO">
+		select theater_sido text ,sum(schedule_time_count) count from(
+		select * from last_info_view where schedule_time_count>0
+		) group by theater_sido order by count desc
+	</select>
 </mapper>

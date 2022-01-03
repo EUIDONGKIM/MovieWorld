@@ -219,6 +219,16 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.countByGradePoint");
 	}
 
+	@Override
+	public List<ChartVO> countMemberjoinByYear() {
+		return sqlSession.selectList("member.countMemberjoinByYear");
+	}
+
+	@Override
+	public List<ChartVO> countMemberjoinByYearMonth() {
+		return sqlSession.selectList("member.countMemberjoinByYearMonth");
+	}
+
 
 
 
