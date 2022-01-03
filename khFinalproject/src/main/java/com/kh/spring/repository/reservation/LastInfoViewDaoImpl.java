@@ -76,4 +76,14 @@ public class LastInfoViewDaoImpl implements LastInfoViewDao{
 		return sqlSession.selectList("lastInfoView.countByProfit");
 	}
 
+	@Override
+	public List<ChartVO> totalPeopleByTheater() {
+		return sqlSession.selectList("lastInfoView.totalPeopleByTheater");
+	}
+
+	@Override
+	public List<ChartVO> totalProfitByTheater() {
+		return sqlSession.selectList("lastInfoView.totalProfitByTheater");
+	}
+
 }

@@ -58,8 +58,20 @@
 		    WHEN extract(year from member_birth) - extract(year from sysdate) + 1 between 20*365 and 60*365  Then '일반'
 		    Else '경로'
 		end text
-		FROM statistics_info_view where reservation_status='결제완료')
+		FROM statistics_info_view where reservation_status='결제완료' and movie_no=3)
 		group by text order by count desc
 	</select>
 	
+	<select id="totalReservationByTheater" resultType="ChartVO">
+		select theater_name text ,count(reservation_no) count from(
+		select * from statistics_info_view where reservation_no>0 and reservation_status='결제완료'
+		) group by theater_name order by count desc
+	</select>
+	
+	<select id="countByGradeReservation" resultType="ChartVO">
+		SELECT member_grade text,
+		count(reservation_no) count from(
+		select * from statistics_info_view where reservation_no>0 and reservation_status='결제완료'
+		)GROUP BY member_grade order by count
+	</select>
 </mapper>

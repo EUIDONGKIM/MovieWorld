@@ -3,6 +3,7 @@ package com.kh.spring.repository.member;
 import java.util.List;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.vo.ChartVO;
 
 public interface MemberDao {
 	//회원가입
@@ -45,6 +46,8 @@ public interface MemberDao {
 	void usePoint(int memberNo, int memberPoint);
 	void returnPoint(int memberNo, int memberPoint);
 	void updateGrade();
+	List<ChartVO> countByGradeTotal();
+	List<ChartVO> countByGradePoint();
 
 
 }
