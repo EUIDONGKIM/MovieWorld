@@ -68,6 +68,29 @@
 		where theater_no = #{theaterNo} 
 	</update>
 	
+		<!-- 검색 및 페이지네이션 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from theater
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="TheaterDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from member
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		order by member_no desc
+		)tmp) where rn between #{begin} and #{end}
+	</select>
+	
 
 	
 </mapper>

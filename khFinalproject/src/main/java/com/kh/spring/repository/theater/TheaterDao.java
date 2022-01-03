@@ -2,7 +2,9 @@ package com.kh.spring.repository.theater;
 
 import java.util.List;
 
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.vo.MemberSearchVO;
 import com.kh.spring.vo.TheaterCityVO;
 
 public interface TheaterDao {
@@ -26,5 +28,8 @@ public interface TheaterDao {
 	//수정
 	void edit(TheaterDto theaterDto);
 	void editInfo(TheaterDto theaterDto);
+	
+	int count(String column, String keyword);
+	List<TheaterDto> search(MemberSearchVO memberSearchVO);
 
 }
