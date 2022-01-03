@@ -34,4 +34,9 @@ public class MovieDaoImpl implements MovieDao{
 		sqlSession.insert("movie.insert",movieDto);
 	}
 
+	@Override
+	public List<MovieDto> listWithoutDuplicate(int theaterNo) {
+		return sqlSession.selectList("movie.listWithoutDuplicate", theaterNo);
+	}
+
 }

@@ -62,7 +62,7 @@ public class ScheduleController {
 	@GetMapping("/create2")
 	public void create2(@RequestParam int theaterNo, Model model) {
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
-		model.addAttribute("movieList", movieDao.list());
+		model.addAttribute("movieList", movieDao.listWithoutDuplicate(theaterNo));
 	}
 	@PostMapping("/create2")
 	public String create2(@ModelAttribute ScheduleDto scheduleDto) {
