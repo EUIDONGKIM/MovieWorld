@@ -59,6 +59,15 @@
 		</div>
 		
 		<div class="row">
+			<label>영화 줄거리</label>
+				<textarea 
+				style="width: 200px; height: 200px"
+            	name="movieContent"
+            	placeholder="내용을 입력해주세요."
+            	required></textarea>
+		</div>
+		
+		<div class="row">
 			<label>메인 포스터 이미지(한장)</label>
 				<input type="file" name="photo" accept="image/*" required>
 		</div>
