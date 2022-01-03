@@ -6,7 +6,7 @@
 	$(function(){
 		
 		var deleteResult = "${deleteResult}";
-		if(deleteResult == "deleteSuccess"){
+		if(deleteResult){
 			alert("삭제가 완료되었습니다.");
 		}
 		

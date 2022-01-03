@@ -35,6 +35,11 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
+	public List<MovieDto> listWithoutDuplicate(int theaterNo) {
+		return sqlSession.selectList("movie.listWithoutDuplicate", theaterNo);
+	}
+		
+	@Override
 	public List<MovieDto> listByOpening() {
 		return sqlSession.selectList("movie.listByOpening");
 	}
