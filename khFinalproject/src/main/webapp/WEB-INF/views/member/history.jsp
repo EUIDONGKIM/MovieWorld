@@ -37,7 +37,13 @@
 					//데이터 출력
 					
 					for(var i=0; i < resp.length; i++){
-						var html = "<h2>"+"[시간:]"+resp[i].historyTime+":[적립금]"+resp[i].historyAmount+":[메모]"+resp[i].historyMemo+"</h2>";
+						console.log("변환 전",resp[i].historyTime);
+						//Date d = new Date(resp[i].historyTime);
+						var date = new Date(resp[i].historyTime);
+						
+						var html = "<h2>"+"[시간:]"+date.getFullYear()+"년 "+date.getMonth()+1+"월 "+date.getDate()+"일 "
+						+date.getHours()+"시 "+date.getMinutes()+"분 "+date.getSeconds()+"초"
+						+":[적립금]"+resp[i].historyAmount+":[메모]"+resp[i].historyMemo+"</h2>";
 						
 						$("#result").append(html);
 					}
