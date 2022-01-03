@@ -281,5 +281,16 @@ public class MemberController {
 		model.addAttribute("list",list);	
 			return "member/history";		
 	}
+	//예매내역 페이지
+	@GetMapping("/ReservationHistoryList")
+	public String ReservationHistoryList() {
+		return "member/ReservationHistoryList";
+	}
+	//결제내역 페이지
+	@GetMapping("payHistroy")
+		public String payHistroy() {
+			return "member/payHistroy";
+	}
+	
 
 }

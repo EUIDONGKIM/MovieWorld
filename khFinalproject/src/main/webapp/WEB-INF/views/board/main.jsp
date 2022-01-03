@@ -136,7 +136,9 @@
 	<!-- 검색창 -->
 	<div class="row center">
 		<form method="get">
-	
+				<!-- 히든으로 보드타입을 보내준다. -->
+				<input type="hidden" name="boardTypeName" value="${param.boardTypeName}">
+			
 			<select name="column" class="form-input form-inline">
 				<c:choose>
 					<c:when test="${boardSearchVO.columnIs('board_title')}">
