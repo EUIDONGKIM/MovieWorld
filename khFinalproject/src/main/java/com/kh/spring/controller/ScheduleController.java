@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.spring.entity.schedule.ScheduleDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
+import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
@@ -50,10 +53,28 @@ public class ScheduleController {
 		return "schedule/create";
 	}
 	
-	//추후에 hall movie schedule 뷰를 만드는게 편할 수 있음(조회시에.!)
 	@PostMapping("/create")
 	public String create(@ModelAttribute ScheduleDto scheduleDto) {
 		scheduleDao.insert(scheduleDto);
+		
+		return "redirect:list";
+	}
+	
+	@GetMapping("/create_total")
+	public String createTotal(Model model) {
+		model.addAttribute("movieList", movieDao.listByOpening());
+		return "schedule/create_total";
+	}
+	
+	@PostMapping("/create_total")
+	public String createTotal(@ModelAttribute ScheduleDto scheduleDto) {
+		
+		List<TheaterDto> theaterList = theaterDao.list();
+		for(TheaterDto theaterDto : theaterList) {
+			scheduleDto.setTheaterNo(theaterDto.getTheaterNo());
+			scheduleDao.insert(scheduleDto);
+		}
+		
 		
 		return "redirect:list";
 	}
