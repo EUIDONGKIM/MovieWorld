@@ -51,14 +51,18 @@ public class TheaterDaoImpl implements TheaterDao{
 	}
 
 	@Override
-	public boolean delete(int theaterNo) {
-		
-		return sqlSession.delete("theater.delete",theaterNo) > 0;
+	public void delete(int theaterNo) {
+		sqlSession.delete("theater.delete",theaterNo);
 	}
 
 	@Override
-	public boolean edit(TheaterDto theaterDto) {
-		return sqlSession.update("theater.edit",theaterDto) > 0;
+	public void edit(TheaterDto theaterDto) {
+		sqlSession.update("theater.edit",theaterDto);
+	}
+
+	@Override
+	public void editInfo(TheaterDto theaterDto) {
+		sqlSession.update("theater.editInfo", theaterDto);
 	}
 
 }
