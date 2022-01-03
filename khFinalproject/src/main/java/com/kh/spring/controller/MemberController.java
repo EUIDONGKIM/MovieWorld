@@ -267,12 +267,17 @@ public class MemberController {
 	}
 	
 	@GetMapping("/history")
-	public String history(HttpSession session,Model model,@ModelAttribute HistoryDto historyDto) {		
+	public String history(HttpSession session,Model model,@ModelAttribute HistoryDto historyDto
+			,@ModelAttribute MemberDto memberDto) {		
 		String memberEmail =(String)session.getAttribute("ses");
 		List<HistoryDto> list = historyDao.list(memberEmail);
 		
-		System.out.println(list);
-	
+		
+//		int point=memberDao.getPoint(memberEmail);
+//		
+
+			
+		model.addAttribute("point",memberDao.getPoint(memberEmail));
 		model.addAttribute("list",list);	
 			return "member/history";		
 	}

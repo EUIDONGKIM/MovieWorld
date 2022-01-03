@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
@@ -22,6 +23,7 @@ import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
+import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
@@ -75,6 +77,9 @@ public class ReservationController {
 	private GradeDao gradeDao;
 	@Autowired
 	private LastInfoViewDao lastInfoViewDao;
+	@Autowired
+	private HistoryDao historyDao;
+
 	
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
@@ -184,15 +189,26 @@ public class ReservationController {
 			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 			scheduleTimeDao.reservationUpdate(scheduleTimeDto);
 			
+			
 			int memberNo = (int)session.getAttribute("memberNo");
 			memberDao.usePoint(memberNo,memberPoint);
-			
 			MemberDto memberDto = memberDao.get2(memberNo);
+			HistoryDto historyDto =new HistoryDto();
+			//예매시 포인트 사용 
+			historyDto.setMemberEmail(memberDto.getMemberEmail());
+			historyDto.setHistoryAmount(memberPoint);
+			historyDto.setHistoryMemo("포인트 사용");
+			historyDao.insert(historyDto);
+			
 			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
 			
 			int pointByPay = ((int)reservationDto.getTotalAmount() - memberPoint) * pointPercent / 100;
 			memberDao.returnPoint(memberNo, pointByPay);
-			
+			//예매시 포인트 적립
+			historyDto.setMemberEmail(memberDto.getMemberEmail());
+			historyDto.setHistoryAmount(pointByPay);
+			historyDto.setHistoryMemo("포인트 적립");
+			historyDao.insert(historyDto);
 			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
 		}
 		
@@ -257,12 +273,22 @@ public class ReservationController {
 			
 			int memberNo = (int)session.getAttribute("memberNo");
 			memberDao.returnPoint(memberNo,reservationDto.getPointUse());
-			
+			//예매 취소시 포인트 취소
+			HistoryDto historyDto = new HistoryDto();
 			MemberDto memberDto = memberDao.get2(memberNo);
-			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
+			historyDto.setMemberEmail(memberDto.getMemberEmail());
+			historyDto.setHistoryAmount(reservationDto.getPointUse());
+			historyDto.setHistoryMemo("포인트 사용 취소");
+			historyDao.insert(historyDto);
 			
+			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
 			int pointByPay = ((int)reservationDto.getTotalAmount() - reservationDto.getPointUse()) * pointPercent / 100;
+			//예매 취소시 포인트 취소
 			memberDao.usePoint(memberNo, pointByPay);
+			historyDto.setMemberEmail(memberDto.getMemberEmail());
+			historyDto.setHistoryAmount(pointByPay);
+			historyDto.setHistoryMemo("포인트 적립금 취소");
+			historyDao.insert(historyDto);
 			
 			attr.addAttribute("reservationNo", reservationNo);
 			return "redirect:history_detail";

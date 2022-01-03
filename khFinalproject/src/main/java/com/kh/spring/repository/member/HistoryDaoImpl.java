@@ -1,6 +1,8 @@
 package com.kh.spring.repository.member;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,14 @@ public class HistoryDaoImpl implements HistoryDao {
 	@Override
 	public HistoryDto get(int historyNo) {
 		return sqlSession.selectOne("history.get",historyNo);
+	}
+	@Override
+	public List<HistoryDto> listByPage(int startRow, int endRow) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("startRow", startRow);
+		param.put("endRow", endRow);
+		
+		return sqlSession.selectList("history.listByPage",param);
 	}
 	
 }
