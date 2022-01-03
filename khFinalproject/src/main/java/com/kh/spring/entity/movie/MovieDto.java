@@ -15,4 +15,5 @@ public class MovieDto {
 	private String movieOpening;
 	private int movieRuntime;
 	private float movieStarpoint;
+	private String movieContent;
 }

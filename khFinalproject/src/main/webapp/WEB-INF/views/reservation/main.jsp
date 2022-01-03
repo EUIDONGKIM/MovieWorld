@@ -631,7 +631,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 
 				scheduleTimeDateTime = resp[i].scheduleTimeDateTime;
 				console.log("scheduleTimeDateTime",scheduleTimeDateTime);
-				
+				console.log("scheduleTimeDateTime 데이터 타입",typeof scheduleTimeDateTime);
 				var checkDate = new Date(resp[i].scheduleTimeDateTime);
 				var firstTime = checkDate.getHours()+":"+checkDate.getMinutes();
 				

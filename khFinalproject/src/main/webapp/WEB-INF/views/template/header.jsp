@@ -6,7 +6,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="login" value="${ses != null}"></c:set>
 <c:set var="grade" value="${grade}"></c:set>
-<c:set var="admin" value="${grade eq '관리자'}"></c:set>
+<c:set var="admin" value="${grade eq '운영자'}"></c:set>
 
 <!DOCTYPE html>
 <html lang="ko">

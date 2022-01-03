@@ -3,6 +3,7 @@ package com.kh.spring.repository.member;
 import java.util.List;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.vo.ChartVO;
 
 public interface MemberDao {
 	//회원가입
@@ -15,6 +16,8 @@ public interface MemberDao {
 	MemberDto get3(String memberNick);
 	//로그인
 	MemberDto login(MemberDto memberDto);
+	//포인트 조회
+	int getPoint(String memberEmail);
 	
 	//아이디 찾기
 	MemberDto findId(String memberName ,String memberPhone);
@@ -45,6 +48,10 @@ public interface MemberDao {
 	void usePoint(int memberNo, int memberPoint);
 	void returnPoint(int memberNo, int memberPoint);
 	void updateGrade();
+	List<ChartVO> countByGradeTotal();
+	List<ChartVO> countByGradePoint();
+	List<ChartVO> countMemberjoinByYear();
+	List<ChartVO> countMemberjoinByYearMonth();
 
 
 }

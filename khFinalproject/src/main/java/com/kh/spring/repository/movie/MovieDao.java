@@ -14,4 +14,6 @@ public interface MovieDao {
 	void insert(MovieDto movieDto);
 	
 	List<MovieDto> listWithoutDuplicate(int theaterNo);
+
+	List<MovieDto> listByOpening();
 }
