@@ -33,7 +33,8 @@
 		#{movieCountry},
 		#{movieOpening},
 		#{movieRuntime},
-		0
+		0,
+		#{movieContent}
 		)
 	</insert>
 	

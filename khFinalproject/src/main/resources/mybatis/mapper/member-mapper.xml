@@ -157,4 +157,26 @@
 		    end
 		where member_grade not in('운영자','정지');
 	</update>
+	
+	<select id="countByGradeTotal" resultType="ChartVO">
+		select member_grade text, count(*) count from member
+		group by member_grade order by count desc
+	</select>
+
+	<select id="countByGradePoint" resultType="ChartVO">
+		select member_grade text, sum(member_point) count from member
+		group by member_grade order by count desc
+	</select>
+
+	<select id="countMemberjoinByYearMonth" resultType="ChartVO">
+		select extract(month from member_join) text,count(*)count from member 
+		where member_join between 
+		to_date('20210101000000', 'YYYYMMDDHH24MISS') and to_date('20221231235959', 'YYYYMMDDHH24MISS')
+		group by extract(month from member_join) order by count desc
+	</select>
+
+	<select id="countMemberjoinByYear" resultType="ChartVO">
+		select extract(year from member_join) text, count(*) count from member
+		group by extract(year from member_join) order by count desc
+	</select>
 </mapper>
