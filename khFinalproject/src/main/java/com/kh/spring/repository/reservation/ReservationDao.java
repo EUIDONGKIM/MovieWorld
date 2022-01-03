@@ -1,5 +1,7 @@
 package com.kh.spring.repository.reservation;
 
+import java.util.List;
+
 import com.kh.spring.entity.reservation.ReservationDto;
 
 public interface ReservationDao {
@@ -18,4 +20,6 @@ public interface ReservationDao {
 	void approve(ReservationDto reservationDto);
 
 	void cancel(int reservationNo);
+	
+	List<ReservationDto> list(int memberNo);
 }

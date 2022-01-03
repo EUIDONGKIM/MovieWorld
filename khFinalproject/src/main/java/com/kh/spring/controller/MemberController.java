@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
-import com.kh.spring.service.EmailService;
+import com.kh.spring.repository.reservation.ReservationDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +37,15 @@ public class MemberController {
 	
 	@Autowired
 	private HistoryDao historyDao;
+	
+	@Autowired
+	private ReservationDao reservationDao;
 
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private RandomUtil randomUtil;
 	
-	@Autowired
-	private EmailService emailService;
 	
 
 	//회원가입 
@@ -271,21 +276,37 @@ public class MemberController {
 			,@ModelAttribute MemberDto memberDto) {		
 		String memberEmail =(String)session.getAttribute("ses");
 		List<HistoryDto> list = historyDao.list(memberEmail);
-		
-		
+			
 //		int point=memberDao.getPoint(memberEmail);
 //		
 
-			
 		model.addAttribute("point",memberDao.getPoint(memberEmail));
 		model.addAttribute("list",list);	
 			return "member/history";		
 	}
 	//예매내역 페이지
 	@GetMapping("/ReservationHistoryList")
-	public String ReservationHistoryList() {
+	public String ReservationHistoryList(HttpSession session,Model model,
+			@ModelAttribute ReservationDto reservationDto) {
+		//세션에서 아이디를 꺼내서 조회를한다.
+		String memberEmail = (String)session.getAttribute("ses");
+		MemberDto findDto = memberDao.get(memberEmail);
+		
+		//만약 아이디로 조회시 null아니라면 findDto에서 memberNo를 가져온다
+		if(findDto !=null) {
+			int memberNo=findDto.getMemberNo();
+			List<ReservationDto> list =reservationDao.list(memberNo);
+		
+	
+			model.addAttribute("list", list);
+
+		}
+		
+		
 		return "member/ReservationHistoryList";
 	}
+	
+	
 	//결제내역 페이지
 	@GetMapping("payHistroy")
 		public String payHistroy() {
