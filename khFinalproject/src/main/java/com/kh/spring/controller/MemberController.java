@@ -297,7 +297,6 @@ public class MemberController {
 			int memberNo=findDto.getMemberNo();
 			List<ReservationDto> list =reservationDao.list(memberNo);
 		
-	
 			model.addAttribute("list", list);
 
 		}
