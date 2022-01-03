@@ -57,7 +57,10 @@ public class AdminController {
 	public String adminReview() {
 		return"admin/review";
 	}
-	
+	@GetMapping("/statistics")
+	public String statistics() {
+		return "admin/statistics";
+	}
 	
 	
 	@GetMapping("/price")
@@ -108,7 +111,5 @@ public class AdminController {
 		memberDao.changeInformationAdmin(memberDto);
 		return "member/edit";
 	}
-	
 
-	
 }

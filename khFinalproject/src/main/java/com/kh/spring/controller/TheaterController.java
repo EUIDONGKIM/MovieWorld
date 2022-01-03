@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.time.LocalDate;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.spring.entity.reservation.ReservationInfoViewDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.theater.TheaterDto;
-import com.kh.spring.repository.reservation.ReservationInfoViewDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
@@ -43,8 +43,10 @@ public class TheaterController {
 	
 	@Autowired
 	private TotalInfoViewDao totalInfoViewDao;
+	
 	@Autowired
-	private ReservationInfoViewDao reservationInfoViewDao;
+	private LastInfoViewDao lastInfoViewDao;
+	
 	@GetMapping("/create")
 	public String create() {
 		return "theater/create";
@@ -67,39 +69,51 @@ public class TheaterController {
 	
 	@GetMapping("/detail")
 	public String detail(@RequestParam int theaterNo, Model model) {
-		LocalDate today = LocalDate.now();
-		List<LocalDate> dateList = new ArrayList<>();	
-		for(int i = 0 ; i < 7 ; i++) {
-			dateList.add(today.plusDays(i));
-		}
-		model.addAttribute("dateList",dateList);
+
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
 		model.addAttribute("hallList",hallDao.list(theaterNo));
 		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));
-		int count = 100;
-
+		
+		List<Map<Integer,Map<Integer,List<LastInfoViewDto>>>> list = new ArrayList<>();
+		List<String> dateList = new ArrayList<>();
+		
 		Calendar c = Calendar.getInstance();
-
-		//c.add(Calendar.DATE, 1);
-
-		Date d = c.getTime();
-
 		Format f = new SimpleDateFormat("yyyy-MM-dd");
 		
-		String today = f.format(d);
-		
-		List<ReservationInfoViewDto> reservationInfoViewList1 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList2 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList3 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList4 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList5 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList6 = new ArrayList<>();
-		List<ReservationInfoViewDto> reservationInfoViewList7 = new ArrayList<>();
-		
-		List<ReservationInfoViewDto> reservationInfoViewList = reservationInfoViewDao.getByTheater(theaterNo);
-		for(ReservationInfoViewDto reservationInfoViewDto : reservationInfoViewList) {
-			reservationInfoViewDto.getScheduleTimeDateTime().equals(today);
+		for(int i = 0 ; i < 7 ; i++) {
+			Date d = c.getTime();
+			String day = f.format(d);
+			
+			Map<Integer,Map<Integer,List<LastInfoViewDto>>> movieMap = new HashMap<>();
+			List<Integer> movieNoList = lastInfoViewDao.getMovieNo(theaterNo,day);
+			
+			for(int movieNo : movieNoList) {
+				Map<Integer,List<LastInfoViewDto>> hallMap = new HashMap<>();
+				List<Integer> hallNoList =lastInfoViewDao.hallNoList(theaterNo,day,movieNo);
+					
+					for(int hallNo : hallNoList) {
+						List<LastInfoViewDto> listByNo = lastInfoViewDao.listByhallNoForMap(theaterNo,day,movieNo,hallNo);
+						hallMap.put(hallNo,listByNo);
+					}
+					
+				movieMap.put(movieNo,hallMap);
+				
+			}
+			
+			list.add(movieMap);
+			dateList.add(day);
+			c.add(Calendar.DATE, 1);
 		}
+
+		
+		model.addAttribute("infoList1", list.get(0));
+		model.addAttribute("infoList2", list.get(1));
+		model.addAttribute("infoList3", list.get(2));
+		model.addAttribute("infoList4", list.get(3));
+		model.addAttribute("infoList5", list.get(4));
+		model.addAttribute("infoList6", list.get(5));
+		model.addAttribute("infoList7", list.get(6));		
+		model.addAttribute("dateList", dateList);
 		
 		return "theater/detail";
 	}

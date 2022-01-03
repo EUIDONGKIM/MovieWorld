@@ -1,11 +1,6 @@
 package com.kh.spring.controller;
 
 import java.net.URISyntaxException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
@@ -28,6 +24,7 @@ import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
@@ -76,19 +73,11 @@ public class ReservationController {
 	private HallDao hallDao;
 	@Autowired
 	private GradeDao gradeDao;
+	@Autowired
+	private LastInfoViewDao lastInfoViewDao;
 	
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
-			//초기화면 10일치 날짜 생성.
-			List<String> dateList = new ArrayList<>();
-			Format f = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar c = Calendar.getInstance();
-			for(int i = 1 ;  i <= 10 ; i++) {
-				Date d = c.getTime();
-				dateList.add(f.format(d));
-				c.add(Calendar.DATE, 1);
-			}
-			//초기 화면 보여줄 시에, 예매율이 높은 순으로 보여준다.
 			
 			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
 			List<TheaterCityVO> theaterList = theaterDao.cityList();
@@ -102,6 +91,26 @@ public class ReservationController {
 			model.addAttribute("memberEmail",memberEmail);
 			model.addAttribute("memberPoint",memberPoint);
 			return "reservation/main";
+		}
+
+		@RequestMapping("/direct")
+		public String direct(Model model,HttpSession session,@RequestParam int scheduleTimeNo) {
+			
+			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
+			List<TheaterCityVO> theaterList = theaterDao.cityList();
+			String memberEmail = (String)session.getAttribute("ses");
+			int memberPoint = 0;
+			if(memberEmail != null){				
+				MemberDto memberDto = memberDao.get(memberEmail);
+				memberPoint = memberDto.getMemberPoint();
+			}
+			LastInfoViewDto lastInfoViewDto = lastInfoViewDao.get(scheduleTimeNo);
+			
+			model.addAttribute("memberEmail",memberEmail);
+			model.addAttribute("memberPoint",memberPoint);
+			model.addAttribute("lastInfoViewDto",lastInfoViewDto);
+			
+			return "reservation/main_direct";
 		}
 		
 		@PostMapping("/confirm")
