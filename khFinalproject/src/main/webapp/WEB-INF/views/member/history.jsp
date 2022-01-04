@@ -41,9 +41,17 @@
 						//Date d = new Date(resp[i].historyTime);
 						var date = new Date(resp[i].historyTime);
 						
-						var html = "<h2>"+"[시간:"+date.getFullYear()+"년 "+date.getMonth()+1+"월 "+date.getDate()+"일 "
-						+date.getHours()+"시 "+date.getMinutes()+"분 "+date.getSeconds()+"초]"
-						+"-[적립금]"+resp[i].historyAmount+"-[내역]"+resp[i].historyMemo+"</h2>";
+						var html = 
+						"<tr>"+
+						"<th>"+date.getFullYear()+"년"+date.getMonth()+1+"월"+date.getDate()+"일"+date.getHours()+"시"+date.getMinutes()+"분"+"</th>"+
+						"<th>"+resp[i].historyAmount+"</th>"+
+						"<th>"+resp[i].historyMemo+"</th>"+
+						"</tr>"
+							
+							
+// 						"<h2>"+"[시간:"+date.getFullYear()+"년 "+date.getMonth()+1+"월 "+date.getDate()+"일"
+// 						+date.getHours()+"시 "+date.getMinutes()+"분 "+date.getSeconds()+"초]"
+// 						+"-[적립금]"+resp[i].historyAmount+"-[내역]"+resp[i].historyMemo+"</h2>";
 						
 						$("#result").append(html);
 					}
@@ -63,30 +71,18 @@
 	 		<h1>사용가능하신 포인트는  ["${point}"] 포인트 입니다</h1>
 	 	</div>
 	</div>
-<!-- 	<table class="table"> -->
-<!-- 		<thead> -->
-<!-- 			<tr> -->
-<!-- 				<td>일시</td> -->
-<!-- 				<td>포인트</td> -->
-<!-- 				<td>메모</td> -->
-<!-- 			</tr> -->
-<!-- 		</thead> -->
-<%-- 		<c:forEach var="historyDto" items="${list}"> --%>
-<!-- 			<tbody> -->
-<!-- 				<tr> -->
-<%-- 					<td>${historyDto.historyTime}</td> --%>
-<%-- 					<td>${historyDto.historyAmount}</td> --%>
-<%-- 					<td id="memo">${historyDto.historyMemo}</td> --%>
-<!-- 				</tr> -->
-<!-- 			</tbody> -->
-<%-- 		</c:forEach> --%>
-<!-- 	</table> -->
-	<div class="row center">
-		<div class="col">
-			<div id="result"></div>
-		</div>
-	</div>
-	
+	<table class="table table-border table-hover">
+		<thead>
+			<tr>
+				<td width="20%">일시</td>
+				<td>포인트</td>
+				<td>사용내역</td>
+			</tr>
+		</thead>
+			<tbody id="result">
+			</tbody>
+	</table>
+
 	<div class="row center">
 		<div class="col">
 			<button type="button" class="btn btn-primary more-btn">더보기</button>
