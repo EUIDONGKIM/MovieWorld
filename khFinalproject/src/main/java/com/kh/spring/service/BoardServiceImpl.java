@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardDto;
 import com.kh.spring.entity.board.BoardFileDto;
+import com.kh.spring.entity.board.BoardVO;
 import com.kh.spring.repository.board.BoardDao;
 import com.kh.spring.repository.board.BoardFileDao;
 import com.kh.spring.vo.BoardSearchVO;
@@ -43,7 +44,7 @@ public class BoardServiceImpl  implements BoardService {
 		int count = boardDao.count(boardSearchVO.getColumn(),boardSearchVO.getKeyword(),boardSearchVO.getBoardTypeName());
 		boardSearchVO.setCount(count);
 		boardSearchVO.calculate();
-		List<BoardDto> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),boardSearchVO.getBoardTypeName());
+		List<BoardVO> list = boardDao.search(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),boardSearchVO.getBoardTypeName());
 		boardSearchVO.setList(list);
 		return boardSearchVO;
 	}
@@ -55,12 +56,14 @@ public class BoardServiceImpl  implements BoardService {
 		boardDto.setBoardNo(sequence);
 		
 		if(boardDto.getBoardSuperno() > 0) {
+			System.out.println(boardDto.getBoardSuperno()+"1");
 			BoardDto parent = boardDao.get(boardDto.getBoardSuperno());
 			boardDto.setBoardGroupno(parent.getBoardGroupno());
 			boardDto.setBoardDepth(parent.getBoardDepth()+1);
 			boardDao.write1(boardDto);
 		}else {
 			boardDto.setBoardGroupno(sequence);
+			System.out.println(boardDto.getBoardSuperno()+"2");
 			boardDao.write2(boardDto);
 		}
 		
@@ -149,7 +152,7 @@ public class BoardServiceImpl  implements BoardService {
 	
 		boardSearchVO.calculate();
 		
-		List<BoardDto> list = boardDao.search1(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),memberEmail);
+		List<BoardVO> list = boardDao.search1(boardSearchVO.getColumn(), boardSearchVO.getKeyword(),boardSearchVO.getBegin(),boardSearchVO.getEnd(),memberEmail);
 		boardSearchVO.setList(list);
 		return boardSearchVO;
 	}
