@@ -2,11 +2,63 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<c:set var="root" value="${pageContext.request.contextPath }" />
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<c:set var="root" value="${pageContext.request.contextPath }"/>
+<style>
+	#map {
+		width:500px;
+		height:400px;
+	}
+</style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd24b2186cc6c3b286f427d9685ecdcf&libraries=services"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
+		
+		//지도 생성 준비 코드
+		var container = document.querySelector("#map");
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		//지도 생성 코드
+		var map = new kakao.maps.Map(container, options);
+		
+		// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new kakao.maps.services.Geocoder();
+		
+		var address = $("#theater-address").data("address");
+
+		// 주소로 좌표를 검색합니다
+		geocoder.addressSearch(address, function(result, status) {
+
+		    // 정상적으로 검색이 완료됐으면 
+		     if (status === kakao.maps.services.Status.OK) {
+
+		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+		        // 결과값으로 받은 위치를 마커로 표시합니다
+		        var marker = new kakao.maps.Marker({
+		            map: map,
+		            position: coords
+		        });
+		        
+				//인포윈도우 추가(위치 : location)
+				var infoWindowText = $("#marker-info-window-template").html();
+				infoWindowText = infoWindowText.replace("{{latitude}}", result[0].y);
+				infoWindowText = infoWindowText.replace("{{longitude}}", result[0].x);
+
+		        // 인포윈도우로 장소에 대한 설명을 표시합니다
+		        var infowindow = new kakao.maps.InfoWindow({
+		            content: infoWindowText
+		        });
+		        infowindow.open(map, marker);
+
+		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		        map.setCenter(coords);
+		    } 
+		});
 		
 		$(".page").hide();
 	    $(".page").eq(0).show();
@@ -20,8 +72,6 @@
 	    	
 	         $(".show-date").empty();
 	         $(".show-date").text($(this).data("value"));
-
-	         
 	    });
 	    
 		var editResult = "${editResult}";
@@ -41,7 +91,14 @@
 
 <hr>
 <h2>지도 영역</h2>
-<h3>주소 : ${theaterDto.getTheaterFullAddress()}</h3>
+<template id="marker-info-window-template">
+	<div style="padding:5px;">
+		${theaterDto.theaterName}점 <br>
+		<a href="https://map.kakao.com/link/to/${theaterDto.theaterAddress},{{latitude}},{{longitude}}" style="color:blue" target="_blank">길찾기</a>
+	</div>
+</template>
+<div id="theater-address" data-address="${theaterDto.theaterAddress}">도로명주소 : ${theaterDto.getTheaterFullAddress()}</div>
+<div id="map"></div>
 
 <hr>
 <!-- 
