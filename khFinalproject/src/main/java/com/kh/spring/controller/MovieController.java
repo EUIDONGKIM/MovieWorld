@@ -2,9 +2,10 @@ package com.kh.spring.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
+import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
+import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.service.MovieService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +39,10 @@ public class MovieController {
 	private MovieService movieService;
 	@Autowired
 	private ActorDao actorDao;
-	
+	@Autowired
+	private TotalInfoViewDao totalInfoViewDao;
+	@Autowired
+	private LastInfoViewDao lastInfoViewDao;
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -72,10 +80,30 @@ public class MovieController {
 	
 	@GetMapping("/list")
 	public String list(Model model) {//리스트를 찍으려면 뭔가가 필요합니다잉
-		model.addAttribute("list", movieDao.list());
+		
+		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = new HashMap<>();
+		List<MovieDto> movieList = movieDao.list();
+		
+		for(MovieDto movieDto : movieList) {
+			List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+			
+			List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
+			
+				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
+					tempMap.put(totalInfoViewDto,list);
+					
+					movieValue.add(tempMap);
+				}
+				
+			sendList.put(movieDto,movieValue);
+		}
+		
+		model.addAttribute("sendList", sendList);
 		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
 	}
-	
+
 	@GetMapping("/movieChart")
 	public String movieChart() {
 		return "movie/movieChart";

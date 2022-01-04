@@ -59,4 +59,16 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 	}
 
 
+	@Override
+	public boolean delete(int scheduleTimeNo) {
+		return sqlSession.delete("scheduleTime.delete",scheduleTimeNo)>0;
+	}
+
+
+	@Override
+	public boolean edit(ScheduleTimeDto scheduleTimeDto) {
+		return sqlSession.update("scheduleTime.edit",scheduleTimeDto)>0;
+	}
+
+
 }

@@ -49,7 +49,7 @@
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="memberlistp=${memberSearchVO.getPreviousBlock()}">&lt;</a>
+						<a href="memberlist?p=${memberSearchVO.getPreviousBlock()}">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -79,7 +79,7 @@
 				<c:choose>
 					<c:when test="${memberSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="memberlistcolumn=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getNextBlock()}">&gt;</a>
+						<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getNextBlock()}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->

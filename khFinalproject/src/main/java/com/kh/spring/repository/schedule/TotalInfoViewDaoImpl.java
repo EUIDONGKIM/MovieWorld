@@ -28,7 +28,7 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	}
 	@Override
 	public List<TotalInfoViewDto> list(int movieNo) {
-		return sqlSession.selectList("totalInfoView.listByMovie");
+		return sqlSession.selectList("totalInfoView.listByMovie",movieNo);
 	}
 	@Override
 	public List<TotalInfoViewDto> listByTheater(int theaterNo) {

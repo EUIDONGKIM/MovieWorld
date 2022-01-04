@@ -248,7 +248,7 @@
 
 
 <div>
-<h2>관리메뉴(관리자만 볼 수 있게 / 해당 영화관으로 영화예약내역? 상영중인 영화? 있으면 수정/삭제 불가능하게? </h2>
+<h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
 	<a href="edit?theaterNo=${theaterDto.theaterNo}">수정</a>
 	<a href="${root}/hall/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
 	

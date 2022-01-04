@@ -35,11 +35,11 @@
       		<div class="row">
       			<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85515/85515199250_727.jpg" width="100%">
       		</div>
-      		<div class="row center">영화제목</div>
-      		<div class="row center">예매율</div>
-      		<div class="row center">평점</div>
-      		<div class="row center">개봉일</div>
-      		<div class="row center">
+      		<div class="row">영화제목</div>
+      		<div class="row left">예매율</div>
+      		
+      		<div class="row">개봉일</div>
+      		<div class="row">
       			<a href="${root}/reservation/main">예매</a>
       		</div>
       	</div>

@@ -84,4 +84,8 @@
 		select * from last_info_view where schedule_time_count>0
 		) group by theater_sido order by count desc
 	</select>
+	
+	<select id="listByScheduleNo" resultType="LastInfoViewDto">
+		select * from last_info_view where schedule_no = #{scheduleNo}
+	</select>
 </mapper>
