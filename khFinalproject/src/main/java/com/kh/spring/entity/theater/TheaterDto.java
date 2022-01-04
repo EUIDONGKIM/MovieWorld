@@ -5,7 +5,7 @@ import java.sql.Date;
 import lombok.Data;
 
 @Data
-public class TheaterDto {
+public class TheaterDto { 
 	private int theaterNo;
 	private String theaterName;
 	private String theaterAddress;
