@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.board.BoardDto;
+import com.kh.spring.entity.board.BoardVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class BoardDaoImpl implements BoardDao{
 	}
 	
 	@Override
-	public List<BoardDto> list() {
+	public List<BoardVO> list() {
 		return sqlsession.selectList("board.list");
 	}
 
@@ -39,7 +40,7 @@ public class BoardDaoImpl implements BoardDao{
 	}
 	
 	@Override
-	public List<BoardDto> getUserWrite(String memberEmail) {
+	public List<BoardVO> getUserWrite(String memberEmail) {
 	
 		return sqlsession.selectList("board.myWrite",memberEmail);
 	}
@@ -65,7 +66,7 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardDto> search(String column, String keyword, int begin, int end,int boardTypeName) {
+	public List<BoardVO> search(String column, String keyword, int begin, int end,int boardTypeName) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("column",column);
 		param.put("keyword",keyword);
@@ -106,7 +107,7 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public List<BoardDto> search1(String column, String keyword, int begin, int end, String memberEmail) {
+	public List<BoardVO> search1(String column, String keyword, int begin, int end, String memberEmail) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("column",column);
 		param.put("keyword",keyword);

@@ -63,7 +63,6 @@ public class BoardController {
 			Model model) throws Exception {
 		//리스트랑 페이지네이션 정보를 서비스에서 받아온다.
 		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
-		System.out.println(param);
 		model.addAttribute("boardSearchVO",param);
 		return "board/main";
 	}
@@ -80,12 +79,14 @@ public class BoardController {
 	
 	@PostMapping("/write")
 	public String write(@ModelAttribute BoardDto boardDto,
-						@RequestParam List<MultipartFile> attach,@RequestParam int boardTypeName,
+						@RequestParam(required = false) List<MultipartFile> attach
+						,@RequestParam int boardTypeName,
 			HttpSession session) throws IllegalStateException, IOException {
 		//맴버 아이디를 세션에서 받아서 주기
 		String mebmerEmail = (String)session.getAttribute("ses");
 		boardDto.setMemberEmail(mebmerEmail);
 		boardDto.setBoardtypeName(boardTypeName);
+		System.err.println(boardDto.getBoardSuperno());
 		int boardNo = boardService.write(boardDto, attach);
 //		int boardNo = boardDao.write(boardDto);
 		

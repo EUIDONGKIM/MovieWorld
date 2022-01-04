@@ -48,27 +48,27 @@
 			</thead>
 			<tbody>
 
-				<c:forEach var="boardDto" items="${searchList}">
+				<c:forEach var="boardVO" items="${searchList}">
 		
 				<tr>
-					<td>${boardDto.boardNo}</td>
+					<td>${boardVO.boardNo}</td>
 					
 					<td class="left" style="text-align: left;">
-						<c:if test="${boardDto.hasDepth()}">
-							<c:forEach var="i" begin="1" end="${boardDto.boardDepth}" step="1">
+						<c:if test="${boardVO.hasDepth()}">
+							<c:forEach var="i" begin="1" end="${boardVO.boardDepth}" step="1">
 										&nbsp;&nbsp;&nbsp;&nbsp;
 							</c:forEach>
 							<img src="${root}/resources/image/reply.png" width="15" height="15">
 						</c:if>
 					
-						<a href="${root}/board/viewUp?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}">
-							${boardDto.boardTitle}
+						<a href="${root}/board/viewUp?boardNo=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}">
+							${boardVO.boardTitle}
 						</a>
 					</td>
 					
-					<td>${boardDto.memberEmail}</td>
-					<td>${boardDto.boardDate}</td>
-					<td>${boardDto.boardViews}</td>
+					<td>${boardVO.memberNick}</td>
+					<td>${boardVO.boardDate}</td>
+					<td>${boardVO.boardViews}</td>
 				</tr>
 				</c:forEach>
 			</tbody>
@@ -144,19 +144,19 @@
 					<c:when test="${boardSearchVO.columnIs('board_title')}">
 						<option value="board_title" selected>제목</option>
 						<option value="board_content">내용</option>
-						<option value="member_email">작성자</option>
+						<option value="member_nick">작성자</option>
 					</c:when>
 					
 					<c:when test="${boardSearchVO.columnIs('board_content')}">
 						<option value="board_title">제목</option>
 						<option value="board_content" selected>내용</option>
-						<option value="member_email">작성자</option>
+						<option value="member_nick">작성자</option>
 					</c:when>
 					
 					<c:otherwise>
 						<option value="board_title">제목</option>
 						<option value="board_content">내용</option>
-						<option value="member_email" selected>작성자</option>
+						<option value="member_nick" selected>작성자</option>
 					</c:otherwise>
 				</c:choose>
 			</select>

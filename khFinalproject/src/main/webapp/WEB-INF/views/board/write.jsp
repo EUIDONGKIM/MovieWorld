@@ -8,7 +8,7 @@
 <form method="post"  enctype="multipart/form-data">
 
 	<c:if test="${answer}">
-		<input type="hidden" name="boardSuperno" value="${boardSuperNo}">
+		<input type="hidden" name="boardSuperno" value="${boardSuperno}">
 	</c:if>
 
 <div class="container-1000 container-center">

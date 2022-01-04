@@ -3,7 +3,7 @@ package com.kh.spring.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kh.spring.entity.board.BoardDto;
+import com.kh.spring.entity.board.BoardVO;
 
 import lombok.Data;
 @Data
@@ -16,7 +16,7 @@ public class BoardSearchVO {
 	private int blockSize = 10;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
-	private List<BoardDto> list = new ArrayList<>();
+	private List<BoardVO> list = new ArrayList<>();
 	private int boardTypeName;
 
 	
