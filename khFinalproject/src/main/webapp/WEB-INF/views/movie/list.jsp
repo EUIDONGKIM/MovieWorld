@@ -123,7 +123,7 @@ display: none;
 				
 				<td>${list.key.movieOpening}</td>
 				
-				<td><a href="#">수정 및 삭제</a></td>
+				<td><a href="${root}/movie/movieDetail">수정 및 삭제</a></td>
 			</tr>	
 		</c:forEach>	
 	</tbody>	
