@@ -41,9 +41,9 @@
         	
         });
         
-        $("input[namescheduleTimeDateTime]").on("input",function(){
-        	console.log("데이트 값",$(this).val());
-        });
+//         $("input[namescheduleTimeDateTime]").on("input",function(){
+//         	console.log("데이트 값",$(this).val());
+//         });
         
 	});
 </script>

@@ -60,7 +60,7 @@
 	 			<td>${theaterDto.theaterNo}</td>
 	 			<td>${theaterDto.theaterSido}</td>
 	 			<td>${theaterDto.theaterName}</td>
-	 			<td>${theaterDto.theaterFullAddress}</td>
+	 			<td>${theaterDto.getTheaterFullAddress()}</td>
 	 			<td>${memberDto.memberPoint}</td>
 	 			<td><a href="${root}/theater/detail?theaterNo=${theaterDto.theaterNo}">상세보기</a></td>
 	 		</tr>

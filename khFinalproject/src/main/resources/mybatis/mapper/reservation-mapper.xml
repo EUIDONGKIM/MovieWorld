@@ -43,6 +43,14 @@
 		select * from RESERVATION where member_no=#{memberNo} order by reservation_no desc
 	</select>
 	
+	<select id="listByPage" parameterType="map" resultType="ReservationDto">
+		select * from (
+			select rownum rn, TMP.* from (
+				select * from reservation order by reservation_no desc
+			)TMP
+		) where rn between #{startRow} and #{endRow}		
+	</select>
+	
 	<update id="updatePrice" parameterType="map">
 		update reservation set total_amount = #{totalAmount}
 		where reservation_no = #{reservationNo}

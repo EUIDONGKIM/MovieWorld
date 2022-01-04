@@ -34,6 +34,22 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	public List<TotalInfoViewDto> listByTheater(int theaterNo) {
 		return sqlSession.selectList("totalInfoView.listByTheater", theaterNo);
 	}
+	@Override
+	public List<TotalInfoViewDto> nowList(int movieNo) {
+		return sqlSession.selectList("totalInfoView.nowList", movieNo);
+	}
+	@Override
+	public List<Integer> nowMoiveList() {
+		return sqlSession.selectList("totalInfoView.nowMoiveList");
+	}
+	@Override
+	public List<Integer> moiveListByPeriod(String scheduleStart, String scheduleEnd) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("scheduleStart",scheduleStart);
+		param.put("scheduleEnd",scheduleEnd);
+		
+		return sqlSession.selectList("totalInfoView.moiveListByPeriod",param);
+	}
 	
 	
 }

@@ -19,10 +19,12 @@ display: none;
 <script>
 	$(function(){
 		
-		$(".toggle-one").click(function(){
+		$(".toggle-one").click(function(e){
+			e.preventDefault();
 			$(this).next().toggle();
 		});
-		$(".toggle-two").click(function(){
+		$(".toggle-two").click(function(e){
+			e.preventDefault();
 			$(this).next().toggle();
 		});
 	});
@@ -30,6 +32,35 @@ display: none;
 
 <h2>영화 리스트(상영작/ 상영예정작) </h2>
 
+<div class="row center">
+	<h3>상영 영화 일괄 생성</h3>
+	<a href="${root}/schedule/create_total">각각 설정 기능은 극장 상세페이지에서 가능(현재 상영 등록 하지 않은 영화들만 나옴)</a>
+</div>
+<div class="row center">
+	<h3>상영 중인 영화(관리 가능/현재 상영 관리용)</h3>
+	<a href="${root}/movie/list">현재 상영만 표시</a>
+</div>
+<div class="row center">
+	<h3>모든 영화 목록(관리 불가능/목록 이력 조회용)</h3>
+	<a href="${root}/movie/list?movieTotal">이전 영화 포함 목록만 표시</a>
+</div>
+<div class="row center">
+	<h3>단일 영화 히스토리 검색(관리 가능/상세 이력 조회용)</h3>
+	<form action="${root}/movie/list" method="get">
+		<input type="text" name="movieTitle" value="${movieTitle }" required>
+		<input type="submit" value="영화 검색">
+	</form>
+</div>
+<div class="row center">
+	<h3>상영 기간별 상세 검색(관리 가능/기간별 상영 조회용)</h3>
+	<form action="${root}/movie/list" method="get">
+		<label>언제부터</label>
+		<input type="date" name="scheduleStart" value="${scheduleStart }" required>
+		<label>언제까지</label>
+		<input type="date" name="scheduleEnd" value="${scheduleEnd }" required>
+		<input type="submit" value="기간별 검색">
+	</form>
+</div>
 <table class="table table-border">
 	<thead>
 		<tr>
@@ -122,8 +153,9 @@ display: none;
 				<td>${list.key.movieType}</td>
 				
 				<td>${list.key.movieOpening}</td>
-				
+
 				<td><a href="${root}/movie/movieDetail">수정 및 삭제</a></td>
+
 			</tr>	
 		</c:forEach>	
 	</tbody>	

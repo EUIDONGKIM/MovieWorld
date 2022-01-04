@@ -88,4 +88,12 @@
 	<select id="listByScheduleNo" resultType="LastInfoViewDto">
 		select * from last_info_view where schedule_no = #{scheduleNo}
 	</select>
+	
+	<select id="nowListByScheduleNo" resultType="LastInfoViewDto">
+		select * from last_info_view where schedule_no = #{scheduleNo}
+		and schedule_time_date_time>sysdate
+	</select>
+	
+	
+	
 </mapper>

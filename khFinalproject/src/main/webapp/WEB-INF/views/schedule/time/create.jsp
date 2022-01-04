@@ -16,7 +16,6 @@
         	$("#send-type-hidden").append(template);
         })
         
-        console.log(${totalInfoViewDto.getStartDateToString() });
 	});
 </script>
 
