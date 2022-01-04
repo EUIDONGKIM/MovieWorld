@@ -29,4 +29,6 @@ public interface LastInfoViewDao {
 
 	List<ChartVO> countPeopleBySido();
 
+	List<LastInfoViewDto> listByScheduleNo(int scheduleNo);
+
 }

@@ -13,4 +13,5 @@ public interface ReservationInfoViewDao {
 	List<TheaterNameBySidoVO> getTheaterNames(int movieNo, String theaterSido);
 	List<MovieCountVO> listMoiveComplexSearch(String theaterSido, int theaterNo);
 	List<ReservationInfoViewDto> getByTheater(int theaterNo);
+	List<ReservationInfoViewDto> listByScheduleNo(int scheduleNo);
 }

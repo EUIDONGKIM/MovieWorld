@@ -55,4 +55,9 @@ public class ReservationInfoViewDaoImpl implements ReservationInfoViewDao{
 		return sqlSession.selectList("reservationInfoView.getByTheater",theaterNo);
 	}
 
+	@Override
+	public List<ReservationInfoViewDto> listByScheduleNo(int scheduleNo) {
+		return sqlSession.selectList("reservationInfoView.listByScheduleNo",scheduleNo);
+	}
+
 }

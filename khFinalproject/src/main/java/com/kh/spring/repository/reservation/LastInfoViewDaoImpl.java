@@ -91,4 +91,9 @@ public class LastInfoViewDaoImpl implements LastInfoViewDao{
 		return sqlSession.selectList("lastInfoView.countPeopleBySido");
 	}
 
+	@Override
+	public List<LastInfoViewDto> listByScheduleNo(int scheduleNo) {
+		return sqlSession.selectList("lastInfoView.listByScheduleNo",scheduleNo);
+	}
+
 }
