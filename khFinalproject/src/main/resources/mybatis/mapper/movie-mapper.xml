@@ -48,9 +48,17 @@
 	</select>
 	
 	<select id="listWithoutDuplicate" parameterType="int" resultType="MovieDto">
-		select movie_no, movie_title from movie
+		select movie_no, movie_title, movie_opening from movie
 		minus
-		select movie_no, movie_title from total_info_view where theater_no = #{theaterNo}
+		select movie_no, movie_title,movie_opening from
+		(select s.schedule_no,s.movie_no,t.theater_no,
+		s.schedule_start,s.schedule_end,
+		m.movie_grade,m.movie_title,m.movie_eng_title,m.movie_runtime,m.movie_opening,
+		t.theater_sido,t.theater_name
+		from schedule S
+		join movie M on s.movie_no = m.movie_no
+		join theater T on t.theater_no = s.theater_no) 
+		where theater_no = #{theaterNo}
 	</select>
 	
 	<select id="listByOpening" resultType="MovieDto">

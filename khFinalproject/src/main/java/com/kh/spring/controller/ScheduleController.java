@@ -129,7 +129,10 @@ public class ScheduleController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int scheduleNo, Model model) {
 		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(scheduleNo);
+		MovieDto movieDto = movieDao.get(totalInfoViewDto.getMovieNo());
+		
 		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
+		model.addAttribute("movieDto",movieDto);
 		
 		return "schedule/edit";
 	}

@@ -24,13 +24,13 @@
 	
 	<div class="row">
 		<label>상영 시작일</label>
-		<input type="date" name="scheduleStart" value="${totalInfoViewDto.scheduleStart}" required>
+		<input type="date" name="scheduleStart" value="${totalInfoViewDto.scheduleStart}" required min="${movieDto.getOpeningDay()}" max="${movieDto.getEndingDay()}">
 	</div>
 	
 	
 	<div class="row">
 		<label>상영 종료일</label>
-		<input type="date" name="scheduleEnd" value="${totalInfoViewDto.scheduleEnd}" required>
+		<input type="date" name="scheduleEnd" value="${totalInfoViewDto.scheduleEnd}" required min="${movieDto.getOpeningDay()}" max="${movieDto.getEndingDay()}">
 	</div>
 	
 	<button type="submit">수정</button>

@@ -58,7 +58,7 @@
 	
 	<div class="row schedule-start">
 		<label>상영 시작일</label>
-		<input type="date" name="scheduleStart=" required min=${movieDto.getOpeningDay() }>
+		<input type="date" name="scheduleStart" required min=${movieDto.getOpeningDay() }>
 	</div>
 	
 	
