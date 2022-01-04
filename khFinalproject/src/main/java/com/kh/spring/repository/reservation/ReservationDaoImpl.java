@@ -65,4 +65,12 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sqlSession.selectList("reservation.getMemberNo",memberNo);
 	}
 
+	@Override
+	public List<ReservationDto> listByPage(int startRow, int endRow) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("startRow", startRow);
+		param.put("endRow", endRow);
+		return sqlSession.selectList("reservation.listByPage",param);
+	}
+
 }
