@@ -52,4 +52,10 @@
 		select * from reservation_info_view where theater_no = #{theaterNo}
         and schedule_time_date_time between sysdate and (sysdate+7);
 	</select>
+	
+	<select id="listByScheduleNo" resultType="ReservationInfoViewDto">
+		select * from reservation_info_view where schedule_no = #{scheduleNo}
+	</select>
+	
+	
 </mapper>

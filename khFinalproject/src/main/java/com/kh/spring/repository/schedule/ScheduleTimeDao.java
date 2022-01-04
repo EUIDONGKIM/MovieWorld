@@ -20,4 +20,8 @@ public interface ScheduleTimeDao {
 
 	void reservationMinusUpdate(ScheduleTimeDto scheduleTimeDto);
 
+	boolean delete(int scheduleTimeNo);
+
+	boolean edit(ScheduleTimeDto scheduleTimeDto);
+
 	}
