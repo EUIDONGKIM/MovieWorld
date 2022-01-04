@@ -24,8 +24,11 @@ import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.service.MovieService;
+import com.kh.spring.vo.ChartVO;
+import com.kh.spring.vo.MovieChartVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +47,8 @@ public class MovieController {
 	private TotalInfoViewDao totalInfoViewDao;
 	@Autowired
 	private LastInfoViewDao lastInfoViewDao;
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -170,7 +175,45 @@ public class MovieController {
 	}
 
 	@GetMapping("/movieChart")
-	public String movieChart() {
+	public String movieChart(Model model) {
+		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+		List<MovieDto> movieList = movieDao.nowList(movieNoList);
+		
+		List<ChartVO> vo = statisticsInfoViewDao.countByReservation();
+		List<MovieChartVO> list = new ArrayList<>();
+
+		int total = 0;
+		for(ChartVO chartVO : vo) {
+			total += chartVO.getCount();//총 예매 건수 합
+			log.debug("합ㄱㅖ1={}",total);
+			log.debug("나온값2={}",chartVO.getCount());
+		}
+		
+		for(MovieDto movieDto : movieList) {
+			MovieChartVO movieChartVO = new MovieChartVO();
+			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
+			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
+			movieChartVO.setMovieNo(movieDto.getMovieNo());
+			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
+			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			
+			for(ChartVO chartVO : vo) {
+				if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+					float movieRatio = (float)chartVO.getCount() / (float)total * 100;
+					String num = String.format("%.2f" , movieRatio);
+					float changeToTwo = Float.parseFloat(num);
+					movieChartVO.setMovieRatio(changeToTwo);
+					break;
+				}
+			}
+			
+			list.add(movieChartVO);
+		}
+		
+		
+		
+		
+		model.addAttribute("list",list);
 		return "movie/movieChart";
 	}
 	

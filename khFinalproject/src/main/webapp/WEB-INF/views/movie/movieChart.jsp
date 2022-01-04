@@ -22,6 +22,7 @@
       <%--for문으로 한줄에 4개 찍기--%>
       
       
+      <c:forEach var="movieChartVO" items="${list}">
       	<div class="container-300">
       		<div class="row center">NO.1</div>
       		<div class="row">
@@ -29,15 +30,16 @@
       			<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85515/85515199250_727.jpg" width="100%"></a>
       		</div>
       		<div class="row">
-      			<a href="${root}/movie/movieDetail">해피 뉴 이어</a>
+      			<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
       		</div>
-      		<div class="row">예매율 : 7.7%</div>
-      		<div class="row">평점 : 8점</div>
-      		<div class="row">2021.12.15 개봉</div>
+      		<div class="row">예매율 : ${movieChartVO.movieRatio }%</div>
+      		<div class="row">평점 : ${movieChartVO.movieStarpoint }점</div>
+      		<div class="row">${movieChartVO.movieOpening } 개봉</div>
       		<div class="row">
       			<a href="${root}/reservation/">예매하기</a>
-      		</div>
+      		</div>      		
       	</div>
+      </c:forEach>
       	
       	</div>
       	

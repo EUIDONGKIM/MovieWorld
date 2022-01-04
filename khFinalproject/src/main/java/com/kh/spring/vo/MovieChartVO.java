@@ -1,12 +1,15 @@
 package com.kh.spring.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
-public class movieChartVO {
+public class MovieChartVO {
 	private int movieNo;
 	private String movieTitle;
 	private String movieGrade;
-	private String movieStringPoint;
+	private float movieStarpoint;
 	private String movieOpening;
+	private float movieRatio;
 }
