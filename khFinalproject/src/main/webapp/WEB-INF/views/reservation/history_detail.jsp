@@ -20,7 +20,7 @@
 			<h2><a href="cancel?reservationNo=${reservationDto.reservationNo}">예매 취소</a></h2>
 		</c:when>
 		<c:otherwise>
-			<h2>취소 완료</h2>
+			<h2>취소 할수 없는 상태입니다</h2>
 		</c:otherwise>
 	</c:choose>
 <hr>
