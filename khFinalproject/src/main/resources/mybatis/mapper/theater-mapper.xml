@@ -62,6 +62,34 @@
 			theater_info = #{theaterInfo} 
 		where theater_no = #{theaterNo} 
 	</update>
+		<update id="editInfo" parameterType="TheaterDto">
+		update theater set 
+			theater_info = #{theaterInfo} 
+		where theater_no = #{theaterNo} 
+	</update>
+	
+		<!-- 검색 및 페이지네이션 -->
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from theater
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="TheaterDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from theater
+		<where>
+			<if test="column != null and keyword != null">	
+			 and instr(${column},#{keyword}) > 0
+			</if>
+		</where>
+		order by theater_no asc
+		)tmp) where rn between #{begin} and #{end}
+	</select>
 	
 
 	

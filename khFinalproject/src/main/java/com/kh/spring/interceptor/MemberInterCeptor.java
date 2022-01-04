@@ -12,10 +12,10 @@ public class MemberInterCeptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		//세션에서 회원아이디를 가져온다
-		log.debug("멤버 인터셉터 실행...");
+		log.debug("★멤버 인터셉터 실행★");
 		String memberEmail=(String)request.getSession().getAttribute("ses");
 		String referer = request.getHeader("Referer");
-		log.debug("이전 url...={}",referer);
+//		log.debug("이전 url...={}",referer);
 		boolean login = memberEmail != null;
 		
 		if(login) {

@@ -3,6 +3,7 @@ package com.kh.spring.repository.theater;
 import java.util.List;
 
 import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.vo.PaginationVO;
 import com.kh.spring.vo.TheaterCityVO;
 
 public interface TheaterDao {
@@ -21,9 +22,13 @@ public interface TheaterDao {
 	TheaterDto get(int theaterNo);
 	
 	//극장 삭제 
-	boolean delete(int theaterNo);
+	void delete(int theaterNo);
 	
 	//수정
-	boolean edit(TheaterDto theaterDto);
+	void edit(TheaterDto theaterDto);
+	void editInfo(TheaterDto theaterDto);
+	
+	int count(PaginationVO paginationVO);
+	List<TheaterDto> search(PaginationVO paginationVO);
 
 }

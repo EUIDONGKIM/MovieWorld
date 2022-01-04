@@ -6,8 +6,9 @@ import java.util.List;
 import com.kh.spring.entity.board.BoardDto;
 
 import lombok.Data;
+
 @Data
-public class BoardSearchVO {
+public class PaginationVO {
 	private int p;
 	private String column;
 	private String keyword;
@@ -16,8 +17,6 @@ public class BoardSearchVO {
 	private int blockSize = 10;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
-	private List<BoardDto> list = new ArrayList<>();
-	private int boardTypeName;
 
 	
 	public void calculate() throws Exception {
@@ -62,4 +61,3 @@ public class BoardSearchVO {
 	}
 	
 }
-

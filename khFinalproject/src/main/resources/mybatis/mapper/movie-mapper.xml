@@ -47,6 +47,12 @@
 		select * from movie where movie_no = #{movieNo}
 	</select>
 	
+	<select id="listWithoutDuplicate" parameterType="int" resultType="MovieDto">
+		select movie_no, movie_title from movie
+		minus
+		select movie_no, movie_title from total_info_view where theater_no = #{theaterNo}
+	</select>
+	
 	<select id="listByOpening" resultType="MovieDto">
 		select * from movie where sysdate between movie_opening-30 and movie_opening+30
 	</select>

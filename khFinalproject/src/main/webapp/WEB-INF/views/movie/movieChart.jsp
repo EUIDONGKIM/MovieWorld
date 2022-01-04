@@ -17,7 +17,7 @@
 	}
 	</style>
 
-	<div calss="contianer-1200 container-center">
+	<div class="contianer-1200 container-center">
 		<div class="row">
       		<h1>✿MOVIE CHART✿</h1>
       		<hr />
@@ -29,21 +29,21 @@
       </div>
       
       <div class="row">
-        <table class="table table-hover item">
-        	<tbody>
-         		<tr height="350px">
-         			<%-- 포스터 자리 --%>
-         			<td colspan="30">
-         			<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85515/85515199250_727.jpg" width="350px" height="500px"></a>
-         			</td>
-         			
-         			<tr>
-			    		<td class="right">가나다</td>
-			    		<td class="legt">가나다</td>
-			    	</tr>
-         		</tr>
-          </tbody>
-        </table>
+      
+      	<div class="container-300">
+      		<div class="row">NO.1</div>
+      		<div class="row">
+      			<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85515/85515199250_727.jpg" width="100%">
+      		</div>
+      		<div class="row">영화제목</div>
+      		<div class="row left">예매율</div>
+      		
+      		<div class="row">개봉일</div>
+      		<div class="row">
+      			<a href="${root}/reservation/main">예매</a>
+      		</div>
+      	</div>
+      	
       </div>
     </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

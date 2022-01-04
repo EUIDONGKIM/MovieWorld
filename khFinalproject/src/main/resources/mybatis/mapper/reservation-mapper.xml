@@ -39,6 +39,10 @@
 		select * from reservation where reservation_no = #{reservationNo}
 	</select>
 	
+	<select id="getMemberNo" parameterType="int" resultType="ReservationDto">
+		select * from RESERVATION where member_no=#{memberNo} order by reservation_no desc
+	</select>
+	
 	<update id="updatePrice" parameterType="map">
 		update reservation set total_amount = #{totalAmount}
 		where reservation_no = #{reservationNo}
