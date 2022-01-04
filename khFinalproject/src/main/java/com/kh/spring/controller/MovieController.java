@@ -174,5 +174,9 @@ public class MovieController {
 		return "movie/movieChart";
 	}
 	
+	@GetMapping("/movieDetail")
+		public String movieDetail() {
+			return "movie/movieDetail";
+		}
 	
 }

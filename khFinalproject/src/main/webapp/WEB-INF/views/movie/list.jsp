@@ -153,10 +153,9 @@ display: none;
 				<td>${list.key.movieType}</td>
 				
 				<td>${list.key.movieOpening}</td>
-				
-				<td>
-					<a href="#">수정 삭제?</a>
-				</td>
+
+				<td><a href="${root}/movie/movieDetail">수정 및 삭제</a></td>
+
 			</tr>	
 		</c:forEach>	
 	</tbody>	
