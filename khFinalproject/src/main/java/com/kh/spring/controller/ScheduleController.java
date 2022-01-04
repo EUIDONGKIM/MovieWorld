@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDiscountDao;
@@ -44,7 +47,8 @@ public class ScheduleController {
 	private TotalInfoViewDao totalInfoViewDao;
 	@Autowired
 	private TheaterDao theaterDao;
-	
+	@Autowired
+	private LastInfoViewDao lastInfoViewDao;
 	
 	@GetMapping("/create")
 	public String create(Model model) {
@@ -62,7 +66,10 @@ public class ScheduleController {
 	
 	@GetMapping("/create_total")
 	public String createTotal(Model model) {
-		model.addAttribute("movieList", movieDao.listByOpening());
+		List<Integer> movieNoList = movieDao.notHaveSchedule();
+		List<MovieDto> movieList = movieDao.nowList(movieNoList);
+		
+		model.addAttribute("movieList", movieList);
 		return "schedule/create_total";
 	}
 	
@@ -76,7 +83,7 @@ public class ScheduleController {
 		}
 		
 		
-		return "redirect:list";
+		return "redirect:/movie/list";
 	}
 	
 	//영화관 상세페이지에서 상영 영화 생성
@@ -115,7 +122,7 @@ public class ScheduleController {
 	public String timeCreate(@ModelAttribute ScheduleTimeDto scheduleTimeDto) {
 		log.debug("디티오 ==== {}",scheduleTimeDto);
 		scheduleTimeDao.insert(scheduleTimeDto);
-		return "redirect:/";
+		return "redirect:/movie/list";
 	}
 	
 	
@@ -130,7 +137,7 @@ public class ScheduleController {
 	public String edit(@ModelAttribute ScheduleDto scheduleDto) {
 		boolean success = scheduleDao.edit(scheduleDto);
 		if(success) {
-			return "redirect:/schedule/list";
+			return "redirect:/movie/list";
 		}
 		else {
 			return "redirect:???"; //실패
@@ -143,7 +150,39 @@ public class ScheduleController {
 	public String delete(@RequestParam int scheduleNo) {
 		boolean success = scheduleDao.delete(scheduleNo);
 		if(success) {
-			return "redirect:/schedule/list";
+			return "redirect:/movie/list";
+		}
+		else {
+			return "redirect:???"; //실패
+		}
+	}
+	
+	@GetMapping("/time/edit")
+	public String timeEdit(@RequestParam int scheduleTimeNo, Model model) {
+		LastInfoViewDto lastInfoViewDto = lastInfoViewDao.get(scheduleTimeNo);
+		model.addAttribute("lastInfoViewDto",lastInfoViewDto);
+		model.addAttribute("hallList", hallDao.list(lastInfoViewDto.getTheaterNo()));
+		model.addAttribute("scheduleTimeDiscountList", scheduleTimeDiscountDao.list());
+		return "schedule/time/edit";
+	}
+	@PostMapping("/time/edit")
+	public String timeEdit(@ModelAttribute ScheduleTimeDto scheduleTimeDto) {
+		boolean success = scheduleTimeDao.edit(scheduleTimeDto);
+		if(success) {
+			return "redirect:/movie/list";
+		}
+		else {
+			return "redirect:???"; //실패
+		}
+		
+	}
+	
+	
+	@GetMapping("/time/delete")
+	public String timeDelete(@RequestParam int scheduleTimeNo) {
+		boolean success = scheduleTimeDao.delete(scheduleTimeNo);
+		if(success) {
+			return "redirect:/movie/list";
 		}
 		else {
 			return "redirect:???"; //실패

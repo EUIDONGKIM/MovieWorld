@@ -15,6 +15,7 @@
      	   
         	$("#send-type-hidden").append(template);
         })
+        
 	});
 </script>
 
@@ -42,7 +43,7 @@
 	
  	<div class="row">
 		<label>상영일/시간 선택</label>
-		<input type="datetime-local" name="scheduleTimeDateTime" required
+		<input type="datetime-local" name="scheduleTimeDateTime" required min="${totalInfoViewDto.getNowDateToString() }" max="${totalInfoViewDto.getEndDateToString()}"
 		pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
 	</div>
 	

@@ -24,10 +24,10 @@ public interface BoardDao {
 	boolean edit (BoardDto boardDto);
 	boolean viewUp(int boardNo);
 	//검색
-	List<BoardDto> search(String column, String keyword, int begin, int end);
+	List<BoardDto> search(String column, String keyword, int begin, int end, int boardTypeName);
 
 
-	int count(String column, String keyword);
+	int count(String column, String keyword ,int boardTypeNo);
 
 	void write1(BoardDto boardDto);
 

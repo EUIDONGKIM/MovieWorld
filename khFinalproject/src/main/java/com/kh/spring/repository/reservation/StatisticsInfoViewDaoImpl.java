@@ -52,5 +52,10 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	public List<ChartVO> countReservationBySido() {
 		return sqlSession.selectList("statisticsInfoView.countReservationBySido");
 	}
+
+	@Override
+	public List<String> movieTitleBymemberNo(int memberNo) {
+		return sqlSession.selectList("movieTitleBymemberNo",memberNo);
+	}
 	
 }

@@ -124,7 +124,7 @@
 								</a>
 						    </li>
 						    <li>
-								<a href="${root}/board/main">
+								<a href="${root}/board/main?boardTypeName=1">
 									<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>고객센터</label>
 								</a>
@@ -147,23 +147,22 @@
 						<li><a href="${root}/reservation/">예매</a></li>
 						<li><a href="${root}/admin/">관리메뉴</a></li>
 						<li><a href="${root}/store/storeMain">스토어</a></li>
+			
 				<c:choose>
 					<c:when test="${login}">
-								<c:choose>
-									<c:when test="${admin}">
-										<li><a href="${root}/admin/">관리메뉴</a></li>
-									</c:when>
-									<c:otherwise>
-										<li><a href="${root}/member/logout">로그아웃</a></li>
-										<li><a href="${root}/member/mypage">마이페이지</a></li>
-										<li><a href="#">고객센터</a>
-									</c:otherwise>
-								</c:choose>
+						<c:if test="${admin}">
+							<li><a href="${root}/admin/">관리메뉴</a></li>		
+						</c:if>
+							<li><a href="${root}/board/main?boardTypeName=2">자주찾는질문</a></li>
+							<li><a href="${root}/board/main?boardTypeName=3">공지/뉴스</a></li>
+							<li><a href="${root}/board/main?boardTypeName=4">이메일/문의</a></li>
+							<li><a href="${root}/board/main?boardTypeName=5">단체대관/문의</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${root}/member/login">로그인</a></li>
-						<li><a href="${root}/member/join">회원가입</a></li>
-						<li><a href="#">고객센터</a>
+							<li><a href="${root}/board/main?boardTypeName=2">자주찾는질문</a></li>
+							<li><a href="${root}/board/main?boardTypeName=3">공지/뉴스</a></li>
+							<li><a href="${root}/board/main?boardTypeName=4">이메일/문의</a></li>
+							<li><a href="${root}/board/main?boardTypeName=5">단체대관/문의</a></li>
 					</c:otherwise>
 				</c:choose>
 

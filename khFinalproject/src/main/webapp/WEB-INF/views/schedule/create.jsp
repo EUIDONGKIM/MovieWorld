@@ -5,11 +5,32 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
+$(function(){
+	$(".movie-pick").on("input",function(){
+		
+		var open = $(".pick-select:selected").data("opening");
+		console.log(open);
+		$(".schedule-start").empty();
+		var template = $("#template-start").html();
+		template = template.replace("{{min}}",open);
+		
+		$(".schedule-start").append(template);
 
+	});
+	
+	var d = new Date();
+	var day = d.toISOString();
+	var input = day.substring(0,10);
+	$("input[name=scheduleEnd]").attr("min",input);
+	
+});
 </script>
 
 <h1> 상영 영화 생성 </h1>
-
+<template id="template-start">
+		<label>상영 시작일</label>
+		<input type="date" name="scheduleStart" required min="{{min}}">
+</template>
 
 <form method="post">
 	<div class="row">
@@ -25,16 +46,16 @@
 	
 	<div class="row">
 		<label>영화 선택</label>
-		<select name="movieNo" required>
+		<select class="movie-pick" name="movieNo" required>
 			<option value="">영화 선택</option>
 				<c:forEach var="movieDto" items="${movieList}">
-					<option value="${movieDto.movieNo}">${movieDto.movieTitle}</option>
+					<option class="pick-select" value="${movieDto.movieNo}" data-opening="${movieDto.getOpeningDay()}">${movieDto.movieTitle}</option>
 				</c:forEach>
 		</select>
 	</div>
 
 	
-	<div class="row">
+	<div class="row schedule-start">
 		<label>상영 시작일</label>
 		<input type="date" name="scheduleStart" required>
 	</div>

@@ -7,6 +7,6 @@ public class movieChartVO {
 	private int movieNo;
 	private String movieTitle;
 	private String movieGrade;
-	private String movieType;
+	private String movieStringPoint;
 	private String movieOpening;
 }

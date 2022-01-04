@@ -14,7 +14,7 @@
 	        }
 	    });
 		$("#drop").click(function(e){
-			if(window.confirm("정말 탈퇴 시킬껍니까? 후회할퇸데...마음속으로만하라했눈데...")){
+			if(window.confirm("정말 탈퇴 시킬껍니까? 후회할퇸데...마음속으로만하라했는뒈......")){
 				return true;
 			} else{
 				return false;

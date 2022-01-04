@@ -1,5 +1,8 @@
 package com.kh.spring.entity.reservation;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,4 +33,30 @@ public class LastInfoViewDto {
 	private String hallName;
 	private String hallType;
 	private int hallSeat;
+	
+	public String getDateToString() {
+		String cut = this.scheduleTimeDateTime;
+		String cut1 = cut.substring(0,10);
+		String cut2 = cut.substring(11,16);
+		
+		String go = cut1 + "T" + cut2;
+		
+		return go;
+	}
+	public String getStartDateToString() {
+		String go = scheduleStart.substring(0,10) + "T" + "00:00";
+		
+		return go;
+	}
+	public String getNowDateToString() {
+		LocalDateTime now = LocalDateTime.now();
+
+		return now.toString().substring(0,16);
+	}
+	
+	public String getEndDateToString() {
+		String go = scheduleEnd.substring(0,10) + "T" + "00:00";
+		
+		return go;
+	}
 }

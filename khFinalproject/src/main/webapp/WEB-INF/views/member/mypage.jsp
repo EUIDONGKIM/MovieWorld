@@ -21,6 +21,26 @@
             border:1px solid black;
         }
      </style>
+     
+     <script>
+     $(function(){
+    	 //기본 전송 이벤트 방지
+    	$(".atag").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page").html(resp);
+    			}
+    		});
+    	});
+     });
+     
+ 
+     </script>
 </head>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root"   value="${pageContext.request.contextPath}"></c:set>
@@ -94,17 +114,19 @@
             <div class="col-md-2 b">
 
                   <div class="list-group">
-                    <a href="mypage" class="list-group-item list-group-item-action active" style="text-align: center;">MY PAGE</a>
-                    <a href="edit" class="list-group-item list-group-item-action ">회원정보수정하러가기</a>
-                    <a href="quit" class="list-group-item list-group-item-action ">회원탈퇴하기</a>
-
-                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action ">내가 작성한 게시글보기</a>
-
-
-                    <a href="history" class="list-group-item list-group-item-action ">포인트 적립/사용</a>
-                    <a href="#" class="list-group-item list-group-item-action ">내가관람한영화</a>
-                    <a href="#" class="list-group-item list-group-item-action ">결제내역</a>
-                    <a href="#" class="list-group-item list-group-item-action ">인태님</a>
+                    <a href="mypage" class="list-group-item list-group-item-action atag" style="text-align: center;">MY PAGE</a>
+                    <br>
+                    <a href="#" class="list-group-item list-group-item-action active atag" style="text-align: center;">회원정보수정</a>
+                    <a href="edit" class=" list-group-item list-group-item-action atag">회원정보수정하러가기</a>
+                    <a href="quit" class="list-group-item list-group-item-action  atag">회원탈퇴하기</a>
+                    <a href="changePw" class=" list-group-item list-group-item-action atag">비밀번호변경</a>
+					
+					<br>
+					<a href="mypage" class="list-group-item list-group-item-action active atag" style="text-align: center;">이용내역</a>
+                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag">내가 작성한 게시글보기</a>
+                    <a href="history" class="list-group-item list-group-item-action atag">포인트 적립/사용</a>
+                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag">내가관람한영화</a>
+                    <a href="payHistroy" class="list-group-item list-group-item-action atag">결제내역</a>
                     <a href="#" class="list-group-item list-group-item-action ">건아님</a>
                     <a href="#" class="list-group-item list-group-item-action ">도현님</a>
                     <a href="#" class="list-group-item list-group-item-action ">죄송합니다</a>
@@ -116,9 +138,7 @@
             <div class="col-md-10 b" style="height: 600px">
 			
                 <div id="page">
-					<jsp:include page="/WEB-INF/views/member/edit.jsp">
-					    <jsp:param value="${memberDto}" name="memberDto"/>
-					</jsp:include>
+				
                 </div>
   			여기야잉 !
              </div>

@@ -61,4 +61,18 @@
  		schedule_time_sum =  schedule_time_sum - #{scheduleTimeSum}
  		where schedule_time_no = #{scheduleTimeNo}
  	</update>
+ 	
+ 	<delete id="delete" parameterType="int">
+ 		delete schedule_time where schedule_time_no = #{scheduleTimeNo}
+ 	</delete>
+ 	
+ 	<update id="edit" parameterType="ScheduleTimeDto">
+		update schedule_time set
+		schedule_time_date_time = to_date(#{scheduleTimeDateTime},'YYYY-MM-DD"T"HH24:MI:SS'),
+		schedule_time_discount_type = #{scheduleTimeDiscountType},
+		schedule_time_discount_price = #{scheduleTimeDiscountPrice},
+		hall_no = #{hallNo}
+		where schedule_time_no = #{scheduleTimeNo}
+	</update>
+ 	
 </mapper>
