@@ -11,4 +11,7 @@ public interface TotalInfoViewDao {
 	List<TotalInfoViewDto> list(int movieNo);
 	
 	List<TotalInfoViewDto> listByTheater(int theaterNo);
+	List<TotalInfoViewDto> nowList(int movieNo);
+	List<Integer> nowMoiveList();
+	List<Integer> moiveListByPeriod(String scheduleStart, String scheduleEnd);
 }

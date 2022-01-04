@@ -1,6 +1,8 @@
 package com.kh.spring.repository.movie;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,24 @@ public class MovieDaoImpl implements MovieDao{
 	@Override
 	public List<MovieDto> listByOpening() {
 		return sqlSession.selectList("movie.listByOpening");
+	}
+
+	@Override
+	public List<MovieDto> nowList(List<Integer> movieNoList) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("list",movieNoList);
+		
+		return sqlSession.selectList("movie.nowList",param);
+	}
+
+	@Override
+	public List<MovieDto> getTitleList(String movieTitle) {
+		return sqlSession.selectList("movie.getTitleList", movieTitle);
+	}
+
+	@Override
+	public List<Integer> notHaveSchedule() {
+		return sqlSession.selectList("movie.notHaveSchedule");
 	}
 
 }

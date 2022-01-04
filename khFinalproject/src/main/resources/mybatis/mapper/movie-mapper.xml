@@ -57,4 +57,25 @@
 		select * from movie where sysdate between movie_opening-30 and movie_opening+30
 	</select>
 	
+	<select id="nowList" parameterType="map" resultType="MovieDto">
+		select * from movie
+		<if test="list.size() > 0">
+			where movie_no in 
+			<foreach collection="list" open="(" close=")" separator="," item="no">
+				#{no}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="getTitleList" parameterType="String" resultType="MovieDto">
+		select * from movie where instr(movie_title,#{movieTitle})>0
+	</select>
+	<select id="notHaveSchedule" resultType="int">
+		select 
+		distinct(m.movie_no)
+		from movie m
+		left join schedule s on m.movie_no = s.movie_no
+		<![CDATA[where s.schedule_no is null and sysdate - m.movie_opening <= 30]]>
+		order by m.movie_no asc
+	</select>
 </mapper>
