@@ -41,9 +41,9 @@
 						//Date d = new Date(resp[i].historyTime);
 						var date = new Date(resp[i].historyTime);
 						
-						var html = "<h2>"+"[시간:]"+date.getFullYear()+"년 "+date.getMonth()+1+"월 "+date.getDate()+"일 "
-						+date.getHours()+"시 "+date.getMinutes()+"분 "+date.getSeconds()+"초"
-						+":[적립금]"+resp[i].historyAmount+":[메모]"+resp[i].historyMemo+"</h2>";
+						var html = "<h2>"+"[시간:"+date.getFullYear()+"년 "+date.getMonth()+1+"월 "+date.getDate()+"일 "
+						+date.getHours()+"시 "+date.getMinutes()+"분 "+date.getSeconds()+"초]"
+						+"-[적립금]"+resp[i].historyAmount+"-[내역]"+resp[i].historyMemo+"</h2>";
 						
 						$("#result").append(html);
 					}
@@ -82,7 +82,7 @@
 <%-- 		</c:forEach> --%>
 <!-- 	</table> -->
 	<div class="row center">
-		<div class="fol">
+		<div class="col">
 			<div id="result"></div>
 		</div>
 	</div>

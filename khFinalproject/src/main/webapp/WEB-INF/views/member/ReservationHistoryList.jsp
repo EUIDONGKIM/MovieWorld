@@ -24,7 +24,7 @@
 							<th width="5%">인원</th>
 							<th>예약시간</th>
 							<th>상태</th>
-							<th>결제내역<th>
+							<th>결제내역</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,7 +35,6 @@
 							<td>${reservationDto.buyTime}</td>
 							<td>${reservationDto.reservationStatus}</td>
 							<td><a href="${root}/reservation/success_result?reservationNo=${reservationDto.reservationNo}">결제내역</a></td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
