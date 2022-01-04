@@ -24,4 +24,6 @@ public interface StatisticsInfoViewDao {
 	
 	List<String> movieTitleBymemberNo(int memberNo);
 
+	List<ChartVO> countForReservationRatio();
+
 }

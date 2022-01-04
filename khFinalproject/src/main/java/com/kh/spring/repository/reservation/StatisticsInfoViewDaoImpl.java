@@ -57,5 +57,10 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	public List<String> movieTitleBymemberNo(int memberNo) {
 		return sqlSession.selectList("movieTitleBymemberNo",memberNo);
 	}
+
+	@Override
+	public List<ChartVO> countForReservationRatio() {
+		return sqlSession.selectList("statisticsInfoView.countByReservation");
+	}
 	
 }

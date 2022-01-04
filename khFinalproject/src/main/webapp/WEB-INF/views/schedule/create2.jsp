@@ -8,27 +8,39 @@
 $(function(){
 	$(".movie-pick").on("input",function(){
 		
-		var open = $(".pick-select:selected").data("opening");
-		console.log(open);
-		$(".schedule-start").empty();
-		var template = $("#template-start").html();
-		template = template.replace("{{min}}",open);
-		
-		$(".schedule-start").append(template);
+		$(".movie-pick").on("input",function(){
+			
+			var open = $(".pick-select:selected").data("opening");
+			var end = $(".pick-select:selected").data("end");
+			
+			$(".schedule-start").empty();
+			$(".schedule-end").empty();
+			
+			var template = $("#template-start").html();
+			template = template.replace("{{min}}",open);
+			template = template.replace("{{max}}",end);
+			
+			var template2 = $("#template-end").html();
+			template2 = template2.replace("{{min}}",open);
+			template2 = template2.replace("{{max}}",end);
+			
+			$(".schedule-start").append(template);
+			$(".schedule-end").append(template2);
+		});
 
 	});
 	
-	var d = new Date();
-	var day = d.toISOString();
-	var input = day.substring(0,10);
-	$("input[name=scheduleEnd]").attr("min",input);
 });
 </script>
 
 <h1>${theaterDto.theaterName }점 상영 영화 생성 </h1>
 <template id="template-start">
 		<label>상영 시작일</label>
-		<input type="date" name="scheduleStart" required min="{{min}}">
+		<input type="date" name="scheduleStart" required min="{{min}}" max="{{max}}">
+</template>
+<template id="template-end">
+		<label>상영 종료일</label>
+		<input type="date" name="scheduleEnd" required min="{{min}}" max="{{max}}">
 </template>
 
 <form method="post">
@@ -42,7 +54,7 @@ $(function(){
 		<select class="movie-pick" name="movieNo" required>
 			<option value="">영화 선택</option>
 				<c:forEach var="movieDto" items="${movieList}">
-					<option class="pick-select" value="${movieDto.movieNo}" data-opening="${movieDto.getOpeningDay()}">${movieDto.movieTitle}</option>
+					<option class="pick-select" value="${movieDto.movieNo}" data-opening="${movieDto.getOpeningDay()}" data-end="${movieDto.getEndingDay()}">${movieDto.movieTitle}</option>
 				</c:forEach>
 		</select>
 	</div>
@@ -54,7 +66,7 @@ $(function(){
 	</div>
 	
 	
-	<div class="row">
+	<div class="row schedule-start">
 		<label>상영 종료일</label>
 		<input type="date" name="scheduleEnd" required>
 	</div>

@@ -179,7 +179,7 @@ public class MovieController {
 		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
 		List<MovieDto> movieList = movieDao.nowList(movieNoList);
 		
-		List<ChartVO> vo = statisticsInfoViewDao.countByReservation();
+		List<ChartVO> vo = statisticsInfoViewDao.countForReservationRatio();
 		List<MovieChartVO> list = new ArrayList<>();
 
 		int total = 0;
