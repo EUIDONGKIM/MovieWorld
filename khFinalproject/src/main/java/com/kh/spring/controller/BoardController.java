@@ -62,8 +62,6 @@ public class BoardController {
 			@ModelAttribute BoardSearchVO boardSearchVO,@RequestParam int boardTypeName,
 			Model model) throws Exception {
 		//리스트랑 페이지네이션 정보를 서비스에서 받아온다.
-		System.out.println("테스트");
-		System.out.println(boardTypeName);
 		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
 		System.out.println(param);
 		model.addAttribute("boardSearchVO",param);
