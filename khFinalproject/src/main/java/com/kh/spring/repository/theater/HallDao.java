@@ -24,4 +24,5 @@ public interface HallDao {
 	
 	//상영관 삭제
 	boolean delete(int hallNo);
+	
 }
