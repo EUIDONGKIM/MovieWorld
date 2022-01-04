@@ -31,5 +31,21 @@
 		select * from total_info_view where theater_no = #{theaterNo} 
 	</select>
 
-
+	<select id="nowList" parameterType="int" resultType="TotalInfoViewDto">
+		select * from total_info_view where movie_no = #{movieNo}
+		and schedule_end>sysdate
+	</select>
+	
+	
+	<select id="nowMoiveList" parameterType="int" resultType="int">
+		select distinct(movie_no) from total_info_view 
+		where schedule_end > sysdate order by movie_no asc
+	</select>
+	
+	<select id="moiveListByPeriod" parameterType="map" resultType="int">
+		select distinct(movie_no) from total_info_view 
+		where schedule_end between to_date(#{scheduleStart},'YYYY-MM-DD')
+		and to_date(#{scheduleEnd},'YYYY-MM-DD') order by movie_no asc
+	</select>
+	
 </mapper>

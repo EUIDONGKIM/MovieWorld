@@ -16,4 +16,10 @@ public interface MovieDao {
 	List<MovieDto> listWithoutDuplicate(int theaterNo);
 
 	List<MovieDto> listByOpening();
+
+	List<MovieDto> nowList(List<Integer> movieNoList);
+
+	List<MovieDto> getTitleList(String movieTitle);
+
+	List<Integer> notHaveSchedule();
 }

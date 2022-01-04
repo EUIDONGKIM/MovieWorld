@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
@@ -65,7 +66,10 @@ public class ScheduleController {
 	
 	@GetMapping("/create_total")
 	public String createTotal(Model model) {
-		model.addAttribute("movieList", movieDao.listByOpening());
+		List<Integer> movieNoList = movieDao.notHaveSchedule();
+		List<MovieDto> movieList = movieDao.nowList(movieNoList);
+		
+		model.addAttribute("movieList", movieList);
 		return "schedule/create_total";
 	}
 	

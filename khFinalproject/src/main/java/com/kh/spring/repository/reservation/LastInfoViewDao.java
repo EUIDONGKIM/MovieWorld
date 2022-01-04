@@ -31,4 +31,6 @@ public interface LastInfoViewDao {
 
 	List<LastInfoViewDto> listByScheduleNo(int scheduleNo);
 
+	List<LastInfoViewDto> nowListByScheduleNo(int scheduleNo);
+
 }
