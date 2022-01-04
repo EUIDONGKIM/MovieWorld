@@ -291,7 +291,8 @@ public class ReservationController {
 			historyDao.insert(historyDto);
 			
 			attr.addAttribute("reservationNo", reservationNo);
-			return "redirect:history_detail";
+//			return "redirect:history_detail";
+			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
 		}
 		
 }
