@@ -43,7 +43,7 @@
 						
 						var html = 
 						"<tr>"+
-						"<th>"+date.getFullYear()+"년"+date.getMonth()+1+"월"+date.getDate()+"일"+date.getHours()+"시"+date.getMinutes()+"분"+"</th>"+
+						"<th>"+date.getFullYear()+"년　"+date.getMonth()+1+"월　"+date.getDate()+"일　"+date.getHours()+"시　"+date.getMinutes()+"분　"+"</th>"+
 						"<th>"+resp[i].historyAmount+"</th>"+
 						"<th>"+resp[i].historyMemo+"</th>"+
 						"</tr>"
@@ -74,7 +74,7 @@
 	<table class="table table-border table-hover">
 		<thead>
 			<tr>
-				<td width="20%">일시</td>
+				<td width="30%">일시</td>
 				<td>포인트</td>
 				<td>사용내역</td>
 			</tr>
