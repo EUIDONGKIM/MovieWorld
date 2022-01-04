@@ -6,7 +6,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
-
+$(function(){
+	
+	var d = new Date();
+	var day = d.toISOString();
+	var input = day.substring(0,10);
+	$("input[name=movieOpening]").attr("min",input);
+	
+});
 </script>
 
 <h1> 영화 추가 </h1>
@@ -16,7 +23,7 @@
  --%>
 
 <form method="post" enctype="multipart/form-data">
-	<div class= "container-400 container-center">
+	<div class= "container-500 container-center">
 		<div class="row center">
 			<label>영화 한국어 제목</label>
 				<input type="text" name="movieTitle" required>
@@ -55,7 +62,7 @@
 		
 		<div class="row">
 			<label>런타임</label>
-				<input type="text" name="movieRuntime" required>
+				<input type="number" name="movieRuntime" required min="0">
 		</div>
 		
 		<div class="row">
