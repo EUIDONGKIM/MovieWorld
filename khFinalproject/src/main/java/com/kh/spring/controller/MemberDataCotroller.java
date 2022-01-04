@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.service.EmailService;
 
 @RestController
@@ -29,6 +31,8 @@ public class MemberDataCotroller {
 	private MemberDao memberDao;
 	@Autowired
 	private HistoryDao historyDao;
+	@Autowired
+	private ReservationDao reservationDao;
 
 
 	@GetMapping("/idcheck")
@@ -68,7 +72,7 @@ public class MemberDataCotroller {
 	}
 	
 	
-	//페이지네이션 기능
+	//더보기(페이지네이션)
 	@GetMapping("/historyMore")
 	public List<HistoryDto> historyMore(
 			@RequestParam(required = false, defaultValue = "1") int page, 
@@ -76,6 +80,14 @@ public class MemberDataCotroller {
 		int endRow = page * size;
 		int startRow = endRow - (size - 1);
 		return historyDao.listByPage(startRow, endRow);
+	}
+	@GetMapping("ReservationHistoryListMore")
+	public List<ReservationDto> ReservationHistoryListMore(
+		@RequestParam(required = false, defaultValue = "1") int page, 
+		@RequestParam(required = false, defaultValue = "5") int size){
+		int endRow = page * size;
+		int startRow = endRow - (size - 1);
+		return reservationDao.listByPage(startRow, endRow);
 	}
 	
 	
