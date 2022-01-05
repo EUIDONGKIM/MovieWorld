@@ -10,7 +10,9 @@
 	</style>
 
 	<div class="contianer-1200 container-center"> <!-- moviechart 큰 box 시작 -->
+
 		<div class="row"><!-- 무비차트 카테고리 찍는 박스 -->
+
       		<h1>✿MOVIE CHART✿</h1>
       		<hr />
       		<input type="checkbox" name="release" value="released" /> 현재 상영중
