@@ -39,7 +39,7 @@
 	});
 </script>
 
-<h1>상영관 정보(좌석 클릭 막아야함)</h1>
+<h1>상영관 정보</h1>
 <h2><a href="${root}/theater/detail?theaterNo=${theaterDto.theaterNo}">${theaterDto.theaterName}</a>점 ${hallDto.getFullName()}</h2>
 <h2>이용 가능한 좌석 수 : ${hallDto.hallSeat}</h2>
 
@@ -47,7 +47,7 @@
         <div>
 			<div id="cinema" class="cinema-wrap" data-name="seat">
 			<div class="cinema-screen">스크린</div>
-			    <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows}" data-colsize="${hallDto.hallCols}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple">
+			    <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows}" data-colsize="${hallDto.hallCols}" data-rowname="number" data-colname="number" data-mode="maneger" data-fill="manual" data-seatno="visible" data-choice="multiple">
 			    <c:forEach var="seatDto" items="${seatList}">
 			        <div class="cinema-seat" data-row="${seatDto.seatRows}" data-col="${seatDto.seatCols}" data-state="${seatDto.seatStatus}"></div>
 			    </c:forEach>
@@ -56,6 +56,9 @@
         </div>
     </div>
     
-    <button type="submit">수정</button>
-    <button type="submit">삭제</button>
+    <a href="${root}/hall/update_seat?hallNo=${hallDto.hallNo}">좌석 상태 설정</a>
+    <form action="${root}/hall/delete" method="post">
+    	<input type="hidden" name="hallNo" value="${hallDto.hallNo}">
+	    <button type="submit">상영관 폐점</button>
+    </form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

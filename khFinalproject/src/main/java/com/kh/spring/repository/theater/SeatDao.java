@@ -11,5 +11,7 @@ public interface SeatDao {
 	List<SeatDto> list(int hallNo);
 
 	int getSeatNo(int hallNo, int seatRows, int seatCols);
+	
+	void delete(int hallNo);
 
 }

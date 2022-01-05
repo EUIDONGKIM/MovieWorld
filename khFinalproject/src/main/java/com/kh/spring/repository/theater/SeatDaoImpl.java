@@ -36,4 +36,9 @@ public class SeatDaoImpl implements SeatDao{
 		return sqlSession.selectOne("seat.getSeatNo",param);
 	}
 
+	@Override
+	public void delete(int hallNo) {
+		sqlSession.delete("seat.delete",hallNo);
+	}
+
 }

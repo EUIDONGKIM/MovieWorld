@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.theater.SeatDto;
 import com.kh.spring.service.SeatService;
@@ -24,7 +25,7 @@ public class SeatController {
 	private SeatService seatService;
 	
 	@PostMapping("/insert")
-	public String insert(@RequestParam List<String> seat,@RequestParam int hallNo) {
+	public String insert(@RequestParam List<String> seat,@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
 		log.debug("seat List 받은 값{}",seat);
 		log.debug("hallNo 받은 값{}",hallNo);
 		
@@ -49,6 +50,8 @@ public class SeatController {
 		
 		seatService.setSeatandUpdateHall(seatList,hallNo);
 		
-		return "redirect:/admin/hall";
+		redirectAttributes.addAttribute("hallNo",hallNo);
+		
+		return "redirect:/hall/detail";
 	}
 }

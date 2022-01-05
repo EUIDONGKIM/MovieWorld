@@ -23,6 +23,6 @@ public interface HallDao {
 	int hallCount (int theaterNo);
 	
 	//상영관 삭제
-	boolean delete(int hallNo);
+	void delete(int hallNo);
 	
 }
