@@ -30,8 +30,8 @@ public class ScheduleTimeDiscountDaoImpl implements ScheduleTimeDiscountDao{
 	}
 
 	@Override
-	public boolean edit(ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
-		return sqlSession.update("scheduleTimeDiscount.edit", scheduleTimeDiscountDto) > 0;
+	public void edit(ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
+		sqlSession.update("scheduleTimeDiscount.edit", scheduleTimeDiscountDto);
 	}
 	
 }
