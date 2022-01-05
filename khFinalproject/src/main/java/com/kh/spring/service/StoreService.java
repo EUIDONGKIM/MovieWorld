@@ -11,10 +11,9 @@ import com.kh.spring.vo.StoreSearchVO;
 public interface StoreService {
 	StoreSearchVO searchNPaging(StoreSearchVO storeSearchVO) throws Exception;
 
-	int write(StoreDto storeDto, List<MultipartFile> attach) throws IllegalStateException, IOException;
-
-	void delete(int boardNo);
+	void delete(int productNo);
 
 	void edit(StoreDto storeDto, List<MultipartFile> attach) throws IllegalStateException, IOException;
-}
 
+	int insert(StoreDto storeDto, MultipartFile photo) throws IllegalStateException, IOException;
+}
