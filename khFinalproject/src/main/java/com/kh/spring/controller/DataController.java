@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
+import com.kh.spring.entity.actor.TotalRoleViewDto;
 import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
@@ -25,6 +26,7 @@ import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
+import com.kh.spring.repository.actor.TotalRoleViewDao;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.movie.VideoDao;
@@ -89,6 +91,40 @@ public class DataController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private TotalRoleViewDao totalRoleViewDao;
+	@DeleteMapping("/deleteVideo")
+	public boolean deleteVideo(@RequestParam int videoNo) {
+		return videoDao.delete(videoNo);
+	}
+	@DeleteMapping("/deleteStaff")
+	public boolean deleteStaff(@RequestParam int actorNo) {
+		return roleDao.delete(actorNo);
+	}
+	@DeleteMapping("/deleteActor")
+	public boolean deleteActor(@RequestParam int actorNo) {
+		return roleDao.delete(actorNo);
+	}
+	@DeleteMapping("/deleteDirector")
+	public boolean deleteDirector(@RequestParam int actorNo) {
+		return roleDao.delete(actorNo);
+	}
+	@GetMapping("/getVideo")
+	public List<VideoDto> getVideo(@RequestParam int movieNo) {
+		return videoDao.listByMovie(movieNo);
+	}
+	@GetMapping("/getStaff")
+	public List<TotalRoleViewDto> getStaff(@RequestParam int movieNo) {
+		return totalRoleViewDao.listByJob(movieNo,"staff");
+	}
+	@GetMapping("/getActor")
+	public List<TotalRoleViewDto> getActor(@RequestParam int movieNo) {
+		return totalRoleViewDao.listByJob(movieNo,"actor");
+	}
+	@GetMapping("/getDirector")
+	public List<TotalRoleViewDto> getDirector(@RequestParam int movieNo) {
+		return totalRoleViewDao.listByJob(movieNo,"director");
+	}
 	
 	@GetMapping("/countPeopleBySido")
 	public ChartTotalVO countPeopleBySido() {

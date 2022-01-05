@@ -15,4 +15,6 @@ public interface ActorDao {
 	List<ActorDto> listByJob(String actorJob);
 
 	void insert(ActorDto actorDto);
+
+	boolean delete(int actorNo);
 }

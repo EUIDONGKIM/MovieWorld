@@ -5,7 +5,7 @@ import java.util.List;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.HallTypePriceDto;
 
-public interface HallDao {
+public interface HallDao { 
 	List<HallDto> list();
 	List<HallTypePriceDto> getHallTypeList();
 	
@@ -24,4 +24,5 @@ public interface HallDao {
 	
 	//상영관 삭제
 	boolean delete(int hallNo);
+	
 }

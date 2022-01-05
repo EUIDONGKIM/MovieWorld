@@ -6,4 +6,6 @@ public interface RoleDao {
 
 	void insert(RoleDto roleDto);
 
+	boolean delete(int actorNo);
+
 }

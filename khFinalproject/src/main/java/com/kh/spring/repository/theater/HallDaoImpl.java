@@ -65,5 +65,4 @@ public class HallDaoImpl implements HallDao{
 		return sqlSession.delete("hall.delete",hallNo) > 0;
 	}
 	
-	
 }

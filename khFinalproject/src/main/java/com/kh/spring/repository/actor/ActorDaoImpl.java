@@ -39,5 +39,10 @@ public class ActorDaoImpl implements ActorDao{
 		
 	}
 
+	@Override
+	public boolean delete(int actorNo) {
+		return sqlSession.delete("actor.delete",actorNo)>0;
+	}
+
 	
 }
