@@ -7,26 +7,47 @@
     <script>
 
         $(function(){
+        	var movieNo = ${movieNo};
 			var checking = '${actorJob}';
             $(".add-btn").click(function(){
-                var giveNo = $("input:checked[name=actorNo]").val();
-                var giveName = $("input:checked[name=actorNo]").data("name");
-                if(!giveNo||!giveName) return;
-                if(checking=='director'){	
-                opener.document.getElementById('directorNo').value = giveNo;
-                opener.document.getElementById('director').value = giveName;
+            	var check = $("input[name=actorNo]").val();
+            	if(!check){
+                	alert("값을 선택하세요!");
+                	return;
                 }
-                if(checking=='actor'){	
-                opener.document.getElementById('actorNo').value = giveNo;
-                opener.document.getElementById('actor').value = giveName;
-                }
-                if(checking=='staff'){	
-                 opener.document.getElementById('staffNo').value = giveNo;
-                 opener.document.getElementById('staff').value = giveName;
-                 }
-                window.close();
-            });
+            	
+            	$("input[name=actorNo]").each(function(){
+            		if($(this).prop("checked")){
+            			var check = $(this).val();
+            			addRole(movieNo,check);
+        				alert("값이 들어갔습니다!"); 
+            		}
+            	
+            	});
 
+                opener.document.location.reload();
+
+        		self.close();
+                //window.close();
+            });
+			
+            function addRole(movieNo,actorNo){
+                $.ajax({
+    			url:"${pageContext.request.contextPath}/data/addRole",
+    			type:"post",
+                data : {
+    				movieNo:movieNo,
+                    actorNo:actorNo
+    			},
+    			success:function(resp){
+    				console.log("성공", resp);
+    			},
+    			error:function(e){
+    				console.log("실패", e);
+    			}
+    		    });
+            };
+            
         });
 
     </script>
@@ -37,7 +58,7 @@
 	<c:forEach var="actorDto" items="${actorList}">
 	     <div class="row">
        		 <label>
-            	<input type="radio" name="actorNo" value="${actorDto.actorNo}" data-name="${actorDto.actorName}" class="actor-item">
+            	<input type="radio" name="actorNo" value="${actorDto.actorNo}">
                 <span>${actorDto.actorName}</span>
             </label>
         </div>

@@ -16,5 +16,10 @@ public class RoleDaoImpl implements RoleDao {
 	public void insert(RoleDto roleDto) {
 		sqlSession.insert("role.insert",roleDto);
 	}
+
+	@Override
+	public boolean delete(int actorNo) {
+		return sqlSession.delete("role.delete",actorNo)>0;
+	}
 	
 }
