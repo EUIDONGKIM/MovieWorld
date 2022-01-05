@@ -7,6 +7,46 @@
 <script>
 	$(function(){
 		loadList();
+		
+		$("#insert").hide();
+		
+		$(".add-btn").click(function(){
+			$("#insert").show();
+			//#insert-form이 전송되면 전송 못하게 막고 ajax로 insert
+			$("#insert-form").submit(function(e){
+				//this == #insert-form
+				e.preventDefault();
+				
+				var dataValue = $(this).serialize();
+				
+				$.ajax({
+					url:"${root}/price/insertAgeDiscount",
+					type:"post",
+					data : dataValue,
+					//dataType 없음
+					success:function(resp){
+						console.log("추가 성공", resp);
+						
+						//주의 : this 는 form이 아니다(this는 함수를 기준으로 계산)
+						//jQuery는 reset() 명령이 없어서 get(0)으로 javascript 객체로 변경
+						//$("#insert-form").get(0).reset();
+						$("#insert-form")[0].reset();
+						
+						//성공하면 목록 갱신
+						$("#insert").hide();
+						loadList();
+					},
+					error:function(e){
+						console.log("실패", e);
+					}
+				});
+			});
+		});
+		
+		$(".add-cancel-btn").click(function(){
+			$("#insert").hide();
+		});
+
 	});
 		
 	function loadList(){
@@ -16,7 +56,7 @@
 			dataType:"json",
 			success:function(resp){
 				
-				$(".age-discount").find("tbody").empty();//내부영역 청소
+				$("#result").empty();//내부영역 청소
 				
 				for(var i=0; i < resp.length; i++){
 					var template = $("#ageDiscount-template").html();
@@ -35,8 +75,34 @@
 						deleteAgeDiscount($(this).data("age-no"));
 					});
 					tag.find(".edit-btn").click(function(){
+						var ageNo = $(this).data("age-no");
+						var ageName = $(this).prevAll(".age-name").text();
+						var ageDiscountPrice = $(this).prevAll(".age-discount-price").text();
+						
+						var form = $("<form id='edit-form'>");
+						form.append("<input type='hidden' name='ageNo' value='"+ageNo+"'>");
+						form.append("<input type='text' name='ageName' value='"+ageName+"'>");
+						form.append("<input type='text' name='ageDiscountPrice' value='"+ageDiscountPrice+"'>");
+						form.append("<button type='submit'>수정</button>");
+						form.append("<button type='button' class='edit-cancel-btn'>취소</button>");
+						form.append("</form>");
+						
+
+						
+						form.submit(function(e){
+							e.preventDefault();
+
+							var ageNoValue = $("input[name=ageNo]").val();
+							var ageNameValue = $("input[name=ageName]").val();
+							var ageDiscountPriceValue = $("input[name=ageDiscountPrice]").val();
+							
+							editAgeDiscount(ageNoValue, ageNameValue, ageDiscountPriceValue);
+						});
+						
+						var div = $(this).parent();
+						div.html(form);
 					});
-					$(".age-discount").find("tbody").append(tag);//추가!
+					$("#result").append(tag);//추가!
 				}
 			},
 			error:function(e){
@@ -59,30 +125,54 @@
 		});
 	}
 	
+	function editAgeDiscount(ageNoValue, ageNameValue, ageDiscountPriceValue){
+		
+		$.ajax({
+			url:"${root}/price/editAgeDiscount",
+			type:"post",
+			data : {
+				ageNo : ageNoValue,
+				ageName : ageNameValue,
+				ageDiscountPrice : ageDiscountPriceValue
+			},
+			//dataType 없음
+			success:function(resp){
+				console.log("수정 성공", resp);
+				
+				//성공하면 목록 갱신
+				loadList();
+			},
+			error:function(e){
+				console.log("수정 실패", e);
+			}
+		});
+		
+		
+	}
+	
+	
+	
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <template id="ageDiscount-template">
-	<tr>
-		<td>{{ageName}}</td>
-		<td>{{ageDiscountPrice}}</td>
-		<td>
-			<button class="edit-btn" data-age-no="{{ageNo}}">수정</button>
-			<button class="remove-btn" data-age-no="{{ageNo}}">삭제</button>
-		</td>
-	<tr>
+	<div class="item">
+		<span class="age-name">{{ageName}}</span>
+		<span class="age-discount-price">{{ageDiscountPrice}}</span>
+		<button class="edit-btn" data-age-no="{{ageNo}}">수정</button>
+		<button class="remove-btn" data-age-no="{{ageNo}}">삭제</button>
+	</div>
 </template>
 
-<h1>연령대별 할인 금액 관리</h1>
-<table class="age-discount table table-border table-hover">
-	<thead>
-		<tr>
-			<th>구분</th>
-			<th>할인금액</th>
-			<th>메뉴</th>
-		</tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
+<h1>연령대별 할인 금액 관리<button type="button" class="add-btn">추가</button></h1>
+
+<div id="result"></div>
+<div id="insert">
+<form id="insert-form">
+	<input type="text" name="ageName" placeholder="연령대">
+	<input type="text" name="ageDiscountPrice" placeholder="금액">
+	<button type="submit">등록</button>
+	<a href="#" class="add-cancel-btn">취소</a>
+</form>
+</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
