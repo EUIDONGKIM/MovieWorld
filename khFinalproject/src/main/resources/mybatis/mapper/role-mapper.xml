@@ -21,4 +21,7 @@
 			#{movieNo}
 		)
 	</insert>
+	<delete id="delete" parameterType="int">
+		delete role where actor_no=#{actorNo}
+	</delete>
 </mapper>

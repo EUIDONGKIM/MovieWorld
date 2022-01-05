@@ -14,20 +14,10 @@
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="video">
-	<insert id="insert" parameterType="VideoDto">
-		insert into video values(
-			video_seq.nextval,
-			#{movieNo},
-			#{videoTitle},
-			sysdate,
-			#{videoRoot}
-		)
-	</insert>
-	<select id="listByMovie" parameterType="int" resultType="VideoDto">
-		select * from video where movie_no=#{movieNo}
+<mapper namespace="totalRoleView">
+
+	<select id="listByJob" parameterType="map" resultType="TotalRoleViewDto">
+		select * from total_role_view where movie_no = #{movieNo} and actor_job = #{actorJob}
 	</select>
-	<delete id="delete" parameterType="int">
-		delete video where video_no=#{videoNo}
-	</delete>
+
 </mapper>

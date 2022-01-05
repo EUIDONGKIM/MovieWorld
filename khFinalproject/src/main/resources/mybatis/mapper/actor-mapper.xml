@@ -35,4 +35,8 @@
 	<select id="listByJob" parameterType="String" resultType="ActorDto">
 		select * from actor where actor_job=#{actorJob}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete actor where actor_no = #{actorNo}
+	</delete>
 </mapper>

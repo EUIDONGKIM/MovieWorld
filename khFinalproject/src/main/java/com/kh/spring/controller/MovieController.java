@@ -76,11 +76,12 @@ public class MovieController {
 	@RequestMapping("/insert_popup")
 	public String insertPopup(
 			@RequestParam String actorJob,
+			@RequestParam int movieNo,
 			Model model) throws UnsupportedEncodingException {
 
 		model.addAttribute("actorList",actorDao.listByJob(actorJob));
 		model.addAttribute("actorJob",actorJob);
-		
+		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor_popup";
 	}
 	
