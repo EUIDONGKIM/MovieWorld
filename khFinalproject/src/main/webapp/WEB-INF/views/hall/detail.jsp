@@ -19,6 +19,10 @@
     .float-box > .result {
         padding:0.5rem;
     }
+    #cinema{
+    	pointer-events : none;
+    }
+    
 </style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.js"></script>
