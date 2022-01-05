@@ -18,66 +18,18 @@
 		loadActor();
 		loadStaff();
 		loadVideo();
-        $("#director").click(function(){
-        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=director&movieNo='+movieNo;
-            window.open(target, "popup", "width=500 , height=500");
-        });
-        $("#actor").click(function(){
-        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=actor&movieNo='+movieNo;
-            window.open(target, "popup", "width=500 , height=500");
-        });
-        $("#staff").click(function(){
-        	var target = '${pageContext.request.contextPath}/movie/insert_popup?actorJob=staff&movieNo='+movieNo;
+		
+        $(".btn-search").click(function(){
+        	var target = '${pageContext.request.contextPath}/movie/insert_popup?movieNo='+movieNo;
             window.open(target, "popup", "width=500 , height=500");
         });
         
-
-
-        $(".btn-director").click(function(){
-        	var actorName =  $("#director").val();
-        	var actorNo = $("#directorNo").val();
-        	
-        	if(!actorName || !actorNo) {
-				alert("값을 입력하세요!!");        		
-        		return;
-        	}
-            
-			addRole(movieNo,actorNo,'director');
-			
-			$("#director").val("");
-			$("#directorNo").val("");
-        });
-        $(".btn-actor").click(function(){
-        	var actorName =  $("#actor").val();
-        	var actorNo = $("#actorNo").val();
-        	
-        	if(!actorName || !actorNo) {
-				alert("값을 입력하세요!!");        		
-        		return;
-        	}
-
-			addRole(movieNo,actorNo,'actor');
-			
-			$("#actor").val("");
-			$("#actorNo").val("");
-        });
-        $(".btn-staff").click(function(){
-        	var actorName =  $("#staff").val();
-        	var actorNo = $("#staffNo").val();
-        	
-        	if(!actorName || !actorNo) {
-				alert("값을 입력하세요!!");        		
-        		return;
-        	}
-            
-			addRole(movieNo,actorNo,'staff');
-			
-			$("#staff").val("");
-			$("#staffNo").val("");
-        });
         
 		$(".exit-btn").click(function(){
+			var check = confirm("등록을 완료하시겠습니까?");
+			if(check){				
 			location.href = "${pageContext.request.contextPath}/movie/list";
+			}
 		});
 
         $(".video-add-btn").click(function(){
@@ -362,33 +314,26 @@
     </template>
     
     <h1>[[영화인 검색]]</h1>
+    
+    <div class="row center">
+		<button class="btn-search">영화인 검색 및 추가창</button>
+	</div>
+    
 	<hr>
     <h1>[[역할 추가]]</h1>
     <hr>
 	<h2 class="center"> - 감독 - </h2>
 	<input type="text" name="directorNo" id="directorNo" readonly>
-	<div class="row center">
-	<input type="text" name="director" id="director" readonly placeholder="여기를 눌러 감독을 넣으세요">
-	<button class="btn-director">감독 추가</button>
-	</div>
 	<div id="result-director"></div>
 	 <hr>
 	 
 	<h2 class="center"> - 배우 - </h2>
 	<input type="text" name="actorNo" id="actorNo" readonly>
-	<div class="row center">
-	<input type="text" name="actor" id="actor" readonly placeholder="여기를 눌러 배우를 넣으세요">
-	<button class="btn-actor">배우 추가</button>
-	</div>
 	<div id="result-actor"></div>
 	 <hr>
 	 
 	<h2 class="center"> - 스태프 - </h2>
 	<input type="text" name="staffNo" id="staffNo" readonly>
-	<div class="row center">
-	<input type="text" name="staff" id="staff" readonly placeholder="여기를 눌러 스태프를 넣으세요">
-	<button class="btn-staff">스태프 추가</button>
-	</div>
 	<div id="result-staff"></div>
 	<hr>
 
@@ -407,12 +352,11 @@
         <input type="hidden" name="movieNo" value="${movieNo}">
     </div>
 	<div class="row center">
-    <button class="video-add-btn">비디오 추가</button>
+    	<button class="video-add-btn">비디오 추가</button>
 	</div>
-    <div class="video-result"></div>
+   		 <div class="video-result"></div>
  <hr>   
 	<div class="row center">
-	<button class="exit-btn">추가 완료</button>
+		<button class="exit-btn">추가 완료</button>
 	</div>
-	<div id="re"></div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

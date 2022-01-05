@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
@@ -26,9 +27,11 @@ import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
+import com.kh.spring.service.ActorService;
 import com.kh.spring.service.MovieService;
 import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
+import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +52,8 @@ public class MovieController {
 	private LastInfoViewDao lastInfoViewDao;
 	@Autowired
 	private StatisticsInfoViewDao statisticsInfoViewDao;
+	@Autowired
+	private ActorService actorService;
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -75,12 +80,11 @@ public class MovieController {
 	
 	@RequestMapping("/insert_popup")
 	public String insertPopup(
-			@RequestParam String actorJob,
 			@RequestParam int movieNo,
-			Model model) throws UnsupportedEncodingException {
+			@ModelAttribute PaginationActorVO paginationActorVO,
+			Model model) throws Exception {
 
-		model.addAttribute("actorList",actorDao.listByJob(actorJob));
-		model.addAttribute("actorJob",actorJob);
+		model.addAttribute("PaginationActorVO",actorService.serachPage(paginationActorVO));
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor_popup";
 	}
