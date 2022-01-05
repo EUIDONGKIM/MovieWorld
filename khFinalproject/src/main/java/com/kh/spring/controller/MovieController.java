@@ -236,8 +236,10 @@ public class MovieController {
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail(@RequestParam int movieNo) {
-			return "movie/movieDetail?movieNo="+movieNo;
+		public String movieDetail() {
+//		MovieDto movieDto =movieDao.get(movieNo);
+//			model.addAttribute("movieDto",movieDto);
+		return "movie/movieDetail";
 		}
 	@GetMapping("/delete")
 	public String delete(@RequestParam int movieNo) {
