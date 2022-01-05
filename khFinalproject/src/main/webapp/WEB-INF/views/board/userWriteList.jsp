@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> --%>
+<jsp:include page="/WEB-INF/views/template/designcode.jsp"></jsp:include>
+
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 <div class="container-1200 container-center">
 	<div class="row center">
@@ -9,7 +10,7 @@
 	</div>
 
 	<div class="row">
-		<table class="table table-border table-hover">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -32,7 +33,7 @@
 							<img src="${root}/resources/image/reply.png" width="15" height="15">
 						</c:if>
 			
-						<a href="${root}/spring/board/detail?boardNo=${boardDto.boardNo}">
+						<a href="${root}/spring/board/detail?boardNo=${boardDto.boardNo}&boardTypeName=1">
 							${boardDto.boardTitle}
 						</a>
 					</td>
@@ -46,18 +47,19 @@
 		</table>
 	</div>
 
-	<div class="row pagination">
+		<div class="row pagination">
 		<!-- 이전 버튼 -->
 		<c:choose>
 			<c:when test="${boardSearchVO.isPreviousAvailable()}">
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}">&lt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a>
+<%-- 						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a> --%>
+						<a href="main?&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -71,11 +73,11 @@
 			<c:choose>
 				<c:when test="${boardSearchVO.isSearch()}">
 					<!-- 검색용 링크 -->
-					<a href="userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}">${i}</a>
+					<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${i}&boardTypeName=${param.boardTypeName}">${i}</a>
 				</c:when>
 				<c:otherwise>
 					<!-- 목록용 링크 -->
-					<a href="userWriteList?p=${i}">${i}</a>
+					<a href="main?p=${i}&boardTypeName=${param.boardTypeName}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -87,11 +89,11 @@
 				<c:choose>
 					<c:when test="${boardSearchVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}&boardTypeName=${param.boardTypeName}}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="userWriteList?p=${boardSearchVO.getNextBlock()}">&gt;</a>
+						<a href="main?p=${boardSearchVO.getNextBlock()}&boardTypeName=${param.boardTypeName}">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -104,22 +106,27 @@
 	<!-- 검색창 -->
 	<div class="row center">
 		<form method="get">
-	
+				<!-- 히든으로 보드타입을 보내준다. -->
+				<input type="hidden" name="boardTypeName" value="${param.boardTypeName}">
+			
 			<select name="column" class="form-input form-inline">
 				<c:choose>
 					<c:when test="${boardSearchVO.columnIs('board_title')}">
 						<option value="board_title" selected>제목</option>
 						<option value="board_content">내용</option>
+						<option value="member_email">작성자</option>
 					</c:when>
 					
 					<c:when test="${boardSearchVO.columnIs('board_content')}">
 						<option value="board_title">제목</option>
 						<option value="board_content" selected>내용</option>
+						<option value="member_email"">작성자</option>
 					</c:when>
 					
 					<c:otherwise>
 						<option value="board_title">제목</option>
 						<option value="board_content">내용</option>
+						<option value="member_email" selected>작성자</option>
 					</c:otherwise>
 				</c:choose>
 			</select>
