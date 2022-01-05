@@ -69,9 +69,14 @@
 			<div class="container-fluid ">
 				<div class="row">
 					<div class="col-3">
+					<br><br><br>
 						<div class="row center">
-								<div>로그인 상태 : ${login}</div>
-								<div>등급 : ${grade}</div>
+							<div class="col-6">
+								<h4>로그인: ${login}</h4>
+							</div>
+							<div class="col-6">
+								<h4>등급 : ${grade}</h4>
+							</div>
 						</div>
 					</div>
 					
@@ -138,8 +143,8 @@
 		</header>
 		<!-- 헤더 끝 -->
 		<!-- 네비게이션 시작 -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container-fluid">	
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+ <div class="container-fluid">	
 	<div class="collapse navbar-collapse" id="navbarColor02">
       <ul class="navbar-nav me-auto">
           <li class="nav-item">
@@ -161,7 +166,7 @@
         </li>
         <c:if test="${admin}">
         <li class="nav-item">
-          <a class="nav-link active" href="${root}/admin/">스토어</a>
+          <a class="nav-link active" href="${root}/admin/">관리자페이지</a>
         </li>
         </c:if>
         <li class="nav-item dropdown">

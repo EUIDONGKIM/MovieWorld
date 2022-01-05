@@ -120,12 +120,12 @@
                     
                   </div>
             </div>
-            <div class="col-md-10 b" style="height: 600px">
+            <div class="col-md-10 b" style="height: auto">
 			
                 <div id="page">
 				
                 </div>
-  			여기야잉 !
+  			
              </div>
         </div>
 
