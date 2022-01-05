@@ -313,10 +313,9 @@
         </div>
     </template>
     
-    <h1>[[영화인 검색]]</h1>
     
     <div class="row center">
-		<button class="btn-search">영화인 검색 및 추가창</button>
+	    <button class="btn-search"><h1>[[영화인 검색 및 추가]]</h1></button>
 	</div>
     
 	<hr>

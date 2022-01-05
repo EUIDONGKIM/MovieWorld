@@ -148,7 +148,7 @@
 		</c:choose>
 	</div>
 	
-	
+	<br><br>
 <div class="row center">
 	<button type="button" class="add-btn">추가</button>
 	<button type="button" class="exit-btn">종료</button>

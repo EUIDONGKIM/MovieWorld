@@ -10,7 +10,7 @@
 <%-- 영화 리스트에서 영화 수정 및 삭제 처리 하기! --%>
 <h3><a href="${root}/movie/insert">영화 추가</a></h3>
 
-<h3><a href="${root}/movie/list">영화 리스트(상영작/상영예정작)</a></h3>
+<h3><a href="${root}/movie/list">영화 관리 리스트</a></h3>
 
 <h2><a href="${root}/schedule/create_total">상영 영화 일괄 생성</a></h2>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

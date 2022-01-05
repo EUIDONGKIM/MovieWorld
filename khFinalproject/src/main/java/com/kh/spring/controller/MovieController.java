@@ -129,7 +129,9 @@ public class MovieController {
 			for(MovieDto movieDto : movieList) {
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				sendList.put(movieDto,movieValue);
+				model.addAttribute("movieTitle", movieTitle);
 			}
+			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
 			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
 			movieList = movieDao.nowList(movieNoList);
@@ -190,8 +192,6 @@ public class MovieController {
 		int total = 0;
 		for(ChartVO chartVO : vo) {
 			total += chartVO.getCount();//총 예매 건수 합
-			log.debug("합ㄱㅖ1={}",total);
-			log.debug("나온값2={}",chartVO.getCount());
 		}
 		
 		for(MovieDto movieDto : movieList) {
@@ -215,16 +215,36 @@ public class MovieController {
 			list.add(movieChartVO);
 		}
 		
-		
-		
-		
 		model.addAttribute("list",list);
 		return "movie/movieChart";
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail() {
-			return "movie/movieDetail";
+		public String movieDetail(@RequestParam int movieNo) {
+			return "movie/movieDetail?movieNo="+movieNo;
 		}
+	@GetMapping("/delete")
+	public String delete(@RequestParam int movieNo) {
+		movieService.delete(movieNo);
+		return "redirect:/movie/list";
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int movieNo,Model model) {
+		MovieDto movieDto = movieDao.get(movieNo);
+		model.addAttribute("movieDto",movieDto);
+		return "movie/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(
+			@ModelAttribute MovieDto movieDto,
+			@RequestParam(required = false) MultipartFile photo,
+			@RequestParam(required = false) List<MultipartFile> attach
+			) throws IllegalStateException, IOException {	
+		
+		movieService.edit(movieDto,photo,attach);
+		
+		return "redirect:/movie/movieDetail?movieNo="+movieDto.getMovieNo();
+	}
 	
 }
