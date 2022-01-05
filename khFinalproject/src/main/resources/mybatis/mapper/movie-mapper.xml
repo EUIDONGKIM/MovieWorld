@@ -78,6 +78,7 @@
 	<select id="getTitleList" parameterType="String" resultType="MovieDto">
 		select * from movie where instr(movie_title,#{movieTitle})>0
 	</select>
+	
 	<select id="notHaveSchedule" resultType="int">
 		select 
 		distinct(m.movie_no)
@@ -86,4 +87,22 @@
 		<![CDATA[where s.schedule_no is null and sysdate - m.movie_opening <= 30]]>
 		order by m.movie_no asc
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete movie where movie_no=#{movieNo}
+	</delete>
+	
+	<update id="update" parameterType="MovieDto">
+		update movie set
+		movie_title = #{movieTitle},
+		movie_eng_title = #{movieEngTitle},
+		movie_grade = #{movieGrade},
+		movie_type = #{movieType},
+		movie_country = #{movieCountry},
+		movie_opening = #{movieOpening},
+		movie_runtime = #{movieRuntime},
+		movie_content = #{movieContent}
+		where movie_no = #{movieNo}
+	</update>
+	
 </mapper>
