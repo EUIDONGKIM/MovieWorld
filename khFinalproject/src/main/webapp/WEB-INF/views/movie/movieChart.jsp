@@ -10,7 +10,9 @@
 	</style>
 
 	<div class="contianer-1200 container-center"> <!-- moviechart 큰 box 시작 -->
-		<div class="row"><!-- 무비차트 카테고리 찍는 박스 --> -->
+
+		<div class="row"><!-- 무비차트 카테고리 찍는 박스 -->
+
       		<h1>✿MOVIE CHART✿</h1>
       		<hr />
       		<input type="checkbox" name="release" value="released" /> 현재 상영중
@@ -20,14 +22,14 @@
       <div class="row">
       
       <%--for문으로 한줄에 4개 찍기--%>
-      
+      	<img src="${root}/movie/movieImg?movieNo=122" width="100%">
       
       <c:forEach var="movieChartVO" items="${list}">
       	<div class="container-300">
       		<div class="row center">NO.1</div>
       		<div class="row">
       			<a href="${root}/movie/movieDetail">
-      			<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85515/85515199250_727.jpg" width="100%"></a>
+      			<img src="${root}/movie/movieImg?movieNo=${movieChartVO.movieNo}" width="100%"></a>
       		</div>
       		<div class="row">
       			<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
