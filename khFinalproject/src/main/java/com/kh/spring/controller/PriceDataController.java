@@ -79,6 +79,14 @@ public class PriceDataController {
 	public void editAgeDiscount(@ModelAttribute AgeDiscountDto ageDiscountDto) {
 		ageDiscountDao.edit(ageDiscountDto);
 	}
+	@PostMapping("/editHallTypePrice")
+	public void editHallTypePrice(@ModelAttribute HallTypePriceDto hallTypePriceDto) {
+		hallTypePriceDao.edit(hallTypePriceDto);
+	}
+	@PostMapping("/editScheduleTimeDiscount")
+	public void editScheduleTimeDiscount(@ModelAttribute ScheduleTimeDiscountDto scheduleTimeDiscountDto) {
+		scheduleTimeDiscountDao.edit(scheduleTimeDiscountDto);
+	}
 
 	
 }
