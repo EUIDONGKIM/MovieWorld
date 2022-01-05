@@ -7,11 +7,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <style>
 .inside-one{
-font-size: 10px;
+font-size: 9px;
 display: none;
 }
 .inside-two{
-font-size: 6px;
+font-size: 5px;
 display: none;
 }
 
@@ -30,36 +30,51 @@ display: none;
 	});
 </script>
 
-<h2>영화 리스트(상영작/ 상영예정작) </h2>
+			<h1 class="center">
+				<c:choose>
+					<c:when test="${movieTotal != null}">
+						[영화 관리 리스트(모든 영화 목록)]
+					</c:when>
+					<c:when test="${movieTitle != null }">
+						[영화 관리 리스트(단일 영화 검색)]
+					</c:when>
+					<c:when test="${scheduleStart != null }">
+						[영화 관리 리스트(상영 기간별 검색)]
+					</c:when>
+					<c:otherwise>
+						[영화 관리 리스트(상영 영화 목록)]
+					</c:otherwise>
+				</c:choose>
+			</h1>
 
-<div class="row center">
-	<h3>상영 영화 일괄 생성</h3>
-	<a href="${root}/schedule/create_total">각각 설정 기능은 극장 상세페이지에서 가능(현재 상영 등록 하지 않은 영화들만 나옴)</a>
+
+
+<div class="row right">
+	<button onclick="location.href='${root}/movie/insert'">영화 추가</button>
+		&nbsp;
+	<button onclick="location.href='${root}/schedule/create_total'">상영 영화 일괄 생성</button>
 </div>
 <div class="row center">
-	<h3>상영 중인 영화(관리 가능/현재 상영 관리용)</h3>
-	<a href="${root}/movie/list">현재 상영만 표시</a>
-</div>
-<div class="row center">
-	<h3>모든 영화 목록(관리 불가능/목록 이력 조회용)</h3>
-	<a href="${root}/movie/list?movieTotal">이전 영화 포함 목록만 표시</a>
-</div>
-<div class="row center">
-	<h3>단일 영화 히스토리 검색(관리 가능/상세 이력 조회용)</h3>
 	<form action="${root}/movie/list" method="get">
+		<label>[단일 영화 히스토리 검색]</label>
 		<input type="text" name="movieTitle" value="${movieTitle }" required>
 		<input type="submit" value="영화 검색">
 	</form>
 </div>
 <div class="row center">
-	<h3>상영 기간별 상세 검색(관리 가능/기간별 상영 조회용)</h3>
 	<form action="${root}/movie/list" method="get">
-		<label>언제부터</label>
+		<label>[상영 기간별 목록 조회]</label>
+		<label>시작일 : </label>
 		<input type="date" name="scheduleStart" value="${scheduleStart }" required>
-		<label>언제까지</label>
+		<label>종료일 : </label>
 		<input type="date" name="scheduleEnd" value="${scheduleEnd }" required>
 		<input type="submit" value="기간별 검색">
 	</form>
+</div>
+<div class="row right">
+	<button onclick="location.href='${root}/movie/list'">현재 상영작</button>
+		&nbsp;
+	<button onclick="location.href='${root}/movie/list?movieTotal'">모든 영화 목록</button>
 </div>
 <table class="table table-border">
 	<thead>
@@ -69,7 +84,7 @@ display: none;
 			<th>등급</th>
 			<th>장르</th>
 			<th>개봉일</th>
-			<th>수정 및 삭제</th>
+			<th>관리</th>
 		</tr>
 	</thead>	 
 	<tbody>
@@ -154,7 +169,12 @@ display: none;
 				
 				<td>${list.key.movieOpening}</td>
 
-				<td><a href="${root}/movie/movieDetail">수정 및 삭제</a></td>
+				<td>
+				<button onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
+				<button onclick="location.href='${root}/movie/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
+				<button onclick="location.href='${root}/movie/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
+				<button onclick="location.href='${root}/movie/delete?movieNo=${list.key.movieNo}'">삭제</button>
+				</td>
 
 			</tr>	
 		</c:forEach>	

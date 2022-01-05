@@ -16,18 +16,17 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="actor">
 
-<insert id="insert" parameterType="ActorDto">
-	insert into actor values(
-	actor_seq.nextval,
-	#{actorName},
-	#{actorEngName},
-	#{actorBirth},
-	#{actorJob},
-	#{actorNationality}
-	)
-</insert>
-
-
+	<insert id="insert" parameterType="ActorDto">
+		insert into actor values(
+		actor_seq.nextval,
+		#{actorName},
+		#{actorEngName},
+		#{actorBirth},
+		#{actorJob},
+		#{actorNationality}
+		)
+	</insert>
+	
 	<select id="list" resultType="ActorDto">
 		select * from actor
 	</select>
@@ -39,4 +38,32 @@
 	<delete id="delete" parameterType="int">
 		delete actor where actor_no = #{actorNo}
 	</delete>
+	
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from actor
+		<where>
+			<if test="actorJob != null and !actorJob.equals('')">	
+			 and instr(actor_job,#{actorJob}) > 0
+			</if>
+			<if test="actorName != null and !actorName.equals('')">	
+			 and instr(actor_name,#{actorName}) > 0
+			</if>
+		</where>
+	</select>	
+	
+	<select id="search" parameterType="map" resultType="ActorDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from actor
+		<where>
+			<if test="actorJob != null and !actorJob.equals('')">	
+			 and instr(actor_job,#{actorJob}) > 0
+			</if>
+			<if test="actorName != null and !actorName.equals('')">	
+			 and instr(actor_name,#{actorName}) > 0
+			</if>
+		</where>
+		)tmp) where rn between #{begin} and #{end}
+	</select>
+	
 </mapper>

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
@@ -37,9 +38,11 @@ import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
+import com.kh.spring.service.ActorService;
 import com.kh.spring.service.MovieService;
 import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
+import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,6 +63,8 @@ public class MovieController {
 	private LastInfoViewDao lastInfoViewDao;
 	@Autowired
 	private StatisticsInfoViewDao statisticsInfoViewDao;
+	@Autowired
+	private ActorService actorService;
 	
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
@@ -90,12 +95,11 @@ public class MovieController {
 	
 	@RequestMapping("/insert_popup")
 	public String insertPopup(
-			@RequestParam String actorJob,
 			@RequestParam int movieNo,
-			Model model) throws UnsupportedEncodingException {
+			@ModelAttribute PaginationActorVO paginationActorVO,
+			Model model) throws Exception {
 
-		model.addAttribute("actorList",actorDao.listByJob(actorJob));
-		model.addAttribute("actorJob",actorJob);
+		model.addAttribute("PaginationActorVO",actorService.serachPage(paginationActorVO));
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor_popup";
 	}
@@ -140,7 +144,9 @@ public class MovieController {
 			for(MovieDto movieDto : movieList) {
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				sendList.put(movieDto,movieValue);
+				model.addAttribute("movieTitle", movieTitle);
 			}
+			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
 			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
 			movieList = movieDao.nowList(movieNoList);
@@ -202,8 +208,6 @@ public class MovieController {
 		int total = 0;
 		for(ChartVO chartVO : vo) {
 			total += chartVO.getCount();//총 예매 건수 합
-			log.debug("합ㄱㅖ1={}",total);
-			log.debug("나온값2={}",chartVO.getCount());
 		}
 		
 		for(MovieDto movieDto : movieList) {
@@ -232,9 +236,32 @@ public class MovieController {
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail() {
-			return "movie/movieDetail";
+		public String movieDetail(@RequestParam int movieNo) {
+			return "movie/movieDetail?movieNo="+movieNo;
 		}
+	@GetMapping("/delete")
+	public String delete(@RequestParam int movieNo) {
+		movieService.delete(movieNo);
+		return "redirect:/movie/list";
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int movieNo,Model model) {
+		MovieDto movieDto = movieDao.get(movieNo);
+		model.addAttribute("movieDto",movieDto);
+		return "movie/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(
+			@ModelAttribute MovieDto movieDto,
+			@RequestParam(required = false) MultipartFile photo,
+			@RequestParam(required = false) List<MultipartFile> attach
+			) throws IllegalStateException, IOException {	
+		
+		movieService.edit(movieDto,photo,attach);
+		
+		return "redirect:/movie/movieDetail?movieNo="+movieDto.getMovieNo();
+	}
 	
 //	다운로드에 대한 요청 처리
 

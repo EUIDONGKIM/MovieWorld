@@ -39,8 +39,28 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 	}
 
 	@Override
+	public List<MoviePhotoDto> list(int movieNo) {
+		return sqlSession.selectList("moviePhoto.list",movieNo);
+	}
+
+	@Override
+	public void delete(int moviePhotoNo) {
+		sqlSession.delete("moviePhoto.delete",moviePhotoNo);
+	}
+
+	@Override
+	public void update(MoviePhotoDto moviePhotoDto, MultipartFile photo) throws IllegalStateException, IOException {
+
+		File target = new File(directory,moviePhotoDto.getMoviePhotoSaveName());
+		photo.transferTo(target);
+		
+		sqlSession.update("moviePhoto.update",moviePhotoDto);
+  }
+  
+  @Override
 	public List<MoviePhotoDto> getList(int movieNo) {
 		return sqlSession.selectList("moviePhoto.getPhotoList", movieNo);
+
 	}
 
 }

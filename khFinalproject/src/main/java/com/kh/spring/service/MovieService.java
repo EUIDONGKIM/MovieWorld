@@ -11,4 +11,8 @@ public interface MovieService {
 
 	int insert(MovieDto movieDto, MultipartFile photo, List<MultipartFile> attach) throws IllegalStateException, IOException;
 
+	void edit(MovieDto movieDto, MultipartFile photo, List<MultipartFile> attach) throws IllegalStateException, IOException;
+
+	void delete(int movieNo);
+
 }

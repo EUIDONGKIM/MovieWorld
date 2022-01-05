@@ -83,8 +83,9 @@ $(function(){
 			<label>스틸컷(여러장)</label>
 				<input type="file" name="attach" accept="image/*" multiple="multiple">
 		</div>
-		
-		<button type="submit">역할 선택(동영상 추가 포함)</button>
+		<div class="row center">
+			<button type="submit">역할/동영상 추가</button>
+		</div>
 	</div>
 </form>
 

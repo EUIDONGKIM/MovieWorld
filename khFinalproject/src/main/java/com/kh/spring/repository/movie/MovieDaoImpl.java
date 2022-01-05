@@ -64,4 +64,14 @@ public class MovieDaoImpl implements MovieDao{
 		return sqlSession.selectList("movie.notHaveSchedule");
 	}
 
+	@Override
+	public void delete(int movieNo) {
+		sqlSession.delete("movie.delete",movieNo);
+	}
+
+	@Override
+	public void edit(MovieDto movieDto) {
+		sqlSession.update("movie.update",movieDto);
+	}
+
 }
