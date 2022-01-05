@@ -138,14 +138,8 @@ public class ScheduleController {
 	}
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute ScheduleDto scheduleDto) {
-		boolean success = scheduleDao.edit(scheduleDto);
-		if(success) {
-			return "redirect:/movie/list";
-		}
-		else {
-			return "redirect:???"; //실패
-		}
-		
+		scheduleDao.edit(scheduleDto);
+		return "redirect:/movie/list";
 	}
 	
 	
