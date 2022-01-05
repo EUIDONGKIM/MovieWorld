@@ -175,6 +175,7 @@ public class MovieController {
 		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
 	}
 
+	//무비차트
 	@GetMapping("/movieChart")
 	public String movieChart(Model model) {
 		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
