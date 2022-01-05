@@ -1,14 +1,22 @@
 package com.kh.spring.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +24,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
@@ -54,6 +65,10 @@ public class MovieController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private ActorService actorService;
+	
+	@Autowired
+	private MoviePhotoDao moviePhotoDao;
+	
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -181,6 +196,7 @@ public class MovieController {
 		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
 	}
 
+	//무비차트
 	@GetMapping("/movieChart")
 	public String movieChart(Model model) {
 		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
@@ -246,5 +262,41 @@ public class MovieController {
 		
 		return "redirect:/movie/movieDetail?movieNo="+movieDto.getMovieNo();
 	}
+	
+//	다운로드에 대한 요청 처리
+
+//	//덩어리를 옮겨야함. 덩어리는 무비에 대한 정보를 알고있다. 
+//	차트vo에다가 무비포토넘버를 하나 추가, 무비컨트롤러에서 
+//	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
+//	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
+	
+	@Value("${config.rootpath}")
+	public String directory;
+
+	@GetMapping("/movieImg")
+	@ResponseBody					
+	public ResponseEntity<ByteArrayResource> imgFile(
+				@RequestParam int movieNo
+			) throws IOException {
+		
+		List<MoviePhotoDto> list = moviePhotoDao.getList(movieNo);
+		
+		File file = new File("C:/upload/kh81", list.get(0).getMoviePhotoSaveName());
+		
+		byte[] data = FileUtils.readFileToByteArray(file);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		String encodeName = URLEncoder.encode(list.get(0).getMoviePhotoUploadName() , "UTF-8");
+		encodeName = encodeName.replace("+", "%20");
+		
+		return ResponseEntity.ok()				
+									.contentType(MediaType.APPLICATION_OCTET_STREAM)
+									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
+									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+									.contentLength(list.get(0).getMoviePhotoSize())
+								.body(resource);
+	}
+	
+	
 	
 }

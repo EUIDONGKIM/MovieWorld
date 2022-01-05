@@ -30,6 +30,7 @@
 			#{moviePhotoType}
 		)
 	</insert>
+
 	<select id="list" parameterType="int" resultType="MoviePhotoDto">
 		select * from movie_photo where movie_no = #{movieNo}
 	</select>
@@ -44,4 +45,9 @@
 		movie_photo_type = #{moviePhotoType}
 		where movie_photo_no = #{moviePhotoNo}
 	</update>
+
+	<select id="getPhotoList" resultType="MoviePhotoDto" parameterType="int">
+		select * from movie_Photo where movie_No= #{movieNo}
+	</select>
+
 </mapper>

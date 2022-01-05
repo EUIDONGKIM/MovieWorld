@@ -53,7 +53,7 @@
 	<select id="search1" parameterType="map" resultType="BoardDto">
 		select * from (
 		select rownum rn, tmp.* from(
-		select * from board
+			select * from board
 		<where>
 			<if test="memberEmail != null">	
 			 and member_email = #{memberEmail}

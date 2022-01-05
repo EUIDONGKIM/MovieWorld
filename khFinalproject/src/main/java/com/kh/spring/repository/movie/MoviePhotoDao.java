@@ -10,7 +10,8 @@ import com.kh.spring.entity.movie.MoviePhotoDto;
 public interface MoviePhotoDao {
 
 	int getPhotoSequence();
-
+	
+	//이미지 등록
 	void insert(MoviePhotoDto moviePhotoDto, MultipartFile photo) throws IllegalStateException, IOException;
 
 	List<MoviePhotoDto> list(int movieNo);
@@ -18,5 +19,8 @@ public interface MoviePhotoDao {
 	void delete(int moviePhotoNo);
 
 	void update(MoviePhotoDto moviePhotoDto, MultipartFile photo) throws IllegalStateException, IOException;
+
+	
+	List<MoviePhotoDto>getList(int movieNo);
 
 }

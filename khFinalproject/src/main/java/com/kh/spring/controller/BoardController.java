@@ -146,7 +146,8 @@ public class BoardController {
 	//2. userWriteList JSP페이지에서 찍어줄떄 확인 다시 해보기.
 	@GetMapping("userWriteList")
 	public String userWriteList(HttpSession session,Model model
-			,@ModelAttribute BoardSearchVO boardSearchVO) throws Exception  {
+			,@ModelAttribute BoardSearchVO boardSearchVO
+			,@RequestParam (required = false ,defaultValue = "1")int boardTypeName ) throws Exception  {
 
 		String memberEmail = (String)session.getAttribute("ses");
 		
@@ -157,6 +158,7 @@ public class BoardController {
 		return "board/userWriteList";
 	}
 	
+
 	@GetMapping("/file")
 	@ResponseBody//이 메소드만큼은 뷰 리졸버를 쓰지 않겠다.
 	public ResponseEntity<ByteArrayResource> file(@RequestParam int boardFileNo) throws IOException {

@@ -55,6 +55,12 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 		photo.transferTo(target);
 		
 		sqlSession.update("moviePhoto.update",moviePhotoDto);
+  }
+  
+  @Override
+	public List<MoviePhotoDto> getList(int movieNo) {
+		return sqlSession.selectList("moviePhoto.getPhotoList", movieNo);
+
 	}
 
 }
