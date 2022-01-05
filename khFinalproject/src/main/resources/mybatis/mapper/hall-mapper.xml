@@ -60,5 +60,12 @@
 	<delete id="delete">
 		delete hall where hall_no = #{hallNo}
 	</delete>
+	
+<!-- 	<select id="getHallAndSeat" parameterType="int" resultType="HallVO">
+		select h.*, s.seat_no, s.seat_rows, s.seat_cols, s.seat_status 
+		from hall h
+		inner join seat s on h.hall_no = s.hall_no
+		where h.hall_no = #{hallNo}
+	</select> -->
 
 </mapper>

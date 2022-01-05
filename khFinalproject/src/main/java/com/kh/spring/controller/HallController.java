@@ -1,7 +1,5 @@
 package com.kh.spring.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +13,8 @@ import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
+import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
-import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +28,8 @@ public class HallController {
 	private TheaterDao theaterDao;
 	@Autowired
 	private HallTypePriceDao hallTypePriceDao;
+	@Autowired
+	private SeatDao seatDao;
 	
 	@RequestMapping("/list")
 	public String hallList(Model model) {
@@ -84,5 +84,14 @@ public class HallController {
 		else {
 			return "redirect:/???"; //실패
 		}
+	}
+	
+	@GetMapping("detail")
+	public void hallDetail(@RequestParam int hallNo, Model model) {
+		HallDto hallDto = hallDao.get(hallNo);
+		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
+		model.addAttribute("hallDto",hallDto);
+		model.addAttribute("seatList", seatDao.list(hallNo));
+		
 	}
 }
