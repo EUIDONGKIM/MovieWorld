@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.css">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
     <style>
         *{
             box-sizing: border-box;
@@ -18,7 +20,7 @@
             padding:0.5rem;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.js"></script>
     <script>
         window.addEventListener("load", function(){
             var cinema = new Hacademy.Reservation("#cinema");
@@ -33,7 +35,7 @@
     </script>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1> 좌석 설정 </h1>
+<h1>${theaterDto.theaterName}점 ${hallDto.hallName} 좌석 설정</h1>
     <ul>
         <li>좌석을 선택한 후 Delete 키를 누르면 좌석 삭제</li>
         <li>좌석을 선택한 후 F2 키를 누르면 좌석이 사라지고 공간으로 병합됨</li>

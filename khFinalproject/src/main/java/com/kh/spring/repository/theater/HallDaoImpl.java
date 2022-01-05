@@ -61,8 +61,8 @@ public class HallDaoImpl implements HallDao{
 	}
 
 	@Override
-	public boolean delete(int hallNo) {
-		return sqlSession.delete("hall.delete",hallNo) > 0;
+	public void delete(int hallNo) {
+		sqlSession.delete("hall.delete",hallNo);
 	}
 	
 }
