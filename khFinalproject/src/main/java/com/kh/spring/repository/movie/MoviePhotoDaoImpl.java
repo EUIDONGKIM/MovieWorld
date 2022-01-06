@@ -18,7 +18,7 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 	@Autowired
 	private SqlSession sqlSession;
 	//저장용 폴더
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.movie}")
 	public String directory;
 	
 	@Override
