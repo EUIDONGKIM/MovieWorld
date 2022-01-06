@@ -1,21 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-      <!--bootstrap cdn-->
-      <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-      <link href="https://bootswatch.com/5/cerulean/bootstrap.min.css" type="text/css" rel="stylesheet">
-
-      <!-- bootstrap javascript cdn-->
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    	
+	
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <style>
         .b{
             border:1px solid black;
@@ -24,25 +11,55 @@
      
      <script>
      $(function(){
+//     	$(".noatag").prop("disabled",true);
     	 //기본 전송 이벤트 방지
-    	$(".atag").on("click",function(e){
+    	$(".atag1").on("click",function(e){
     		e.preventDefault();
     		
     		var url = $(this).attr("href");
     		
+    		
     		$.ajax({
     			url:url,
     			success:function(resp){
-    				$("#page").html(resp);
+    				$("#page2").empty();
+    				$("#page3").empty();
+    				$("#page1").html(resp);
+    			}
+    		});
+    	});
+    	$(".atag2").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page1").empty();
+    				$("#page3").empty();
+    				$("#page2").html(resp);
+    			}
+    		});
+    	});
+    	$(".atag3").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page2").empty();
+    				$("#page1").empty();
+    				$("#page3").html(resp);
     			}
     		});
     	});
      });
-     
- 
      </script>
-</head>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="root"   value="${pageContext.request.contextPath}"></c:set>
 <c:set var="bronze" value="${memberDto.memberGrade eq '브론즈' }"></c:set>
 <c:set var="silver" value="${memberDto.memberGrade eq '실버' }"></c:set>
@@ -114,33 +131,35 @@
             <div class="col-md-2 b">
 
                   <div class="list-group">
-                    <a href="mypage" class="list-group-item list-group-item-action atag" style="text-align: center;">MY PAGE</a>
+                    <a class="list-group-item list-group-item-action "   disabled style="text-align: center;">MY PAGE</a>
                     <br>
-                    <a href="#" class="list-group-item list-group-item-action active atag" style="text-align: center;">회원정보수정</a>
+                    <a  class="list-group-item list-group-item-action active" style="text-align: center;">회원정보수정</a>
                     <a href="edit" class=" list-group-item list-group-item-action atag">회원정보수정하러가기</a>
                     <a href="quit" class="list-group-item list-group-item-action  atag">회원탈퇴하기</a>
                     <a href="changePw" class=" list-group-item list-group-item-action atag">비밀번호변경</a>
-					
 					<br>
-					<a href="mypage" class="list-group-item list-group-item-action active atag" style="text-align: center;">이용내역</a>
-                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag">내가 작성한 게시글보기</a>
-                    <a href="history" class="list-group-item list-group-item-action atag">포인트 적립/사용</a>
-                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag">내가관람한영화</a>
+					<a class="list-group-item list-group-item-action active" style="text-align: center;">이용내역</a>
+                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag1">내가 작성한 게시글보기</a>
+                    <a href="history" class="list-group-item list-group-item-action atag2">포인트 적립/사용</a>
+                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag3">내가관람한영화</a>
                     <a href="payHistroy" class="list-group-item list-group-item-action atag">결제내역</a>
-                    <a href="#" class="list-group-item list-group-item-action ">건아님</a>
-                    <a href="#" class="list-group-item list-group-item-action ">도현님</a>
-                    <a href="#" class="list-group-item list-group-item-action ">죄송합니다</a>
-                    <a href="#" class="list-group-item list-group-item-action ">멍청이는</a>
-                    <a href="#" class="list-group-item list-group-item-action ">뭘해야할지 모르겟습니다.</a>
-                    
+                
                   </div>
             </div>
-            <div class="col-md-10 b" style="height: 600px">
+            <div class="col-md-10 b" style="height: auto">
 			
-                <div id="page">
+                	<div id="page1">
 				
                 </div>
-  			여기야잉 !
+                
+  				  <div id="page2">
+				
+                </div>
+                
+					<div id="page3">
+				
+                </div>
+                
              </div>
         </div>
 

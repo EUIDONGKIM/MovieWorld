@@ -58,7 +58,7 @@ $(function(){
 		</select>
 	</div>
 	
-	<button type="submit">좌석 꾸미러가기</button>
+	<button type="submit">좌석 설정</button>
 </form>
 
 

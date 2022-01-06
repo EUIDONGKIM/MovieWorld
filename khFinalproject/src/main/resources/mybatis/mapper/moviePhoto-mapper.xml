@@ -31,4 +31,27 @@
 		)
 	</insert>
 
+	<select id="list" parameterType="int" resultType="MoviePhotoDto">
+		select * from movie_photo where movie_no = #{movieNo}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete movie_photo where movie_photo_no = #{moviePhotoNo}
+	</delete>
+	<update id="update" parameterType="MoviePhotoDto">
+		update movie_photo set
+		movie_photo_upload_name = #{moviePhotoUploadName},
+		movie_photo_save_name = #{moviePhotoSaveName},
+		movie_photo_size = #{moviePhotoSize},
+		movie_photo_type = #{moviePhotoType}
+		where movie_photo_no = #{moviePhotoNo}
+	</update>
+
+	<select id="getPhotoList" resultType="MoviePhotoDto" parameterType="int">
+		select * from movie_Photo where movie_No= #{movieNo}
+	</select>
+	
+	<select id="get" resultType="MoviePhotoDto" parameterType="int">
+		select * from movie_Photo where movie_photo_no= #{moviePhotoNo}
+	</select>
+
 </mapper>

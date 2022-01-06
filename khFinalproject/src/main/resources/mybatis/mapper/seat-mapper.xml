@@ -36,4 +36,8 @@
 		and seat_cols=#{seatCols}
 	</select>
 	
+	<delete id="delete" parameterType="int">
+		delete seat where hall_no=#{hallNo}
+	</delete>
+	
 </mapper>

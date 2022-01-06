@@ -34,8 +34,8 @@ public class AgeDiscountDaoImpl implements AgeDiscountDao{
 	}
 
 	@Override
-	public boolean edit(AgeDiscountDto ageDiscountDto) {
-		return sqlSession.update("ageDiscount.edit",ageDiscountDto) > 0;
+	public void edit(AgeDiscountDto ageDiscountDto) {
+		sqlSession.update("ageDiscount.edit",ageDiscountDto);
 	}
 	
 	

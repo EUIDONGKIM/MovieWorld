@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
@@ -72,18 +73,15 @@ public class HallController {
 		return "hall/create_seat";
 	}
 	
-	@GetMapping("/delete")
-	public String hallDelete(@RequestParam int hallNo) {
+	@PostMapping("/delete")
+	public String hallDelete(@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
 		HallDto hallDto = hallDao.get(hallNo);
 		int theaterNo = hallDto.getTheaterNo(); //리다이렉트용 
 		
-		boolean success = hallDao.delete(hallNo);
-		if(success) {
-			return "redirect:/theater/detail?theaterNo="+theaterNo;
-		}
-		else {
-			return "redirect:/???"; //실패
-		}
+		hallDao.delete(hallNo);
+		redirectAttributes.addAttribute("theaterNo",theaterNo);
+		
+		return "redirect:/theater/detail";
 	}
 	
 	@GetMapping("detail")
@@ -92,6 +90,13 @@ public class HallController {
 		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
 		model.addAttribute("hallDto",hallDto);
 		model.addAttribute("seatList", seatDao.list(hallNo));
-		
+	}
+	
+	@GetMapping("update_seat")
+	public void hallupdateSeat(@RequestParam int hallNo, Model model) {
+		HallDto hallDto = hallDao.get(hallNo);
+		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
+		model.addAttribute("hallDto",hallDto);
+		model.addAttribute("seatList", seatDao.list(hallNo));
 	}
 }

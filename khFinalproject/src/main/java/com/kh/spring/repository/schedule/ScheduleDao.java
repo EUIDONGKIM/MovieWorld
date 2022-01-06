@@ -17,5 +17,5 @@ public interface ScheduleDao {
 	boolean delete(int scheduleNo);
 	
 	//상영 시작일 종료일 수정
-	boolean edit(ScheduleDto schedulDto);
+	void edit(ScheduleDto schedulDto);
 }

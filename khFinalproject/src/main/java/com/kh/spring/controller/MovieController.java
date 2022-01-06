@@ -1,7 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,19 +20,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
+import com.kh.spring.service.ActorService;
 import com.kh.spring.service.MovieService;
 import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
+import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +58,12 @@ public class MovieController {
 	private LastInfoViewDao lastInfoViewDao;
 	@Autowired
 	private StatisticsInfoViewDao statisticsInfoViewDao;
+	@Autowired
+	private ActorService actorService;
+	
+	@Autowired
+	private MoviePhotoDao moviePhotoDao;
+	
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -73,14 +88,13 @@ public class MovieController {
 		return "movie/insert_actor";
 	}
 	
-	@RequestMapping("/insert_popup")
+	@GetMapping("/insert_popup")
 	public String insertPopup(
-			@RequestParam String actorJob,
 			@RequestParam int movieNo,
-			Model model) throws UnsupportedEncodingException {
+			@ModelAttribute PaginationActorVO paginationActorVO,
+			Model model) throws Exception {
 
-		model.addAttribute("actorList",actorDao.listByJob(actorJob));
-		model.addAttribute("actorJob",actorJob);
+		model.addAttribute("PaginationActorVO",actorService.serachPage(paginationActorVO));
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor_popup";
 	}
@@ -125,7 +139,9 @@ public class MovieController {
 			for(MovieDto movieDto : movieList) {
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				sendList.put(movieDto,movieValue);
+				model.addAttribute("movieTitle", movieTitle);
 			}
+			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
 			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
 			movieList = movieDao.nowList(movieNoList);
@@ -177,8 +193,14 @@ public class MovieController {
 
 	//무비차트
 	@GetMapping("/movieChart")
-	public String movieChart(Model model) {
-		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+	public String movieChart(Model model,@RequestParam(required = false,defaultValue = "0") int nowMovie) {
+		
+		List<Integer> movieNoList = new ArrayList<>();
+		if(nowMovie == 1) {
+			movieNoList = totalInfoViewDao.nowMoiveList();
+		}else {
+			movieNoList = totalInfoViewDao.nowTMoiveListContainSoon();
+		}
 		List<MovieDto> movieList = movieDao.nowList(movieNoList);
 		
 		List<ChartVO> vo = statisticsInfoViewDao.countForReservationRatio();
@@ -187,17 +209,20 @@ public class MovieController {
 		int total = 0;
 		for(ChartVO chartVO : vo) {
 			total += chartVO.getCount();//총 예매 건수 합
-			log.debug("합ㄱㅖ1={}",total);
-			log.debug("나온값2={}",chartVO.getCount());
 		}
 		
 		for(MovieDto movieDto : movieList) {
+			
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
 			MovieChartVO movieChartVO = new MovieChartVO();
 			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
 			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
 			movieChartVO.setMovieNo(movieDto.getMovieNo());
 			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
 			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
 			
 			for(ChartVO chartVO : vo) {
 				if(movieDto.getMovieTitle().equals(chartVO.getText())) {
@@ -206,22 +231,74 @@ public class MovieController {
 					float changeToTwo = Float.parseFloat(num);
 					movieChartVO.setMovieRatio(changeToTwo);
 					break;
+					
 				}
 			}
 			
 			list.add(movieChartVO);
 		}
-		
-		
-		
-		
 		model.addAttribute("list",list);
+		model.addAttribute("nowMovie",nowMovie);
 		return "movie/movieChart";
 	}
 	
 	@GetMapping("/movieDetail")
 		public String movieDetail() {
-			return "movie/movieDetail";
+//		MovieDto movieDto =movieDao.get(movieNo);
+//			model.addAttribute("movieDto",movieDto);
+		return "movie/movieDetail";
 		}
+	@GetMapping("/delete")
+	public String delete(@RequestParam int movieNo) {
+		movieService.delete(movieNo);
+		return "redirect:/movie/list";
+	}
+	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int movieNo,Model model) {
+		MovieDto movieDto = movieDao.get(movieNo);
+		model.addAttribute("movieDto",movieDto);
+		return "movie/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(
+			@ModelAttribute MovieDto movieDto,
+			@RequestParam(required = false) MultipartFile photo,
+			@RequestParam(required = false) List<MultipartFile> attach
+			) throws IllegalStateException, IOException {	
+		
+		movieService.edit(movieDto,photo,attach);
+		
+		return "redirect:/movie/movieDetail?movieNo="+movieDto.getMovieNo();
+	}
+	
+//	다운로드에 대한 요청 처리
+
+//	//덩어리를 옮겨야함. 덩어리는 무비에 대한 정보를 알고있다. 
+//	차트vo에다가 무비포토넘버를 하나 추가, 무비컨트롤러에서 
+//	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
+//	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
+
+	@GetMapping("/movieImg")
+	@ResponseBody					
+	public ResponseEntity<ByteArrayResource> imgFile(
+				@RequestParam int moviePhotoNo
+			) throws IOException {
+		MoviePhotoDto moviePhotoDto = moviePhotoDao.get(moviePhotoNo);
+		byte[] data = moviePhotoDao.load(moviePhotoNo);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		String encodeName = URLEncoder.encode(moviePhotoDto.getMoviePhotoUploadName() , "UTF-8");
+		encodeName = encodeName.replace("+", "%20");
+		
+		return ResponseEntity.ok()				
+									.contentType(MediaType.APPLICATION_OCTET_STREAM)
+									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
+									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+									.contentLength(moviePhotoDto.getMoviePhotoSize())
+								.body(resource);
+	}
+	
+	
 	
 }
