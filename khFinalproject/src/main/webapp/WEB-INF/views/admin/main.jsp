@@ -21,6 +21,9 @@
 
 <h2><a href="${root}/admin/statistics">통계 현황</a></h2>
 
+<h2><a href="${root}/store/storeInsert">상품 등록</a></h2>
+
+<h2><a href="${root}/store/storeList">상품 목록(관리)</a></h2>
 <h2>결제(예매) 관리</h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
