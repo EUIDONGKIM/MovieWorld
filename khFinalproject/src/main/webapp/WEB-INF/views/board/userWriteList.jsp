@@ -16,7 +16,7 @@
     		$.ajax({
     			url:url,
     			success:function(resp){
-    				$("#page").html(resp);
+    				$("#page1").html(resp);
     			}
     		});
     	});
@@ -78,13 +78,13 @@
 						<c:when test="${boardSearchVO.isSearch()}">
 							<li class="page-item">
 							<!-- 검색용 링크 -->
-							<a href="${root}/board/userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}}" class="page-link">&lt;</a>
+							<a href="${root}/board/userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getPreviousBlock()}}" class="atag page-link">&lt;</a>
 							</li>
 						</c:when>
 						<c:otherwise>
 							<!-- 목록용 링크 -->
 							<li class="page-item">
-								<a href="${root}/board/userWriteList?&p=${boardSearchVO.getPreviousBlock()}}" class="page-link">&lt;</a>
+								<a href="${root}/board/userWriteList?&p=${boardSearchVO.getPreviousBlock()}}" class="atag page-link">&lt;</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -122,13 +122,13 @@
 						<c:when test="${boardSearchVO.isSearch()}">
 							<!-- 검색용 링크 -->
 							<li class="page-item">
-								<a href="${root}/board/userWriteList??column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}}" class="atag page-link">&gt;</a>
+								<a href="${root}/board/userWriteList?column=${boardSearchVO.column}&keyword=${boardSearchVO.keyword}&p=${boardSearchVO.getNextBlock()}}" class="atag page-link">&gt;</a>
 							<li>
 						</c:when>
 						<c:otherwise>
 							<!-- 목록용 링크 -->
 							<li class="page-item">
-								<a href="${root}/board/userWriteList??p=${boardSearchVO.getNextBlock()}" class="atag page-link">&gt;</a>
+								<a href="${root}/board/userWriteList?p=${boardSearchVO.getNextBlock()}" class="atag page-link">&gt;</a>
 							</li>					
 						</c:otherwise>
 					</c:choose>

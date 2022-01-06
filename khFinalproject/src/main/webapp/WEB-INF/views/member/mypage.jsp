@@ -13,7 +13,7 @@
      $(function(){
 //     	$(".noatag").prop("disabled",true);
     	 //기본 전송 이벤트 방지
-    	$(".atag").on("click",function(e){
+    	$(".atag1").on("click",function(e){
     		e.preventDefault();
     		
     		var url = $(this).attr("href");
@@ -22,7 +22,39 @@
     		$.ajax({
     			url:url,
     			success:function(resp){
-    				$("#page").html(resp);
+    				$("#page2").empty();
+    				$("#page3").empty();
+    				$("#page1").html(resp);
+    			}
+    		});
+    	});
+    	$(".atag2").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page1").empty();
+    				$("#page3").empty();
+    				$("#page2").html(resp);
+    			}
+    		});
+    	});
+    	$(".atag3").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page2").empty();
+    				$("#page1").empty();
+    				$("#page3").html(resp);
     			}
     		});
     	});
@@ -107,19 +139,27 @@
                     <a href="changePw" class=" list-group-item list-group-item-action atag">비밀번호변경</a>
 					<br>
 					<a class="list-group-item list-group-item-action active" style="text-align: center;">이용내역</a>
-                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag">내가 작성한 게시글보기</a>
-                    <a href="history" class="list-group-item list-group-item-action atag">포인트 적립/사용</a>
-                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag">내가관람한영화</a>
+                    <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag1">내가 작성한 게시글보기</a>
+                    <a href="history" class="list-group-item list-group-item-action atag2">포인트 적립/사용</a>
+                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag3">내가관람한영화</a>
                     <a href="payHistroy" class="list-group-item list-group-item-action atag">결제내역</a>
                 
                   </div>
             </div>
             <div class="col-md-10 b" style="height: auto">
 			
-                <div id="page">
+                	<div id="page1">
 				
                 </div>
-  			
+                
+  				  <div id="page2">
+				
+                </div>
+                
+					<div id="page3">
+				
+                </div>
+                
              </div>
         </div>
 
