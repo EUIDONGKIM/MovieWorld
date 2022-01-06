@@ -93,7 +93,7 @@ public class MovieController {
 		return "movie/insert_actor";
 	}
 	
-	@RequestMapping("/insert_popup")
+	@GetMapping("/insert_popup")
 	public String insertPopup(
 			@RequestParam int movieNo,
 			@ModelAttribute PaginationActorVO paginationActorVO,
