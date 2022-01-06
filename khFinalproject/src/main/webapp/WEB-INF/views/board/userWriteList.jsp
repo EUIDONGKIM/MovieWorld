@@ -73,7 +73,7 @@
 		</div>
 		<div class="col" >
 		<!-- 이전 버튼 -->
-			<ul class="pagination pagination-lg center">
+			<ul class="pagination pagination-lg center" style="justify-content: center;">
 			<c:choose>
 				<c:when test="${boardSearchVO.isPreviousAvailable()}">
 					<c:choose>
