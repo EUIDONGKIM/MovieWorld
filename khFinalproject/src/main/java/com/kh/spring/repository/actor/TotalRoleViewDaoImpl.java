@@ -22,4 +22,9 @@ public class TotalRoleViewDaoImpl implements TotalRoleViewDao{
 		param.put("actorJob",actorJob);
 		return sqlSession.selectList("totalRoleView.listByJob",param);
 	}
+
+	@Override
+	public List<TotalRoleViewDto> listByActorNo(int actorNo) {
+		return sqlSession.selectList("totalRoleView.listByActorNo",actorNo);
+	}
 }

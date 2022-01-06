@@ -18,4 +18,6 @@ public interface ActorPhotoDao {
 
 	void delete(int actorPhotoNo);
 
+	byte[] load(int actorPhotoNo) throws IOException;
+
 }
