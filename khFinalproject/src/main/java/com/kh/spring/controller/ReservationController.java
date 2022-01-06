@@ -83,9 +83,7 @@ public class ReservationController {
 	
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
-			
-			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
-			List<TheaterCityVO> theaterList = theaterDao.cityList();
+
 			String memberEmail = (String)session.getAttribute("ses");
 			int memberPoint = 0;
 			if(memberEmail != null){				
@@ -100,9 +98,6 @@ public class ReservationController {
 
 		@RequestMapping("/direct")
 		public String direct(Model model,HttpSession session,@RequestParam int scheduleTimeNo) {
-			
-			List<MovieCountVO> movieList = reservationInfoViewDao.listMoiveByCount();
-			List<TheaterCityVO> theaterList = theaterDao.cityList();
 			String memberEmail = (String)session.getAttribute("ses");
 			int memberPoint = 0;
 			if(memberEmail != null){				

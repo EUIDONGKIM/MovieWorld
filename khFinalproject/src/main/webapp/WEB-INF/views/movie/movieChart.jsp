@@ -68,7 +68,7 @@
       				</div>
       				<div class="row">예매율 : ${movieChartVO.movieRatio}%</div>
       				<div class="row">평점 : ${movieChartVO.movieStarpoint}점</div>
-      				<div class="row">${movieChartVO.movieOpening} 개봉</div>
+      				<div class="row">${fn:substring(movieChartVO.movieOpening,0,10) } 개봉</div>
       				<div class="row">
       					<a href="${root}/reservation/">예매하기</a>
       				</div>      		
