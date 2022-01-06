@@ -3,8 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="grade" value="${memberGrade}"></c:set>
-<c:set var="admin" value="${grade eq '관리자'}"></c:set>
 <c:set var="direct" value="${lastInfoViewDto != null}"></c:set>
 <c:set var="initDto" value="${lastInfoViewDto}"></c:set>
 
