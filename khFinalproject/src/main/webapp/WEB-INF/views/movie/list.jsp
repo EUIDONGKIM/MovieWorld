@@ -140,6 +140,7 @@ display: none;
 																			<td>${lastInfoViewDto.scheduleTimeDateTime}</td>
 																			<td>
 																				<a href="${root}/schedule/time/edit?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
+																				<br>
 																				<a href="${root}/schedule/time/delete?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
 																			</td>
 																		</tr>
@@ -150,9 +151,10 @@ display: none;
 													</td>
 													<td>${map.key.scheduleStart }</td>
 													<td>${map.key.scheduleEnd }</td>
-													<td><a href="${root}/schedule/time/create?scheduleNo=${map.key.scheduleNo}">추가하기</a></td>
+													<td><a href="${root}/schedule/time/create?scheduleNo=${map.key.scheduleNo}">추가</a></td>
 													<td>
 														<a href="${root}/schedule/edit?scheduleNo=${map.key.scheduleNo}">수정</a>
+														<br>
 														<a href="${root}/schedule/delete?scheduleNo=${map.key.scheduleNo}">삭제</a>
 													</td>
 												</tr>
@@ -167,7 +169,7 @@ display: none;
 				
 				<td>${list.key.movieType}</td>
 				
-				<td>${list.key.movieOpening}</td>
+				<td>${fn:substring(list.key.movieOpening,0,10) }</td>
 
 				<td>
 				<button onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
