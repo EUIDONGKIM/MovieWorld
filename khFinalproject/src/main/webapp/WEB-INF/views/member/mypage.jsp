@@ -7,6 +7,11 @@
         .b{
             border:1px solid black;
         }
+        
+        .fsize{
+         font-size:  20px;
+        }
+        
      </style>
      
      <script>
@@ -142,7 +147,7 @@
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag1">내가 작성한 게시글보기</a>
                     <a href="history" class="list-group-item list-group-item-action atag2">포인트 적립/사용</a>
                     <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag3">내가관람한영화</a>
-                    <a href="payHistroy" class="list-group-item list-group-item-action atag">결제내역</a>
+
                 
                   </div>
             </div>
