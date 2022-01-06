@@ -1,9 +1,15 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,12 +17,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
-import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.actor.ActorPhotoDto;
+import com.kh.spring.entity.actor.TotalRoleViewDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.repository.actor.ActorDao;
+import com.kh.spring.repository.actor.ActorPhotoDao;
+import com.kh.spring.repository.actor.TotalRoleViewDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.service.ActorService;
+import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +43,12 @@ public class ActorController {
 	private ActorDao actorDao;
 	@Autowired
 	private ActorService actorService;
-	
+	@Autowired
+	private ActorPhotoDao actorPhotoDao;
+	@Autowired
+	private TotalRoleViewDao totalRoleViewDao;
+	@Autowired
+	private MoviePhotoDao moviePhotoDao;
 	@GetMapping("/insert")
 	public String insert() {
 		return "actor/insert";
@@ -81,5 +99,49 @@ public class ActorController {
 		return "redirect:/actor/list";
 		//return "redirect:/actor/detail?actor="+actorDto.getActorNo();
 	}	
+	@GetMapping("/actorImg")
+	@ResponseBody					
+	public ResponseEntity<ByteArrayResource> imgFile(
+				@RequestParam int actorNo
+			) throws IOException {
+		ActorPhotoDto actorPhotoDto = actorPhotoDao.getByActor(actorNo);
+		byte[] data = actorPhotoDao.load(actorPhotoDto.getActorPhotoNo());
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		String encodeName = URLEncoder.encode(actorPhotoDto.getActorPhotoUploadName() , "UTF-8");
+		encodeName = encodeName.replace("+", "%20");
+		
+		return ResponseEntity.ok()				
+									.contentType(MediaType.APPLICATION_OCTET_STREAM)
+									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
+									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+									.contentLength(actorPhotoDto.getActorPhotoSize())
+								.body(resource);
+	}
+	
+	@GetMapping("/detail")
+	public String detail(@RequestParam int actorNo,Model model) {
+		ActorDto actorDto = actorDao.get(actorNo);
+		List<TotalRoleViewDto> listByActorNo =  totalRoleViewDao.listByActorNo(actorNo);
+		List<MovieChartVO> movieList = new ArrayList<>();
+		
+		for(TotalRoleViewDto totalRoleViewDto : listByActorNo) {
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(totalRoleViewDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
+			MovieChartVO movieChartVO = new MovieChartVO();
+			movieChartVO.setMovieTitle(totalRoleViewDto.getMovieTitle());
+			movieChartVO.setMovieOpening(totalRoleViewDto.getMovieOpening());
+			movieChartVO.setMovieNo(totalRoleViewDto.getMovieNo());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
+			
+			movieList.add(movieChartVO);
+		}
 
+		
+		model.addAttribute("movieList",movieList);
+		model.addAttribute("actorDto",actorDto);
+		return "actor/detail";
+	}
+	
 }

@@ -428,6 +428,8 @@ height: 900px !important;
 <h1>영화 별 매출 순위</h1> => last info view로 해결
 <canvas id="totalProfit" width="400" height="400"></canvas>
 
+
+
 <h1>전체 영화 성별 예매 순위</h1>
 <canvas id="countByGenderForTotal" width="400" height="400"></canvas>
 
