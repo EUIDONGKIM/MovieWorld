@@ -9,61 +9,50 @@
 	.round.lightblue{
 	border: 2px solid #3e82a4;
 	color: #3e82a4;
+	width: 110px;
+	height: 30px;
 	}
 	</style>
 	
-	<%--상세페이지 큰 틀 --%>
-	<div class="container">
-		<%--정보 입력하는 틀 --%>
-		<div id="contents">
-			<%-- 실컨텐츠 시작 --%>
-			<div class="wrap-moive-detail" id="select_main"> <!-- 영화디테일 container -->
-				<div class="tit-heading-wrap">
-					<h3>영화 상세</h3>
-				</div>
-				<div class="sect-base-movie"> <!-- 영화 포스터 제목, 예매율, 평점, 감독, 장르 개봉일 box -->
-					<div class="box-image"> <!-- main poster -->
-						<a href="https://img.cgv.co.kr/Movie/Thumbnail/Poster/000085/85515/85515_1000.jpg"></a>
-					</div>
-					<div class="box-contents"> <!-- poster옆 영화 상세정보 내용쓰는 box -->
-						<div class="title">
-							<strong>해피 뉴 이어</strong>
-							<em class="round lightblue">
-								<span>현재상영중</span>
-							</em>
-							<p>A YEAR-END MEDLEY</p>
-						</div>
-						<div class="score">
-							<strong class="percent">
-								"예매율"
-								<span>7.1%</span>
-							</strong>
-							<div class="starPoint">
-								<strong class="rating">
-									"평점"
-									<span>9점</span>
-								</strong>
-							</div>
-						</div>
-						<!-- 감독&배우정보란 -->
-						<div class="spec">
-							<dl>
-								<dt>감독 : &nbsp;</dt>
-								<dd>
-									<a href="${root}/actor/detail">감독이름</a>
-								</dd>
-								<dd></dd>
-								<dt> &nbsp;/배우 :&nbsp;</dt>
-							</dl>
-						</div>
-					</div>
-				</div>
-				
+	<div class="container fluid">
+		<div class="row">
+			<div class="col">
+					<h1>✿영화상세✿</h1>
+					<hr>
+			</div>
+				<div class="row">
+  					<div class="col">영화 포스터 자리</div>
+  					<div class="col col-8">
+  						<div class="row">
+  							<div class="col-sm">
+  								<strong class="inline">스파이더맨-노 웨이 홈</strong>
+  								<em class="round lightblue">
+  									<span>현재상영중</span>
+  								</em>
+  							<p>Spider-Man: No Way Home</p>
+  							<hr>
+  							</div>
+  							</div>
+  						<div class="row">감독 : 존 왓츠 / 배우 : 톰 홀랜드 ,  젠데이아 콜먼 ,  베네딕트 컴버배치 ,  존 파브로 ,  제이콥 배덜런 ,  마리사 토메이 ,  알프리드 몰리나
+													장르 : 액션, 어드벤처, SF / 기본 : 12세 이상, 148분, 미국
+													개봉 : 2021.12.15</div>
+  					</div>
+  					<div class="row">영화 스파이더맨: 노 웨이 홈은 정체가 탄로난 스파이더맨 '피터 파커'(톰 홀랜드)가 문제를 해결하기 위해 '닥터 스트레인지'(베네딕트 컴버배치)의 도움을 받던 중 뜻하지 않게 멀티버스가 열리게 되고,
+이를 통해 '닥터 옥토퍼스'(알프리드 몰리나) 등 각기 다른 차원의 숙적들이 나타나며 사상 최악의 위기를 맞게 되는 이야기를 그린 마블 액션 블록버스터.</div>
+  				</div>
+			</div>
+			<div class="row">
+				트레일러 자리
+			</div>
+			<div class="row">
+				스틸컷 자리
 			</div>
 			
+			
+			
 		</div>
-		
-	</div>
+	
+
 
 
 
