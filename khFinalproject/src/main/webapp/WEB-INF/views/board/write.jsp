@@ -15,7 +15,7 @@
 
 
 	<!-- 제목 -->
-	<div class="row">
+	<div class="row center">
 		<c:choose>
 			<c:when test="${answer}">
 				<h2>답글 작성</h2>
@@ -28,22 +28,28 @@
 	
 	<div class="row">
 		<label>제목</label>
-		<input type="text" name="boardTitle" required class="form-input">
+		<input type="text" name="boardTitle" required class="form-control form-control-lg" id="inputLarge">
 	</div>
 	
 	<div class="row">
 		<label>내용</label>
-		<textarea name="boardContent" required rows="10" class="form-input"></textarea>
+		<textarea name="boardContent" required rows="10" class="form-control" id="exampleTextarea"></textarea>
+	</div>
+	
+	<div class="row right">
+		<div class="col">
+			<a href="main?boardTypeName=${param.boardTypeName}" class="btn btn-info">목록</a> 
+		</div>
 	</div>
 	
 	<div class="row">
 		<label class="form-block">첨부파일</label>
-		<input type="file" name="attach" accept="image/*" multiple="multiple" class="form-input form-inline">
+		<input type="file" name="attach" accept="image/*" multiple="multiple" class="form-control">
 	</div>
 	
-	<div class="row right">
-		<a href="main?boardTypeName=${param.boardTypeName}" class="form-link-btn">목록</a> 
-		<input type="submit" value="등록" class="form-btn form-inline">
+	<br>
+	<div class="row">
+		<input type="submit" value="등록" class="btn btn-info">
 	</div>
 	
 </div>
