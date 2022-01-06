@@ -26,9 +26,7 @@
 	      		<div class="item">
 <%-- 	      			${index.current} --%>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
-	      		  		<c:if test="${movieChartVO.moviePhotoNo != null}">
-	      					<img src="${root}/movie/movieImg?movieNo=${movieChartVO.moviePhotoNo}" width="100%"></a>
-	      		  		</c:if>
+	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="100%"></a>
       						
       				<div class="row">
       					<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
