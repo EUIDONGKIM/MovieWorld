@@ -19,5 +19,9 @@
 	<select id="listByJob" parameterType="map" resultType="TotalRoleViewDto">
 		select * from total_role_view where movie_no = #{movieNo} and actor_job = #{actorJob}
 	</select>
-
+	
+	<select id="listByActorNo" parameterType="int" resultType="TotalRoleViewDto">
+		select * from total_role_view where actor_no = #{actorNo}
+	</select>
+	
 </mapper>
