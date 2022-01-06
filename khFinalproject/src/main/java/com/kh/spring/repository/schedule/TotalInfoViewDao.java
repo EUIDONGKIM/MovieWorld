@@ -14,4 +14,5 @@ public interface TotalInfoViewDao {
 	List<TotalInfoViewDto> nowList(int movieNo);
 	List<Integer> nowMoiveList();
 	List<Integer> moiveListByPeriod(String scheduleStart, String scheduleEnd);
+	List<Integer> nowTMoiveListContainSoon();
 }

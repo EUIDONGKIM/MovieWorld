@@ -7,7 +7,27 @@
 	<style>
 	
 	</style>
-
+	<script>
+		$(function(){
+			var nowMovie = ${nowMovie};
+			
+			if(nowMovie==1){
+				$(".chk-now-movie").prop("checked",true);
+			}
+			
+			$(".chk-now-movie").click(function(){
+				console.log("확인!");
+				if($(this).prop("checked")){
+					console.log("체크!");
+					location.href = "${root}/movie/movieChart?nowMovie=1";
+				}else{
+					console.log("비체크!");
+					location.href = "${root}/movie/movieChart?nowMovie=0";
+				}
+				
+			});
+		});
+	</script>
 
 	<div class="contianer">
 		<div class="row">
@@ -17,7 +37,12 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="row">
+		<label>
+			<span>현재 상영작</span>
+			<input class="chk-now-movie" type="checkbox" name="nowMovie">
+		</label>
+	</div>
       <%--for문으로 시작--%>
      
       <c:forEach var="movieChartVO" items="${list}">

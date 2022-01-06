@@ -42,6 +42,11 @@
 		where sysdate between schedule_start and schedule_end order by movie_no asc
 	</select>
 	
+	<select id="nowTMoiveListContainSoon" parameterType="int" resultType="int">
+		select distinct(movie_no) from total_info_view 
+		<![CDATA[where sysdate < schedule_end order by movie_no asc]]>
+	</select>
+	
 	<select id="moiveListByPeriod" parameterType="map" resultType="int">
 		select distinct(movie_no) from total_info_view 
 		where schedule_end between to_date(#{scheduleStart},'YYYY-MM-DD')

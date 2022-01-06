@@ -50,6 +50,10 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 		
 		return sqlSession.selectList("totalInfoView.moiveListByPeriod",param);
 	}
+	@Override
+	public List<Integer> nowTMoiveListContainSoon() {
+		return sqlSession.selectList("totalInfoView.nowTMoiveListContainSoon");
+	}
 	
 	
 }

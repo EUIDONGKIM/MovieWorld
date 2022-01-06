@@ -1,8 +1,6 @@
 package com.kh.spring.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
@@ -198,8 +193,14 @@ public class MovieController {
 
 	//무비차트
 	@GetMapping("/movieChart")
-	public String movieChart(Model model) {
-		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+	public String movieChart(Model model,@RequestParam(required = false,defaultValue = "0") int nowMovie) {
+		
+		List<Integer> movieNoList = new ArrayList<>();
+		if(nowMovie == 1) {
+			movieNoList = totalInfoViewDao.nowMoiveList();
+		}else {
+			movieNoList = totalInfoViewDao.nowTMoiveListContainSoon();
+		}
 		List<MovieDto> movieList = movieDao.nowList(movieNoList);
 		
 		List<ChartVO> vo = statisticsInfoViewDao.countForReservationRatio();
@@ -236,8 +237,8 @@ public class MovieController {
 			
 			list.add(movieChartVO);
 		}
-		
 		model.addAttribute("list",list);
+		model.addAttribute("nowMovie",nowMovie);
 		return "movie/movieChart";
 	}
 	
