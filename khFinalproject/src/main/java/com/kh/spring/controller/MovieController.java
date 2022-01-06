@@ -278,7 +278,7 @@ public class MovieController {
 //	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
 //	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
 	
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.movie}")
 	public String directory;
 
 	@GetMapping("/movieImg")

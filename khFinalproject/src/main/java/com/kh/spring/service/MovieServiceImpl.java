@@ -26,7 +26,7 @@ public class MovieServiceImpl implements MovieService{
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
 	//저장용 폴더/
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.movie}")
 	public String directory;
 		
 	@Override
