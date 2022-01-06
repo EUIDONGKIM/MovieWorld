@@ -51,7 +51,7 @@
 		<select class="movie-pick" name="movieNo" required>
 			<option value="">영화 선택</option>
 				<c:forEach var="movieDto" items="${movieList}">
-					<option class="pick-select" value="${movieDto.movieNo}" data-opening="${movieDto.getOpeningDay()}" data-end="${movieDto.getEndingDay()}">${movieDto.movieTitle}</option>
+					<option class="pick-select" value="${movieDto.movieNo}">${movieDto.movieTitle}</option>
 				</c:forEach>
 		</select>
 	</div>
