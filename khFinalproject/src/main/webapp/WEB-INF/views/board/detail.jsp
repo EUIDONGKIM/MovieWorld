@@ -10,42 +10,8 @@
 </style>
 <%-- 번외 : 수정 버튼을 눌렀을 때 처리되도록 구현하는 스크립트(나중에 배움) --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script>
-	$(function(){
-		$(".view-row").find(".edit-btn").click(function(){
-			$(this).parents("tr.view-row").hide();
-			$(this).parents("tr.view-row").next("tr.edit-row").show();
-		});
-		
-		$(".edit-row").find(".edit-cancel-btn").click(function(){
-			$(this).parents("tr.edit-row").hide();
-			$(this).parents("tr.edit-row").prev("tr.view-row").show();
-		});
-		
-		$(".edit-row").hide();
-	});
-</script>    
 
 <c:set var="owner" value="${boardDto.memberEmail == memberEmail}"></c:set>
-
-
-
-<style>
-	.flex-container > .reply-write-wrapper {
-		width:80%;
-	}
-	.flex-container > .reply-send-wrapper {
-		flex-grow:1;
-	}
-	.flex-container > .reply-send-wrapper > .form-btn,
-	.flex-container > .reply-send-wrapper > .form-link-btn {
-		width:100%;
-		height:100%;
-		display: flex;
-		align-items:center;
-		justify-content:center;
-	}
-</style>
 
 <div class="container-1200 container-center">
 
@@ -60,27 +26,32 @@
 	</div>
 	
 	<div class="row">
+	 <div class="col">
 		등록일 : ${boardDto.boardDate}
 		|
 		작성자 : ${boardDto.memberEmail}
-		|
+	</div>
+	<div class="col right">
 		조회수 : ${boardDto.boardViews}
 	</div>
+	
+	<br>
 	
 	<div class="row" style="min-height:250px;">
 		<pre>${boardDto.boardContent}</pre>
 	</div>
 	
 	<div class="row right">
-<%-- 		<a href="write?boardTypeName=${param.boardTypeName}" class="link-btn form-inline right">글쓰기</a> --%>
-		<a href="write?boardSuperno=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="link-btn form-inline right"  >답글쓰기</a>
-		<a href="main?boardTypeName=${param.boardTypeName}" class="link-btn form-inline right">목록보기</a>
+	 <div class="col">
+		<a href="write?boardSuperno=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">답글쓰기</a>
+		<a href="main?boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">목록보기</a>
 		
 		<c:if test="${owner}">
-		<a href="edit?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="link-btn form-inline right">수정하기</a>
-		<a href="delete?boardNo=${boardDto.boardNo}" class="link-btn form-inline right">삭제하기</a>
+		<a href="edit?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">수정하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-outline-info">삭제하기</a>
 		</c:if>
-		
+	 
+	 </div>
 	</div>
 	
 	<hr>
