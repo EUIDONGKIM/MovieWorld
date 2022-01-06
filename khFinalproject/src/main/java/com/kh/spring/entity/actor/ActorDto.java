@@ -2,8 +2,8 @@ package com.kh.spring.entity.actor;
 
 import lombok.Data;
 
-@Data 
-public class ActorDto {
+@Data  
+public class ActorDto { 
 	private int actorNo;
 	private String actorName;
 	private String actorEngName;
