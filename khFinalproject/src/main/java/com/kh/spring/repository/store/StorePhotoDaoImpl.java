@@ -17,7 +17,7 @@ public class StorePhotoDaoImpl implements StorePhotoDao{
 	@Autowired
 	private SqlSession sqlSession;
 	//저장용 폴더
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.store}")
 	public String directory;
 
 	@Override

@@ -22,4 +22,8 @@ public interface MovieDao {
 	List<MovieDto> getTitleList(String movieTitle);
 
 	List<Integer> notHaveSchedule();
+
+	void delete(int movieNo);
+
+	void edit(MovieDto movieDto);
 }

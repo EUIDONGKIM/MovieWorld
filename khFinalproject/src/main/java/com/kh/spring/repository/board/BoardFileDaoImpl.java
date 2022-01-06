@@ -21,7 +21,7 @@ public class BoardFileDaoImpl implements BoardFileDao{
 	private SqlSession sqlSession;
 	
 	//저장용 폴더
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.board}")
 	public String directory;
 	
 	@Override

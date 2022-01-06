@@ -1,13 +1,14 @@
 package com.kh.spring.repository.actor;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.actor.ActorDto;
-import com.kh.spring.entity.actor.RoleDto;
 
 @Repository
 public class ActorDaoImpl implements ActorDao{
@@ -42,6 +43,24 @@ public class ActorDaoImpl implements ActorDao{
 	@Override
 	public boolean delete(int actorNo) {
 		return sqlSession.delete("actor.delete",actorNo)>0;
+	}
+
+	@Override
+	public int count(String actorJob, String actorName) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("actorJob",actorJob);
+		param.put("actorName",actorName);
+		return sqlSession.selectOne("actor.count",param);
+	}
+
+	@Override
+	public List<ActorDto> search(String actorJob, String actorName, int begin, int end) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("actorJob",actorJob);
+		param.put("actorName",actorName);
+		param.put("begin",begin);
+		param.put("end",end);
+		return sqlSession.selectList("actor.search",param);
 	}
 
 	

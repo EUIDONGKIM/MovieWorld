@@ -45,8 +45,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	}
 
 	@Override
-	public boolean edit(ScheduleDto schedulDto) {
-		return sqlSession.update("schedule.edit", schedulDto) > 0;
+	public void edit(ScheduleDto schedulDto) {
+		sqlSession.update("schedule.edit", schedulDto);
 	}
 
 }

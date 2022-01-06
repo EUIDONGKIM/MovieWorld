@@ -15,6 +15,6 @@ public interface HallTypePriceDao {
 	
 	boolean delete(int hallTypeNo);
 	
-	boolean edit(HallTypePriceDto hallTypePriceDto);
+	void edit(HallTypePriceDto hallTypePriceDto);
 
 }
