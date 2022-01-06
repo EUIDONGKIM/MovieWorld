@@ -3,6 +3,7 @@ package com.kh.spring.repository.store;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,8 +18,8 @@ public class StorePhotoDaoImpl implements StorePhotoDao{
 	@Autowired
 	private SqlSession sqlSession;
 	//저장용 폴더
-	@Value("${config.rootpath.store}")
-	public String directory;
+
+	private File directory = new File("C:/Users/RENEWCOM/upload/store");
 
 	@Override
 	public int getPhotoSequence() {
@@ -28,9 +29,9 @@ public class StorePhotoDaoImpl implements StorePhotoDao{
 	@Override
 	public void insert(StorePhotoDto storePhotoDto, MultipartFile file) throws IllegalStateException, IOException {
 		int sequencePhoto = getPhotoSequence();
-		
-		System.out.println("storePhotoDao 1");
+	
 		File target = new File(directory,String.valueOf(sequencePhoto));
+		
 		file.transferTo(target);
 		
 		storePhotoDto.setProductPhotoNo(sequencePhoto);
@@ -39,6 +40,25 @@ public class StorePhotoDaoImpl implements StorePhotoDao{
 
 		sqlSession.insert("storePhoto.insert",storePhotoDto);
 		
+	}
+
+	@Override
+	public StorePhotoDto get(int productPhotoNo) {
+	
+		return sqlSession.selectOne("productPhoto.get",productPhotoNo);
+	}
+
+	@Override
+	public byte[] load(int productPhotoNo) throws IOException {
+		File target = new File(directory,String.valueOf(productPhotoNo));
+		byte[] data = FileUtils.readFileToByteArray(target);
+		return data;
+	}
+
+	@Override
+	public StorePhotoDto get(String productNo) {
+		
+		return sqlSession.selectOne("storePhoto.getByNo",productNo);
 	}
 
 }
