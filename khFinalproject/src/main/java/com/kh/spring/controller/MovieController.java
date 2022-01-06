@@ -277,9 +277,6 @@ public class MovieController {
 //	차트vo에다가 무비포토넘버를 하나 추가, 무비컨트롤러에서 
 //	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
 //	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
-	
-	@Value("${config.rootpath.movie}")
-	public String directory;
 
 	@GetMapping("/movieImg")
 	@ResponseBody					
@@ -287,10 +284,7 @@ public class MovieController {
 				@RequestParam int moviePhotoNo
 			) throws IOException {
 		MoviePhotoDto moviePhotoDto = moviePhotoDao.get(moviePhotoNo);
-
-		File file = new File(directory, moviePhotoDto.getMoviePhotoSaveName());
-		
-		byte[] data = FileUtils.readFileToByteArray(file);
+		byte[] data = moviePhotoDao.load(moviePhotoNo);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		String encodeName = URLEncoder.encode(moviePhotoDto.getMoviePhotoUploadName() , "UTF-8");
