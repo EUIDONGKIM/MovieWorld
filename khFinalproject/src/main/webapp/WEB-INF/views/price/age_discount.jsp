@@ -146,8 +146,6 @@
 				console.log("수정 실패", e);
 			}
 		});
-		
-		
 	}
 	
 	
@@ -170,7 +168,7 @@
 <div id="insert">
 <form id="insert-form">
 	<input type="text" name="ageName" placeholder="연령대">
-	<input type="text" name="ageDiscountPrice" placeholder="금액">
+	<input type="text" name="ageDiscountPrice" placeholder="할인 금액">
 	<button type="submit">등록</button>
 	<a href="#" class="add-cancel-btn">취소</a>
 </form>
