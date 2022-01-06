@@ -50,6 +50,7 @@
 </div>
 <div class="container">
 	<div class="row">
+
 	<c:forEach var="theaterCityVO" items="${cityList}">
 		<div class="col-3">
 			<a class="city" role="button" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
@@ -57,5 +58,6 @@
 	</c:forEach>
 	<div class="row result"></div>
 	</div>
+
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

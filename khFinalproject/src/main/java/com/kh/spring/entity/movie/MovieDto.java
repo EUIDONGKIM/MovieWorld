@@ -31,7 +31,7 @@ public class MovieDto implements Comparable<MovieDto>{
 		String string = movieOpening;
 		Calendar c = Calendar.getInstance();
 		c.set(Integer.parseInt(string.substring(0,4)), Integer.parseInt(string.substring(5,7))-1, Integer.parseInt(string.substring(8,10)));
-		c.add(Calendar.DATE, 30);
+		c.add(Calendar.DATE, 60);
 		Date d = c.getTime();
 
 		Format f = new SimpleDateFormat("yyyy-MM-dd");
