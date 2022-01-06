@@ -8,4 +8,6 @@ public interface TotalRoleViewDao {
 
 	List<TotalRoleViewDto> listByJob(int movieNo, String actorJob);
 
+	List<TotalRoleViewDto> listByActorNo(int actorNo);
+
 }
