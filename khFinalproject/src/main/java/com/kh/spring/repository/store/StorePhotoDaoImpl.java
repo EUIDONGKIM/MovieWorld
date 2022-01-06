@@ -17,7 +17,7 @@ public class StorePhotoDaoImpl implements StorePhotoDao{
 	
 	@Autowired
 	private SqlSession sqlSession;
-	//저장용 폴더
+	//저장용 폴더 폴더
 
 	private File directory = new File("C:/Users/RENEWCOM/upload/store");
 
