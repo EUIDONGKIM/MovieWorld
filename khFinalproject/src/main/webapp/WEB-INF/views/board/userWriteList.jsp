@@ -16,9 +16,7 @@
     		$.ajax({
     			url:url,
     			success:function(resp){
-
     				$("#page1").html(resp);
-
     			}
     		});
     	});

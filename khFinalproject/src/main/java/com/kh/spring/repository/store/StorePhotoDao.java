@@ -11,10 +11,18 @@ public interface StorePhotoDao {
 	int getPhotoSequence();
 
 	void insert(StorePhotoDto storePhotoDto, MultipartFile photo) throws IllegalStateException, IOException;
+
 	
 	StorePhotoDto get(int productPhotoNo);
 	StorePhotoDto get(String productNo);
 	byte[] load(int productPhotoNo) throws IOException;
 	
-	
+
+
+	StorePhotoDto get(int productPhotoNo);
+
+	byte[] load(int productPhotoNo) throws IOException;
+
+	StorePhotoDto get(String productNo);
+
 }
