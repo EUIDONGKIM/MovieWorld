@@ -211,12 +211,17 @@ public class MovieController {
 		}
 		
 		for(MovieDto movieDto : movieList) {
+			
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
 			MovieChartVO movieChartVO = new MovieChartVO();
 			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
 			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
 			movieChartVO.setMovieNo(movieDto.getMovieNo());
 			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
 			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
 			
 			for(ChartVO chartVO : vo) {
 				if(movieDto.getMovieTitle().equals(chartVO.getText())) {
@@ -225,6 +230,7 @@ public class MovieController {
 					float changeToTwo = Float.parseFloat(num);
 					movieChartVO.setMovieRatio(changeToTwo);
 					break;
+					
 				}
 			}
 			
@@ -278,24 +284,23 @@ public class MovieController {
 	@GetMapping("/movieImg")
 	@ResponseBody					
 	public ResponseEntity<ByteArrayResource> imgFile(
-				@RequestParam int movieNo
+				@RequestParam int moviePhotoNo
 			) throws IOException {
-		
-		List<MoviePhotoDto> list = moviePhotoDao.getList(movieNo);
-		
-		File file = new File("C:/upload/kh81", list.get(0).getMoviePhotoSaveName());
+		MoviePhotoDto moviePhotoDto = moviePhotoDao.get(moviePhotoNo);
+
+		File file = new File(directory, moviePhotoDto.getMoviePhotoSaveName());
 		
 		byte[] data = FileUtils.readFileToByteArray(file);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
-		String encodeName = URLEncoder.encode(list.get(0).getMoviePhotoUploadName() , "UTF-8");
+		String encodeName = URLEncoder.encode(moviePhotoDto.getMoviePhotoUploadName() , "UTF-8");
 		encodeName = encodeName.replace("+", "%20");
 		
 		return ResponseEntity.ok()				
 									.contentType(MediaType.APPLICATION_OCTET_STREAM)
 									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
 									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-									.contentLength(list.get(0).getMoviePhotoSize())
+									.contentLength(moviePhotoDto.getMoviePhotoSize())
 								.body(resource);
 	}
 	

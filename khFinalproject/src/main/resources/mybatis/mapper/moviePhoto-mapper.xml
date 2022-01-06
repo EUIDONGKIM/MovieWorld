@@ -49,5 +49,9 @@
 	<select id="getPhotoList" resultType="MoviePhotoDto" parameterType="int">
 		select * from movie_Photo where movie_No= #{movieNo}
 	</select>
+	
+	<select id="get" resultType="MoviePhotoDto" parameterType="int">
+		select * from movie_Photo where movie_photo_no= #{moviePhotoNo}
+	</select>
 
 </mapper>

@@ -63,4 +63,9 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 
 	}
 
+		@Override
+		public MoviePhotoDto get(int moviePhotoNo) {
+			return sqlSession.selectOne("moviePhoto.get", moviePhotoNo);
+		}
+
 }
