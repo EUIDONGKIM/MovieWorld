@@ -3,6 +3,7 @@ package com.kh.spring.repository.actor;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,5 +53,12 @@ public class ActorPhotoDaoImpl implements ActorPhotoDao{
 	@Override
 	public void delete(int actorPhotoNo) {
 		sqlSession.delete("actorPhoto.delete",actorPhotoNo);
+	}
+
+	@Override
+	public byte[] load(int actorPhotoNo) throws IOException {
+		File target = new File(directory,String.valueOf(actorPhotoNo));
+		byte[] data = FileUtils.readFileToByteArray(target);
+		return data;
 	}
 }
