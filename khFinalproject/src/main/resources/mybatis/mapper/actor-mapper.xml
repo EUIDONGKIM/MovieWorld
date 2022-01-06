@@ -18,7 +18,7 @@
 
 	<insert id="insert" parameterType="ActorDto">
 		insert into actor values(
-		actor_seq.nextval,
+		#{actorNo},
 		#{actorName},
 		#{actorEngName},
 		#{actorBirth},
@@ -26,6 +26,10 @@
 		#{actorNationality}
 		)
 	</insert>
+	
+	<select id="getSequence" resultType="int">
+		select actor_seq.nextval from dual
+	</select>
 	
 	<select id="list" resultType="ActorDto">
 		select * from actor
@@ -66,4 +70,18 @@
 		)tmp) where rn between #{begin} and #{end}
 	</select>
 	
+	<update id="update" parameterType="ActorDto">
+		update actor set
+		actor_name = #{actorName},
+		actor_eng_name = #{actorEngName},
+		actor_birth = #{actorBirth},
+		actor_job = #{actorJob},
+		actor_nationality = #{actorNationality}
+		where actor_no = #{actorNo}
+	</update>
+	
+	<select id="get" parameterType="int" resultType="ActorDto">
+		select * from actor where actor_no = #{actorNo}
+	</select>
+
 </mapper>

@@ -12,4 +12,8 @@ public class ActorDto {
 	private String actorBirth;
 	private String actorJob;
 	private String actorNationality;
+	
+	public String getStringBirth() {
+		return this.actorBirth.substring(0,10);
+	}
 }

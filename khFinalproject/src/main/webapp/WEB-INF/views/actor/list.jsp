@@ -12,6 +12,10 @@
 </script>
 
 <h2>영화인 목록</h2>
+<div class="row center">
+<h3><a href="${root}/actor/insert">영화인 추가</a></h3>
+</div>
+
 <form method="get">
 		<div class="row center">
 			<label>직업 선택</label>
@@ -51,9 +55,9 @@
 				<td>${actorDto.actorJob}</td>
 				<td>${actorDto.actorNationality}</td>
 				<td>
-					<button onclick="location.href='${root}/movie/actorDetail?actorNo=${actorDto.actorNo}'">상세</button>
-					<button onclick="location.href='${root}/movie/edit?actorNo=${actorDto.actorNo}'">수정</button>
-					<button onclick="location.href='${root}/movie/delete?actorNo=${actorDto.actorNo}'">삭제</button>
+					<button onclick="location.href='${root}/actor/detail?actorNo=${actorDto.actorNo}'">상세</button>
+					<button onclick="location.href='${root}/actor/edit?actorNo=${actorDto.actorNo}'">수정</button>
+					<button onclick="location.href='${root}/actor/delete?actorNo=${actorDto.actorNo}'">삭제</button>
 				</td>
 			</tr>	
 		</c:forEach>	

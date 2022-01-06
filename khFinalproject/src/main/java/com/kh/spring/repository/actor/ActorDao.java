@@ -22,4 +22,8 @@ public interface ActorDao {
 	int count(String actorJob, String actorName);
 
 	List<ActorDto> search(String actorJob, String actorName, int begin, int end);
+
+	int getSequence();
+
+	void update(ActorDto actorDto);
 }
