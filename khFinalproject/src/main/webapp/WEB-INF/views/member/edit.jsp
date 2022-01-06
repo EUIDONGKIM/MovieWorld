@@ -1,10 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-
+<style>
+       .form-input.fail {
+            border-color: red;
+         }
+        span.success {
+            color:red;
+            display: none;
+        }
+        span.fail {
+            color:red;
+            display: none;
+        }
+        .form-input.success ~ span.success { 
+            display:block;
+        }
+        .form-input.fail ~ span.fail {
+            display: block;
+        }
+</style>
 <script>
 	var grade = '${memberDto.memberGrade}';
 	$(function(){
@@ -23,8 +42,46 @@
 		});
 	});
 	
+	$(function() {
+		$("input[name=memberNick]").on("blur", function() {
+			var regex = /^[가-힣]{2,17}$/;
+			var name = $(this).val();
+			$(this).removeClass("success").removeClass("fail");
+			if (regex.test(name)) {
+				$("input[name=memberNick]").addClass("success");
+				nickCheck(name)
+				$("#join-btn").prop("disabled",false);
+			} else {
+				$("input[name=memberNick]").addClass("fail");
+				$("#join-btn").prop("disabled",true);
+			}
+		});
+		
+		function nickCheck(name){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/member/nickCheck",
+				type : "get",
+				dataType : "text",
+				data : {
+					memberNick : name
+				},	
+				success:function(resp){
+					console.log(resp)
+					if(resp=="nonono"){		
+						$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
+					}else{				
+						$("input[name=memberNick]").next().text("");
+					}
+				},
+				error:function(e){
+					console.log("실패", e);
+				}
+			});
+		}
+	});
+	
 </script>
-<div class="container">
+<div class="container-700 container-center">
 	
 		<h2 class="center">회원 정보 수정</h2>
 			<form action="edit" method="post">
@@ -49,8 +106,10 @@
 						</c:if>
 						<tr>
 							<th>닉네임</th>
-							<td><input type="text" name="memberNick" required
-								value="${memberDto.memberNick}" class="form-control fsize" id="floatingInput"></td>
+							<td><input type="text" name="memberNick" required value="${memberDto.memberNick}" class="form-control fsize" id="floatingInput">
+								<span class="success"></span>
+	           		 			<span class="fail">2~17자 이내 한글로 작성하세요!</span>
+							</td>
 						</tr>
 						<tr>
 							<th>생년월일</th>

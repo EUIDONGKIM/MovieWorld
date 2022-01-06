@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 
-	<div class="container-600 container-center">
+	<div class="container-500 container-center">
 		<div class="row">
 			<div class="col center">
 				<h1>회원 탈퇴 페이지</h1>
@@ -33,14 +33,7 @@
 		</c:if>
 		
 		<div class="row">
-			<div class="col">
-			</div>
-			<div class="col">
-			</div>
-			<div class="col right">
 				<input type="submit" value="회원탈퇴" class="btn btn-info">
-			</div>
-		
 		</div>
 	</form>
 	

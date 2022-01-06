@@ -13,24 +13,31 @@
 	
 	<div class="row">
 		<label>제목</label>
-		<input type="text" name="boardTitle" required value="${boardDto.boardTitle}" class="form-input">
+		<input type="text" name="boardTitle" required value="${boardDto.boardTitle}" class="form-control form-control-lg" id="inputLarge">
 	</div>
 	
 	<div class="row">
 		<label>내용</label>
 		<textarea name="boardContent" required 
-					rows="10" class="form-input">${boardDto.boardContent}</textarea>
+					rows="10" class="form-control" id="exampleTextarea">${boardDto.boardContent}</textarea>
+	</div>
+	
+	<div class="row right">
+		<div class="col">
+			<a href="main?boardTypeName=${param.boardTypeName}" class="btn btn-info">목록</a> 
+		</div>
 	</div>
 	
 	<div class="row">
 		<label class="form-block">첨부파일</label>
-		<input type="file" name="attach" accept="image/*" multiple="multiple" class="form-input form-inline">
+		<input type="file" name="attach" accept="image/*" multiple="multiple" class="form-control">
 	</div>
 	
-	<div class="row right">
-		<a href="list" class="form-link-btn">목록</a>
-		<input type="submit" value="수정" class="form-btn form-inline">
+	<br>
+	<div class="row">
+		<input type="submit" value="등록" class="btn btn-info">
 	</div>
+	
 </div>
 	
 </form>
