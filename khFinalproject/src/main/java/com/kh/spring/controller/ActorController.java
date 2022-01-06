@@ -1,5 +1,7 @@
 package com.kh.spring.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.repository.actor.ActorDao;
@@ -32,10 +35,12 @@ public class ActorController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(@ModelAttribute ActorDto actorDto) {
-		actorDao.insert(actorDto);
+	public String insert(@ModelAttribute ActorDto actorDto,
+			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+		int sequence = actorService.insert(actorDto,attach);
 		
-		return "actor/insert";
+		return "redirect:/actor/list";
+//		return "redirect:/movie/detail?actorNo="+sequence;
 //		return"redirect:/actor/detail?actorNo="+actorDto.getActorNo();
 	}
 	

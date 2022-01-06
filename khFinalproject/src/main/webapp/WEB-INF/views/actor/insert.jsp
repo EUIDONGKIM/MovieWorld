@@ -11,12 +11,12 @@
 
 <h1> 영화인 추가 </h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	<div class= "container-400">
 	
 	<div class="row">
 			<label>프로필 이미지(한장)</label>
-				<input type="file" name="actorPhoto">
+				<input type="file" name="attach" accept="image/*" required>
 		</div>
 	
 		<div class="row">
