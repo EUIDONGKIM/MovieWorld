@@ -122,15 +122,15 @@ public class AdminController {
 
 	
 	//관리자가 회원정보 수정
-	@GetMapping("/member/edit")
+	@GetMapping("/member/edit2")
 	public String adminMemberEdit(@RequestParam int memberNo,Model model) {
 		model.addAttribute("memberDto",memberDao.get2(memberNo));
-		return "member/edit";
+		return "member/edit2";
 	}
-	@PostMapping("/member/edit")
+	@PostMapping("/member/edit2")
 	public String adminMemberEdit(@ModelAttribute MemberDto memberDto) {
 		memberDao.changeInformationAdmin(memberDto);
-		return "member/edit";
+		return "member/edit2";
 	}
 
 }

@@ -6,9 +6,11 @@
 <c:set var="list" value="${memberSearchVO.list}"></c:set>
 
 
-<h1> 회원 목록  </h1>
+<div class="container-1200 container-center">
+	<div class="row center">
+		<h1> 회원 목록  </h1>
+	</div>
 
-<div class="container-1200 contianer-center">
  <table class="table">
  	<thead>
 	 	<tr>
@@ -30,7 +32,7 @@
 	 			<td>${memberDto.memberNick}</td>
 	 			<td>${memberDto.memberGrade}</td>
 	 			<td>${memberDto.memberPoint}</td>
-	 			<td><a href="${root}/admin/member/edit?memberNo=${memberDto.memberNo}">상세</a></td>
+	 			<td><a href="${root}/admin/member/edit2?memberNo=${memberDto.memberNo}">상세</a></td>
 <%-- 	 			<td><a href="${root}/member/eidt?memberNo="${memberDto.memberNo}>수정</a></td> --%>
 <!-- 	 			<td><a href="memberDrop">탈퇴</a></td> -->
 	 		</tr>
@@ -38,68 +40,93 @@
  	</tbody>
  </table>
  <!-- 페이지 네이션 및 검색 -->
- 	<div class="row pagination">
+ 	<div class="row center">
+		<div class="col">
+		</div>
+		<div class="col center" >
 		<!-- 이전 버튼 -->
-		<c:choose>
-			<c:when test="${memberSearchVO.isPreviousAvailable()}">
-				<c:choose>
-					<c:when test="${memberSearchVO.isSearch()}">
-						<!-- 검색용 링크 -->
-						<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getPreviousBlock()}">&lt;</a>
-					</c:when>
-					<c:otherwise>
-						<!-- 목록용 링크 -->
-						<a href="memberlist?p=${memberSearchVO.getPreviousBlock()}">&lt;</a>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<a>&lt;</a>
-			</c:otherwise>
-		</c:choose>
-	
-		<!-- 페이지 네비게이터 -->
-		<c:forEach var="i" begin="${memberSearchVO.getStartBlock()}" end="${memberSearchVO.getRealLastBlock()}" step="1">
+			<ul class="pagination pagination-lg center">
 			<c:choose>
-				<c:when test="${memberSearchVO.isSearch()}">
-					<!-- 검색용 링크 -->
-					<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${i}">${i}</a>
+				<c:when test="${memberSearchVO.isPreviousAvailable()}">
+					<c:choose>
+						<c:when test="${memberSearchVO.isSearch()}">
+							<li class="page-item">
+							<!-- 검색용 링크 -->
+							<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getPreviousBlock()}" class="page-link">&lt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<!-- 목록용 링크 -->
+	<%-- 						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a> --%>
+							<li class="page-item">
+							<a href="memberlist?p=${memberSearchVO.getPreviousBlock()}" class="page-link">&lt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<!-- 목록용 링크 -->
-					<a href="memberlist?p=${i}">${i}</a>
+					<a>&laquo;</a>
 				</c:otherwise>
 			</c:choose>
-		</c:forEach>
-
 		
-		<!-- 다음 -->
-		<c:choose>
-			<c:when test="${memberSearchVO.isNextAvailable()}">
+			<!-- 페이지 네비게이터 -->
+			<c:forEach var="i" begin="${memberSearchVO.getStartBlock()}" end="${memberSearchVO.getRealLastBlock()}" step="1">
+				
 				<c:choose>
 					<c:when test="${memberSearchVO.isSearch()}">
+						<li class="page-item">
 						<!-- 검색용 링크 -->
-						<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getNextBlock()}">&gt;</a>
+						<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${i}" class="page-link">${i}</a>
+						</li>
 					</c:when>
 					<c:otherwise>
+						<li class="page-item">
 						<!-- 목록용 링크 -->
-						<a href="memberlist?p=${memberSearchVO.getNextBlock()}">&gt;</a>
+						<a href="memberlist?p=${i}" class="page-link">${i}</a>
+						</li>
 					</c:otherwise>
 				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<a>&gt;</a>
-			</c:otherwise>
-		</c:choose>
+			
+			</c:forEach>
+	
+			
+			<!-- 다음 -->
+			<c:choose>
+				<c:when test="${memberSearchVO.isNextAvailable()}">
+					<c:choose>
+						<c:when test="${memberSearchVO.isSearch()}">
+							<!-- 검색용 링크 -->
+							<li class="page-item">
+								<a href="memberlist?column=${memberSearchVO.column}&keyword=${memberSearchVO.keyword}&p=${memberSearchVO.getNextBlock()}" class="page-link">&gt;</a>
+						</c:when>
+						<c:otherwise>
+							<!-- 목록용 링크 -->
+							<li class="page-item">
+								<a href="memberlist?p=${memberSearchVO.getNextBlock()}" class="page-link">&gt;</a>
+							</li>					
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<a>&raquo;</a>
+				</c:otherwise>
+			</c:choose>
+			</ul>
+		</div>
+		<div class="col">
+		</div>
 	</div>
 	
 	<!-- 검색창 -->
-	<div class="row center">
-		<form method="get">
-	
-			<select name="column" class="form-input form-inline">
-				<c:choose>
-					<c:when test="${MemberSearchVO.columnIs('member_no')}">
+	<div class="row">
+		<div class="col-4">
+		</div>
+		<div class="col-4 right">
+			<form method="get" class="d-flex">
+			
+				<select name="column" class="form-input form-inline">
+					<c:choose>
+						<c:when test="${MemberSearchVO.columnIs('member_no')}">
 						<option value="member_no" selected>회원번호</option>
 						<option value="member_email">이메일</option>
 						<option value="member_nick">닉네임</option>
@@ -116,18 +143,18 @@
 						<option value="member_email">이메일</option>
 						<option value="member_nick" selected>닉네임</option>
 					</c:otherwise>
-				</c:choose>
-			</select>
-			
-			<input type="search" name="keyword" placeholder="검색어 입력" required 
-					value="${MemberSearchVO.keyword}" class="form-input form-inline">
-			
-			<input type="submit" value="검색" class="form-btn form-inline">
-			
-		</form>
+					</c:choose>
+				</select>
+				
+				<input type="search" name="keyword" placeholder="검색어 입력" required 
+						value="${MemberSearchVO.keyword}" class="form-input form-inline">
+				
+				<input type="submit" value="검색" class="btn btn-info my-2 my-sm-0">
+				
+			</form>
+		</div>
+		<div class="col-4">
+		</div>
 	</div>
 </div>
-
-
-
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
