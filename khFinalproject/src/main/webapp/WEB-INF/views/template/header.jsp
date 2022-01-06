@@ -22,13 +22,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
 <!-- Bootstrap CSS CDN-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<!-- boorStrap Skin cdn -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://bootswatch.com/5/journal/bootstrap.css" type="text/css" rel="stylesheet">
 <!-- jquey cdn -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--Bootstrap bundle CSS CDN -->
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
  #header{
@@ -170,13 +169,14 @@
         </li>
         </c:if>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle show active" data-bs-toggle="dropdown" href="${root}/board/main?boardTypeName=1" role="button" aria-haspopup="true" aria-expanded="true">고객센터</a>
-          <div class="dropdown-menu" data-bs-popper="none">
-            <a class="dropdown-item" href="${root}/board/main?boardTypeName=2">자주찾는질문</a>
-            <a class="dropdown-item" href="${root}/board/main?boardTypeName=3">공지/뉴스</a>
-            <a class="dropdown-item" href="${root}/board/main?boardTypeName=4">분실물문의</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="${root}/board/main?boardTypeName=5">단체대관/문의</a>
+        	
+        	<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="${root}/board/main?boardTypeName=1" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
+        	<div class="dropdown-menu">
+				<a class="dropdown-item" href="${root}/board/main?boardTypeName=2">자주찾는질문</a>
+            	<a class="dropdown-item" href="${root}/board/main?boardTypeName=3">공지/뉴스</a>
+            	<a class="dropdown-item" href="${root}/board/main?boardTypeName=4">분실물문의</a>
+            	<div class="dropdown-divider"></div>
+           		<a class="dropdown-item" href="${root}/board/main?boardTypeName=5">단체대관/문의</a>
           </div>
         </li>
       </ul>

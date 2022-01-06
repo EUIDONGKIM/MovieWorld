@@ -13,14 +13,19 @@
  	</div>
  <form method="post">
  	 <div class="row">
- 			<input type="text" name="memberEmail"  value="${cookie.saveId.value}" placeholder="examEmail@google.com" required class="form-input">
+ 	 	<div class="col">
+			<input type="text" name="memberEmail"  value="${cookie.saveId.value}" placeholder="examEmail@google.com" required class="form-input"> 	 	
+ 	 	</div>
  	 </div>
  	
- 	 <div class="row ">
- 			<input type="password" name="memberPw" placeholder="pawssword" required class="form-input">
+ 	 <div class="row">
+ 	 	<div class="col">
+			<input type="password" name="memberPw" placeholder="pawssword" required class="form-input">
+ 	 	</div>
  	 </div>
  	
 	 <div class="row">
+	 	<div class="col">
 		 	<label>
 		 	<c:choose>
 		 		<c:when test="${cookie.saveId==null}">
@@ -32,16 +37,21 @@
 		 	</c:choose>
 			 	아이디 저장
 		 	</label>
+	 	</div>
 	 </div>
 
  	 
  	 <div class="row">
+ 	 	<div class="col">
  			<input type="submit" value="login" class="form-btn">
+ 	 	</div>
  	 </div>
  	 
 	<c:if test="${param.error != null}">
 		<div class="row center">
-			<h4 class="error">입력하신 정보가 일치하지 않습니다</h4>
+			<div class="col">
+				<h4 class="error">입력하신 정보가 일치하지 않습니다</h4>
+			</div>
 		</div>
 	</c:if>
  	 

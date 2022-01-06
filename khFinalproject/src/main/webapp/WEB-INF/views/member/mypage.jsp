@@ -134,9 +134,9 @@
                     <a class="list-group-item list-group-item-action "   disabled style="text-align: center;">MY PAGE</a>
                     <br>
                     <a  class="list-group-item list-group-item-action active" style="text-align: center;">회원정보수정</a>
-                    <a href="edit" class=" list-group-item list-group-item-action atag">회원정보수정하러가기</a>
-                    <a href="quit" class="list-group-item list-group-item-action  atag">회원탈퇴하기</a>
-                    <a href="changePw" class=" list-group-item list-group-item-action atag">비밀번호변경</a>
+                    <a href="edit" class=" list-group-item list-group-item-action atag1">회원정보수정하러가기</a>
+                    <a href="quit" class="list-group-item list-group-item-action  atag2">회원탈퇴하기</a>
+                    <a href="changePw" class=" list-group-item list-group-item-action atag3">비밀번호변경</a>
 					<br>
 					<a class="list-group-item list-group-item-action active" style="text-align: center;">이용내역</a>
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag1">내가 작성한 게시글보기</a>
