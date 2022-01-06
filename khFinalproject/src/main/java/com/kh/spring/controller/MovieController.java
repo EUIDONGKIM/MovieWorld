@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -24,11 +26,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.movie.MovieLikeDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
@@ -63,6 +67,10 @@ public class MovieController {
 	
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
+	
+	//좋아요
+	@Autowired
+	private MovieLikeDao movieLikeDao;
 	
 	
 	@GetMapping("/insert")
@@ -301,4 +309,11 @@ public class MovieController {
 	
 	
 	
+	
+	//좋아요 기능
+	@PostMapping("/data/isnertLike")
+	@ResponseBody
+	public void insertLike(@ModelAttribute MovieLikeDto movieLikeDto, HttpSession session) {
+		
+	}
 }
