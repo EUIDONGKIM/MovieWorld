@@ -63,5 +63,10 @@ public class ActorDaoImpl implements ActorDao{
 		return sqlSession.selectList("actor.search",param);
 	}
 
+	@Override
+	public int getSequence() {
+		return sqlSession.selectOne("actor.getSequence");
+	}
+
 	
 }
