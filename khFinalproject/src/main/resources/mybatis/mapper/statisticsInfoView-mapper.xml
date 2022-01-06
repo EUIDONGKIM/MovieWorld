@@ -19,7 +19,6 @@
 	<select id="countByReservation" resultType="ChartVO">
 		select movie_title text ,count(reservation_no) count from(
 		select * from statistics_info_view where reservation_no>0 and reservation_status='결제완료'
-		<![CDATA[and sysdate < schedule_end]]>
 		) group by movie_title order by count desc
 	</select>
 	
@@ -73,7 +72,6 @@
 	<select id="totalReservationByTheater" resultType="ChartVO">
 		select theater_name text ,count(reservation_no) count from(
 		select * from statistics_info_view where reservation_no>0 and reservation_status='결제완료'
-		<![CDATA[and sysdate < schedule_end]]>
 		) group by theater_name order by count desc
 	</select>
 	

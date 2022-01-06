@@ -12,8 +12,8 @@ public class PaginationActorVO {
 	private String actorName;
 	private String actorJob;
 	private int count;
-	private int pageSize = 10;
-	private int blockSize = 10;
+	private int pageSize = 5;
+	private int blockSize = 5;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
 	private List<ActorDto> list;
