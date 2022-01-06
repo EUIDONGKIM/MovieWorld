@@ -11,5 +11,5 @@ public interface ScheduleTimeDiscountDao {
 	
 	boolean delete(int scheduleTimeDiscountNo);
 	
-	boolean edit(ScheduleTimeDiscountDto scheduleTimeDiscountDto);
+	void edit(ScheduleTimeDiscountDto scheduleTimeDiscountDto);
 }

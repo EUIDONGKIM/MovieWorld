@@ -2,6 +2,7 @@ package com.kh.spring.repository.movie;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,35 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 		moviePhotoDto.setMoviePhotoSaveName(String.valueOf(sequencePhoto));
 		sqlSession.insert("moviePhoto.insert",moviePhotoDto);
 	}
+
+	@Override
+	public List<MoviePhotoDto> list(int movieNo) {
+		return sqlSession.selectList("moviePhoto.list",movieNo);
+	}
+
+	@Override
+	public void delete(int moviePhotoNo) {
+		sqlSession.delete("moviePhoto.delete",moviePhotoNo);
+	}
+
+	@Override
+	public void update(MoviePhotoDto moviePhotoDto, MultipartFile photo) throws IllegalStateException, IOException {
+
+		File target = new File(directory,moviePhotoDto.getMoviePhotoSaveName());
+		photo.transferTo(target);
+		
+		sqlSession.update("moviePhoto.update",moviePhotoDto);
+  }
+  
+  @Override
+	public List<MoviePhotoDto> getList(int movieNo) {
+		return sqlSession.selectList("moviePhoto.getPhotoList", movieNo);
+
+	}
+
+		@Override
+		public MoviePhotoDto get(int moviePhotoNo) {
+			return sqlSession.selectOne("moviePhoto.get", moviePhotoNo);
+		}
 
 }

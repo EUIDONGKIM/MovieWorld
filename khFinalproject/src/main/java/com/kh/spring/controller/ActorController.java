@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.actor.ActorDto;
-import com.kh.spring.entity.schedule.ScheduleDto;
 import com.kh.spring.repository.actor.ActorDao;
+import com.kh.spring.service.ActorService;
+import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.GetProxy;
 
 @Slf4j
 @Controller
@@ -23,6 +23,8 @@ public class ActorController {
 	
 	@Autowired
 	private ActorDao actorDao;
+	@Autowired
+	private ActorService actorService;
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -37,10 +39,22 @@ public class ActorController {
 //		return"redirect:/actor/detail?actorNo="+actorDto.getActorNo();
 	}
 	
-	@GetMapping("/list")
+	//@GetMapping("/list")
 	public String list(Model model) {
 		model.addAttribute("list", actorDao.list());
 		return "actor/list";
+	}
+	@GetMapping("/list")
+	public String list(
+			@ModelAttribute PaginationActorVO paginationActorVO,
+			Model model) throws Exception {
+		model.addAttribute("PaginationActorVO",actorService.serachPage(paginationActorVO));
+		return "actor/list";
+	}
+	@GetMapping("/delete")
+	public String delete(@RequestParam int actorNo) throws Exception {
+		actorDao.delete(actorNo);
+		return "redirect:/actor/list";
 	}
 	
 }

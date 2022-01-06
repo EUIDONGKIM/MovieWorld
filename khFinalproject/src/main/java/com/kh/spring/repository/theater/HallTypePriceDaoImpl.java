@@ -35,8 +35,8 @@ public class HallTypePriceDaoImpl implements HallTypePriceDao{
 	}
 
 	@Override
-	public boolean edit(HallTypePriceDto hallTypePriceDto) {
-		return sqlSession.update("hallTypePrice.edit", hallTypePriceDto) > 0;
+	public void edit(HallTypePriceDto hallTypePriceDto) {
+		sqlSession.update("hallTypePrice.edit", hallTypePriceDto);
 	}
 	
 }

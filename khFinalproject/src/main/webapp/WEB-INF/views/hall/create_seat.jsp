@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.13/cinema/hacademy-cinema.css"> -->
-<!-- 이미지가 안바껴서 강사님 코드 css에 넣어둠 (허락맡아야함) 현재는 테스트 이미지 -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.17/cinema/hacademy-cinema.css">
     <style>
         *{
@@ -35,12 +33,8 @@
     </script>    
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1> 상영관 생성 </h1>
-<h1 align="center">Demo 1 : Manager auto mode</h1>
+<h1> 좌석 설정 </h1>
     <ul>
-        <li>관리자 모드에서는 최초에 좌석을 생성하기 위한 명령을 지원</li>
-        <li>.cinema-seat-area에 data-mode="manager"로 관리자 모드 설정</li>
-        <li>좌석을 우클릭하면 시계 방향으로 회전</li>
         <li>좌석을 선택한 후 Delete 키를 누르면 좌석 삭제</li>
         <li>좌석을 선택한 후 F2 키를 누르면 좌석이 사라지고 공간으로 병합됨</li>
         <li>좌석을 선택한 후 F3 키를 누르면 좌석이 선택 불가로 전환됨</li>
@@ -56,7 +50,7 @@
                 </div>
         
                 <input type="hidden" name="hallNo" value="${hallDto.hallNo}">
-                <input type="submit" value="선택">
+                <input type="submit" value="좌석 등록">
             </form>
         </div>
 

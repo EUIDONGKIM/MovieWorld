@@ -22,6 +22,8 @@ public class SeatServiceImpl implements SeatService{
 	
 	@Override
 	public void setSeatandUpdateHall(List<SeatDto> seatList, int hallNo) {
+		
+		seatDao.delete(hallNo); //일단 좌석 삭제하고 다시 생성
 
 		int count = 0;
 		for(SeatDto seatDto : seatList) {
