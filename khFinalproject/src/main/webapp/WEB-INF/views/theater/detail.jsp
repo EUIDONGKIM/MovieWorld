@@ -90,7 +90,7 @@
 </div>
 
 <hr>
-<h2>지도 영역</h2>
+<h2>교통안내</h2>
 <template id="marker-info-window-template">
 	<div style="padding:5px;">
 		무비월드 ${theaterDto.theaterName}<br>
@@ -104,12 +104,12 @@
 <!-- 
  List<Map<Integer,Map<Integer,List<LastInfoViewDto>>>>
  -->
-<h2>상영시간표 영역</h2>
-	<div class="row center">
+<h2>상영시간표</h2>
+	<div class="row">
 	
-			<div class="row center">
+			<div class="col">
 				<c:forEach var="i" items="${dateList}" varStatus="index">
-					<button class="btn-page" data-count="${index.count}" data-value="${i}">${i}</button>
+					<button class="btn-page btn" data-count="${index.count}" data-value="${i}">${i}</button>
 				</c:forEach>
 			</div>
 			<h3>
