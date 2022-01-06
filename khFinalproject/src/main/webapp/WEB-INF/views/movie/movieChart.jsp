@@ -47,7 +47,7 @@
      
       <c:forEach var="movieChartVO" items="${list}">
       	<div class="container">
-	      	<div class="row-vh d-flex flex-row justify-content-around">
+	      	<div class="row-vh d-flex flex-row justify-content-around ">
 	      		<div class="item">
 <%-- 	      			${index.current} --%>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
