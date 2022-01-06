@@ -1,6 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
+import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.service.ActorService;
 import com.kh.spring.vo.PaginationActorVO;
@@ -40,7 +42,7 @@ public class ActorController {
 		int sequence = actorService.insert(actorDto,attach);
 		
 		return "redirect:/actor/list";
-//		return "redirect:/movie/detail?actorNo="+sequence;
+//		return "redirect:/actor/detail?actorNo="+sequence;
 //		return"redirect:/actor/detail?actorNo="+actorDto.getActorNo();
 	}
 	
@@ -56,10 +58,28 @@ public class ActorController {
 		model.addAttribute("PaginationActorVO",actorService.serachPage(paginationActorVO));
 		return "actor/list";
 	}
+	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int actorNo) throws Exception {
-		actorDao.delete(actorNo);
+		actorService.delete(actorNo);
 		return "redirect:/actor/list";
 	}
 	
+	@GetMapping("/edit")
+	public String edit(@RequestParam int actorNo,Model model) {
+		ActorDto actorDto = actorDao.get(actorNo);
+		model.addAttribute("actorDto",actorDto);
+		return "actor/edit";
+	}
+	@PostMapping("/edit")
+	public String edit(
+			@ModelAttribute ActorDto actorDto,
+			@RequestParam(required = false) MultipartFile attach
+			) throws IllegalStateException, IOException {	
+		
+		actorService.edit(actorDto,attach);
+		return "redirect:/actor/list";
+		//return "redirect:/actor/detail?actor="+actorDto.getActorNo();
+	}	
+
 }
