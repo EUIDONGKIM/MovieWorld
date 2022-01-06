@@ -12,6 +12,10 @@
 </script>
 
 <h2>영화인 목록</h2>
+<div class="row center">
+<h3><a href="${root}/actor/insert">영화인 추가</a></h3>
+</div>
+
 <form method="get">
 		<div class="row center">
 			<label>직업 선택</label>

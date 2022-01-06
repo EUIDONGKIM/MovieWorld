@@ -18,7 +18,7 @@
 
 	<insert id="insert" parameterType="ActorDto">
 		insert into actor values(
-		actor_seq.nextval,
+		#{actorNo},
 		#{actorName},
 		#{actorEngName},
 		#{actorBirth},
@@ -26,6 +26,10 @@
 		#{actorNationality}
 		)
 	</insert>
+	
+	<select id="getSequence" resultType="int">
+		select actor_seq.nextval from dual
+	</select>
 	
 	<select id="list" resultType="ActorDto">
 		select * from actor
