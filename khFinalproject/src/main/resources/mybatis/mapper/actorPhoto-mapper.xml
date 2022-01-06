@@ -25,20 +25,29 @@
 		#{actorPhotoType}
 		)
 	</insert>
+	
 	<select id="getSequence" resultType="int">
 		select actor_photo_seq.nextval from dual
 	</select>
-	<!-- 
-	<select id="list" parameterType="int" resultType="ActorPhotoDto">
-		select * from boardFile where board_no = #{boardNo}
-	</select>
+	
+	<update id="update" parameterType="ActorPhotoDto">
+		update actor_photo set
+		actor_photo_upload_name = #{actorPhotoUploadName},
+		actor_photo_size = #{actorPhotoSize},
+		actor_photo_type = #{actorPhotoType}
+		where actor_photo_no = #{actorPhotoNo}
+	</update>
 	
 	<select id="get" parameterType="int" resultType="ActorPhotoDto">
-		select * from boardFile where board_file_no = #{boardFileNo}
+		select * from actor_photo where actor_photo_no = #{actorPhotoNo}
 	</select>
-		
+	
+	<select id="getByActor" parameterType="int" resultType="ActorPhotoDto">
+		select * from actor_photo where actor_no = #{actorNo}
+	</select>
+	
 	<delete id="delete" parameterType="int">
-		delete boardFile where board_file_no = #{boardFileNo}
-	</delete>	
-	 -->
+		delete actor_photo where actor_photo_no = #{actorPhotoNo}
+	</delete>
+	
 </mapper>

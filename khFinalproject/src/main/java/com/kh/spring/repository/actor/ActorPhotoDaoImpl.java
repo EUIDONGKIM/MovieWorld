@@ -31,4 +31,26 @@ public class ActorPhotoDaoImpl implements ActorPhotoDao{
 		
 		sqlSession.insert("actorPhoto.save",actorPhotoDto);
 	}
+
+	@Override
+	public void update(ActorPhotoDto findPhotoDto, MultipartFile attach) throws IllegalStateException, IOException {
+		File target = new File(directory,findPhotoDto.getActorPhotoSaveName());
+		attach.transferTo(target);
+		sqlSession.insert("actorPhoto.update",findPhotoDto);
+	}
+
+	@Override
+	public ActorPhotoDto get(int actorPhotoNo) {
+		return sqlSession.selectOne("actorPhoto.get",actorPhotoNo);
+	}
+
+	@Override
+	public ActorPhotoDto getByActor(int actorNo) {
+		return sqlSession.selectOne("actorPhoto.getByActor",actorNo);
+	}
+
+	@Override
+	public void delete(int actorPhotoNo) {
+		sqlSession.delete("actorPhoto.delete",actorPhotoNo);
+	}
 }
