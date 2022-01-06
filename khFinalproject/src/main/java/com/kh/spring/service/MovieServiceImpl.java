@@ -68,6 +68,22 @@ public class MovieServiceImpl implements MovieService{
 		boolean checkSingle = !photo.isEmpty();
 		log.debug("단일 파일 트루?={}",checkSingle);
 		
+		//건아님이 요청하셔서전 오늘 코드를 하나도 짜지못했지만 흔쾌히 해드리는 코드
+		List<MoviePhotoDto> list1 = moviePhotoDao.list(movieDto.getMovieNo());
+		if(list1.isEmpty()) {
+			//아무 사진도 등록되지 않았으면, 메인 포스터만 우선 먼저 등록하세요.
+			MoviePhotoDto moviePhotoDto = new MoviePhotoDto();
+			moviePhotoDto.setMovieNo(movieDto.getMovieNo());
+			moviePhotoDto.setMoviePhotoUploadName(photo.getOriginalFilename());
+			moviePhotoDto.setMoviePhotoSize(photo.getSize());
+			moviePhotoDto.setMoviePhotoType(photo.getContentType());
+			
+			moviePhotoDao.insert(moviePhotoDto,photo);
+			return;
+		}
+		
+		
+		
 		if(checkSingle) {
 			List<MoviePhotoDto> list = moviePhotoDao.list(movieDto.getMovieNo());
 			MoviePhotoDto findDto = list.get(0);
@@ -167,8 +183,6 @@ public class MovieServiceImpl implements MovieService{
 				}
 			}
 		}
-		
-		
 		
 	
 		
