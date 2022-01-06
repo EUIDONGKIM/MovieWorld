@@ -1,8 +1,6 @@
 package com.kh.spring.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
@@ -198,8 +193,14 @@ public class MovieController {
 
 	//무비차트
 	@GetMapping("/movieChart")
-	public String movieChart(Model model) {
-		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+	public String movieChart(Model model,@RequestParam(required = false,defaultValue = "0") int nowMovie) {
+		
+		List<Integer> movieNoList = new ArrayList<>();
+		if(nowMovie == 1) {
+			movieNoList = totalInfoViewDao.nowMoiveList();
+		}else {
+			movieNoList = totalInfoViewDao.nowTMoiveListContainSoon();
+		}
 		List<MovieDto> movieList = movieDao.nowList(movieNoList);
 		
 		List<ChartVO> vo = statisticsInfoViewDao.countForReservationRatio();
@@ -211,12 +212,17 @@ public class MovieController {
 		}
 		
 		for(MovieDto movieDto : movieList) {
+			
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
 			MovieChartVO movieChartVO = new MovieChartVO();
 			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
 			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
 			movieChartVO.setMovieNo(movieDto.getMovieNo());
 			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
 			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
 			
 			for(ChartVO chartVO : vo) {
 				if(movieDto.getMovieTitle().equals(chartVO.getText())) {
@@ -225,13 +231,14 @@ public class MovieController {
 					float changeToTwo = Float.parseFloat(num);
 					movieChartVO.setMovieRatio(changeToTwo);
 					break;
+					
 				}
 			}
 			
 			list.add(movieChartVO);
 		}
-		
 		model.addAttribute("list",list);
+		model.addAttribute("nowMovie",nowMovie);
 		return "movie/movieChart";
 	}
 	
@@ -271,31 +278,24 @@ public class MovieController {
 //	차트vo에다가 무비포토넘버를 하나 추가, 무비컨트롤러에서 
 //	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
 //	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
-	
-	@Value("${config.rootpath}")
-	public String directory;
 
 	@GetMapping("/movieImg")
 	@ResponseBody					
 	public ResponseEntity<ByteArrayResource> imgFile(
-				@RequestParam int movieNo
+				@RequestParam int moviePhotoNo
 			) throws IOException {
-		
-		List<MoviePhotoDto> list = moviePhotoDao.getList(movieNo);
-		
-		File file = new File("C:/upload/kh81", list.get(0).getMoviePhotoSaveName());
-		
-		byte[] data = FileUtils.readFileToByteArray(file);
+		MoviePhotoDto moviePhotoDto = moviePhotoDao.get(moviePhotoNo);
+		byte[] data = moviePhotoDao.load(moviePhotoNo);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
-		String encodeName = URLEncoder.encode(list.get(0).getMoviePhotoUploadName() , "UTF-8");
+		String encodeName = URLEncoder.encode(moviePhotoDto.getMoviePhotoUploadName() , "UTF-8");
 		encodeName = encodeName.replace("+", "%20");
 		
 		return ResponseEntity.ok()				
 									.contentType(MediaType.APPLICATION_OCTET_STREAM)
 									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
 									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-									.contentLength(list.get(0).getMoviePhotoSize())
+									.contentLength(moviePhotoDto.getMoviePhotoSize())
 								.body(resource);
 	}
 	

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,7 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 	@Autowired
 	private SqlSession sqlSession;
 	//저장용 폴더
-	@Value("${config.rootpath}")
+	@Value("${config.rootpath.movie}")
 	public String directory;
 	
 	@Override
@@ -61,6 +62,18 @@ public class MoviePhotoDaoImpl implements MoviePhotoDao{
 	public List<MoviePhotoDto> getList(int movieNo) {
 		return sqlSession.selectList("moviePhoto.getPhotoList", movieNo);
 
+	}
+
+	@Override
+	public MoviePhotoDto get(int moviePhotoNo) {
+		return sqlSession.selectOne("moviePhoto.get", moviePhotoNo);
+	}
+
+	@Override
+	public byte[] load(int moviePhotoNo) throws IOException {
+		File target = new File(directory,String.valueOf(moviePhotoNo));
+		byte[] data = FileUtils.readFileToByteArray(target);
+		return data;
 	}
 
 }

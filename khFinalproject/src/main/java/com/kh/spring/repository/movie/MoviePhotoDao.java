@@ -23,4 +23,8 @@ public interface MoviePhotoDao {
 	
 	List<MoviePhotoDto>getList(int movieNo);
 
+	MoviePhotoDto get(int moviePhotoNo);
+
+	byte[] load(int moviePhotoNo) throws IOException;
+
 }

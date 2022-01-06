@@ -66,13 +66,18 @@
 	</select>
 	
 	<select id="nowList" parameterType="map" resultType="MovieDto">
+		<choose>
+		<when test="list.size() > 0">
 		select * from movie
-		<if test="list.size() > 0">
 			where movie_no in 
 			<foreach collection="list" open="(" close=")" separator="," item="no">
 				#{no}
 			</foreach>
-		</if>
+		</when>
+		<otherwise>
+			select * from movie where movie_no=0
+		</otherwise>
+		</choose>
 	</select>
 	
 	<select id="getTitleList" parameterType="String" resultType="MovieDto">
