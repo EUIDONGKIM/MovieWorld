@@ -147,16 +147,16 @@ public class BoardController {
 	@GetMapping("userWriteList")
 	public String userWriteList(HttpSession session,Model model
 			,@ModelAttribute BoardSearchVO boardSearchVO
-			,@RequestParam (required = false ,defaultValue = "1")int boardTypeName ) throws Exception  {
-
+			) throws Exception  {
+		System.out.println("P = " + boardSearchVO.getP());
 		String memberEmail = (String)session.getAttribute("ses");
 		
 		BoardSearchVO param = boardService.searchNPagingByMember(boardSearchVO,memberEmail);
 		model.addAttribute("boardSearchVO",param);
-
-
+		
 		return "board/userWriteList";
 	}
+	
 	
 
 	@GetMapping("/file")

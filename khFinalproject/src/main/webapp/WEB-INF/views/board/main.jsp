@@ -84,9 +84,9 @@
 	
 	<!-- 게시판 아래부분  -->
 	<div class="row">
-		<div class="col-4">
+		<div class="col">
 		</div>
-		<div class="col-4 ">
+		<div class="col">
 		<!-- 이전 버튼 -->
 			<ul class="pagination pagination-lg center">
 			<c:choose>
@@ -157,7 +157,7 @@
 			</c:choose>
 			</ul>
 		</div>
-		<div class="col-4">
+		<div class="col">
 		</div>
 	</div>
 	
