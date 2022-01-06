@@ -24,4 +24,6 @@ public interface ActorDao {
 	List<ActorDto> search(String actorJob, String actorName, int begin, int end);
 
 	int getSequence();
+
+	void update(ActorDto actorDto);
 }

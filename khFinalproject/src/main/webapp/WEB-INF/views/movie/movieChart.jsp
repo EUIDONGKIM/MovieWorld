@@ -2,10 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 	<style>
-	
+	.board{
+	padding:20px;
+	}
 	</style>
 	<script>
 		$(function(){
@@ -45,16 +48,23 @@
 	</div>
       <%--for문으로 시작--%>
      
-      <c:forEach var="movieChartVO" items="${list}">
       	<div class="container">
-	      	<div class="row-vh d-flex flex-row justify-content-around">
-	      		<div class="item">
+	      	<div class="board d-flex flex-wrap">
+      <c:forEach var="movieChartVO" items="${list}">
+	      		<div class="board">
 <%-- 	      			${index.current} --%>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
-	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="100%"></a>
+	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
       						
       				<div class="row">
-      					<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
+      					<c:choose>
+      						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
+      							<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
+      						</c:when>
+      						<c:otherwise>
+      							<a href="${root}/movie/movieDetail">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
+      						</c:otherwise>
+      					</c:choose>
       				</div>
       				<div class="row">예매율 : ${movieChartVO.movieRatio}%</div>
       				<div class="row">평점 : ${movieChartVO.movieStarpoint}점</div>
@@ -63,25 +73,10 @@
       					<a href="${root}/reservation/">예매하기</a>
       				</div>      		
 	      		</div>        
+      </c:forEach>
       	    </div>
 		</div>
-      </c:forEach>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
-<!--       		<div class="row"> -->
-<%--       			<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}"> --%>
-<%--       			<img src="${root}/movie/movieImg?movieNo=${movieChartVO.movieNo}" width="100%"></a> --%>
-<!--       		</div> -->
-<!--       		<div class="row"> -->
-<%--       			<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a> --%>
-<!--       		</div> -->
-<%--       		<div class="row">예매율 : ${movieChartVO.movieRatio}%</div> --%>
-<%--       		<div class="row">평점 : ${movieChartVO.movieStarpoint}점</div> --%>
-<%--       		<div class="row">${movieChartVO.movieOpening} 개봉</div> --%>
-<!--       		<div class="row"> -->
-<%--       			<a href="${root}/reservation/">예매하기</a> --%>
-<!--       		</div>      		 -->
-<!--       	</div> -->
-<%--       </c:forEach> --%>
       

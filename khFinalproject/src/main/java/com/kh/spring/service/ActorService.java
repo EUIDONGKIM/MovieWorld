@@ -15,4 +15,8 @@ public interface ActorService {
 
 	int insert(ActorDto actorDto, MultipartFile attach) throws IllegalStateException, IOException;
 
+	void edit(ActorDto actorDto, MultipartFile attach) throws IllegalStateException, IOException;
+
+	void delete(int actorNo);
+
 }

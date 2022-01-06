@@ -68,5 +68,10 @@ public class ActorDaoImpl implements ActorDao{
 		return sqlSession.selectOne("actor.getSequence");
 	}
 
+	@Override
+	public void update(ActorDto actorDto) {
+		sqlSession.update("actor.update",actorDto);
+	}
+
 	
 }

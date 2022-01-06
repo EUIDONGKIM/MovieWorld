@@ -55,9 +55,9 @@
 				<td>${actorDto.actorJob}</td>
 				<td>${actorDto.actorNationality}</td>
 				<td>
-					<button onclick="location.href='${root}/movie/actorDetail?actorNo=${actorDto.actorNo}'">상세</button>
-					<button onclick="location.href='${root}/movie/edit?actorNo=${actorDto.actorNo}'">수정</button>
-					<button onclick="location.href='${root}/movie/delete?actorNo=${actorDto.actorNo}'">삭제</button>
+					<button onclick="location.href='${root}/actor/detail?actorNo=${actorDto.actorNo}'">상세</button>
+					<button onclick="location.href='${root}/actor/edit?actorNo=${actorDto.actorNo}'">수정</button>
+					<button onclick="location.href='${root}/actor/delete?actorNo=${actorDto.actorNo}'">삭제</button>
 				</td>
 			</tr>	
 		</c:forEach>	

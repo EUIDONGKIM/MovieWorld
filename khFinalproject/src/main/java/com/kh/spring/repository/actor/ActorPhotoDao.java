@@ -10,4 +10,12 @@ public interface ActorPhotoDao {
 
 	void save(ActorPhotoDto actorPhotoDto, MultipartFile attach) throws IllegalStateException, IOException;
 
+	void update(ActorPhotoDto findPhotoDto, MultipartFile attach) throws IllegalStateException, IOException;
+
+	ActorPhotoDto get(int actorPhotoNo);
+
+	ActorPhotoDto getByActor(int actorNo);
+
+	void delete(int actorPhotoNo);
+
 }
