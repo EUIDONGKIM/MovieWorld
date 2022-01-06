@@ -2,7 +2,7 @@ package com.kh.spring.entity.actor;
 
 import lombok.Data;
 
-@Data 
+@Data  
 public class ActorDto {
 	private int actorNo;
 	private String actorName;
