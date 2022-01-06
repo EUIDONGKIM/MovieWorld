@@ -6,7 +6,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 	<style>
-	
+	.board{
+	padding:20px;
+	}
 	</style>
 	<script>
 		$(function(){
