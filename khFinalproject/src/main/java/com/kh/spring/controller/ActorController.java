@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/actor")
 public class ActorController {
-	//
+	//머고
 	@Autowired
 	private ActorDao actorDao;
 	@Autowired
