@@ -14,11 +14,11 @@ $(function(){
 		}
 	});
 	
-	var d = new Date();
-	var day = d.toISOString();
-	var input = day.substring(0,10);
-	$("input[name=movieOpening]").attr("min",input);
-	
+// 	var d = new Date();
+// 	var day = d.toISOString();
+// 	var input = day.substring(0,10);
+// 	$("input[name=movieOpening]").attr("min",input);
+
 });
 </script>
 
