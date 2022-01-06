@@ -7,6 +7,7 @@
 <c:set var="login" value="${ses != null}"></c:set>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
+<c:set var="memberNo" value="${memberNo}"></c:set>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -75,6 +76,7 @@
 							</div>
 							<div class="col-6">
 								<h4>등급 : ${grade}</h4>
+								<h4>회원번호 : ${memberNo}</h4>
 							</div>
 						</div>
 					</div>

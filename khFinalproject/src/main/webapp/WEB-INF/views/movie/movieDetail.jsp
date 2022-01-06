@@ -29,6 +29,7 @@
   								<em class="round lightblue">
   									<span>현재상영중</span>
   								</em>
+  								<button type="button">좋아요</button>
   							<p>Spider-Man: No Way Home</p>
   							<hr>
   							</div>
