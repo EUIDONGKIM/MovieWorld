@@ -259,7 +259,7 @@ public class MemberController {
 
 		boolean result = memberDao.changeInformation(memberDto,memberPw);
 		if (result) {
-			return "redirect:edit_success";
+			return "redirect:mypage";
 		} else {
 			return "redirect:edit?error";
 		}
