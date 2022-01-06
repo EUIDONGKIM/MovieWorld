@@ -19,10 +19,8 @@ public interface StorePhotoDao {
 	
 
 
-	StorePhotoDto get(int productPhotoNo);
 
-	byte[] load(int productPhotoNo) throws IOException;
 
-	StorePhotoDto get(String productNo);
+
 
 }
