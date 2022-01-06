@@ -86,7 +86,7 @@
 	<div class="row">
 		<div class="col">
 		</div>
-		<div class="col">
+		<div class="col center">
 		<!-- 이전 버튼 -->
 			<ul class="pagination pagination-lg center">
 			<c:choose>

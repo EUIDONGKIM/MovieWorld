@@ -262,13 +262,31 @@ $(function() {$("input[name=memberBirth]").on("input",function() {
 	}
 });
 });
+//회원약관 체크시에만 버튼 활성화
+$(function(){
+	$("input[type=checkbox]").change(function(){
+	/* 값을 불러오기 위한 코드 */
+	var test1 = document.getElementById('#pass1');
+	var test2 = document.getElementById('#pass2');
+	
+	var var1 = $("#pass1").prop("checked");
+	var var2 = $("#pass2").prop("checked");
+	console.log(var1);
+	console.log(var2);
+
+	if(var1&&var2){
+		$("#next-buttton").prop("disabled",false);
+	}
+	
+	});
+});
 
 $(function(){
     //[1] 1페이지 빼고 다 숨김
     //= 다 숨기고 1페이지만 표시
     $(".page").hide();
     $(".page").eq(0).show();
-
+	
     //[2] 페이지 번호 관리 변수 생성
     var p = 0;
 
@@ -277,20 +295,13 @@ $(function(){
     //= form 안의 버튼은 submit 효과가 자동 부여되므로 이를 방지해야 한다.
     $(".btn-next").click(function(e){
         e.preventDefault();
-
+		
         p++;
         $(".page").hide();
         $(".page").eq(p).show();
     });
 
-    //[4] 이전 단계로 버튼에 대한 이벤트 처리
-    $(".btn-prev").click(function(e){
-        e.preventDefault();
 
-        p--;
-        $(".page").hide();
-        $(".page").eq(p).show();
-    });
 });
 
 
@@ -543,7 +554,7 @@ $(function(){
 
 			   </textarea>
 			   <div class="row left">   
-				   <label><input type="checkbox"><span>위 약관에 동의합니다</span></label>
+				   <label><input type="checkbox" id="pass1" required><span>위 약관에 동의합니다</span></label>
 			   </div>
 			 </div>
 			
@@ -688,12 +699,12 @@ $(function(){
 1) 공고일자 : 2018년 05월 01일
 2) 시행일자 : 2018년 05월 01일 </textarea>
 			   <div class="row left">   
-				   <label><input type="checkbox"><span>위 약관에 동의합니다</span></label>
+				   <label><input type="checkbox" id="pass2" required><span>위 약관에 동의합니다</span></label>
 			   </div>
 			 </div>
 			
 		   <div class="row">
-		      <button class="btn btn-next form-btn">다음 단계로</button>
+		      <button class="btn-next btn btn-info"  id="next-buttton" disabled>다음 단계로</button>
 		   </div>
 	</div>
 </div>
