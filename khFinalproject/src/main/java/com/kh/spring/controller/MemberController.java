@@ -129,6 +129,7 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("ses");
 		session.removeAttribute("grade");
+		session.removeAttribute("memberNo");
 		return "redirect:/";
 	}
 	
