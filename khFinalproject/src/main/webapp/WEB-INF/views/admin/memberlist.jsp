@@ -45,7 +45,7 @@
 		</div>
 		<div class="col center" >
 		<!-- 이전 버튼 -->
-			<ul class="pagination pagination-lg center">
+			<ul class="pagination pagination-lg center" style="justify-content: center;">
 			<c:choose>
 				<c:when test="${memberSearchVO.isPreviousAvailable()}">
 					<c:choose>
@@ -121,7 +121,7 @@
 	<div class="row">
 		<div class="col-4">
 		</div>
-		<div class="col-4 right">
+		<div class="col-4">
 			<form method="get" class="d-flex">
 			
 				<select name="column" class="form-input form-inline">
