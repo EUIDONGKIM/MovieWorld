@@ -203,6 +203,7 @@ public class MemberController {
 	
 	@GetMapping("/changePw")
 	public String changePw() {
+		System.out.println("changePw입갤");
 		return "member/changePw";
 	}
 	
@@ -213,9 +214,8 @@ public class MemberController {
 			HttpSession session) {
 		String memberId = (String) session.getAttribute("ses");
 		boolean result = memberDao.changePassword(memberId, memberPw, changePw);
-
 		if(result) {
-			return "redirect:/";
+			return "redirect:mypage";
 		}
 		else {
 			return "redirect:changePw?error";
