@@ -148,4 +148,20 @@
 	<update id="viewUp" parameterType="int">
 		update board set board_views=board_views+1 where board_no=#{boardNo}
 	</update>
+	
+	
+	<!-- 리뷰 글작성 -->
+	<insert id="reviewWrite" parameterType="ReviewDto">
+		insert into review values(
+			#{movieNo},
+			#{memberNo},
+			#{reviewContent},
+			1,
+			 sysdate,
+		 	0,	
+		)
+	</insert>
+	
+	
+	
 </mapper>

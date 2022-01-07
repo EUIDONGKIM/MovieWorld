@@ -300,7 +300,7 @@
  				</thead>
  				<tbody>
    					<tr>
-     			 		<td>관람평</td>
+     			 		<td>${movieDto.movieContent}</td>
      			 		<td>관람평</td>
   			 		</tr>
   			 		<tr>
