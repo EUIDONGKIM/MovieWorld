@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.repository.member.MemberDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,13 @@ public class MemberTest {
 	  
 	  @Test
 	  public void test01() {
-		  log.debug("리스트={}",sqlSession.selectOne("member.getPoint","khmaster@kh.com").toString());
+//		  log.debug("리스트={}",sqlSession.selectOne("member.get","khmaster@kh.com").toString());
+		  MemberDto memberDto = new MemberDto();
+		  
+		  memberDto = memberDao.get("dkwntbvj@naver.com");
+		  
+		  System.out.println(memberDto);
 	  }
+	  
+	
 }

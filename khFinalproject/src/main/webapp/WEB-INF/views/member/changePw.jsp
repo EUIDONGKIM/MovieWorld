@@ -8,17 +8,17 @@
 		</div>
 		<form method="post">
 			<div class="row">
-				<label>현재 비밀번호</label>
-				<input type="password" name="memberPw" required class="form-control fsize" id="floatingInput">
+					<label>현재 비밀번호</label>
+					<input type="password" name="memberPw" required class="form-control fsize" id="floatingInput">
 			</div>
 			
 			<div class="row">
-				<label>바꿀 비밀번호</label>
-				<input type="password" name="changePw" required class="form-control fsize" id="floatingInput">
+					<label>바꿀 비밀번호</label>
+					<input type="password" name="changePw" required class="form-control fsize" id="floatingInput">
 			</div>
 			
-			<div class="row">
-				<input type="submit" value="비밀번호 변경" class="btn btn-info">
+			<div class="row">		
+					<input type="submit" value="비밀번호 변경" class="btn btn-info">
 			</div>
 		</form>
 		<c:if test="${param.error != null}">

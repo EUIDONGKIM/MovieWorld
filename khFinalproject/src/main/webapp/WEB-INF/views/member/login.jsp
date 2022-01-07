@@ -9,6 +9,31 @@ font-size: 20px;
 }
 </style>
 
+<script>
+// 	// form이 전송되면 input[type=password]가 자동 암호화되도록 설정
+// $(function(){
+// 	$("form").submit(function(e){
+// 		e.preventDefault();//form 기본 전송 이벤트 방지
+	
+// 		//this == form
+// 		//모든 비밀번호 입력창에 SHA-1 방식 암호화 지시(32byte 단방향 암호화)
+// 		$(this).find("input[type=password]").each(function(){
+// 			//this == 입력창
+// 			var origin = $(this).val();
+// 			console.log(origin);
+// 			var hash = CryptoJS.SHA1(origin);//암호화(SHA-1)
+// 			var encrypt = CryptoJS.enc.Hex.stringify(hash);//암호화 값 문자열 변환
+// 			$(this).val(encrypt);
+// 		});
+		
+// 		this.submit();//form 전송 지시
+// 	});
+// });
+</script>
+
+
+
+
  <div class="container-500 container-center">
  	<div class="row">
  		<div class="col center">
@@ -62,7 +87,7 @@ font-size: 20px;
 	  		<a href="#" onclick="window.open('idScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">아이디찾기</a>
 	  	</div>
 	  	<div class="col center">
-	 		<a href="#" onclick="window.open('pWScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">비밀번호찾기</a>
+	 		<a href="#" onclick="window.open('pwScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">비밀번호찾기</a>
 	  	</div>
 	  	<div class="col center">
 	  		<a href="${root}/member/join">회원가입</a>
