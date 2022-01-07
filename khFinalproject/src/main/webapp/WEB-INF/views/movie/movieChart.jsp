@@ -13,6 +13,7 @@
 	<script>
 		$(function(){
 			var nowMovie = ${nowMovie};
+			var income = '${order}';
 			
 			if(nowMovie==1){
 				$(".chk-now-movie").prop("checked",true);
@@ -29,6 +30,19 @@
 				}
 				
 			});
+			
+			
+			$(".order").change(function(){ 
+				var order = parseInt($(this).val());
+				location.href = '${root}/movie/movieChart?nowMovie=1&order='+parseInt($(this).val());
+			});
+			
+			$(".select-order").each(function(){
+				if(income==$(this).val()){
+					$(this).prop("selected",true);
+				}
+			});
+			
 		});
 	</script>
 
@@ -49,10 +63,10 @@
 			</label>
 		</div>
 		<div class="col">
-			<select class="btn float-right">
-				<option title="현재 선택됨" selected value="1">예매율순</option>
-				<option value="2">평점순</option>
-				<option value="3">관람객순</option>
+			<select class="btn float-right order">
+				<option class="select-order" value="0">예매율순</option>
+				<option class="select-order" value="1">평점순</option>
+				<option class="select-order" value="2">관람객순</option>
 			</select>
 		</div>
 	</div>
@@ -61,26 +75,13 @@
       <%--for문으로 시작--%>
      
       	<div class="container">
-      	
-      	<c:if test="${param.boardTypeName==1}">
-			<h2>예매율순</h2>
-		</c:if>
-		
-		<c:if test="${param.boardTypeName==2}">
-			<h2>평점순</h2>
-		</c:if>
-		
-		<c:if test="${param.boardTypeName==3}">
-			<h2>관람객순</h2>
-		</c:if>
-      	
-      	
+
       	
 	      	<div class="board d-flex flex-wrap">
-      <c:forEach var="movieChartVO" items="${list}">
+      <c:forEach var="movieChartVO" items="${list}" varStatus="status">
 	      		<div class="board">
 	      			<div class="row center">
-					    <strong>No.1</strong>
+					    <strong>NO.${status.index}</strong>
 	      			</div>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
 	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>	

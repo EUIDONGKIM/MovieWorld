@@ -26,7 +26,7 @@
 	<select id="countForReservationRatio" resultType="ChartVO">
 	 select movie_title text ,count(reservation_no) count from(
 		select * from statistics_info_view where reservation_no>0 and reservation_status='결제완료'
-        and sysdate between schedule_start and schedule_end
+        <![CDATA[and sysdate < schedule_end]]>
 		) group by movie_title order by count desc
 	</select>	
 	

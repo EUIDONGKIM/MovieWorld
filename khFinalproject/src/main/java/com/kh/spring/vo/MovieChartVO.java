@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class MovieChartVO {
+public class MovieChartVO{
 	private int movieNo;
 	private int moviePhotoNo;
 	private String movieTitle;
@@ -13,4 +13,6 @@ public class MovieChartVO {
 	private float movieStarpoint;
 	private String movieOpening;
 	private float movieRatio;
+	private int movieCount;
+	
 }
