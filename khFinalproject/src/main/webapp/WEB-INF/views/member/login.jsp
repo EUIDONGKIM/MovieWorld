@@ -62,7 +62,7 @@ font-size: 20px;
 	  		<a href="#" onclick="window.open('idScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">아이디찾기</a>
 	  	</div>
 	  	<div class="col center">
-	 		<a href="#" onclick="window.open('pWScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">비밀번호찾기</a>
+	 		<a href="#" onclick="window.open('pwScan','window_name','width=600,height=500,location=no,status=no,scrollbars=yes');">비밀번호찾기</a>
 	  	</div>
 	  	<div class="col center">
 	  		<a href="${root}/member/join">회원가입</a>
