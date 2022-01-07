@@ -254,8 +254,20 @@ public class MovieController {
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail(@RequestParam int movieNo, Model model) {
+		public String movieDetail(@RequestParam int movieNo, Model model, HttpSession session) {
 		MovieDto movieDto = movieDao.get(movieNo);
+		
+		int memberNo;
+		if(session.getAttribute("memberNo") == null) {
+			memberNo = 0;
+		}
+		else {
+			memberNo = (int)session.getAttribute("memberNo");
+		}
+		log.debug("memberNo==={}",memberNo);
+		log.debug("myMovieLike==={}",movieLikeDao.get(movieNo, memberNo));
+
+		model.addAttribute("myMovieLike",movieLikeDao.get(movieNo, memberNo));
 		model.addAttribute("movieDto", movieDto);
 		return "movie/movieDetail";
 		}
@@ -322,7 +334,7 @@ public class MovieController {
 		movieLikeDao.insert(movieLikeDto);
 	}
 	
-	@DeleteMapping("/data/deleteLike")
+	@PostMapping("/data/deleteLike")
 	@ResponseBody
 	public void deleteLike(@ModelAttribute MovieLikeDto movieLikeDto, HttpSession session) {
 		movieLikeDao.delete(movieLikeDto);
