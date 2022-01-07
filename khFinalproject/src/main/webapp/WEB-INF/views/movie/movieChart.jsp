@@ -35,26 +35,55 @@
 	<div class="contianer">
 		<div class="row">
 			<div class="col">
-					<h1>✿무비 차트✿</h1>
-					<hr>
+				<h1>✿무비 차트✿</h1>
+				<hr>
 			</div>
 		</div>
 	</div>
+	
 	<div class="row">
-		<label>
-			<span>현재 상영작</span>
-			<input class="chk-now-movie" type="checkbox" name="nowMovie">
-		</label>
+		<div class="col col-10">
+			<label>
+				<input class="chk-now-movie" type="checkbox" name="nowMovie">
+				<span>현재 상영작</span>
+			</label>
+		</div>
+		<div class="col">
+			<select class="btn float-right">
+				<option title="현재 선택됨" selected value="1">예매율순</option>
+				<option value="2">평점순</option>
+				<option value="3">관람객순</option>
+			</select>
+		</div>
 	</div>
+	
+
       <%--for문으로 시작--%>
      
       	<div class="container">
+      	
+      	<c:if test="${param.boardTypeName==1}">
+			<h2>예매율순</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==2}">
+			<h2>평점순</h2>
+		</c:if>
+		
+		<c:if test="${param.boardTypeName==3}">
+			<h2>관람객순</h2>
+		</c:if>
+      	
+      	
+      	
 	      	<div class="board d-flex flex-wrap">
       <c:forEach var="movieChartVO" items="${list}">
 	      		<div class="board">
+	      			<div class="row center">
+					    <strong>No.1</strong>
+	      			</div>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
-	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
-      						
+	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>	
       				<div class="row">
       					<c:choose>
       						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">

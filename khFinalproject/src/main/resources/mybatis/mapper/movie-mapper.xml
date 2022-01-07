@@ -110,4 +110,11 @@
 		where movie_no = #{movieNo}
 	</update>
 	
+	<select id="reservationList" resultType="MovieDto">
+		select * from movie order by 
+	</select>
+	
+	
+	
+	
 </mapper>
