@@ -2,6 +2,8 @@ package com.kh.spring.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +69,7 @@ public class MemberDataCotroller {
 	}
 	
 	@PostMapping("/emailSend")
-	public void emailSend(@RequestParam String to) {
+	public void emailSend(@RequestParam String to) throws MessagingException {
 		emailService.sendCertificationNumber(to);
 	}
 	

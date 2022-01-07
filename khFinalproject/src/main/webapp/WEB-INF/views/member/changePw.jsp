@@ -6,7 +6,7 @@
 		<div class="row center">
 			<h2>비밀번호 변경</h2>
 		</div>
-		<form method="post">
+		<form action="changePw" method="post">
 			<div class="row">
 					<label>현재 비밀번호</label>
 					<input type="password" name="memberPw" required class="form-control fsize" id="floatingInput">
