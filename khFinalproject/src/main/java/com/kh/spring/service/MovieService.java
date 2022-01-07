@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.vo.MyMovieLikeVO;
 
 public interface MovieService {
 
@@ -14,5 +15,7 @@ public interface MovieService {
 	void edit(MovieDto movieDto, MultipartFile photo, List<MultipartFile> attach) throws IllegalStateException, IOException;
 
 	void delete(int movieNo);
+	
+	List<MyMovieLikeVO> listMyMovieLikeAndPhoto(int memberNo);
 
 }

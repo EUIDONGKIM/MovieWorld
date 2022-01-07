@@ -110,11 +110,15 @@
 		where movie_no = #{movieNo}
 	</update>
 	
+	<!-- 보고 싶은 영화 목록 -->
+	<select id="myMovieLike" parameterType="int" resultType="MovieDto">
+		select m.* from movie m
+		inner join movie_like ml on m.movie_no = ml.movie_no
+		where ml.member_no = #{memberNo}
+	</select>
+	
 	<select id="reservationList" resultType="MovieDto">
 		select * from movie order by 
 	</select>
-	
-	
-	
 	
 </mapper>

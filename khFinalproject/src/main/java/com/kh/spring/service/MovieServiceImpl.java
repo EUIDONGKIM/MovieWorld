@@ -14,6 +14,7 @@ import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.movie.MoviePhotoDao;
+import com.kh.spring.vo.MyMovieLikeVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -209,6 +210,12 @@ public class MovieServiceImpl implements MovieService{
 
 		movieDao.delete(movieNo);
 		
+	}
+
+	@Override
+	public List<MyMovieLikeVO> listMyMovieLikeAndPhoto(int memberNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

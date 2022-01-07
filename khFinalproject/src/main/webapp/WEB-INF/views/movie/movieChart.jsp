@@ -88,7 +88,7 @@
       				<div class="row">
       					<c:choose>
       						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
-      							<a href="${root}/movie/movieDetail">${movieChartVO.movieTitle }</a>
+      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
       						</c:when>
       						<c:otherwise>
       							<a href="${root}/movie/movieDetail">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>

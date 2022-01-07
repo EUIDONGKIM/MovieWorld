@@ -22,5 +22,9 @@
 	<delete id="delete" parameterType="MovieLikeDto">
 		delete movie_like where movie_no =  #{movieNo} and member_no = #{memberNo} 
 	</delete>
+	
+	<select id="get"  parameterType="map" resultType="MovieLikeDto">
+		select * from movie_like where movie_no = #{movieNo} and member_no = #{memberNo}
+	</select>
 
 </mapper>

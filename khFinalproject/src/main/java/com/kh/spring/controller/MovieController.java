@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -285,8 +286,20 @@ public class MovieController {
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail(@RequestParam int movieNo, Model model) {
+		public String movieDetail(@RequestParam int movieNo, Model model, HttpSession session) {
 		MovieDto movieDto = movieDao.get(movieNo);
+		
+		int memberNo;
+		if(session.getAttribute("memberNo") == null) {
+			memberNo = 0;
+		}
+		else {
+			memberNo = (int)session.getAttribute("memberNo");
+		}
+		log.debug("memberNo==={}",memberNo);
+		log.debug("myMovieLike==={}",movieLikeDao.get(movieNo, memberNo));
+
+		model.addAttribute("myMovieLike",movieLikeDao.get(movieNo, memberNo));
 		model.addAttribute("movieDto", movieDto);
 		return "movie/movieDetail";
 		}
@@ -345,9 +358,15 @@ public class MovieController {
 	
 
 	//좋아요 기능
-	@PostMapping("/data/isnertLike")
+	@PostMapping("/data/insertLike")
 	@ResponseBody
 	public void insertLike(@ModelAttribute MovieLikeDto movieLikeDto, HttpSession session) {
-		
+		movieLikeDao.insert(movieLikeDto);
+	}
+	
+	@DeleteMapping("/data/deleteLike")
+	@ResponseBody
+	public void deleteLike(@ModelAttribute MovieLikeDto movieLikeDto, HttpSession session) {
+		movieLikeDao.delete(movieLikeDto);
 	}
 }
