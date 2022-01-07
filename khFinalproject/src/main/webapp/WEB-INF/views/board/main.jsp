@@ -108,7 +108,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<a>&laquo;</a>
+					<li class="page-item"><a class="page-link">&laquo;</a></li>
 				</c:otherwise>
 			</c:choose>
 		
@@ -152,7 +152,7 @@
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-					<a>&raquo;</a>
+					<li class="page-item"><a class="page-link">&raquo;</a></li>
 				</c:otherwise>
 			</c:choose>
 			</ul>

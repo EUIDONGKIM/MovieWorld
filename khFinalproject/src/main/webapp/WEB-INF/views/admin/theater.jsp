@@ -5,17 +5,16 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-
-<h1> 현재 ${totalCount}개의 영화관이 운영 중입니다. | <a href="${root}/theater/create">극장 생성</a></h1>
-
-<hr>
-
-<div class="container-1200 contianer-center">
+<div class="container-1200 container-center">
+	<div class="row">
+		<h1> 현재 ${totalCount}개의 영화관이 운영 중입니다. | <a href="${root}/theater/create">극장 생성</a></h1>
+	</div>
 	
-	<!-- 검색창 -->
-	<div class="row center">
-		<form method="get">
-	
+	<div class="row">
+		<div class="col-3">
+		</div>
+		<div class="col-6 right">
+		<form method="get" class="d-flex">
 			<select name="column" class="form-input form-inline">
 				<c:choose>
 					<c:when test="${paginationVO.columnIs('theater_sido')}">
@@ -36,15 +35,18 @@
 			</select>
 			
 			<input type="search" name="keyword" placeholder="검색어 입력" required 
-					value="${paginationVO.keyword}" class="form-input form-inline">
+					value="${paginationVO.keyword}" class="form-control me-sm-2">
 			
-			<input type="submit" value="검색" class="form-btn form-inline">
+			<input type="submit" value="검색" class="btn btn-info my-2 my-sm-0">
 			
 		</form>
+		</div>
+		<div class="col-3">
+		</div>
 	</div>
 
 
- <table class="table">
+ <table class="table table-hover">
  	<thead>
 	 	<tr>
 	 		<th>영화관 번호</th>
@@ -67,27 +69,40 @@
  		</c:forEach>
  	</tbody>
  </table>
- <!-- 페이지 네이션 및 검색 -->
- 	<div class="row pagination">
+ <!-- 페이지 네이션 -->
+ 	<div class="row">
+ 		<div class="col">
+ 		</div>
+		<div class="col outline">
 		<!-- 이전 버튼 -->
+		<ul class="pagination pagination-lg center " style="justify-content: center;">
 		<c:choose>
 			<c:when test="${paginationVO.isPreviousAvailable()}">
 				<c:choose>
 					<c:when test="${paginationVO.isSearch()}">
+						<li class="page-item">
 						<!-- 검색용 링크 -->
-						<a href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=1">&lt;&lt;</a>
-						<a href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.getPreviousBlock()}">&lt;</a>
+						<a class="page-link" href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=1">&lt;&lt;</a>
+						</li>
+						<li class="page-item">
+						<a class="page-link" href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.getPreviousBlock()}">&lt;</a>
+						</li>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="theater?p=1">&lt;&lt;</a>
-						<a href="theater?p=${paginationVO.getPreviousBlock()}">&lt;</a>
+						<li class="page-item">
+						<a class="page-link" href="theater?p=1">&lt;&lt;</a>
+						</li>
+						<li class="page-item">
+						<a class="page-link" href="theater?p=${paginationVO.getPreviousBlock()}">&lt;</a>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<a>&lt;&lt;</a>
-				<a>&lt;</a>
+				
+				<li class="page-item"><a class="page-link">&lt;&lt;</a></li>
+				<li class="page-item"><a class="page-link">&lt;</a></li>
 			</c:otherwise>
 		</c:choose>
 	
@@ -95,12 +110,16 @@
 		<c:forEach var="i" begin="${paginationVO.getStartBlock()}" end="${paginationVO.getRealLastBlock()}" step="1">
 			<c:choose>
 				<c:when test="${paginationVO.isSearch()}">
+					<li class="page-item">
 					<!-- 검색용 링크 -->
-					<a href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${i}">${i}</a>
+					<a  class="page-link" href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${i}">${i}</a>
+					</li>
 				</c:when>
 				<c:otherwise>
+					<li class="page-item">
 					<!-- 목록용 링크 -->
-					<a href="theater?p=${i}">${i}</a>
+					<a class="page-link" href="theater?p=${i}">${i}</a>
+					</li>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -111,24 +130,41 @@
 			<c:when test="${paginationVO.isNextAvailable()}">
 				<c:choose>
 					<c:when test="${paginationVO.isSearch()}">
+						<li class="page-item">
 						<!-- 검색용 링크 -->
-						<a href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.getNextBlock()}">&gt;</a>
-						<a href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.lastBlock}">&gt;&gt;</a>
+						<a class="page-link" href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.getNextBlock()}">&gt;</a>
+						<a class="page-link" href="theater?column=${paginationVO.column}&keyword=${paginationVO.keyword}&p=${paginationVO.lastBlock}">&gt;&gt;</a>
+						</li>
 					</c:when>
 					<c:otherwise>
+						<li class="page-item">
 						<!-- 목록용 링크 -->
-						<a href="theater?p=${paginationVO.getNextBlock()}">&gt;</a>
-						<a href="theater?p=${paginationVO.lastBlock}">&gt;&gt;</a>
+						<a class="page-link" href="theater?p=${paginationVO.getNextBlock()}">&gt;</a>
+						</li>
+						<li class="page-item">
+						<a class="page-link" href="theater?p=${paginationVO.lastBlock}">&gt;&gt;</a>
+						</li>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<a>&gt;</a>
-				<a>&gt;&gt;</a>
+				<li class="page-item"><a class="page-link">&gt;</a></li>
+				<li class="page-item"><a class="page-link">&gt;&gt;</a></li>
 			</c:otherwise>
 		</c:choose>
+	</ul>
+	</div>
+	<div class="col">
 	</div>
 
+	</div>
 </div>
+
+
+
+
+
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
