@@ -86,9 +86,9 @@
 	<div class="row">
 		<div class="col">
 		</div>
-		<div class="col center">
+		<div class="col outline">
 		<!-- 이전 버튼 -->
-			<ul class="pagination pagination-lg center">
+			<ul class="pagination pagination-lg center " style="justify-content: center;">
 			<c:choose>
 				<c:when test="${boardSearchVO.isPreviousAvailable()}">
 					<c:choose>
@@ -102,7 +102,7 @@
 							<!-- 목록용 링크 -->
 	<%-- 						<a href="main?p=${boardSearchVO.getPreviousBlock()}">&lt;</a> --%>
 							<li class="page-item">
-							<a href="main?&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}" class="page-link">&laquo;</a>
+							<a href="main?&p=${boardSearchVO.getPreviousBlock()}&boardTypeName=${param.boardTypeName}" class="page-link" >&laquo;</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -125,7 +125,7 @@
 					<c:otherwise>
 						<li class="page-item">
 						<!-- 목록용 링크 -->
-						<a href="main?p=${i}&boardTypeName=${param.boardTypeName}" class="page-link">${i}</a>
+						<a href="main?p=${i}&boardTypeName=${param.boardTypeName}" class="page-link ">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>

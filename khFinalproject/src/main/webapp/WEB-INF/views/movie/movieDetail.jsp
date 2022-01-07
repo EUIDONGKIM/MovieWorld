@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -21,16 +21,18 @@
 					<hr>
 			</div>
 				<div class="row">
-  					<div class="col">영화 포스터 자리</div>
-  					<div class="col col-8">
+  					<div class="col-md-2" style="float: none; margin:0 auto;">
+  					<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px">
+  					</div>
+  					<div class="col col-9">
   						<div class="row">
   							<div class="col-sm">
-  								<strong class="inline">스파이더맨-노 웨이 홈</strong>
+  								<strong class="inline">${movieDto.movieTitle}</strong>
   								<em class="round lightblue">
   									<span>현재상영중</span>
   								</em>
   								<button type="button">보고 싶은 영화</button>
-  							<p>Spider-Man: No Way Home</p>
+  							<p>${movieDto.movieEngTitle}</p>
   							<hr>
   							</div>
   							</div>
@@ -38,20 +40,97 @@
 													장르 : 액션, 어드벤처, SF / 기본 : 12세 이상, 148분, 미국
 													개봉 : 2021.12.15</div>
   					</div>
-  					<div class="row">영화 스파이더맨: 노 웨이 홈은 정체가 탄로난 스파이더맨 '피터 파커'(톰 홀랜드)가 문제를 해결하기 위해 '닥터 스트레인지'(베네딕트 컴버배치)의 도움을 받던 중 뜻하지 않게 멀티버스가 열리게 되고,
-이를 통해 '닥터 옥토퍼스'(알프리드 몰리나) 등 각기 다른 차원의 숙적들이 나타나며 사상 최악의 위기를 맞게 되는 이야기를 그린 마블 액션 블록버스터.</div>
   				</div>
 			</div>
-			<div class="row">
-				트레일러 자리
-			</div>
-			<div class="row">
-				스틸컷 자리
-			</div>
+			<br>
+				<div class="row">
+					<div class="col-md-11" style="float: none; margin:0 auto;">
+					${movieDto.movieContent}
+					</div>
+				</div>
+		<br>
+		<br>
+			<table class="table table-bordered">
+ 				<thead>
+  					 <tr>
+      					<th>성별 예매 분포</th>
+      					<th>연령별 예매 분포</th>
+   					</tr>
+ 				</thead>
+ 				<tbody>
+   					<tr>
+     			 		<td>그래프 자리</td>
+      					<td>그래프 자리</td>
+  			 		</tr>
+				</tbody>
+			</table>	
+			
+			<br>
+			<br>
+			
+			<table class="table table-bordered">
+ 				<thead>
+  					 <tr class="table-active">
+      					<th>트레일러</th>
+   					</tr>
+ 				</thead>
+ 				<tbody>
+   					<tr>
+     			 		<td>동영상 자리</td>
+  			 		</tr>
+				</tbody>
+			</table>	
+			
+			<br>
+			<br>
+			
+			<table class="table table-bordered">
+ 				<thead>
+  					 <tr class="table-active">
+      					<th>스틸컷</th>
+   					</tr>
+ 				</thead>
+ 				<tbody>
+   					<tr>
+     			 		<td>스틸컷이미지</td>
+  			 		</tr>
+				</tbody>
+			</table>	
+			
+			<br>
+			<br>
+			
+			<table class="table table-bordered">
+ 				<thead>
+  					 <tr class="table-active">
+      					<th>1</th>
+      					<th>2</th>
+   					</tr>
+ 				</thead>
+ 				<tbody>
+   					<tr>
+     			 		<td>관람평</td>
+     			 		<td>관람평</td>
+  			 		</tr>
+  			 		<tr>
+     			 		<td>관람평</td>
+     			 		<td>관람평</td>
+  			 		</tr>
+  			 		<tr>
+     			 		<td>관람평</td>
+     			 		<td>관람평</td>
+  			 		</tr>
+  			 		<tr>
+     			 		<td>관람평</td>
+     			 		<td>관람평</td>
+  			 		</tr>
+				</tbody>
+			</table>	
+			
+	</div>
 			
 			
-			
-		</div>
+
 	
 
 

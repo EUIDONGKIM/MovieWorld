@@ -65,9 +65,11 @@ public class MovieController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private ActorService actorService;
-	
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
+	
+	
+	
 	
 	//좋아요
 	@Autowired
@@ -252,11 +254,13 @@ public class MovieController {
 	}
 	
 	@GetMapping("/movieDetail")
-		public String movieDetail() {
-//		MovieDto movieDto =movieDao.get(movieNo);
-//			model.addAttribute("movieDto",movieDto);
+		public String movieDetail(@RequestParam int movieNo, Model model) {
+		MovieDto movieDto = movieDao.get(movieNo);
+		model.addAttribute("movieDto", movieDto);
 		return "movie/movieDetail";
 		}
+	
+	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int movieNo) {
 		movieService.delete(movieNo);

@@ -52,7 +52,6 @@
 	      	<div class="board d-flex flex-wrap">
       <c:forEach var="movieChartVO" items="${list}">
 	      		<div class="board">
-<%-- 	      			${index.current} --%>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
 	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
       						
