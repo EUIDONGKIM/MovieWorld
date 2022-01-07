@@ -31,8 +31,6 @@
 						insertLike(movieNo, memberNo);
 					}
 					else{//하트가 채워져 있으면
-						console.log(movieNo);
-						console.log(memberNo);
 						deleteLike(movieNo, memberNo);
 					}
 				}
@@ -61,12 +59,8 @@
 		function deleteLike(movieNo, memberNo){
 			
 			$.ajax({
-				url:"${pageContext.request.contextPath}/movie/data/deleteLike",
-				type:"post",
-				data:{
-					movieNo : movieNo,
-					memberNo : memberNo
-				},
+				url:"${pageContext.request.contextPath}/movie/data/deleteLike?"+$.param({"movieNo":movieNo,"memberNo":memberNo}),
+				type:"delete",
 				success:function(resp){
 					console.log("좋아요 취소 성공", resp);
 					$(".bi").css("color", "black");

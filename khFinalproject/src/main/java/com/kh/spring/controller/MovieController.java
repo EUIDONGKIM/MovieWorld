@@ -334,7 +334,7 @@ public class MovieController {
 		movieLikeDao.insert(movieLikeDto);
 	}
 	
-	@PostMapping("/data/deleteLike")
+	@DeleteMapping("/data/deleteLike")
 	@ResponseBody
 	public void deleteLike(@ModelAttribute MovieLikeDto movieLikeDto, HttpSession session) {
 		movieLikeDao.delete(movieLikeDto);
