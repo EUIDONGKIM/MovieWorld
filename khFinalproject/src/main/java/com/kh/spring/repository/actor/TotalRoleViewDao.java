@@ -10,4 +10,6 @@ public interface TotalRoleViewDao {
 
 	List<TotalRoleViewDto> listByActorNo(int actorNo);
 
+	List<TotalRoleViewDto> listByMovieNo(int movieNo);
+
 }

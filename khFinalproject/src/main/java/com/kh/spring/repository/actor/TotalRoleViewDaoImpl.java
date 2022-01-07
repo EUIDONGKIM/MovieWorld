@@ -27,4 +27,9 @@ public class TotalRoleViewDaoImpl implements TotalRoleViewDao{
 	public List<TotalRoleViewDto> listByActorNo(int actorNo) {
 		return sqlSession.selectList("totalRoleView.listByActorNo",actorNo);
 	}
+
+	@Override
+	public List<TotalRoleViewDto> listByMovieNo(int movieNo) {
+		return sqlSession.selectList("totalRoleView.listByMovieNo",movieNo);
+	}
 }

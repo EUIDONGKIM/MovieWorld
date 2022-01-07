@@ -25,15 +25,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.actor.TotalRoleViewDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.MovieLikeDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
+import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
+import com.kh.spring.repository.actor.TotalRoleViewDao;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.movie.MoviePhotoDao;
+import com.kh.spring.repository.movie.VideoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
@@ -66,9 +70,10 @@ public class MovieController {
 	private ActorService actorService;
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
-	
-	
-	
+	@Autowired
+	private VideoDao videoDao;
+	@Autowired
+	private TotalRoleViewDao totalRoleViewDao;
 	
 	//좋아요
 	@Autowired
@@ -255,7 +260,15 @@ public class MovieController {
 	@GetMapping("/movieDetail")
 		public String movieDetail(@RequestParam int movieNo, Model model) {
 		MovieDto movieDto = movieDao.get(movieNo);
+		List<TotalRoleViewDto> totalRoleViewList = totalRoleViewDao.listByMovieNo(movieNo);
+		List<MoviePhotoDto> moviePhotoList = moviePhotoDao.getList(movieNo);
+		List<VideoDto> videoList = videoDao.listByMovie(movieNo);
+		
+		model.addAttribute("totalRoleViewList", totalRoleViewList);
 		model.addAttribute("movieDto", movieDto);
+		model.addAttribute("moviePhotoList", moviePhotoList);
+		model.addAttribute("videoList", videoList);
+		
 		return "movie/movieDetail";
 		}
 	
