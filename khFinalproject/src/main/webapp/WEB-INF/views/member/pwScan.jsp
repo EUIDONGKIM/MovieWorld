@@ -7,12 +7,21 @@
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/layout.css">
 <jsp:include page="/WEB-INF/views/template/designcode.jsp"></jsp:include>
 
+<script>
+ 	
+
+
+</script> 
 <div class="container-500 container-center">
 	<br>
 	<div class="row center">
 		<h1>비밀번호 찾기</h1>
 	</div>
- <form method="post">
+ <form action="pwScan" method="post">
+<!--  	<div class="row"> -->
+<%--  	  <input type="hidden" name="memberPw" value="${memberPw}"> --%>
+<!--  	</div> -->
+	
 	<div class="row">
 		<label>이름</label>
 		<input type="text" name="memberName" required class="form-control form-control-lg"  id="inputLarge" placeholder="이름">
@@ -20,7 +29,7 @@
 	
 	<div class="row">
 		<label>이메일</label>
-		<input type="email" name="memberEmail" required class="form-control form-control-lg"  id="inputLarge" placeholder="example@goole.com">
+		<input type="email" name="memberEmail" required class="form-control form-control-lg email"  id="inputLarge" placeholder="example@goole.com">
 	</div>
 	
 	<div class="row">
@@ -29,7 +38,7 @@
 	</div>
 	
 	<div class="row">
-		<input type="submit" value="비밀번호찾기" class="btn btn-info">
+		<input type="submit" value="비밀번호찾기[이메일전송]" class="btn btn-info email-send-btn">
 	</div>
 	
 	<c:if test="${param.error != null}">

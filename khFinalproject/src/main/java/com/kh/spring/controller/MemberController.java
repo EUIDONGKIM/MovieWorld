@@ -2,12 +2,14 @@ package com.kh.spring.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
+import com.kh.spring.service.EmailService;
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,9 @@ public class MemberController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private RandomUtil randomUtil;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	
 
@@ -89,7 +95,9 @@ public class MemberController {
 						@RequestParam(required = false) String saveId,HttpServletResponse response) {
 		
 		MemberDto findDto = memberDao.login(memberDto);
-
+		
+		System.out.println("-------------");
+		System.err.println(findDto);
 		if(findDto !=null) {
 		
 		 session.setAttribute("memberNo", findDto.getMemberNo());
@@ -101,6 +109,8 @@ public class MemberController {
 		 if(memberGrade.equals("정지")){
 			 return "redirect:login?stop";
 		 }
+		
+		 
 		 //임시 비밀번호로 변경하여 로그인할시 세션에 저장되어있는 값이 있다면 비밀번호
 		 //변경 페이지로 리다이렉트
 		 String redirectPassword= (String)session.getAttribute("temparayPassword");
@@ -173,22 +183,30 @@ public class MemberController {
 	public String pwScan() {
 		return "member/pwScan";
 	}
+	@Autowired
+	private EmailService emailService;
+	
 	@PostMapping("/pwScan")
 	public String pwScan(@RequestParam String memberEmail,@RequestParam String memberName,@RequestParam String memberPhone
-			,Model model ,@ModelAttribute MemberDto memberDto ,HttpSession session) {
+			,Model model ,@ModelAttribute MemberDto memberDto ,HttpSession session) throws MessagingException {
 		MemberDto isPass=memberDao.findPw(memberName, memberEmail, memberPhone);
-		//6자리의 랜덤숫자생성
-		String tmpPw = randomUtil.generateRandomPassword(10);
+		//랜덤 난수 글자 생성 
+		//String tmpPw = randomUtil.generateRandomPassword(10);
 		
 		if(isPass!=null) {
-			//6자리의 난수 비밀번호 생성
-			isPass.setMemberPw(tmpPw);
 			
-			String chagePw = isPass.getMemberPw();
-		
+			String chagePw = emailService.examPw(memberEmail);
+			//암호화 하여 셋팅
+//			String origin = tmpPw;
+//			String encrypt = encoder.encode(origin);
+			//비밀번호를 업데이트 해준다
+//			isPass.setMemberPw(tmpPw);
+//			String chagePw = isPass.getMemberPw();
+			
+			//비밀번호를 업데이트
 			memberDao.temporayPassword(memberDto,chagePw);
-			model.addAttribute("memberPw",chagePw);
-			//임시 비밀번호로 바뀌면 세션에 아이디를 저장
+//			model.addAttribute("memberPw",chagePw);
+//			//임시 비밀번호로 바뀌면 세션에 아이디를 저장
 			session.setAttribute("temparayPassword", memberDto.getMemberEmail());
 			System.out.println(memberDto.getMemberEmail());
 			return "member/PwScanSuccess";
@@ -199,7 +217,6 @@ public class MemberController {
 	
 	@GetMapping("/changePw")
 	public String changePw() {
-		System.out.println("changePw입갤");
 		return "member/changePw";
 	}
 	
