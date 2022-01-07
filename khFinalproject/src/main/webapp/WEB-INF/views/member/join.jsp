@@ -175,7 +175,7 @@ $(function() {
 //비밀번호 정규표현식
 $(function() {
 	$("input[name=memberPw]").on("blur", function() {
-		var regex = /^[A-Za-z0-9!@#$\s_-]{8,16}$/;
+		var regex = /^[A-Za-z-0-9!@#$\s_-]{8,16}$/;
 		var pw = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(pw)) {
@@ -773,7 +773,7 @@ $(function(){
 			    	 <label>비밀번호*</label>
 					 <input type="password" name="memberPw" disabled required placeholder="password" class="form-input" id="pw">
 					 <span class="success"></span>
-	           		 <span class="fail">8~16자 이내 영문,숫자,특수문자로 작성하세요!</span>
+	           		 <span class="fail">8~16자 이내 영문,숫자,특수문자[!@#$\s_-]로 작성하세요!</span>
 		    	</div> 
 		    </div>
 		    

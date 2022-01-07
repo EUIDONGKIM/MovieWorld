@@ -40,7 +40,7 @@ $(function(){
  			<h1>로그인</h1>
  		</div>
  	</div>
- <form method="post">
+ <form method="post" action="login">
  	 <div class="row">
  	 	<div class="col">
 			<input type="text" name="memberEmail" value="${cookie.saveId.value}" placeholder="examEmail@google.com" required class="form-control fsize" id="floatingInput"> 	 	
@@ -78,6 +78,16 @@ $(function(){
 		<div class="row center">
 			<div class="col">
 				<h4 class="error">입력하신 정보가 일치하지 않습니다</h4>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${param.stop != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">계정이 정지되었습니다.</h4>
+				<h4 class="error">관리자에게 문의하세요</h4>
+				
 			</div>
 		</div>
 	</c:if>

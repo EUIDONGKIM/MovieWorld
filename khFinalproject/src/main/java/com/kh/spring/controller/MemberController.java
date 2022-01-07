@@ -79,13 +79,7 @@ public class MemberController {
 	
 	//로그인
 	@GetMapping("/login")
-	public String login(HttpServletRequest request,Model model) {
-//	 	String referer = request.getHeader("Referer");
-//	 	if(referer !=null) {
-//	 		System.out.println("어디까지왓니");
-//	 		model.addAttribute("referer",referer);
-//	 		
-//	 	}
+	public String login() {
 		return "member/login";
 		
 	}
@@ -94,20 +88,21 @@ public class MemberController {
 	public String login(@ModelAttribute MemberDto memberDto,HttpSession session,HttpServletRequest request,
 						@RequestParam(required = false) String saveId,HttpServletResponse response) {
 		
-		log.info("------------------- : " + memberDto);
-		
 		MemberDto findDto = memberDao.login(memberDto);
-		
-		log.info("------------------- : " + memberDto);
-		log.info("------------------- : " + findDto);
+
 		if(findDto !=null) {
 		
 		 session.setAttribute("memberNo", findDto.getMemberNo());
 		 session.setAttribute("ses",findDto.getMemberEmail());
 		 session.setAttribute("grade", findDto.getMemberGrade());
+		 
+		 //만약 등급이 정지라면 로그인 실패
+		 String memberGrade = (String)session.getAttribute("grade");
+		 if(memberGrade.equals("정지")){
+			 return "redirect:login?stop";
+		 }
 		 //임시 비밀번호로 변경하여 로그인할시 세션에 저장되어있는 값이 있다면 비밀번호
 		 //변경 페이지로 리다이렉트
-//		 System.err.println(findDto.getMemberPw());
 		 String redirectPassword= (String)session.getAttribute("temparayPassword");
 		 	if(redirectPassword != null) {
 		 		//넘어 왔으면 세션을 삭제한다

@@ -31,7 +31,14 @@
 					
 					for(var i = 0 ; i < resp.length ; i++){
 						//여기 고쳐야함
-						var html = "<div class='col-md-3'><a href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a></div>" 
+						var html = 
+// 						"<div class='col'>"+
+							"<ul>"+
+								"<li>"+	
+									"<a class='btn btn-outline-info btn-lg' href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a>"+
+								"</li>"+	
+							"</ul>" 
+// 						"</div>"	
 						$(".result").append(html);
 					}
 					
@@ -46,17 +53,23 @@
 
 
 <div class="container">
-<h2>전체 극장</h2>
-</div>
-<div class="container">
 	<div class="row">
+		<h1>전체 극장</h1>
+	</div>
+	<div class="row bg-light border-5">
+	
+		<c:forEach var="theaterCityVO" items="${cityList}">
+			 <div class="col">
+					<a class="city btn btn-outline-info" role="button" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
+			 </div>
+		</c:forEach>
+	<br><br>
+	<hr>
 
-	<c:forEach var="theaterCityVO" items="${cityList}">
-		<div class="col-3">
-			<a class="city" role="button" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
-		</div>
-	</c:forEach>
-	<div class="row result"></div>
+	<div class="row  result">
+	
+	</div>
+	
 	</div>
 
 </div>
