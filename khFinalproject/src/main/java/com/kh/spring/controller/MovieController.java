@@ -3,6 +3,7 @@ package com.kh.spring.controller;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,8 @@ import com.kh.spring.service.ActorService;
 import com.kh.spring.service.MovieService;
 import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
+import com.kh.spring.vo.OrderByCount;
+import com.kh.spring.vo.OrderByRatio;
 import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -203,7 +206,9 @@ public class MovieController {
 
 	//무비차트
 	@GetMapping("/movieChart")
-	public String movieChart(Model model,@RequestParam(required = false,defaultValue = "0") int nowMovie) {
+	public String movieChart(Model model,
+			@RequestParam(required = false,defaultValue = "0") int nowMovie,
+			@RequestParam(required = false,defaultValue = "0") int order) {
 		
 		List<Integer> movieNoList = new ArrayList<>();
 		if(nowMovie == 1) {
@@ -213,13 +218,22 @@ public class MovieController {
 		}
 		List<MovieDto> movieList = movieDao.nowList(movieNoList);
 		
-		List<ChartVO> vo = statisticsInfoViewDao.countForReservationRatio();
+		List<ChartVO> vo = new ArrayList<>();
+		List<ChartVO> voForCount = new ArrayList<>();
+		
 		List<MovieChartVO> list = new ArrayList<>();
-
+		
 		int total = 0;
-		for(ChartVO chartVO : vo) {
-			total += chartVO.getCount();//총 예매 건수 합
+		
+			vo = statisticsInfoViewDao.countForReservationRatio();
+			for(ChartVO chartVO : vo) {
+				total += chartVO.getCount();//총 예매 건수 합
+			}
+			
+		if(order==2) {			
+			voForCount = lastInfoViewDao.countByTotal();
 		}
+
 		
 		for(MovieDto movieDto : movieList) {
 			
@@ -234,19 +248,37 @@ public class MovieController {
 			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
 			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
 			
-			for(ChartVO chartVO : vo) {
-				if(movieDto.getMovieTitle().equals(chartVO.getText())) {
-					float movieRatio = (float)chartVO.getCount() / (float)total * 100;
-					String num = String.format("%.2f" , movieRatio);
-					float changeToTwo = Float.parseFloat(num);
-					movieChartVO.setMovieRatio(changeToTwo);
-					break;
-					
+				
+				for(ChartVO chartVO : vo) {
+					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+						float movieRatio = (float)chartVO.getCount() / (float)total * 100;
+						String num = String.format("%.2f" , movieRatio);
+						float changeToTwo = Float.parseFloat(num);
+						movieChartVO.setMovieRatio(changeToTwo);
+						break;
+						
+					}
 				}
+			
+				if(order==2) {
+				
+				for(ChartVO chartVO : voForCount) {
+					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+						movieChartVO.setMovieCount(chartVO.getCount());
+					}
+				}
+				
 			}
 			
 			list.add(movieChartVO);
 		}
+
+		if(order==2) {
+			Collections.sort(list,new OrderByCount());		
+		}else {
+			Collections.sort(list,new OrderByRatio());
+		}
+		model.addAttribute("order",order);
 		model.addAttribute("list",list);
 		model.addAttribute("nowMovie",nowMovie);
 		return "movie/movieChart";
