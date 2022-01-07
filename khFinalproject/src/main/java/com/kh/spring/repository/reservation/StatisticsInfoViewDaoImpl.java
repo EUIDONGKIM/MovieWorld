@@ -19,8 +19,8 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	}
 
 	@Override
-	public List<ChartVO> countByGenderForMovie() {
-		return sqlSession.selectList("statisticsInfoView.countByGenderForMovie");
+	public List<ChartVO> countByGenderForMovie(int movieNo) {
+		return sqlSession.selectList("statisticsInfoView.countByGenderForMovie",movieNo);
 	}
 
 	@Override
@@ -29,8 +29,8 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	}
 
 	@Override
-	public List<ChartVO> countByAgeForMoive() {
-		return sqlSession.selectList("statisticsInfoView.countByAgeForMoive");
+	public List<ChartVO> countByAgeForMoive(int movieNo) {
+		return sqlSession.selectList("statisticsInfoView.countByAgeForMoive",movieNo);
 	}
 
 	@Override
