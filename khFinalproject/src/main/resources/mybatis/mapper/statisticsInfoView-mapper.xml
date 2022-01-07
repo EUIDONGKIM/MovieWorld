@@ -30,10 +30,10 @@
 		) group by movie_title order by count desc
 	</select>	
 	
-	<select id="countByGenderForMovie" resultType="ChartVO">
+	<select id="countByGenderForMovie" parameterType="int" resultType="ChartVO">
 		SELECT member_gender text,
 		count(reservation_no) count from(
-		select * from statistics_info_view where movie_no=3 and reservation_status='결제완료'
+		select * from statistics_info_view where movie_no=#{movieNo} and reservation_status='결제완료'
 		)GROUP BY member_gender
 	</select>
 	
@@ -45,7 +45,7 @@
 		)GROUP BY member_gender
 	</select>
 	
-	<select id="countByAgeForMoive" resultType="ChartVO">
+	<select id="countByAgeForMoive" parameterType="int" resultType="ChartVO">
 		select text,count(*) count from
 		(SELECT 
 		CASE 
@@ -53,7 +53,7 @@
 		    WHEN extract(year from member_birth) - extract(year from sysdate) + 1 between 20*365 and 60*365  Then '일반'
 		    Else '경로'
 		end text
-		FROM statistics_info_view where reservation_status='결제완료' and movie_no=3)
+		FROM statistics_info_view where reservation_status='결제완료' and movie_no=#{movieNo})
 		group by text order by count desc
 	</select>
 	

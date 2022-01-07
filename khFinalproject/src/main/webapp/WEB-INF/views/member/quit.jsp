@@ -7,7 +7,7 @@
 		<div class="row center">
 				<h2>회원 탈퇴 페이지</h2>
 		</div>
-	<form method="post">
+	<form action="quit" method="post">
 		<div class="row">
 				<label>이메일</label>
 				<input type="text" name="membeEmail" required class="form-control fsize" id="floatingInput">

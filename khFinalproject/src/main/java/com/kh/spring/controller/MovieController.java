@@ -321,12 +321,10 @@ public class MovieController {
 									.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+encodeName+"\"")
 									.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
 									.contentLength(moviePhotoDto.getMoviePhotoSize())
-								.body(resource);
+									.body(resource);
 	}
 	
-	
-	
-	
+
 	//좋아요 기능
 	@PostMapping("/data/insertLike")
 	@ResponseBody

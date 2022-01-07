@@ -117,4 +117,8 @@
 		where ml.member_no = #{memberNo}
 	</select>
 	
+	<select id="reservationList" resultType="MovieDto">
+		select * from movie order by 
+	</select>
+	
 </mapper>

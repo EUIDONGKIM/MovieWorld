@@ -8,11 +8,11 @@ public interface StatisticsInfoViewDao {
 
 	List<ChartVO> countByReservation();
 
-	List<ChartVO> countByGenderForMovie();
+	List<ChartVO> countByGenderForMovie(int movieNo);
 
 	List<ChartVO> countByGenderForTotal();
 
-	List<ChartVO> countByAgeForMoive();
+	List<ChartVO> countByAgeForMoive(int movieNo);
 
 	List<ChartVO> countByAgeForTotal();
 

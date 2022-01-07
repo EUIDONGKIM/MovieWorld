@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <style>
        .form-input.fail {
             border-color: red;
@@ -20,6 +21,27 @@
             display: block;
         }
 </style>
+<script>
+// 	// form이 전송되면 input[type=password]가 자동 암호화되도록 설정
+$(function(){
+	$("form").submit(function(e){
+		e.preventDefault();//form 기본 전송 이벤트 방지
+	
+		//this == form
+		//모든 비밀번호 입력창에 SHA-1 방식 암호화 지시(32byte 단방향 암호화)
+		$(this).find("input[type=password]").each(function(){
+			//this == 입력창
+			var origin = $(this).val();
+			console.log(origin);
+			var hash = CryptoJS.SHA1(origin);//암호화(SHA-1)
+			var encrypt = CryptoJS.enc.Hex.stringify(hash);//암호화 값 문자열 변환
+			$(this).val(encrypt);
+		});
+		
+		this.submit();//form 전송 지시
+	});
+});
+</script>
 <script>
 
 
@@ -107,6 +129,7 @@ $(function() {
 						$("input[name=memberPhone]").prop("disabled",false);
 						$("input[name=memberGender]").prop("disabled",false);
 						$("input[type=submit]").prop("disabled",false);
+						
 					}else if(resp=="NNNNN"){
 						$(".check-success").text("인증번호가 일치하지 않거나 시간이 경과되었습니다.").css("color","red");
 						$(".check-fail").remove();
@@ -152,7 +175,7 @@ $(function() {
 //비밀번호 정규표현식
 $(function() {
 	$("input[name=memberPw]").on("blur", function() {
-		var regex = /^[A-Za-z0-9!@#$\s_-]{8,16}$/;
+		var regex = /^[A-Za-z-0-9!@#$\s_-]{8,16}$/;
 		var pw = $(this).val();
 		$(this).removeClass("success").removeClass("fail");
 		if (regex.test(pw)) {
@@ -303,9 +326,10 @@ $(function(){
 
 
 });
-
-
 </script>
+
+
+
 <div class="page">
 	<div class="container-800 container-center">
 			 <div class="row center">
@@ -749,7 +773,7 @@ $(function(){
 			    	 <label>비밀번호*</label>
 					 <input type="password" name="memberPw" disabled required placeholder="password" class="form-input" id="pw">
 					 <span class="success"></span>
-	           		 <span class="fail">8~16자 이내 영문,숫자,특수문자로 작성하세요!</span>
+	           		 <span class="fail">8~16자 이내 영문,숫자,특수문자[!@#$\s_-]로 작성하세요!</span>
 		    	</div> 
 		    </div>
 		    

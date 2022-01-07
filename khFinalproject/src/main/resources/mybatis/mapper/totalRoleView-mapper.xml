@@ -24,4 +24,7 @@
 		select * from total_role_view where actor_no = #{actorNo}
 	</select>
 	
+	<select id="listByMovieNo" parameterType="int" resultType="TotalRoleViewDto">
+		select actor_no,actor_name,actor_job from total_role_view where movie_no = #{movieNo}
+	</select>
 </mapper>

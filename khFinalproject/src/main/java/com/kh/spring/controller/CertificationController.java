@@ -2,6 +2,7 @@ package com.kh.spring.controller;
 
 import java.util.Random;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,13 @@ public class CertificationController {
  		return "member/join";
  	}
  	@PostMapping("/send")
- 	public String sned(@RequestParam String memberEmail) {
+ 	public String sned(@RequestParam String memberEmail) throws MessagingException {
  		emailService.sendCertificationNumber(memberEmail);
  		return "member/join";
  	}
  
  	@PostMapping("/")
- 	public String cert(@RequestParam String email ,Model model) {
+ 	public String cert(@RequestParam String email ,Model model) throws MessagingException {
  		emailService.sendCertificationNumber(email);
  		model.addAttribute("email",email);
  		return "";

@@ -217,11 +217,11 @@ public class DataController {
 	}
 	
 	@GetMapping("/countByAgeForMoive")
-	public ChartTotalVO countByAgeForMoive() {
+	public ChartTotalVO countByAgeForMoive(@RequestParam int movieNo) {
 		ChartTotalVO vo = new ChartTotalVO();
 		vo.setTitle("특정 영화에 따른 연령별 예매");
 		vo.setLabel("연령");
-		vo.setDataset(statisticsInfoViewDao.countByAgeForMoive());
+		vo.setDataset(statisticsInfoViewDao.countByAgeForMoive(movieNo));
 		return vo;
 	}
 	
@@ -244,11 +244,11 @@ public class DataController {
 	}
 	
 	@GetMapping("/countByGenderForMovie")
-	public ChartTotalVO countByGenderForMovie() {
+	public ChartTotalVO countByGenderForMovie(@RequestParam int movieNo) {
 		ChartTotalVO vo = new ChartTotalVO();
 		vo.setTitle("특정 영화에 따른 성별별 예매");
 		vo.setLabel("성별");
-		vo.setDataset(statisticsInfoViewDao.countByGenderForMovie());
+		vo.setDataset(statisticsInfoViewDao.countByGenderForMovie(movieNo));
 		return vo;
 	}
 
