@@ -36,8 +36,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberDto get(String membeEmail) {
-		return sqlSession.selectOne("member.get", membeEmail);
+	public MemberDto get(String memberEmail) {
+		return sqlSession.selectOne("member.get", memberEmail);
 	}
 	
 	@Override
@@ -54,8 +54,13 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public MemberDto login(MemberDto memberDto) {
 		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
+		System.out.println("2222222222222222222222222222"+memberDto.getMemberEmail());
+		System.out.println("2222222222222222222222222222"+findDto);
 		//해당 아이디의 회원정보가 존재 && 입력 비밀번호와 조회된 비밀번호가 같다면 => 로그인 성공(객체를 반환)
-		if(findDto != null && encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
+		
+		//&& encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())
+		if(findDto != null&& encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
+			System.out.println("2222222222222222222222222222너가 널이라면"+findDto);
 			return findDto;
 		}
 		else {//아니면 null을 반환

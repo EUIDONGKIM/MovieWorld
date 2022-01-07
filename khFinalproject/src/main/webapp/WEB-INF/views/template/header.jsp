@@ -19,9 +19,6 @@
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/commons.css">
 <link rel="stylesheet" type="text/css" href="${root}/resources/css/layout.css">
-<!-- sha1 암호화 cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
 <!-- Bootstrap CSS CDN-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://bootswatch.com/5/journal/bootstrap.css" type="text/css" rel="stylesheet">
@@ -29,6 +26,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--Bootstrap bundle CSS CDN -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- sha1 암호화 cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
 
 <style>
  #header{
