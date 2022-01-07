@@ -26,4 +26,6 @@ public interface MovieDao {
 	void delete(int movieNo);
 
 	void edit(MovieDto movieDto);
+	
+	List<MovieDto> myMovieLikeList(int memberNo);
 }

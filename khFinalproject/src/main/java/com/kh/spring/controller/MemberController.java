@@ -94,6 +94,7 @@ public class MemberController {
 	public String login(@ModelAttribute MemberDto memberDto,HttpSession session,HttpServletRequest request,
 						@RequestParam(required = false) String saveId,HttpServletResponse response,Model model) {
 		MemberDto findDto = memberDao.login(memberDto);
+		log.debug("콘트롤러 디티오...={}",findDto);
 		if(findDto !=null) {
 		 session.setAttribute("memberNo", findDto.getMemberNo());
 		 session.setAttribute("ses",findDto.getMemberEmail());
@@ -205,7 +206,7 @@ public class MemberController {
 			HttpSession session) {
 		String memberId = (String) session.getAttribute("ses");
 		boolean result = memberDao.changePassword(memberId, memberPw, changePw);
-
+		log.debug("비밀번호 변경...{}",result);
 		if(result) {
 			return "redirect:/";
 		}

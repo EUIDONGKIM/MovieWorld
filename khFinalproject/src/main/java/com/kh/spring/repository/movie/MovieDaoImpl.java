@@ -74,4 +74,9 @@ public class MovieDaoImpl implements MovieDao{
 		sqlSession.update("movie.update",movieDto);
 	}
 
+	@Override
+	public List<MovieDto> myMovieLikeList(int memberNo) {
+		return sqlSession.selectList("movie.myMovieLike", memberNo);
+	}
+
 }
