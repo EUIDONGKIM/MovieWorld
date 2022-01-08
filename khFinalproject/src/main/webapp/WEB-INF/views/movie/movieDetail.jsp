@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <c:set var="memberNo" value="${memberNo eq null ? 0: memberNo}"></c:set>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -17,6 +18,12 @@
 	width: 300px !important; 
 	height: 300px !important; 
 	} 
+	.show-off{
+	display: none;
+	}
+	.red-like{
+	color: red;
+	}
 	</style>
 	<script>
 	$(function(){
@@ -156,7 +163,278 @@
 		});
 	}
 	
+	$(function(){
+		loadReply();
+		//$(".edit-cancel-btn").click();
+		$(".send-reply").submit(function(e){
+			e.preventDefault();
+			var reviewContent = $("#reviewContent").val();
+			var reviewStarpoint = $("#reviewStarpoint").val();
+			var movieNo = '${movieDto.movieNo}';
+			var memberNo = '${memberNo}';
+			if(memberNo == '0'){
+				alert("로그인 후 작성 가능합니다.");
+				return;
+			}
+			if(!reviewContent || !reviewStarpoint){
+				alert("내용을 작성해주세요.");
+				return;
+			}
+			$.ajax({
+				url:"${pageContext.request.contextPath}/data/watchedCheck",
+				type:"get",
+				data:{
+					movieNo:movieNo,
+					memberNo:memberNo
+					},
+				dataType:"text",
+				success:function(resp){
+					if(resp=='NNNNA'){
+						console.log(resp);					
+						alert("해당 영화의 리뷰를 이미 작성하셨습니다.");
+						return;
+					}else if(resp=='NNNNN'){
+						console.log(resp);
+						alert("해당 영화 관람 후 작성이 가능합니다.");
+						return;
+					}else{
+						replyInsert(reviewContent,reviewStarpoint,movieNo,memberNo);
+						console.log("성공", resp);
+					}
+				},
+				error:function(e){
+					console.log("실패",e);
+				}
+			});
+		
+		});
+
+	});
+
+	
+	function replyInsert(reviewContent,reviewStarpoint,movieNo,memberNo){
+		
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/replyInsert",
+			type:"post",
+			data:{
+				reviewContent:reviewContent,
+				reviewStarpoint:reviewStarpoint,
+				movieNo:movieNo,
+				memberNo:memberNo
+				},
+			success:function(resp){
+				console.log("성공", resp);
+				alert("성공적으로 추가되었습니다.");
+				loadReply();
+			},
+			error:function(e){
+				alert("이미 리뷰를 등록하셨습니다.");
+				console.log("실패",e);
+			}
+		});
+	}
+	
+	function loadReply(){
+		var movieNo = '${movieDto.movieNo}';
+		var memberNo = '${memberNo}';
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/loadReply",
+			type:"get",
+			data:{
+				movieNo : movieNo,
+			},
+			dataType : "json",
+			success:function(resp){
+				console.log("성공", resp);
+				$(".reply-items").empty();
+				for(var i = 0 ; i < resp.length ; i++){
+				if('${memberNo}' == resp[i].memberNo){
+					var template = $("#template-reply").html();
+					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
+					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
+					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
+					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
+					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
+					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
+					template = template.replace("{{memberNo}}",resp[i].memberNo);
+					template = template.replace("{{movieNo}}",resp[i].movieNo);
+					template = template.replace("{{memberNo}}",resp[i].memberNo);
+					template = template.replace("{{movieNo}}",resp[i].movieNo);
+					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
+					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
+					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
+					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
+
+					var tag = $(template);
+					tag.find(".edit-btn").click(function(){
+						$(this).parents("tr.view-row").hide();
+						$(this).parents("tr.view-row").next("tr.edit-row").show();
+					});
+					tag.find(".edit-cancel-btn").click(function(){
+						$(this).parents("tr.edit-row").hide();
+						$(this).parents("tr.edit-row").prev("tr.view-row").show();
+					});
+					
+					
+					tag.find(".btn-edit-reply").click(function(e){
+						e.preventDefault();
+						var movieNo = $(this).data("movie_no");
+						var memberNo = $(this).data("member_no");
+						var reviewStarpoint = $(this).parents("tr.edit-row").find("input[name=reviewStarpoint]").val();
+						var reviewContent = $(this).parents("tr.edit-row").find("input[name=reviewContent]").val();
+						console.log("movieNo", movieNo);
+						console.log("memberNo", memberNo);
+						console.log("reviewStarpoint", reviewStarpoint);
+						console.log("reviewContent", reviewContent);
+						
+						if(!reviewContent || !reviewStarpoint || !memberNo || !movieNo){
+							return;
+						}
+						updateReply(reviewContent,reviewStarpoint,movieNo,memberNo);
+					});
+					tag.find(".delete-btn").click(function(e){
+						e.preventDefault();
+						var movieNo = $(this).data("movie_no");
+						var memberNo = $(this).data("member_no");
+						deleteReply(movieNo,memberNo);
+					});
+					tag.find(".reply-like").click(function(e){
+						e.preventDefault();
+						var movieNo = $(this).next().next().data("movie_no");
+						var memberNo = $(this).next().next().data("member_no");
+						
+						console.log("movieNo", movieNo);
+						console.log("memberNo", memberNo);
+						addReplylike(movieNo,memberNo);
+						$(this).hide();
+						$(this).prev().show();
+					});
+					$(".reply-items").append(tag);
+				}else{
+					var template = $("#template-reply-not").html();
+					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
+					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
+					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
+					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
+					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
+					template = template.replace("{{memberNo}}",resp[i].memberNo);
+					template = template.replace("{{movieNo}}",resp[i].movieNo);
+					var tag = $(template);
+					tag.find(".reply-like").click(function(e){
+						e.preventDefault();
+						var movieNo = $(this).data("movie_no");
+						var memberNo = $(this).data("member_no");
+						console.log("movieNo", movieNo);
+						console.log("memberNo", memberNo);
+						addReplylike(movieNo,memberNo);
+						$(this).hide();
+						$(this).next().show();
+					});
+					$(".reply-items").append(tag);
+				}
+				
+				}
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
+	
+	
+	function deleteReply(movieNo,memberNo){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/deleteReply?"+$.param({"movieNo":movieNo,"memberNo":memberNo}),
+			type:"delete",
+			dataType:"text",
+			success:function(resp){
+				console.log("성공", resp);
+				alert("리뷰 삭제가 완료되었습니다.");
+				loadReply();
+			},
+			error:function(e){}
+		});
+	}
+	
+	function addReplylike(movieNo,memberNo){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/addReplylike",
+			type:"post",
+			data:{
+				movieNo:movieNo,
+				memberNo:memberNo
+				},
+			success:function(resp){
+				console.log("댓글 좋아요 성공", resp);
+				//loadReply();
+			},
+			error:function(e){
+				console.log("수정 실패",e);
+			}
+		});
+	}
+	
+	function updateReply(reviewContent,reviewStarpoint,movieNo,memberNo){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/replyUpdate",
+			type:"post",
+			data:{
+				reviewContent:reviewContent,
+				reviewStarpoint:reviewStarpoint,
+				movieNo:movieNo,
+				memberNo:memberNo
+				},
+			success:function(resp){
+				console.log("수정 성공", resp);
+				alert("리뷰 수정이 완료되었습니다.");
+				loadReply();
+			},
+			error:function(e){
+				console.log("수정 실패",e);
+			}
+		});
+	}
 	</script>
+	
+	
+<template id="template-reply">
+	<tr class="view-row">
+		<td>{{memberEmail}}</td>
+		<td>{{reviewStarpoint}}</td>
+		<td>{{reviewDate}}</td>
+		<td>{{reviewContent}}</td>
+		<td>{{reviewLike}}</td>
+		<td>
+			<button class="reply-already-like" style="color: red;display: none;">좋아요</button>
+			<button class="reply-like">좋아요</button>
+			<button class="edit-btn">수정</button>
+			<button class="delete-btn" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">삭제</button>
+		</td>
+	</tr>
+	<tr class="edit-row" style="display: none;">
+				<td><span>별점 : </span><input type="number" class="reviewStarpoint" name="reviewStarpoint" required min="0" max="5" value="{{reviewStarpoint}}"></td>
+				<td><span>내용 : </span><input type="text" class="reviewContent" name="reviewContent" required value="{{reviewContent}}"></td>
+				<td>
+					<input type="submit" class="btn-edit-reply" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}" value="완료">
+					<button type="button" class="edit-cancel-btn">취소</button>
+				</td>
+	</tr>
+</template>	
+<template id="template-reply-not">
+	<tr class="view-row">
+		<td>{{memberEmail}}</td>
+		<td>{{reviewStarpoint}}</td>
+		<td>{{reviewDate}}</td>
+		<td>{{reviewContent}}</td>
+		<td>{{reviewLike}}</td>
+		<td>
+			<button class="reply-like" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">좋아요</button>
+			<button class="reply-already-like" style="color: red;display: none;">좋아요</button>
+		</td>
+	</tr>
+</template>		
+	
 	<div class="container fluid">
 		<div class="row">
 			<div class="col">
@@ -290,6 +568,23 @@
 			
 			<br>
 			<br>
+			
+			<div class="container-800 container-center">
+				<form class="send-reply">
+					<div class="row center">
+						<span>댓글 작성</span>
+						<textarea type="text" id="reviewContent" name="reviewContent" required rows="4" cols="50" style="resize: none;"></textarea>
+						<span>별점</span>
+						<input type="number" id="reviewStarpoint" name="reviewStarpoint" required min="0" max="5">
+						<input type="submit" class="btn-send-reply" value="작성 완료">
+					</div>
+				</form>
+			
+				<table class="table">
+					<tbody class="reply-items">
+					</tbody>
+				</table>
+			</div>
 			
 			<table class="table table-bordered">
  				<thead>

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.RoleDto;
 import com.kh.spring.entity.actor.TotalRoleViewDto;
+import com.kh.spring.entity.board.ReviewDto;
+import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
@@ -27,6 +29,7 @@ import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.RoleDao;
 import com.kh.spring.repository.actor.TotalRoleViewDao;
+import com.kh.spring.repository.board.ReviewDao;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.movie.VideoDao;
@@ -45,6 +48,7 @@ import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.ChartTotalVO;
 import com.kh.spring.vo.HallByScheduleTimeVO;
 import com.kh.spring.vo.MovieCountVO;
+import com.kh.spring.vo.ReplyVO;
 import com.kh.spring.vo.ReservationVO;
 import com.kh.spring.vo.ShowRealTimeVO;
 import com.kh.spring.vo.TheaterCityVO;
@@ -93,6 +97,74 @@ public class DataController {
 	private MemberDao memberDao;
 	@Autowired
 	private TotalRoleViewDao totalRoleViewDao;
+	@Autowired
+	private ReviewDao reviewDao;
+	
+	@GetMapping("/watchedCheck")
+	public String watchedCheck(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo
+			) {
+		String check;
+		MovieDto checkDto = statisticsInfoViewDao.getByNo(memberNo,movieNo);
+		ReviewDto reviewDto = reviewDao.getByNo(memberNo,movieNo);
+
+		if(checkDto==null) {
+			check="NNNNN";
+			return check;
+		}
+		else if(reviewDto != null) check="NNNNA";
+		else check="NNNNO";
+		
+		return check;
+	}
+	
+	@PostMapping("/addReplylike")
+	public void addReplylike(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo
+			) {
+		reviewDao.replyLike(memberNo,movieNo);
+	}
+	
+	@DeleteMapping("/deleteReply")
+	public boolean deleteReply(@RequestParam int movieNo,@RequestParam int memberNo) {
+		return reviewDao.delete(movieNo,memberNo);
+	}
+	@PostMapping("/replyUpdate")
+	public void replyUpdate(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo,
+			@RequestParam int reviewStarpoint,
+			@RequestParam String reviewContent
+			) {
+		ReviewDto reviewDto = new ReviewDto();
+		reviewDto.setMemberNo(memberNo);
+		reviewDto.setMovieNo(movieNo);
+		reviewDto.setReviewStarpoint(reviewStarpoint);
+		reviewDto.setReviewContent(reviewContent);
+		reviewDao.update(reviewDto);
+	}
+	@GetMapping("/loadReply")
+	public List<ReplyVO> loadReply(
+			@RequestParam int movieNo
+			) {
+		return reviewDao.list(movieNo);
+	}
+	@PostMapping("/replyInsert")
+	public void replyInsert(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo,
+			@RequestParam int reviewStarpoint,
+			@RequestParam String reviewContent
+			) {
+		ReviewDto reviewDto = new ReviewDto();
+		reviewDto.setMemberNo(memberNo);
+		reviewDto.setMovieNo(movieNo);
+		reviewDto.setReviewStarpoint(reviewStarpoint);
+		reviewDto.setReviewContent(reviewContent);
+		reviewDao.insert(reviewDto);
+	}
 	@DeleteMapping("/deleteVideo")
 	public boolean deleteVideo(@RequestParam int videoNo) {
 		return videoDao.delete(videoNo);

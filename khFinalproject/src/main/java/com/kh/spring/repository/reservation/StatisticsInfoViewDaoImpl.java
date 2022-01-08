@@ -1,11 +1,14 @@
 package com.kh.spring.repository.reservation;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.vo.ChartVO;
 
 @Repository
@@ -61,6 +64,14 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	@Override
 	public List<ChartVO> countForReservationRatio() {
 		return sqlSession.selectList("statisticsInfoView.countByReservation");
+	}
+
+	@Override
+	public MovieDto getByNo(int memberNo, int movieNo) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("movieNo", movieNo);
+		param.put("memberNo", memberNo);
+		return sqlSession.selectOne("statisticsInfoView.getByNo",param);
 	}
 	
 }
