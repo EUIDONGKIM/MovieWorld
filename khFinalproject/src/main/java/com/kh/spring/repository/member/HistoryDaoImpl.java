@@ -27,8 +27,9 @@ public class HistoryDaoImpl implements HistoryDao {
 		return sqlSession.selectOne("history.get",historyNo);
 	}
 	@Override
-	public List<HistoryDto> listByPage(int startRow, int endRow) {
+	public List<HistoryDto> listByPage(String memberEmail, int startRow, int endRow) {
 		Map<String,Object> param = new HashMap<>();
+		param.put("memberEmail", memberEmail);
 		param.put("startRow", startRow);
 		param.put("endRow", endRow);
 		

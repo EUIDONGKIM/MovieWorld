@@ -16,6 +16,7 @@ public interface MovieService {
 
 	void delete(int movieNo);
 	
-	List<MyMovieLikeVO> listMyMovieLikeAndPhoto(int memberNo);
+	//내가 좋아요한 영화 목록
+	List<MyMovieLikeVO> myMovieLikeList(int memberNo);
 
 }
