@@ -42,8 +42,6 @@ public class AdminController {
 	@GetMapping("/theater")
 	public String adminTheater(@ModelAttribute PaginationVO paginationVO, Model model) throws Exception {
 		paginationVO.setCount(theaterDao.count(paginationVO));
-		paginationVO.setPageSize(1);
-		paginationVO.setBlockSize(5);
 		paginationVO.calculate();
 		
 		log.debug("paginationVO...{}",paginationVO);

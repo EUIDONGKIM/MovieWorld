@@ -1,5 +1,6 @@
 package com.kh.spring.repository.board;
 
+
 import java.util.List;
 
 import com.kh.spring.entity.board.ReviewDto;
@@ -20,3 +21,4 @@ public interface ReviewDao {
 	ReviewDto getByNo(int memberNo, int movieNo);
 
 }
+
