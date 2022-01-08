@@ -174,6 +174,8 @@
 			var memberNo = '${memberNo}';
 			if(memberNo == '0'){
 				alert("로그인 후 작성 가능합니다.");
+				$("#reviewContent").val("");
+				$("#reviewStarpoint").val("");
 				return;
 			}
 			if(!reviewContent || !reviewStarpoint){
@@ -192,10 +194,14 @@
 					if(resp=='NNNNA'){
 						console.log(resp);					
 						alert("해당 영화의 리뷰를 이미 작성하셨습니다.");
+						$("#reviewContent").val("");
+						$("#reviewStarpoint").val("");
 						return;
 					}else if(resp=='NNNNN'){
 						console.log(resp);
 						alert("해당 영화 관람 후 작성이 가능합니다.");
+						$("#reviewContent").val("");
+						$("#reviewStarpoint").val("");
 						return;
 					}else{
 						replyInsert(reviewContent,reviewStarpoint,movieNo,memberNo);
@@ -226,10 +232,14 @@
 			success:function(resp){
 				console.log("성공", resp);
 				alert("성공적으로 추가되었습니다.");
+				$("#reviewContent").val("");
+				$("#reviewStarpoint").val("");
 				loadReply();
 			},
 			error:function(e){
 				alert("이미 리뷰를 등록하셨습니다.");
+				$("#reviewContent").val("");
+				$("#reviewStarpoint").val("");
 				console.log("실패",e);
 			}
 		});

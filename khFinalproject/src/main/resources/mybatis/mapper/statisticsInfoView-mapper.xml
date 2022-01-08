@@ -49,7 +49,7 @@
 		select text,count(*) count from
 		(SELECT 
 		CASE 
-		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대 이하']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 29  Then '20대']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 39  Then '30대']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 49  Then '40대']]>
@@ -64,13 +64,13 @@
 		select text,count(*) count from
 		(SELECT 
 		CASE 
-		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대 이하']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 29  Then '20대']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 39  Then '30대']]>
 		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 49  Then '40대']]>
 		    Else '50대 이상'
 		end text
-		FROM statistics_info_view where reservation_status='결제완료' and movie_no=3)
+		FROM statistics_info_view where reservation_status='결제완료')
 		group by text order by count desc
 	</select>
 	

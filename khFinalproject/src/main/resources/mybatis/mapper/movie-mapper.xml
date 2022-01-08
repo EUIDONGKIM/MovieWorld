@@ -120,5 +120,9 @@
 	<select id="reservationList" resultType="MovieDto">
 		select * from movie order by 
 	</select>
-	
+
+    <update id="refreshStar" parameterType="int">
+    	update movie set movie_starpoint =  (select sum(review_starpoint) from review where movie_no=#{movieNo})/(select count(*) from review where movie_no=#{movieNo})
+        where movie_no=#{movieNo}
+    </update>
 </mapper>
