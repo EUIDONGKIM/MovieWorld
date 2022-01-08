@@ -46,7 +46,7 @@
 	<select id="listByPage" parameterType="map" resultType="ReservationDto">
 		select * from (
 			select rownum rn, TMP.* from (
-				select * from reservation order by reservation_no desc
+				select * from reservation where member_no = #{memberNo} order by reservation_no desc
 			)TMP
 		) where rn between #{startRow} and #{endRow}		
 	</select>

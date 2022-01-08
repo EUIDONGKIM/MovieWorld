@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.spring.entity.actor.TotalRoleViewDto;
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.movie.MovieLikeDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.repository.movie.MovieDao;
+import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.movie.MoviePhotoDao;
+import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +30,7 @@ public class MovieServiceImpl implements MovieService{
 	private MovieDao movieDao;
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
+	
 	//저장용 폴더/
 	@Value("${config.rootpath.movie}")
 	public String directory;
@@ -213,9 +218,29 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public List<MyMovieLikeVO> listMyMovieLikeAndPhoto(int memberNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MyMovieLikeVO> myMovieLikeList(int memberNo) {
+		
+		List<MovieDto> myMovieLikeList = movieDao.myMovieLikeList(memberNo); 
+		List<MyMovieLikeVO> listMyMovieLikeAndPhoto = new ArrayList<MyMovieLikeVO>();
+		
+		for(MovieDto movieDto : myMovieLikeList) {
+			
+			MyMovieLikeVO myMovieLikeVO = new MyMovieLikeVO();
+			myMovieLikeVO.setMoviePhotoNo(moviePhotoDao.getList(movieDto.getMovieNo()).get(0).getMoviePhotoNo());
+			myMovieLikeVO.setMovieNo(movieDto.getMovieNo());
+			myMovieLikeVO.setMovieTitle(movieDto.getMovieTitle());
+			myMovieLikeVO.setMovieEngTitle(movieDto.getMovieEngTitle());
+			myMovieLikeVO.setMovieGrade(movieDto.getMovieGrade());
+			myMovieLikeVO.setMovieType(movieDto.getMovieType());
+			myMovieLikeVO.setMovieCountry(movieDto.getMovieCountry());
+			myMovieLikeVO.setMovieOpening(movieDto.getMovieOpening());
+			myMovieLikeVO.setMovieRuntime(movieDto.getMovieRuntime());
+			myMovieLikeVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			myMovieLikeVO.setMovieContent(movieDto.getMovieContent());
+			
+			listMyMovieLikeAndPhoto.add(myMovieLikeVO);
+		}
+		return listMyMovieLikeAndPhoto;
 	}
 
 }

@@ -23,6 +23,7 @@ import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
+import com.kh.spring.service.MovieService;
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,9 @@ public class MemberController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private RandomUtil randomUtil;
+	
+	@Autowired
+	private MovieService movieService;
 	
 	
 
@@ -316,5 +320,12 @@ public class MemberController {
 			return "member/payHistroy";
 	}
 	
-
+	@GetMapping("/movieLikeList")
+	public void movieLikeList(Model model, HttpSession session) { 
+		int memberNo = (int)session.getAttribute("memberNo");
+		
+		model.addAttribute("myMovieLikeList",movieService.myMovieLikeList(memberNo));
+		
+	}
+	
 }

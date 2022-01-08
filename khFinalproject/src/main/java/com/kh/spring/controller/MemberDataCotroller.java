@@ -3,6 +3,7 @@ package com.kh.spring.controller;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,20 +77,22 @@ public class MemberDataCotroller {
 	
 	//더보기(페이지네이션)
 	@GetMapping("/historyMore")
-	public List<HistoryDto> historyMore(
+	public List<HistoryDto> historyMore(HttpSession session,
 			@RequestParam(required = false, defaultValue = "1") int page, 
 			@RequestParam(required = false, defaultValue = "5") int size) {
-		int endRow = page * size;
+		String memberEmail = (String)session.getAttribute("ses");		int endRow = page * size;
 		int startRow = endRow - (size - 1);
-		return historyDao.listByPage(startRow, endRow);
+		return historyDao.listByPage(memberEmail, startRow, endRow);
 	}
+	
 	@GetMapping("ReservationHistoryListMore")
-	public List<ReservationDto> ReservationHistoryListMore(
+	public List<ReservationDto> ReservationHistoryListMore(HttpSession session,
 		@RequestParam(required = false, defaultValue = "1") int page, 
 		@RequestParam(required = false, defaultValue = "5") int size){
+		int memberNo = (int)session.getAttribute("memberNo");
 		int endRow = page * size;
 		int startRow = endRow - (size - 1);
-		return reservationDao.listByPage(startRow, endRow);
+		return reservationDao.listByPage(memberNo, startRow, endRow);
 	}
 	
 	
