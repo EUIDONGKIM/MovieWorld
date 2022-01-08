@@ -49,6 +49,7 @@ import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.OrderByCount;
 import com.kh.spring.vo.OrderByRatio;
+import com.kh.spring.vo.OrderByStar;
 import com.kh.spring.vo.PaginationActorVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -283,6 +284,8 @@ public class MovieController {
 
 		if(order==2) {
 			Collections.sort(list,new OrderByCount());		
+		}else if(order==1){
+			Collections.sort(list,new OrderByStar());
 		}else {
 			Collections.sort(list,new OrderByRatio());
 		}

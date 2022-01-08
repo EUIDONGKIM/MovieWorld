@@ -32,6 +32,7 @@ import com.kh.spring.repository.actor.TotalRoleViewDao;
 import com.kh.spring.repository.board.ReviewDao;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.movie.VideoDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.ReservationDao;
@@ -99,6 +100,8 @@ public class DataController {
 	private TotalRoleViewDao totalRoleViewDao;
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private MovieDao movieDao;
 	
 	@GetMapping("/watchedCheck")
 	public String watchedCheck(
@@ -129,7 +132,9 @@ public class DataController {
 	
 	@DeleteMapping("/deleteReply")
 	public boolean deleteReply(@RequestParam int movieNo,@RequestParam int memberNo) {
-		return reviewDao.delete(movieNo,memberNo);
+		boolean result = reviewDao.delete(movieNo,memberNo);
+		movieDao.refreshStar(movieNo);
+		return result;
 	}
 	@PostMapping("/replyUpdate")
 	public void replyUpdate(
@@ -144,6 +149,9 @@ public class DataController {
 		reviewDto.setReviewStarpoint(reviewStarpoint);
 		reviewDto.setReviewContent(reviewContent);
 		reviewDao.update(reviewDto);
+		
+		movieDao.refreshStar(movieNo);
+		
 	}
 	@GetMapping("/loadReply")
 	public List<ReplyVO> loadReply(
@@ -164,6 +172,7 @@ public class DataController {
 		reviewDto.setReviewStarpoint(reviewStarpoint);
 		reviewDto.setReviewContent(reviewContent);
 		reviewDao.insert(reviewDto);
+		movieDao.refreshStar(movieNo);
 	}
 	@DeleteMapping("/deleteVideo")
 	public boolean deleteVideo(@RequestParam int videoNo) {

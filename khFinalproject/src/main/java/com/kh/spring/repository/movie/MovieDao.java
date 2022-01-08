@@ -28,4 +28,6 @@ public interface MovieDao {
 	void edit(MovieDto movieDto);
 	
 	List<MovieDto> myMovieLikeList(int memberNo);
+
+	void refreshStar(int movieNo);
 }
