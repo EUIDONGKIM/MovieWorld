@@ -43,6 +43,10 @@
 		select * from movie
 	</select>
 	
+	<select id="listNotContent" resultType="MovieDto">
+		select movie_no,movie_title,movie_grade,movie_type,movie_country,movie_opening,movie_runtime,movie_starpoint from movie
+	</select>
+	
 	<select id="get" parameterType="int" resultType="MovieDto">
 		select * from movie where movie_no = #{movieNo}
 	</select>
@@ -68,7 +72,7 @@
 	<select id="nowList" parameterType="map" resultType="MovieDto">
 		<choose>
 		<when test="list.size() > 0">
-		select * from movie
+		select movie_no,movie_title,movie_grade,movie_type,movie_country,movie_opening,movie_runtime,movie_starpoint from movie
 			where movie_no in 
 			<foreach collection="list" open="(" close=")" separator="," item="no">
 				#{no}
@@ -81,7 +85,8 @@
 	</select>
 	
 	<select id="getTitleList" parameterType="String" resultType="MovieDto">
-		select * from movie where instr(movie_title,#{movieTitle})>0
+		select movie_no,movie_title,movie_grade,movie_type,movie_country,movie_opening,movie_runtime,movie_starpoint
+		from movie where instr(movie_title,#{movieTitle})>0
 	</select>
 	
 	<select id="notHaveSchedule" resultType="int">

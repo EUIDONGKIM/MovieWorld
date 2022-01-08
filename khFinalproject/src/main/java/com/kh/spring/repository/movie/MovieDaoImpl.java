@@ -84,4 +84,9 @@ public class MovieDaoImpl implements MovieDao{
 		sqlSession.update("movie.refreshStar",movieNo);
 	}
 
+	@Override
+	public List<MovieDto> listNotContent() {
+		return sqlSession.selectList("movie.listNotContent");
+	}
+
 }

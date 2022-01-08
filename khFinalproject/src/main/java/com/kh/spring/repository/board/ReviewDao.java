@@ -20,5 +20,7 @@ public interface ReviewDao {
 
 	ReviewDto getByNo(int memberNo, int movieNo);
 
+	List<ReplyVO> listByPage(int movieNo, int startRow, int endRow);
+
 }
 

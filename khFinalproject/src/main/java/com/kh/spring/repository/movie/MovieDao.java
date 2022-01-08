@@ -30,4 +30,6 @@ public interface MovieDao {
 	List<MovieDto> myMovieLikeList(int memberNo);
 
 	void refreshStar(int movieNo);
+
+	List<MovieDto> listNotContent();
 }

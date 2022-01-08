@@ -61,4 +61,14 @@ public class ReviewDaoImpl implements ReviewDao{
 		param.put("memberNo", memberNo);
 		return sqlSession.selectOne("review.getByNo",param);
 	}
+
+	@Override
+	public List<ReplyVO> listByPage(int movieNo, int startRow, int endRow) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("movieNo", movieNo);
+		param.put("startRow", startRow);
+		param.put("endRow", endRow);
+		
+		return sqlSession.selectList("review.listByPage",param);
+	}
 }

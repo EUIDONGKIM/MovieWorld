@@ -157,7 +157,7 @@ public class MovieController {
 			}
 			model.addAttribute("movieTitle", movieTitle);
 		}else if(movieTotal != null) {
-			movieList = movieDao.list();
+			movieList = movieDao.listNotContent();
 			for(MovieDto movieDto : movieList) {
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				sendList.put(movieDto,movieValue);
@@ -190,7 +190,6 @@ public class MovieController {
 			List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
 			movieList = movieDao.nowList(movieNoList);
 			for(MovieDto movieDto : movieList) {
-				log.debug("영화순서확인!!@@@{}",movieDto);
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				
 				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());

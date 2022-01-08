@@ -43,7 +43,7 @@
 	</select>
 	
 	<select id="listByhallNoForMap" parameterType="map" resultType="LastInfoViewDto">
-		select * from last_info_view 
+		select movie_no,movie_title,movie_grade,movie_type,movie_opening,movie_runtime,hall_name,hall_type,hall_seat,schedule_time_count,schedule_time_discount_type,schedule_time_date_time,schedule_time_no from last_info_view 
 		where theater_no = #{theaterNo}
 		and to_char(schedule_time_date_time,'YYYY-MM-DD') = #{day}
 		and movie_no = #{movieNo}
@@ -90,11 +90,13 @@
 	</select>
 	
 	<select id="listByScheduleNo" resultType="LastInfoViewDto">
-		select * from last_info_view where schedule_no = #{scheduleNo}
+		select hall_name,hall_type,hall_seat,schedule_time_count,schedule_time_discount_type,schedule_time_date_time,schedule_time_no 
+		from last_info_view where schedule_no = #{scheduleNo}
 	</select>
 	
 	<select id="nowListByScheduleNo" resultType="LastInfoViewDto">
-		select * from last_info_view where schedule_no = #{scheduleNo}
+		select hall_name,hall_type,hall_seat,schedule_time_count,schedule_time_discount_type,schedule_time_date_time,schedule_time_no 
+		from last_info_view where schedule_no = #{scheduleNo}
 		and schedule_time_date_time>sysdate
 	</select>
 	
