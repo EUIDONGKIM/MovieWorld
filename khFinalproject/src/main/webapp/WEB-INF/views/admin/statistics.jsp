@@ -417,11 +417,6 @@ height: 900px !important;
 		<canvas id="countByAgeForTotal" width="400" height="400"></canvas>
 	</div>
 	
-
-	<div class="row">
-		<h1>영화 평점별 순위</h1> =>통계 view
-	</div>
-	
 	<div class="row">
 		<h1>지점별 예매율(판매율) 순위</h1> =>통계 view
 		<canvas id="totalReservationByTheater" width="400" height="400"></canvas>

@@ -53,4 +53,15 @@
 		and to_date(#{scheduleEnd},'YYYY-MM-DD') order by movie_no asc
 	</select>
 	
+	<select id="checkStatus" parameterType="int" resultType="ChartVO">
+		   select text,count(*) count from
+		(SELECT 
+		CASE 
+		   <![CDATA[WHEN sysdate between schedule_start and schedule_end  Then '현재 상영중']]>
+		   <![CDATA[WHEN sysdate<schedule_start Then '개봉 예정작']]>
+           <![CDATA[WHEN schedule_end<sysdate  Then '상영 종료']]>
+		end text
+		FROM total_info_view where movie_no=#{movieNo})
+		group by text
+	</select>
 </mapper>
