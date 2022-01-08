@@ -1,14 +1,14 @@
-package com.kh.spring.entity.board;
-
-import java.sql.Date;
+package com.kh.spring.vo;
 
 import lombok.Data;
+
 @Data
-public class ReviewDto {
+public class ReplyVO {
 	private int movieNo;
 	private int memberNo;
 	private String reviewContent;
 	private int reviewStarpoint;
 	private String reviewDate;
 	private int reviewLike;
+	private String memberEmail;
 }

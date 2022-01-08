@@ -91,6 +91,10 @@
 	</select>
 	
 	<select id="movieTitleBymemberNo" parameterType="int" resultType="String">
-		select Movie_title from statistics_info_view where member_no=#{memebrNo}
+		select Movie_title from statistics_info_view where member_no=#{memberNo}
+	</select>
+	
+	<select id="getByNo" parameterType="map" resultType="MovieDto">
+		select distinct(movie_no),movie_title from statistics_info_view where member_no=#{memberNo} and movie_no=#{movieNo}
 	</select>
 </mapper>
