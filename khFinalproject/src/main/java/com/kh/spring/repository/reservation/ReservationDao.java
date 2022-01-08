@@ -23,5 +23,5 @@ public interface ReservationDao {
 	
 	List<ReservationDto> list(int memberNo);
 	
-	List<ReservationDto> listByPage(int startRow, int endRow);
+	List<ReservationDto> listByPage(int memberNo, int startRow, int endRow);
 }

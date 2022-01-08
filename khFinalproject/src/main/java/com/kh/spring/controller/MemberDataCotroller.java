@@ -3,12 +3,14 @@ package com.kh.spring.controller;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.spring.entity.member.CertificationDto;
@@ -72,24 +74,32 @@ public class MemberDataCotroller {
 	public void emailSend(@RequestParam String to) throws MessagingException {
 		emailService.sendCertificationNumber(to);
 	}
+	@PostMapping("/emailSend2")
+	@ResponseBody
+	public int emailSend2(@RequestParam String to) throws MessagingException {
+		emailService.examPw(to);
+		return 0;
+	}
 	
 	
 	//더보기(페이지네이션)
 	@GetMapping("/historyMore")
-	public List<HistoryDto> historyMore(
+	public List<HistoryDto> historyMore(HttpSession session,
 			@RequestParam(required = false, defaultValue = "1") int page, 
 			@RequestParam(required = false, defaultValue = "5") int size) {
-		int endRow = page * size;
+		String memberEmail = (String)session.getAttribute("ses");		int endRow = page * size;
 		int startRow = endRow - (size - 1);
-		return historyDao.listByPage(startRow, endRow);
+		return historyDao.listByPage(memberEmail, startRow, endRow);
 	}
+	
 	@GetMapping("ReservationHistoryListMore")
-	public List<ReservationDto> ReservationHistoryListMore(
+	public List<ReservationDto> ReservationHistoryListMore(HttpSession session,
 		@RequestParam(required = false, defaultValue = "1") int page, 
 		@RequestParam(required = false, defaultValue = "5") int size){
+		int memberNo = (int)session.getAttribute("memberNo");
 		int endRow = page * size;
 		int startRow = endRow - (size - 1);
-		return reservationDao.listByPage(startRow, endRow);
+		return reservationDao.listByPage(memberNo, startRow, endRow);
 	}
 	
 	

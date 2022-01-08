@@ -29,6 +29,7 @@
     			success:function(resp){
     				$("#page2").empty();
     				$("#page3").empty();
+    				$("#page4").empty();
     				$("#page1").html(resp);
     			}
     		});
@@ -44,6 +45,7 @@
     			success:function(resp){
     				$("#page1").empty();
     				$("#page3").empty();
+    				$("#page4").empty();
     				$("#page2").html(resp);
     			}
     		});
@@ -59,7 +61,25 @@
     			success:function(resp){
     				$("#page2").empty();
     				$("#page1").empty();
+    				$("#page4").empty();
     				$("#page3").html(resp);
+    			}
+    		});
+    	});
+    	
+    	$(".atag4").on("click",function(e){
+    		e.preventDefault();
+    		
+    		var url = $(this).attr("href");
+    		
+    		
+    		$.ajax({
+    			url:url,
+    			success:function(resp){
+    				$("#page2").empty();
+    				$("#page1").empty();
+    				$("#page3").empty();
+    				$("#page4").html(resp);
     			}
     		});
     	});
@@ -146,7 +166,8 @@
 					<a class="list-group-item list-group-item-action active" style="text-align: center;">이용내역</a>
                     <a href="${root}/board/userWriteList" class="list-group-item list-group-item-action atag1">내가 작성한 게시글보기</a>
                     <a href="history" class="list-group-item list-group-item-action atag2">포인트 적립/사용</a>
-                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag3">내가관람한영화</a>
+                    <a href="ReservationHistoryList" class="list-group-item list-group-item-action atag3">내가 관람한 영화</a>
+                    <a href="movieLikeList" class="list-group-item list-group-item-action atag4">내가 보고 싶은 영화</a>
 
                 
                   </div>
@@ -162,6 +183,10 @@
                 </div>
                 
 					<div id="page3">
+				
+                </div>
+                
+  					<div id="page4">
 				
                 </div>
                 
