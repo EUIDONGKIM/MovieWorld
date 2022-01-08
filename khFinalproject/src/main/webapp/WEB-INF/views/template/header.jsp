@@ -9,7 +9,7 @@
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <c:set var="memberNo" value="${memberNo}"></c:set>
 
-<!DOCTYPE html>z
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">

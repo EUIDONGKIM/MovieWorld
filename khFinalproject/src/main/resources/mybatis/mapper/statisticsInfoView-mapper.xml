@@ -49,9 +49,11 @@
 		select text,count(*) count from
 		(SELECT 
 		CASE 
-		     <![CDATA[WHEN extract(year from member_birth) - extract(year from sysdate) + 1 <= 14*365  Then '청소년']]>
-		    WHEN extract(year from member_birth) - extract(year from sysdate) + 1 between 20*365 and 60*365  Then '일반'
-		    Else '경로'
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 29  Then '20대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 39  Then '30대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 49  Then '40대']]>
+		    Else '50대 이상'
 		end text
 		FROM statistics_info_view where reservation_status='결제완료' and movie_no=#{movieNo})
 		group by text order by count desc
@@ -62,9 +64,11 @@
 		select text,count(*) count from
 		(SELECT 
 		CASE 
-		    <![CDATA[WHEN extract(year from member_birth) - extract(year from sysdate) + 1 <= 14*365  Then '청소년']]>
-		    WHEN extract(year from member_birth) - extract(year from sysdate) + 1 between 20*365 and 60*365  Then '일반'
-		    Else '경로'
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 19  Then '10대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 29  Then '20대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 39  Then '30대']]>
+		    <![CDATA[WHEN extract(year from sysdate) - extract(year from member_birth) + 1 <= 49  Then '40대']]>
+		    Else '50대 이상'
 		end text
 		FROM statistics_info_view where reservation_status='결제완료' and movie_no=3)
 		group by text order by count desc
