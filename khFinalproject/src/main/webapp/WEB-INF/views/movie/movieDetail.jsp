@@ -15,8 +15,8 @@
 	height: 30px;
 	}
 	canvas{ 
-	width: 300px !important; 
-	height: 300px !important; 
+	width: 600px !important; 
+	height: 400px !important; 
 	} 
 	.show-off{
 	display: none;
@@ -71,7 +71,7 @@
 	
 		//var myChart = new Chart(펜객체, 차트옵션);
 		var myChart = new Chart(ctx1, {
-		    type: 'pie', //차트의 유형
+		    type: 'bar', //차트의 유형
 		    data: { //차트 데이터
 		    	
 		    	//하단 제목
@@ -265,6 +265,7 @@
 					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
 					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
 					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
+					template = template.replace("{{reviewLikePlus}}",parseInt(resp[i].reviewLike)+1);
 
 					var tag = $(template);
 					tag.find(".edit-btn").click(function(){
@@ -306,6 +307,10 @@
 						
 						console.log("movieNo", movieNo);
 						console.log("memberNo", memberNo);
+						if('${memberNo}'=='0'){
+							alert("로그인 후 가능합니다.");
+							return;
+						}
 						addReplylike(movieNo,memberNo);
 						$(this).hide();
 						$(this).prev().show();
@@ -320,6 +325,7 @@
 					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
 					template = template.replace("{{memberNo}}",resp[i].memberNo);
 					template = template.replace("{{movieNo}}",resp[i].movieNo);
+					template = template.replace("{{reviewLikePlus}}",parseInt(resp[i].reviewLike)+1);
 					var tag = $(template);
 					tag.find(".reply-like").click(function(e){
 						e.preventDefault();
@@ -327,6 +333,10 @@
 						var memberNo = $(this).data("member_no");
 						console.log("movieNo", movieNo);
 						console.log("memberNo", memberNo);
+						if('${memberNo}'=='0'){
+							alert("로그인 후 가능합니다.");
+							return;
+						}
 						addReplylike(movieNo,memberNo);
 						$(this).hide();
 						$(this).next().show();
@@ -404,10 +414,9 @@
 		<td>{{reviewStarpoint}}</td>
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>
-		<td>{{reviewLike}}</td>
 		<td>
-			<button class="reply-already-like" style="color: red;display: none;">좋아요</button>
-			<button class="reply-like">좋아요</button>
+			<button class="reply-already-like" style="color: red;display: none;">좋아요({{reviewLikePlus}})</button>
+			<button class="reply-like">좋아요({{reviewLike}})</button>
 			<button class="edit-btn">수정</button>
 			<button class="delete-btn" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">삭제</button>
 		</td>
@@ -427,10 +436,9 @@
 		<td>{{reviewStarpoint}}</td>
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>
-		<td>{{reviewLike}}</td>
 		<td>
-			<button class="reply-like" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">좋아요</button>
-			<button class="reply-already-like" style="color: red;display: none;">좋아요</button>
+			<button class="reply-like" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">좋아요({{reviewLike}})</button>
+			<button class="reply-already-like" style="color: red;display: none;">좋아요({{reviewLikePlus}})</button>
 		</td>
 	</tr>
 </template>		
@@ -585,33 +593,7 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<table class="table table-bordered">
- 				<thead>
-  					 <tr class="table-active">
-      					<th>1</th>
-      					<th>2</th>
-   					</tr>
- 				</thead>
- 				<tbody>
-   					<tr>
-     			 		<td>${movieDto.movieContent}</td>
-     			 		<td>관람평</td>
-  			 		</tr>
-  			 		<tr>
-     			 		<td>관람평</td>
-     			 		<td>관람평</td>
-  			 		</tr>
-  			 		<tr>
-     			 		<td>관람평</td>
-     			 		<td>관람평</td>
-  			 		</tr>
-  			 		<tr>
-     			 		<td>관람평</td>
-     			 		<td>관람평</td>
-  			 		</tr>
-				</tbody>
-			</table>	
+				
 			
 	</div>
 			
