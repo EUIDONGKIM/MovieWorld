@@ -297,6 +297,8 @@ public class MovieController {
 	
 	@GetMapping("/movieDetail")
 		public String movieDetail(@RequestParam int movieNo, Model model, HttpSession session) {
+		
+		ChartVO checkStatus = totalInfoViewDao.checkStatus(movieNo);
 		MovieDto movieDto = movieDao.get(movieNo);
 		List<TotalRoleViewDto> totalRoleViewList = totalRoleViewDao.listByMovieNo(movieNo);
 		List<MoviePhotoDto> moviePhotoList = moviePhotoDao.getList(movieNo);
@@ -312,7 +314,8 @@ public class MovieController {
 		}
 		log.debug("memberNo==={}",memberNo);
 		log.debug("myMovieLike==={}",movieLikeDao.get(movieNo, memberNo));
-
+		
+		model.addAttribute("showStatus",checkStatus.getText());
 		model.addAttribute("myMovieLike",movieLikeDao.get(movieNo, memberNo));
 		model.addAttribute("movieDto", movieDto);
 		model.addAttribute("moviePhotoList", moviePhotoList);

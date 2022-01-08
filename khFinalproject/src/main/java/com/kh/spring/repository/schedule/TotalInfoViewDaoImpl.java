@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
+import com.kh.spring.vo.ChartVO;
 
 @Repository
 public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
@@ -53,6 +54,10 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	@Override
 	public List<Integer> nowTMoiveListContainSoon() {
 		return sqlSession.selectList("totalInfoView.nowTMoiveListContainSoon");
+	}
+	@Override
+	public ChartVO checkStatus(int movieNo) {
+		return sqlSession.selectOne("totalInfoView.checkStatus",movieNo);
 	}
 	
 	

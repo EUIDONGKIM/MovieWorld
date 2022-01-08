@@ -468,7 +468,7 @@
   							<div class="col-sm">
   								<strong class="inline">${movieDto.movieTitle}</strong>
   								<em class="round lightblue">
-  									<span>현재상영중</span>
+  									<span>${showStatus }</span>
   								</em>
  								<button type="button" class="btn-like btn btn-sm btn-outline-secondary">
 				           				<!-- 좋아요 아이콘 -->
