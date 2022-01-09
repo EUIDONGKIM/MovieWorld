@@ -7,9 +7,11 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <div class="container-1200 container-center">
 	<div class="row">
-		<h1> 현재 ${totalCount}개의 영화관이 운영 중입니다. | <a href="${root}/theater/create">극장 생성</a></h1>
+		<div class="col">
+			<h1 class="center"> 현재 ${totalCount}개의 영화관이 운영 중입니다.</h1>				
+		</div>				
 	</div>
-	
+
 	<div class="row">
 		<div class="col-3">
 		</div>
@@ -42,6 +44,12 @@
 		</form>
 		</div>
 		<div class="col-3">
+		</div>	
+	</div>
+	
+	<div class="row"> 
+		<div class="d-flex flex-row-reverse bd-highlight">
+				<a class="btn btn-info my-2 my-sm-0" href="${root}/theater/create">극장 생성</a>
 		</div>
 	</div>
 
