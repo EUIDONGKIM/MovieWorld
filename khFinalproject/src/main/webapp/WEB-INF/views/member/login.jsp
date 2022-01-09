@@ -49,7 +49,7 @@ font-size: 20px;
 	 </div>
 
  	 
- 	 <div class="row">
+ 	 <div class="d-grid gap-2 col mx-auto">
  			<input type="submit" value="login" class="btn btn-info fsize" width="100%">
  	 </div>
  	 
