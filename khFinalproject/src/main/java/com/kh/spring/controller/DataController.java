@@ -21,6 +21,7 @@ import com.kh.spring.entity.actor.TotalRoleViewDto;
 import com.kh.spring.entity.board.ReviewDto;
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.movie.VideoDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
@@ -102,6 +103,23 @@ public class DataController {
 	private ReviewDao reviewDao;
 	@Autowired
 	private MovieDao movieDao;
+	
+	@GetMapping("/checkSameTime")
+	public String checkSameTime(
+			@RequestParam int scheduleNo,
+			@RequestParam int hallNo,
+			@RequestParam String scheduleTimefirst
+			) {
+		List<LastInfoViewDto> checkList = lastInfoViewDao.checkTime(scheduleNo,hallNo,scheduleTimefirst);
+		String check;
+		if(!checkList.isEmpty()) {
+			check="NNNNN";
+			return check;
+		}
+		else check="NNNNO";
+		
+		return check;
+	}
 	
 	@GetMapping("/watchedCheck")
 	public String watchedCheck(
