@@ -33,4 +33,6 @@ public interface LastInfoViewDao {
 
 	List<LastInfoViewDto> nowListByScheduleNo(int scheduleNo);
 
+	List<LastInfoViewDto> checkTime(int scheduleNo, int hallNo, String scheduleTimefirst);
+
 }

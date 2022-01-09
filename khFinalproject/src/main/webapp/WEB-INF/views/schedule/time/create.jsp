@@ -6,6 +6,8 @@
 
 <script>
 	$(function(){
+		var hallNo;
+		var scheduleTimeDateTime;
         $("select[name=scheduleTimeDiscountPrice]").change(function(){
         	$("#send-type-hidden").empty();
         	var type = $(this).find("option:selected").data("type");
@@ -15,6 +17,48 @@
      	   
         	$("#send-type-hidden").append(template);
         })
+        
+        $("select[name=hallNo]").change(function(){
+        	hallNo = $(this).val();
+        });
+        $("input[name=scheduleTimeDateTime]").on("input",function(){
+        	var scheduleNo = '${totalInfoViewDto.scheduleNo }';
+        	scheduleTimeDateTime = $(this).val();
+        	var day = scheduleTimeDateTime.substring(0,10);
+        	console.log(day);
+        	var time = scheduleTimeDateTime.substring(11,16);
+        	console.log(time);
+        	var scheduleTimefirst = day + " " + time + ":00";
+        	console.log(scheduleTimefirst);
+        	
+        	checkSameTime(scheduleNo,hallNo,scheduleTimefirst);
+        });
+        function checkSameTime(scheduleNo,hallNo,scheduleTimefirst){
+        	$.ajax({
+				url:"${pageContext.request.contextPath}/data/checkSameTime",
+				type:"get",
+				data:{
+					scheduleNo:scheduleNo,
+					hallNo:hallNo,
+					scheduleTimefirst:scheduleTimefirst
+					},
+				dataType:"text",
+				success:function(resp){
+					if(resp=='NNNNN'){
+						console.log(resp);					
+						alert("해당 상영관에 상영하는 영화가 있습니다. 다른 시간을 선택하세요.");
+						$("input[name=scheduleTimeDateTime]").val("");
+						return;
+					}
+					else{
+						console.log("성공", resp);
+					}
+				},
+				error:function(e){
+					console.log("실패",e);
+				}
+			});
+        }
         
 	});
 </script>
