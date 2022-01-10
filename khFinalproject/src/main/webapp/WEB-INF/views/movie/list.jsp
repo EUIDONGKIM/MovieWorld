@@ -55,13 +55,15 @@ display: none;
 		<button  class="btn btn-outline-dark" onclick="location.href='${root}/schedule/create_total'">상영 영화 일괄 생성</button>
 	</div>
 	
+		<form action="${root}/movie/list" method="get">
 		<div class="row">
 		<h5>[단일 영화 히스토리 검색]</h5>
 		</div>		
 	<div class="d-flex flex-row">
-		<input type="text" name="movieTitle" value="${movieTitle }" required class="form-control me-sm-2 form-inline" >
-		<input type="submit" value="영화 검색" class="btn btn-info my-2 my-sm-0">
+			<input type="text" name="movieTitle" value="${movieTitle }" required class="form-control me-sm-2 form-inline" >
+			<input type="submit" value="영화 검색" class="btn btn-info my-2 my-sm-0">
 	</div>
+		</form>
 	
 	<div class="row cneter">
 		<form action="${root}/movie/list" method="get">
