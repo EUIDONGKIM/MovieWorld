@@ -26,8 +26,6 @@ public class SeatController {
 	
 	@PostMapping("/insert")
 	public String insert(@RequestParam List<String> seat,@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
-		log.debug("seat List 받은 값{}",seat);
-		log.debug("hallNo 받은 값{}",hallNo);
 		
 		List<SeatDto> seatList = new ArrayList<>();
 		
@@ -45,9 +43,6 @@ public class SeatController {
 			seatList.add(seatDto);
 			}
 			
-		
-		log.debug("seatList 받은 값{}",seatList);
-		
 		seatService.setSeatandUpdateHall(seatList,hallNo);
 		
 		redirectAttributes.addAttribute("hallNo",hallNo);
