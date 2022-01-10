@@ -218,9 +218,9 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public List<MyMovieLikeVO> myMovieLikeList(int memberNo) {
+	public List<MyMovieLikeVO> myMovieLikeList(int memberNo, int startRow, int endRow) {
 		
-		List<MovieDto> myMovieLikeList = movieDao.myMovieLikeList(memberNo); 
+		List<MovieDto> myMovieLikeList = movieDao.myMovieLikeList(memberNo, startRow, endRow); 
 		List<MyMovieLikeVO> listMyMovieLikeAndPhoto = new ArrayList<MyMovieLikeVO>();
 		
 		for(MovieDto movieDto : myMovieLikeList) {

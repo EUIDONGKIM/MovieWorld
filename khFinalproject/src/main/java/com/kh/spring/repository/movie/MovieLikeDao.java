@@ -11,4 +11,6 @@ public interface MovieLikeDao{
 	void delete(MovieLikeDto movieLikeDto);
 	
 	boolean get(int movieNo, int memberNo);
+	
+	int count(int memberNo);
 }

@@ -15,4 +15,8 @@ public class MyMovieLikeVO {
 	private int movieRuntime;
 	private float movieStarpoint;
 	private String movieContent;
+	
+	public String getOpeningDay() {
+		return this.movieOpening.substring(0,10);
+	}
 }

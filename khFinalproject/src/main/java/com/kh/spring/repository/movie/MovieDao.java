@@ -27,7 +27,7 @@ public interface MovieDao {
 
 	void edit(MovieDto movieDto);
 	
-	List<MovieDto> myMovieLikeList(int memberNo);
+	List<MovieDto> myMovieLikeList(int memberNo, int startRow, int endRow);
 
 	void refreshStar(int movieNo);
 

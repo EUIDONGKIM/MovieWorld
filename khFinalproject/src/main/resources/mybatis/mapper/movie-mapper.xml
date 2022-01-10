@@ -117,9 +117,14 @@
 	
 	<!-- 보고 싶은 영화 목록 -->
 	<select id="myMovieLike" parameterType="int" resultType="MovieDto">
-		select m.* from movie m
-		inner join movie_like ml on m.movie_no = ml.movie_no
-		where ml.member_no = #{memberNo}
+		select * from (
+			select rownum rn, TMP.* from (
+						select m.* from movie m
+						inner join movie_like ml on m.movie_no = ml.movie_no
+						where ml.member_no = #{memberNo}
+			)TMP
+		) where rn between #{startRow} and #{endRow} order by rn desc
+
 	</select>
 	
 	<select id="reservationList" resultType="MovieDto">

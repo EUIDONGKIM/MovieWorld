@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,12 @@ import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.service.EmailService;
+import com.kh.spring.service.MovieService;
+import com.kh.spring.vo.MyMovieLikeVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/member")
 public class MemberDataCotroller {
@@ -37,6 +43,8 @@ public class MemberDataCotroller {
 	private HistoryDao historyDao;
 	@Autowired
 	private ReservationDao reservationDao;
+	@Autowired
+	private MovieService movieService;
 
 
 	@GetMapping("/idcheck")
@@ -87,7 +95,8 @@ public class MemberDataCotroller {
 	public List<HistoryDto> historyMore(HttpSession session,
 			@RequestParam(required = false, defaultValue = "1") int page, 
 			@RequestParam(required = false, defaultValue = "5") int size) {
-		String memberEmail = (String)session.getAttribute("ses");		int endRow = page * size;
+		String memberEmail = (String)session.getAttribute("ses");		
+		int endRow = page * size;
 		int startRow = endRow - (size - 1);
 		return historyDao.listByPage(memberEmail, startRow, endRow);
 	}
@@ -100,6 +109,17 @@ public class MemberDataCotroller {
 		int endRow = page * size;
 		int startRow = endRow - (size - 1);
 		return reservationDao.listByPage(memberNo, startRow, endRow);
+	}
+	
+	@GetMapping("/movieLikeListMore")
+	public List<MyMovieLikeVO> movieLikeList(HttpSession session,
+		@RequestParam(required = false, defaultValue = "1") int page, 
+		@RequestParam(required = false, defaultValue = "5") int size){
+		int memberNo = (int)session.getAttribute("memberNo");
+		int endRow = page * size;
+		int startRow = endRow - (size - 1);
+		return movieService.myMovieLikeList(memberNo, startRow, endRow);
+		
 	}
 	
 	
