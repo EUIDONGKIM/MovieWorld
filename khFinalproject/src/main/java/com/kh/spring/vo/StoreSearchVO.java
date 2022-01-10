@@ -6,6 +6,8 @@ import java.util.List;
 import com.kh.spring.entity.store.StoreDto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
 @Data
 public class StoreSearchVO {
 	
