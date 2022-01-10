@@ -48,7 +48,7 @@
 		
 		<c:if test="${owner}">
 		<a href="edit?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">수정하기</a>
-		<a href="delete?boardNo=${boardDto.boardNo}" class="btn btn-outline-info">삭제하기</a>
+		<a href="delete?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">삭제하기</a>
 		</c:if>
 	 
 	 </div>

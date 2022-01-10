@@ -121,9 +121,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(int boardNo) {
+	public String delete(int boardNo,@RequestParam int boardTypeName) {
 		boardDao.delete(boardNo);
-		return "redirect:/board/main";
+		return "redirect:/board/main?boardTypeName="+boardTypeName;
 	}
 	
 	@GetMapping("/edit")
