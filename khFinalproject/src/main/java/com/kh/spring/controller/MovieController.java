@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -79,13 +77,10 @@ public class MovieController {
 	private VideoDao videoDao;
 	@Autowired
 	private TotalRoleViewDao totalRoleViewDao;
-	
-	
-	
 	//좋아요
 	@Autowired
 	private MovieLikeDao movieLikeDao;
-	
+
 	
 	@GetMapping("/insert")
 	public String insert() {
@@ -128,88 +123,22 @@ public class MovieController {
 			@RequestParam(required = false) String movieTotal,
 			@RequestParam(required = false) String scheduleStart,
 			@RequestParam(required = false) String scheduleEnd
-			) {//리스트를 찍으려면 뭔가가 필요합니다잉
-		// 영화 => 개봉일 기준 검색 / 제목 검색
-		
-		// 상영 영화 검색 / 상영 중이지 않음 / 모두
-		
-		// 처음 => 상영 중인것만 보여준다.
-		// 검색 시 상영 끝난것 위주로 보여준다 이력들 영화 검색.
-		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = new TreeMap<>();
-		List<MovieDto> movieList = new ArrayList<>();
+			) {
+		movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);
 		
 		if(movieTitle != null) {
-			movieList = movieDao.getTitleList(movieTitle);
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				
-				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
-				
-				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
-					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
-					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
-					tempMap.put(totalInfoViewDto,list);
-					
-					movieValue.add(tempMap);
-				}
-				
-				sendList.put(movieDto,movieValue);
-			}
 			model.addAttribute("movieTitle", movieTitle);
 		}else if(movieTotal != null) {
-			movieList = movieDao.listNotContent();
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				sendList.put(movieDto,movieValue);
-				model.addAttribute("movieTitle", movieTitle);
-			}
 			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
-			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
-			movieList = movieDao.nowList(movieNoList);
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				
-				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
-				
-				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
-					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
-					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
-					tempMap.put(totalInfoViewDto,list);
-					
-					movieValue.add(tempMap);
-				}
-				
-				sendList.put(movieDto,movieValue);
-			}
 			model.addAttribute("scheduleStart", scheduleStart);
 			model.addAttribute("scheduleEnd", scheduleEnd);
 		}
-		else {			
-			
-			List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
-			movieList = movieDao.nowList(movieNoList);
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				
-				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());
-				
-				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
-					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
-					List<LastInfoViewDto> list = lastInfoViewDao.nowListByScheduleNo(totalInfoViewDto.getScheduleNo());
-					tempMap.put(totalInfoViewDto,list);
-					
-					movieValue.add(tempMap);
-				}
-				
-				sendList.put(movieDto,movieValue);
-			}
-			
-		}
 		
-		
+		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = 
+				movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);		
 		model.addAttribute("sendList", sendList);
-		return "movie/list";//잊지마세요 뷰.리.졸.버 - 김동율 뷰! 리졸버~
+		return "movie/list";
 	}
 
 	//무비차트
@@ -224,62 +153,7 @@ public class MovieController {
 		}else {
 			movieNoList = totalInfoViewDao.nowTMoiveListContainSoon();
 		}
-		List<MovieDto> movieList = movieDao.nowList(movieNoList);
-		
-		List<ChartVO> vo = new ArrayList<>();
-		List<ChartVO> voForCount = new ArrayList<>();
-		
-		List<MovieChartVO> list = new ArrayList<>();
-		
-		int total = 0;
-		
-			vo = statisticsInfoViewDao.countForReservationRatio();
-			for(ChartVO chartVO : vo) {
-				total += chartVO.getCount();//총 예매 건수 합
-			}
-			
-		if(order==2) {			
-			voForCount = lastInfoViewDao.countByTotal();
-		}
-
-		
-		for(MovieDto movieDto : movieList) {
-			
-			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
-			MoviePhotoDto moviePhotoDto = photoList.get(0);
-			
-			MovieChartVO movieChartVO = new MovieChartVO();
-			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
-			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
-			movieChartVO.setMovieNo(movieDto.getMovieNo());
-			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
-			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
-			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
-			
-				
-				for(ChartVO chartVO : vo) {
-					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
-						float movieRatio = (float)chartVO.getCount() / (float)total * 100;
-						String num = String.format("%.2f" , movieRatio);
-						float changeToTwo = Float.parseFloat(num);
-						movieChartVO.setMovieRatio(changeToTwo);
-						break;
-						
-					}
-				}
-			
-				if(order==2) {
-				
-				for(ChartVO chartVO : voForCount) {
-					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
-						movieChartVO.setMovieCount(chartVO.getCount());
-					}
-				}
-				
-			}
-			
-			list.add(movieChartVO);
-		}
+		List<MovieChartVO> list = movieService.getChartList(movieNoList,order);
 
 		if(order==2) {
 			Collections.sort(list,new OrderByCount());		
@@ -347,12 +221,6 @@ public class MovieController {
 		return "redirect:/movie/movieDetail?movieNo="+movieDto.getMovieNo();
 	}
 	
-//	다운로드에 대한 요청 처리
-
-//	//덩어리를 옮겨야함. 덩어리는 무비에 대한 정보를 알고있다. 
-//	차트vo에다가 무비포토넘버를 하나 추가, 무비컨트롤러에서 
-//	무비넘버에 있는 파일들을 꺼내서, 무비포토에대한 리스트가 여러개 나오는데, 
-//	리스트에.get0 각파일리스트에있는 첫번쨰있는걸 따올수 있음. 이걸 저장해서 넘긴다.
 
 	@GetMapping("/movieImg")
 	@ResponseBody					

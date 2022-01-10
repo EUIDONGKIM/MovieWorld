@@ -3,20 +3,26 @@ package com.kh.spring.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.spring.entity.actor.TotalRoleViewDto;
 import com.kh.spring.entity.movie.MovieDto;
-import com.kh.spring.entity.movie.MovieLikeDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
+import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.movie.MovieDao;
-import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.movie.MoviePhotoDao;
+import com.kh.spring.repository.reservation.LastInfoViewDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
+import com.kh.spring.repository.schedule.TotalInfoViewDao;
+import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
 
@@ -30,6 +36,12 @@ public class MovieServiceImpl implements MovieService{
 	private MovieDao movieDao;
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
+	@Autowired
+	private TotalInfoViewDao totalInfoViewDao;
+	@Autowired
+	private LastInfoViewDao lastInfoViewDao;
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
 	
 	//저장용 폴더/
 	@Value("${config.rootpath.movie}")
@@ -241,6 +253,137 @@ public class MovieServiceImpl implements MovieService{
 			listMyMovieLikeAndPhoto.add(myMovieLikeVO);
 		}
 		return listMyMovieLikeAndPhoto;
+	}
+
+	@Override
+	public Map<MovieDto, List<Map<TotalInfoViewDto, List<LastInfoViewDto>>>> getMovieList(String movieTitle,
+			String movieTotal, String scheduleStart, String scheduleEnd) {
+		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = new TreeMap<>();
+		List<MovieDto> movieList = new ArrayList<>();
+		
+		if(movieTitle != null) {
+			movieList = movieDao.getTitleList(movieTitle);
+			for(MovieDto movieDto : movieList) {
+				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+				
+				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
+				
+				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
+					tempMap.put(totalInfoViewDto,list);
+					movieValue.add(tempMap);
+				}
+				sendList.put(movieDto,movieValue);
+			}
+		}else if(movieTotal != null) {
+			movieList = movieDao.listNotContent();
+			for(MovieDto movieDto : movieList) {
+				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+				sendList.put(movieDto,movieValue);
+			}
+		}else if(scheduleStart != null && scheduleEnd != null) {
+			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
+			movieList = movieDao.nowList(movieNoList);
+			for(MovieDto movieDto : movieList) {
+				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+				
+				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
+				
+				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
+					tempMap.put(totalInfoViewDto,list);
+					
+					movieValue.add(tempMap);
+				}
+				
+				sendList.put(movieDto,movieValue);
+			}
+		}
+		else {			
+			
+			List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+			movieList = movieDao.nowList(movieNoList);
+			for(MovieDto movieDto : movieList) {
+				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+				
+				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());
+				
+				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+					List<LastInfoViewDto> list = lastInfoViewDao.nowListByScheduleNo(totalInfoViewDto.getScheduleNo());
+					tempMap.put(totalInfoViewDto,list);
+					
+					movieValue.add(tempMap);
+				}
+				
+				sendList.put(movieDto,movieValue);
+			}
+			
+		}
+		return sendList;
+	}
+
+	@Override
+	public List<MovieChartVO> getChartList(List<Integer> movieNoList, int order) {
+		List<MovieDto> movieList = movieDao.nowList(movieNoList);
+		
+		List<ChartVO> vo = new ArrayList<>();
+		List<ChartVO> voForCount = new ArrayList<>();
+		List<MovieChartVO> list = new ArrayList<>();
+		
+		int total = 0;
+		
+			vo = statisticsInfoViewDao.countForReservationRatio();
+			for(ChartVO chartVO : vo) {
+				total += chartVO.getCount();//총 예매 건수 합
+			}
+			
+		if(order==2) {			
+			voForCount = lastInfoViewDao.countByTotal();
+		}
+
+		
+		for(MovieDto movieDto : movieList) {
+			
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
+			MovieChartVO movieChartVO = new MovieChartVO();
+			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
+			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
+			movieChartVO.setMovieNo(movieDto.getMovieNo());
+			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
+			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
+			
+				
+				for(ChartVO chartVO : vo) {
+					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+						float movieRatio = (float)chartVO.getCount() / (float)total * 100;
+						String num = String.format("%.2f" , movieRatio);
+						float changeToTwo = Float.parseFloat(num);
+						movieChartVO.setMovieRatio(changeToTwo);
+						break;
+						
+					}
+				}
+			
+				if(order==2) {
+				
+				for(ChartVO chartVO : voForCount) {
+					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+						movieChartVO.setMovieCount(chartVO.getCount());
+					}
+				}
+				
+			}
+			
+			list.add(movieChartVO);
+		}
+		
+		return list;
 	}
 
 }
