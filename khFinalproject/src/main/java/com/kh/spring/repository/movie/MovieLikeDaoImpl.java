@@ -34,4 +34,9 @@ public class MovieLikeDaoImpl implements MovieLikeDao {
 		return sqlSession.selectList("movieLike.get",param).size() > 0;
 	}
 
+	@Override
+	public int count(int memberNo) {
+		return sqlSession.selectOne("movieLike.count", memberNo);
+	}
+
 }

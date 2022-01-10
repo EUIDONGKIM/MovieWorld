@@ -75,8 +75,12 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
-	public List<MovieDto> myMovieLikeList(int memberNo) {
-		return sqlSession.selectList("movie.myMovieLike", memberNo);
+	public List<MovieDto> myMovieLikeList(int memberNo, int startRow, int endRow) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberNo", memberNo);
+		param.put("startRow", startRow);
+		param.put("endRow", endRow);
+		return sqlSession.selectList("movie.myMovieLike", param);
 	}
 
 	@Override

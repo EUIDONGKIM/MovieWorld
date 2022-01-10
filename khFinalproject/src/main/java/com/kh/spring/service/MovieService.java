@@ -21,7 +21,7 @@ public interface MovieService {
 	void delete(int movieNo);
 	
 	//내가 좋아요한 영화 목록
-	List<MyMovieLikeVO> myMovieLikeList(int memberNo);
+	List<MyMovieLikeVO> myMovieLikeList(int memberNo, int startRow, int endRow);
 
 	Map<MovieDto, List<Map<TotalInfoViewDto, List<LastInfoViewDto>>>> getMovieList(String movieTitle, String movieTotal,
 			String scheduleStart, String scheduleEnd);
