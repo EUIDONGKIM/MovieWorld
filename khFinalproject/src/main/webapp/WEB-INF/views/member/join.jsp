@@ -14,24 +14,32 @@
             color:red;
             display: none;
         }
+                 
+        span.check-success {
+            color:red;
+            display:block;
+        }
+        span.check-fail {
+            color:red;
+            display:block;
+        }
         .form-input.success ~ span.success { 
             display:block;
         }
         .form-input.fail ~ span.fail {
             display: block;
         }
+        
+
 </style>
 
 <script>
-
-
 //이메일 정규표현식
 $(function() {
 	
 	$("input[name=memberEmail]").on("blur",function() {
 		var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 		var email = $(this).val();
-
 		$(this).removeClass("success").removeClass("fail");
 		
 		if (regex.test(email)) {
@@ -49,8 +57,9 @@ $(function() {
         var to = $("input[name=memberEmail]").val();
         if(to){
         	emailSender(to);
+        
+        	 $("#userinput_email2").next().next().text('이메일로 인증번호를 전송하였습니다.').css("color","blue");
         	 $("#userinput_email2").prop("disabled",false);
-        	 $(".check-fail").text('이메일로 인증번호를 전송하였습니다.').css("color","blue");
         	 $(".email-confirm-btn").prop("disabled",false);
         	 
         	 $(this).prop("disabled",true);
@@ -64,10 +73,9 @@ $(function() {
         if(to&&check){
         	serialChecker(to,check);
         }else{
-        	$(".check-success").text("인증번호를 입력하시지 않앗습니다.").css("color","red");
+        	$("#userinput_email2").next().next().text("인증번호를 입력하시지 않앗습니다.").css("color","red");
         }
     });
-
 	 function emailSender(to){
 	            $.ajax({
 				url:"${pageContext.request.contextPath}/member/emailSend",
@@ -97,7 +105,7 @@ $(function() {
 				console.log("성공", resp);
 					if(resp=="NNNNO"){
 						$(".check-fail").remove();
-						$(".check-success").text("인증이 완료되었습니다.").css("color","blue");
+						$("#userinput_email2").next().next().text("인증이 완료되었습니다.").css("color","blue");
 						$(".email-confirm-btn").prop("disabled",true);
 					
 						
@@ -112,7 +120,7 @@ $(function() {
 						$("input[type=submit]").prop("disabled",false);
 						
 					}else if(resp=="NNNNN"){
-						$(".check-success").text("인증번호가 일치하지 않거나 시간이 경과되었습니다.").css("color","red");
+						$("#userinput_email2").next().next().text("인증번호가 일치하지 않거나 시간이 경과되었습니다.").css("color","red");
 						$(".check-fail").remove();
 						$(".email-send-btn").prop("disabled",false);
 					}
@@ -135,12 +143,12 @@ $(function() {
 			},	
 			success:function(resp){
 				if(resp=="nono"){
-					$("input[name=memberEmail]").next().text("이미사용중인 이메일 입니다.");
+					$("input[name=memberEmail]").next().next().text("이미사용중인 이메일 입니다.");
 					$(".email-send-btn").prop("disabled",true);
 					$(".email-confirm-btn").prop("disabled",true);
 					remove();
 				}else{
-					$("input[name=memberEmail]").next().text("");
+					$("input[name=memberEmail]").next().next().text("");
 					$(".email-send-btn").prop("disabled",false);
 					$(".email-confirm-btn").prop("disabled",false);
 				}	
@@ -150,9 +158,7 @@ $(function() {
 			}
 		});
 	}
-
 });
-
 //비밀번호 정규표현식
 $(function() {
 	$("input[name=memberPw]").on("blur", function() {
@@ -277,14 +283,12 @@ $(function(){
 	var var2 = $("#pass2").prop("checked");
 	console.log(var1);
 	console.log(var2);
-
 	if(var1&&var2){
 		$("#next-buttton").prop("disabled",false);
 	}
 	
 	});
 });
-
 $(function(){
     //[1] 1페이지 빼고 다 숨김
     //= 다 숨기고 1페이지만 표시
@@ -293,7 +297,6 @@ $(function(){
 	
     //[2] 페이지 번호 관리 변수 생성
     var p = 0;
-
     //[3] 다음 단계로 버튼에 대한 이벤트 처리
     //= p를 1 증가시키고 해당하는 페이지를 표시
     //= form 안의 버튼은 submit 효과가 자동 부여되므로 이를 방지해야 한다.
@@ -304,8 +307,6 @@ $(function(){
         $(".page").hide();
         $(".page").eq(p).show();
     });
-
-
 });
 </script>
 
@@ -708,13 +709,13 @@ $(function(){
 			   </div>
 			 </div>
 			
-		   <div class="row">
+		   <div class="d-grid gap-2 col mx-auto">
 		      <button class="btn-next btn btn-info"  id="next-buttton" disabled>다음 단계로</button>
 		   </div>
 	</div>
 </div>
 <div class="page">
-	<div class="container-800 container-center">
+	<div class="container-600 container-center">
 		<div class="row center">
 		  <h1>회원가입홈페이지</h1>
 		  <div class="row center">
@@ -727,28 +728,22 @@ $(function(){
 		    	<div class="col">
 			    	 <label>아이디(이메일)*</label>
 					 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input" id="id">
+					 <input type="button" value="이메일 인증" class="btn btn-info email-send-btn"  style="position: absolute; margin-left: -119px ; height:52px;">
 					 <span class="success"></span>
 	           		 <span class="fail">이메일 형식이 올바르지 않습니다.</span>
-					 <input type="button" value="이메일 인증" class="btn btn-info email-send-btn">
 		    	</div>
-	
 		    </div>
 		    
 		    <div class="row">
 		    	<div class="col">
-			    	 <label>인증번호*</label>
-					 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2">
-		    		 <span class="check-success"></span>
-		    		 <span class="check-fail"></span>
-		    		 <div class="row">
-		    		 	<div class="col">
-				    		 <input type="button" value="인증번호 확인"  disabled class="btn btn-info email-confirm-btn">	
-		    		 	</div>
-		    		 </div>
-		    	</div> 
+				    	 <label>인증번호*</label>
+						 <input type="number" name="serial" disabled  required placeholder="인증번호" class="form-input" id="userinput_email2" >
+					     <input type="button" value="인증하기"  disabled class="btn btn-info email-confirm-btn" style="position: absolute; margin-left: -100px ; height:52px;">
+			    		 <span class="check-success"></span>
+			    		 <span class="check-fail"> </span>
+			    	</div> 
 		    </div>
-	        
-		   
+	
 		    <div class="row">
 		    	<div class="col">
 			    	 <label>비밀번호*</label>
@@ -816,7 +811,7 @@ $(function(){
 		
 		 
 		 
-		    <div class="row">
+		    <div class="d-grid gap-2 col mx-auto">
 					 <input type="submit" disabled value="회원가입" class="btn btn-info" id="join-btn" width="136px">	    	
 		    </div>  
 		
