@@ -101,4 +101,14 @@ public class LastInfoViewDaoImpl implements LastInfoViewDao{
 		return sqlSession.selectList("lastInfoView.nowListByScheduleNo",scheduleNo);
 	}
 
+	@Override
+	public List<LastInfoViewDto> checkTime(int scheduleNo, int hallNo, String scheduleTimefirst) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("scheduleNo",scheduleNo);
+		param.put("hallNo",hallNo);
+		param.put("scheduleTimefirst",scheduleTimefirst);
+
+		return sqlSession.selectList("lastInfoView.checkTime",param);
+	}
+
 }
