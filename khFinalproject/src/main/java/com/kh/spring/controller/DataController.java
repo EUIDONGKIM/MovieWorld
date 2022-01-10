@@ -172,10 +172,20 @@ public class DataController {
 		
 	}
 	@GetMapping("/loadReply")
-	public List<ReplyVO> loadReply(
+	public List<ReplyVO> loadPeopleReply(
 			@RequestParam int movieNo
 			) {
 		return reviewDao.list(movieNo);
+	}
+	@GetMapping("/loadPeopleReply")
+	public List<ReplyVO> loadReply(
+			@RequestParam int movieNo,
+			@RequestParam(required = false, defaultValue = "1") int page, 
+			@RequestParam(required = false, defaultValue = "3") int size
+			) {
+		int endRow = page * size;
+		int startRow = endRow - (size - 1);
+		return reviewDao.listByPage(movieNo, startRow, endRow);
 	}
 	@PostMapping("/replyInsert")
 	public void replyInsert(

@@ -165,6 +165,18 @@
 	
 	$(function(){
 		loadReply();
+
+		var page = 1;
+		var size = 3;
+		
+		$("#more-btn").click(function(){
+			loadPeopleReply(page, size);
+			page++;
+		});
+		
+		//더보기 버튼을 강제 1회 클릭(트리거)
+		$("#more-btn").click();
+		
 		//$(".edit-cancel-btn").click();
 		$(".send-reply").submit(function(e){
 			e.preventDefault();
@@ -326,7 +338,34 @@
 						$(this).prev().show();
 					});
 					$(".reply-items").append(tag);
-				}else{
+				}
+				}
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
+	}
+	function loadPeopleReply(page, size){
+		var movieNo = '${movieDto.movieNo}';
+		var memberNo = '${memberNo}';
+		$.ajax({
+			url:"${pageContext.request.contextPath}/data/loadPeopleReply",
+			type:"get",
+			data:{
+				movieNo : movieNo,
+				page:page,
+				size:size
+			},
+			dataType : "json",
+			success:function(resp){
+				console.log("성공", resp);
+					if(resp.length < size){
+						$("#more-btn").remove();
+					}
+				for(var i = 0 ; i < resp.length ; i++){
+
+				if('${memberNo}' != resp[i].memberNo){
 					var template = $("#template-reply-not").html();
 					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
 					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
@@ -351,7 +390,7 @@
 						$(this).hide();
 						$(this).next().show();
 					});
-					$(".reply-items").append(tag);
+					$(".reply-people-items").append(tag);
 				}
 				
 				}
@@ -361,7 +400,6 @@
 			}
 		});
 	}
-	
 	
 	function deleteReply(movieNo,memberNo){
 		$.ajax({
@@ -599,9 +637,14 @@
 				</form>
 			
 				<table class="table">
-					<tbody class="reply-items">
+					<thead class="reply-items">
+					</thead>
+					
+					<tbody class="reply-people-items">
 					</tbody>
 				</table>
+				
+				<button id="more-btn">더보기</button>
 			</div>
 				
 			
