@@ -123,6 +123,23 @@ public class DataController {
 		return check;
 	}
 	
+	@GetMapping("/checkSameTime")
+	public String checkSameTime(
+			@RequestParam int scheduleNo,
+			@RequestParam int hallNo,
+			@RequestParam String scheduleTimefirst
+			) {
+		List<LastInfoViewDto> checkList = lastInfoViewDao.checkTime(scheduleNo,hallNo,scheduleTimefirst);
+		String check;
+		if(!checkList.isEmpty()) {
+			check="NNNNN";
+			return check;
+		}
+		else check="NNNNO";
+		
+		return check;
+	}
+	
 	@GetMapping("/watchedCheck")
 	public String watchedCheck(
 			@RequestParam int memberNo,

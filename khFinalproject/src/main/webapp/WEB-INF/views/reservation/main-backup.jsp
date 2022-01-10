@@ -899,133 +899,122 @@ function cancelTempReservation(reservationKey){
 
 });
 </script>
-<div class="page">
-<div class="container container-center">
-	<div class="row center">
-		<div class="col">
-			<h1>예매 화면</h1>
-		</div>
-	</div>
-	
-	<template id="movie-list-template">
-		<div>
-			<label>
-			<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
-			<span>{{grade}} {{name}}</span>		
-			</label>
-		</div>	
-	</template>
+<
+<h1> 예매 화면 </h1>
 
-	<template id="list-template">
-		<div>
-			<label>
-			<span>{{name}}</span>
-			<input type="radio" name="{{key}}" value="{{value}}" data-name="{{name}}">
-			</label>
-		</div>	
-	</template>
-	
-	<div class="row">
-		<div class="d-grid gap-2 col mx-auto">
-			<button type="button" class="btn-init btn btn-outline-info"><h1>다시 선택</h1></button>
-		</div>
+<template id="movie-list-template">
+	<div>
+		<label>
+		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
+		<span>{{grade}} {{name}}</span>		
+		</label>
+	</div>	
+</template>
+
+<template id="list-template">
+	<div>
+		<label>
+		<span>{{name}}</span>
+		<input type="radio" name="{{key}}" value="{{value}}" data-name="{{name}}">
+		</label>
+	</div>	
+</template>
+
+<div class="container-1500 container-center page">
+
+	<div class="row center">
+		<button type="button" class="btn-init"><h1>다시 선택</h1></button>
 	</div>
 	
-	<div class="row">
-		<div class=col-3>
-			<div class="row center border bg-secondary text-white"><h2>영화</h2></div>
-			<div class="movie-list "></div>
+	<div class="row float-container">
+		
+		<div class="float-item-left">
+			<div class="row"><h2>영화</h2></div>
+				<div class="movie-list">
+				</div>
+		</div>
+
+		<div class="float-item-left">
+			<div class="row"><h2>지역</h2></div>
+				<div class="theater-sido-list">
+				</div>
 		</div>
 		
-		<div class=col-1>
-			<div class="row center border bg-secondary text-white"><h2>지역</h2></div>
-			<div class="theater-sido-list"></div>
+		
+		<div class="float-item-left">
+			<div class="row"><h2>극장(명)</h2></div>
+				<div class="flex-container">
+					<div class="theater-name-list"></div>
+				</div>
+			
 		</div>
 		
-		<div class=col-1>
-			<div class="row center border bg-secondary text-white"><h2>극장</h2></div>
-			<div class="theater-name-list"></div>
-		</div>
-		<div class=col-2>
-			<div class="row center border bg-secondary text-white" ><h2>날짜</h2></div>
-			<div class="schedule-time-date-list">
-				<c:forEach var="date" items="${dateList}">
-					<label>
-						<input type="radio" name="scheduleTimeDate" value="${date}">
-						<span>${date}</span>
-					</label>
-				</c:forEach>
-			</div>
-		</div>
-		<div class=col-2>
-			<div class="row center border bg-secondary text-white"><h2>시간</h2></div>
-			<div class="schedule-time-date-time-list"></div>
-		</div>
-		<div class=col-3>
-			<div class="row center border bg-secondary text-white"><h2>인원 선택</h2></div>
-			<div class="row">
-				<div class="row">
-				    <span class="fw-bold" >[일반]</span>
-				    	<div class="col">
-					    	<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>선택
-				    	</div>
-				    	<div class="col">
-					    	<input type="radio" name="ageNormal" class="ageNormal" value="1">1명
-				    	</div>
-				    	<div class="col">
-				    		<input type="radio" name="ageNormal" class="ageNormal" value="2">2명
-				    	</div>
-					    <div class="col">
-					    	<input type="radio" name="ageNormal" class="ageNormal" value="3">3명
-				    	</div>
-				    </div>
-				</div>
-				<div class="row">
-					<span class="fw-bold" >[학생]</span>
-						<div class="col">
-							<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>선택
+		<div class="float-item-left">
+			<div class="row"><h2>날짜</h2></div>
+				<div class="flex-container">
+					<div class="schedule-time-date-list">
+						<c:forEach var="date" items="${dateList}">
+						<div class="flex-container">
+							<label>
+								<input type="radio" name="scheduleTimeDate" value="${date}">
+								<span>${date}</span>
+							</label>
 						</div>
-						<div class="col">
-							<input type="radio" name="ageYoung" class="ageYoung" value="1">1명
-						</div>
-						<div class="col">
-							<input type="radio" name="ageYoung" class="ageYoung" value="2">2명
-						</div>
-						<div class="col">
-							<input type="radio" name="ageYoung" class="ageYoung" value="3">3명
-						</div>
-				</div>
-				
-				<div class="row">
-					 <span class="fw-bold">[경로]</span>
-					<div class="col">
-						<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>선택
-					</div>
-					<div class="col">
-						<input type="radio" name="ageOld" class="ageOld" value="1">1명
-					</div>
-					<div class="col">
-						<input type="radio" name="ageOld" class="ageOld" value="2">2명
-					</div>
-					<div class="col">
-						 <input type="radio" name="ageOld" class="ageOld" value="3">3명
+						</c:forEach>
 					</div>
 				</div>
 			
-			<div class="row">
-				<span class="fw-bold">[Total]</span>
-				<input type="number"  name="ageTotal" class="ageTotal" value="0" readonly> 
-			</div>
-		</div>			
-	</div>
-	<hr><br>
-	<div class="row">
-		<div class="d-grid gap-2 col mx-auto">
-			<button class="btn-next btn btn-outline-info"><h1>다음 단계</h1></button>
 		</div>
+		
+		<div class="float-item-left">
+			<div class="row"><h2>시간</h2></div>
+				<div class="flex-container">
+					<div class="schedule-time-date-time-list"></div>
+				</div>
+		</div>
+		
+		<div class="float-item-left">
+			<div class="row"><h2>인원 선택</h2></div>
+				<div class="flex-container">
+					<div class="row">
+					    <span>[일반]</span>
+					    	<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>선택
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="1">1명
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="2">2명
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="3">3명
+					    </div>
+					 </div>
+					<div class="flex-container">    
+					    <div class="row">
+					    <span>[청소년]</span>
+					    	<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>선택
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="1">1명
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="2">2명
+					    	<input type="radio" name="ageYoung" class="ageYoung" value="3">3명
+					    </div>
+					  </div>
+					<div class="flex-container">   
+					    <div class="row">
+					    <span>[경로]</span>
+					    	<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>선택
+					    	<input type="radio" name="ageOld" class="ageOld" value="1">1명
+					    	<input type="radio" name="ageOld" class="ageOld" value="2">2명
+					    	<input type="radio" name="ageOld" class="ageOld" value="3">3명
+			    		</div>
+			    	</div>	
+			    	<div class="flex-container">  
+					    <div class="row">
+					    	<span>총 인원</span><input type="number" name="ageTotal" class="ageTotal" value="0" readonly> 
+					    </div>	
+					</div>    
+				</div>
+		</div>
+		
+	<div class="row center">
+		<button class="btn-next"><h1>다음 단계</h1></button>
 	</div>
-</div>
-</div>
+	</div>
+
 
 <div class="page">
 
@@ -1042,7 +1031,7 @@ function cancelTempReservation(reservationKey){
 					</div>
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay btn btn-info">
+	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay">
 		</div>
 		</form>
 	</div>
@@ -1061,7 +1050,7 @@ function cancelTempReservation(reservationKey){
 
 	
 	<div class="row center">
-		<button class="btn-prev btn-seat-cancel btn btn-info"><h1>다시 선택하기</h1></button>
+		<button class="btn-prev btn-seat-cancel"><h1>다시 선택하기</h1></button>
 	</div>
 </div>
 
@@ -1077,7 +1066,6 @@ function cancelTempReservation(reservationKey){
 			<label>영화관</label>
 			<span>{{theaterName}}</span>
 		</div>
-	
 		<div class="row center">
 			<label>상영시간</label>
 			<span>{{scheduleTimeDateTime}}</span>
@@ -1145,8 +1133,8 @@ function cancelTempReservation(reservationKey){
 	</div>
 	
 	<div class="row">
-		<button class="btn-use-point btn btn-info">포인트 사용</button>
-		<button class="btn-init-point btn btn-info">포인트 다시 선택</button>
+		<button class="btn-use-point">포인트 사용</button>
+		<button class="btn-init-point">포인트 다시 선택</button>
 	</div>
 	
 	<div class="row">
@@ -1157,12 +1145,12 @@ function cancelTempReservation(reservationKey){
 	</div>
 	
 	<div class="row center">
-		<button class="btn-pay-confirm btn btn-info"><h1>결제 진행(카카오 페이)</h1></button>
+		<button class="btn-pay-confirm"><h1>결제 진행(카카오 페이)</h1></button>
 	</div>
 	
 	
 	<div class="row center">
-		<button class="btn-prev btn-pay-cancel btn btn-info" ><h1>이전 단계</h1></button>
+		<button class="btn-prev btn-pay-cancel"><h1>이전 단계</h1></button>
 	</div>
 </div>
 
