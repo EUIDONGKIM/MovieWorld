@@ -45,10 +45,7 @@ public class ActorController {
 	private ActorService actorService;
 	@Autowired
 	private ActorPhotoDao actorPhotoDao;
-	@Autowired
-	private TotalRoleViewDao totalRoleViewDao;
-	@Autowired
-	private MoviePhotoDao moviePhotoDao;
+
 	@GetMapping("/insert")
 	public String insert() {
 		return "actor/insert";
@@ -122,22 +119,7 @@ public class ActorController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int actorNo,Model model) {
 		ActorDto actorDto = actorDao.get(actorNo);
-		List<TotalRoleViewDto> listByActorNo =  totalRoleViewDao.listByActorNo(actorNo);
-		List<MovieChartVO> movieList = new ArrayList<>();
-		
-		for(TotalRoleViewDto totalRoleViewDto : listByActorNo) {
-			List<MoviePhotoDto> photoList = moviePhotoDao.getList(totalRoleViewDto.getMovieNo()); 
-			MoviePhotoDto moviePhotoDto = photoList.get(0);
-			
-			MovieChartVO movieChartVO = new MovieChartVO();
-			movieChartVO.setMovieTitle(totalRoleViewDto.getMovieTitle());
-			movieChartVO.setMovieOpening(totalRoleViewDto.getMovieOpening());
-			movieChartVO.setMovieNo(totalRoleViewDto.getMovieNo());
-			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
-			
-			movieList.add(movieChartVO);
-		}
-
+		List<MovieChartVO> movieList = actorService.getDetailVO(actorNo);
 		
 		model.addAttribute("movieList",movieList);
 		model.addAttribute("actorDto",actorDto);

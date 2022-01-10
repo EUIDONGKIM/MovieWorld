@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
+import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.PaginationActorVO;
 import com.kh.spring.vo.PaginationVO;
 
@@ -18,5 +19,7 @@ public interface ActorService {
 	void edit(ActorDto actorDto, MultipartFile attach) throws IllegalStateException, IOException;
 
 	void delete(int actorNo);
+
+	List<MovieChartVO> getDetailVO(int actorNo);
 
 }

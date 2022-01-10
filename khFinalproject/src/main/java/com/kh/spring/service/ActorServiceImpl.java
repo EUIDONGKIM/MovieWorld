@@ -2,6 +2,7 @@ package com.kh.spring.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.actor.ActorDto;
 import com.kh.spring.entity.actor.ActorPhotoDto;
+import com.kh.spring.entity.actor.TotalRoleViewDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.ActorPhotoDao;
+import com.kh.spring.repository.actor.TotalRoleViewDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
+import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.PaginationActorVO;
 
 @Service
@@ -21,6 +27,11 @@ public class ActorServiceImpl implements ActorService{
 	private ActorDao actorDao;
 	@Autowired
 	private ActorPhotoDao actorPhotoDao;
+	@Autowired
+	private TotalRoleViewDao totalRoleViewDao;
+	@Autowired
+	private MoviePhotoDao moviePhotoDao;
+	
 	@Value("${config.rootpath.actor}")
 	public String directory;
 	
@@ -92,6 +103,25 @@ public class ActorServiceImpl implements ActorService{
 			}
 		
 		actorDao.delete(actorNo);
+	}
+
+	@Override
+	public List<MovieChartVO> getDetailVO(int actorNo) {
+		List<MovieChartVO> movieList = new ArrayList<>();
+		List<TotalRoleViewDto> listByActorNo =  totalRoleViewDao.listByActorNo(actorNo);
+		for(TotalRoleViewDto totalRoleViewDto : listByActorNo) {
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(totalRoleViewDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
+			MovieChartVO movieChartVO = new MovieChartVO();
+			movieChartVO.setMovieTitle(totalRoleViewDto.getMovieTitle());
+			movieChartVO.setMovieOpening(totalRoleViewDto.getMovieOpening());
+			movieChartVO.setMovieNo(totalRoleViewDto.getMovieNo());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
+			
+			movieList.add(movieChartVO);
+		}
+		return movieList;
 	}
 	
 }
