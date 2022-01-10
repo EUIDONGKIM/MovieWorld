@@ -5,6 +5,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="direct" value="${lastInfoViewDto != null}"></c:set>
 <c:set var="initDto" value="${lastInfoViewDto}"></c:set>
+<c:set var="movieNoCheck" value="${movieNo != null}"></c:set>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
 <style>
@@ -254,14 +255,14 @@ $(function(){
 	if(${direct}){
 		movieName = '${initDto.movieTitle}';
 		theaterName = '${initDto.theaterName}';
-		movieRuntime = ${initDto.movieRuntime};
-		movieNo = ${initDto.movieNo};
+		movieRuntime = '${initDto.movieRuntime}';
+		movieNo = '${initDto.movieNo}';
 		theaterSido = '${initDto.theaterSido}';
-		theaterNo = ${initDto.theaterNo};
+		theaterNo = '${initDto.theaterNo}';
 		scheduleTimeDateTime = '${initDto.scheduleTimeDateTime}';
 		var timedate = scheduleTimeDateTime.substring(0,10);
 		scheduleTimeDate = timedate;
-		scheduleTimeNo = ${initDto.scheduleTimeNo};
+		scheduleTimeNo = '${initDto.scheduleTimeNo}';
 		hallType = '${initDto.hallType}';
 		scheduleTimeDiscountType = '${initDto.scheduleTimeDiscountType}';
 		console.log("쳌0",scheduleTimeNo);
@@ -274,6 +275,11 @@ $(function(){
 		scheduleDateTimeDateList(scheduleTimeDate);
 		getHallRowsAndCols(scheduleTimeNo);
 		
+	}else if(${movieNoCheck}){
+		movieNo = '${movieNo}';
+		console.log("무비쳌0",movieNo);
+		movieLoadList();
+		sidoList(movieNo);
 	}else{
 		loadList();
 	}
@@ -409,6 +415,7 @@ function movieLoadList(){
 		dataType : "json",
 		success:function(resp){
 			$(".movie-list").empty();
+			
 			for(var i = 0 ; i < resp.length ; i++){
 				var template = $("#movie-list-template").html();
 				template = template.replace("{{grade}}",resp[i].movieGrade);
@@ -530,6 +537,12 @@ function sidoList(movieNo){
 		},
 		dataType : "json",
 		success:function(resp){
+			if(resp.length == 0){
+				alert("해당 영화의 상영 정보가 없습니다.!");
+				loadList();
+			}
+			
+			directChecked();
 			$(".theater-sido-list").empty();
 			
 			for(var i = 0 ; i < resp.length ; i++){
@@ -998,7 +1011,7 @@ function cancelTempReservation(reservationKey){
 		<div class="float-item-left">
 			<div class="row"><h2>극장(명)</h2></div>
 				<div class="flex-container">
-					<div class="theater-name-list"></div>
+					<div class="theater-name-list">영화 또는 지역을 먼저 선택하세요.</div>
 				</div>
 			
 		</div>
@@ -1007,14 +1020,7 @@ function cancelTempReservation(reservationKey){
 			<div class="row"><h2>날짜</h2></div>
 				<div class="flex-container">
 					<div class="schedule-time-date-list">
-						<c:forEach var="date" items="${dateList}">
-						<div class="flex-container">
-							<label>
-								<input type="radio" name="scheduleTimeDate" value="${date}">
-								<span>${date}</span>
-							</label>
-						</div>
-						</c:forEach>
+						영화와 지점을 먼저 선택하세요.
 					</div>
 				</div>
 			
@@ -1023,7 +1029,7 @@ function cancelTempReservation(reservationKey){
 		<div class="float-item-left">
 			<div class="row"><h2>시간</h2></div>
 				<div class="flex-container">
-					<div class="schedule-time-date-time-list"></div>
+					<div class="schedule-time-date-time-list">상영 날짜를 선택해주세요.</div>
 				</div>
 		</div>
 		

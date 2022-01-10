@@ -97,19 +97,25 @@ public class ReservationController {
 		}
 
 		@RequestMapping("/direct")
-		public String direct(Model model,HttpSession session,@RequestParam int scheduleTimeNo) {
+		public String direct(Model model,HttpSession session,
+				@RequestParam(required = false,defaultValue = "0") int scheduleTimeNo,
+				@RequestParam(required = false,defaultValue = "0") int movieNo) {
 			String memberEmail = (String)session.getAttribute("ses");
 			int memberPoint = 0;
 			if(memberEmail != null){				
 				MemberDto memberDto = memberDao.get(memberEmail);
 				memberPoint = memberDto.getMemberPoint();
 			}
-			LastInfoViewDto lastInfoViewDto = lastInfoViewDao.get(scheduleTimeNo);
-			
+			LastInfoViewDto lastInfoViewDto = null;
+			if(scheduleTimeNo != 0) {				
+				lastInfoViewDao.get(scheduleTimeNo);
+				model.addAttribute("lastInfoViewDto",lastInfoViewDto);
+			}
+			if(movieNo != 0) {				
+				model.addAttribute("movieNo",movieNo);
+			}
 			model.addAttribute("memberEmail",memberEmail);
 			model.addAttribute("memberPoint",memberPoint);
-			model.addAttribute("lastInfoViewDto",lastInfoViewDto);
-			
 			return "reservation/main_direct";
 		}
 		
