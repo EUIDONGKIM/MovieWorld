@@ -1042,7 +1042,7 @@ function cancelTempReservation(reservationKey){
 					</div>
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay">
+	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay btn btn-info">
 		</div>
 		</form>
 	</div>
@@ -1061,7 +1061,7 @@ function cancelTempReservation(reservationKey){
 
 	
 	<div class="row center">
-		<button class="btn-prev btn-seat-cancel"><h1>다시 선택하기</h1></button>
+		<button class="btn-prev btn-seat-cancel btn btn-info"><h1>다시 선택하기</h1></button>
 	</div>
 </div>
 
@@ -1145,8 +1145,8 @@ function cancelTempReservation(reservationKey){
 	</div>
 	
 	<div class="row">
-		<button class="btn-use-point">포인트 사용</button>
-		<button class="btn-init-point">포인트 다시 선택</button>
+		<button class="btn-use-point btn btn-info">포인트 사용</button>
+		<button class="btn-init-point btn btn-info">포인트 다시 선택</button>
 	</div>
 	
 	<div class="row">
@@ -1157,15 +1157,13 @@ function cancelTempReservation(reservationKey){
 	</div>
 	
 	<div class="row center">
-		<button class="btn-pay-confirm"><h1>결제 진행(카카오 페이)</h1></button>
+		<button class="btn-pay-confirm btn btn-info"><h1>결제 진행(카카오 페이)</h1></button>
 	</div>
 	
 	
 	<div class="row center">
-		<button class="btn-prev btn-pay-cancel"><h1>이전 단계</h1></button>
+		<button class="btn-prev btn-pay-cancel btn btn-info" ><h1>이전 단계</h1></button>
 	</div>
 </div>
-
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
