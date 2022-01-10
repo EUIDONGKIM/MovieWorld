@@ -33,7 +33,7 @@
 				dataType:"json",
 				success:function(resp){
 					console.log("성공", resp);
-					
+
 					//데이터가 sizeValue보다 적은 개수가 왔다면 더보기 버튼을 삭제
 					if(resp.length < sizeValue){
 						$(".more-btn").remove();
@@ -47,7 +47,7 @@
 										"<div class='row'>"+
 											"<div class='col-md-2' style='float: none; margin:0 auto;'>"+
 												"<a href='${root}/movie/movieDetail?movieNo="+resp[i].movieNo+"'>"+
-														"<img src='${root}/movie/movieImg?moviePhotoNo=${myMovieLikeVO.moviePhotoNo}' width='197px' height='260px'>"+
+														"<img src='${root}/movie/movieImg?moviePhotoNo="+resp[i].moviePhotoNo+"' width='197px' height='260px'>"+
 												"</a>"+
 											"</div>"+
 											"<div class='col col-9'>"+

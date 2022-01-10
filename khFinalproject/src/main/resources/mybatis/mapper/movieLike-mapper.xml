@@ -16,7 +16,7 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="movieLike">
 	<insert id="insert" parameterType="MovieLikeDto">
-		insert into movie_like values(#{movieNo}, #{memberNo})
+		insert into movie_like values(#{movieNo}, #{memberNo}, sysdate)
 	</insert>
 	
 	<delete id="delete" parameterType="MovieLikeDto">
