@@ -99,7 +99,7 @@
       				<div class="row">평점 : ${movieChartVO.movieStarpoint}점</div>
       				<div class="row">${fn:substring(movieChartVO.movieOpening,0,10) } 개봉</div>
       				<div class="row">
-      					<a href="${root}/reservation/">예매하기</a>
+      					<a href="${root}/reservation/direct?movieNo=${movieChartVO.movieNo}">예매하기</a>
       				</div>      		
 	      		</div>        
       </c:forEach>
