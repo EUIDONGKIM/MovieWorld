@@ -30,6 +30,8 @@ import com.kh.spring.vo.KakaoPayApproveRequestVO;
 import com.kh.spring.vo.KakaoPayApproveResponseVO;
 import com.kh.spring.vo.KakaoPayCancelResponseVO;
 import com.kh.spring.vo.KakaoPayReadyRequestVO;
+import com.kh.spring.vo.PaginationVO;
+import com.kh.spring.vo.ReservationListVO;
 import com.kh.spring.vo.ReservationVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -336,6 +338,17 @@ public class ReservationServiceImpl implements ReservationService {
 		historyDto.setHistoryMemo("포인트 적립금 취소");
 		historyDao.insert(historyDto);
 
+	}
+
+
+	@Override
+	public PaginationVO searchNPaging(PaginationVO paginationVO) throws Exception {
+		int count = reservationDao.count(paginationVO.getColumn(),paginationVO.getKeyword());
+		paginationVO.setCount(count);
+		paginationVO.calculate();
+		List<ReservationListVO> list = reservationDao.serach(paginationVO.getColumn(),paginationVO.getKeyword(),paginationVO.getBegin(),paginationVO.getEnd());
+		paginationVO.setList(list);
+		return paginationVO;
 	}
 
 
