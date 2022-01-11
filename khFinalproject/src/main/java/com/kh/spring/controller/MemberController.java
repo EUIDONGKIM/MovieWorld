@@ -122,7 +122,7 @@ public class MemberController {
 		 	if(redirectPassword != null) {
 		 		//넘어 왔으면 세션을 삭제한다
 		 		session.removeAttribute("temparayPassword");
-		 		return "redirect:changePw";
+		 		return "redirect:changePw2";
 		 	}
 			
 		 	if(saveId !=null) {
@@ -225,6 +225,11 @@ public class MemberController {
 		return "member/changePw";
 	}
 	
+	@GetMapping("/changePw2")
+	public String changePw2() {
+		return "member/changePw2";
+	}
+	
 	@PostMapping("/changePw")
 	public String changePw(
 			@RequestParam String memberPw, 
@@ -237,6 +242,21 @@ public class MemberController {
 		}
 		else {
 			return "redirect:changePw?error";
+		}
+	}
+	
+	@PostMapping("/changePw2")
+	public String changePw2(
+			@RequestParam String memberPw, 
+			@RequestParam String changePw, 
+			HttpSession session) {
+		String memberId = (String) session.getAttribute("ses");
+		boolean result = memberDao.changePassword(memberId, memberPw, changePw);
+		if(result) {
+			return "redirect:/";
+		}
+		else {
+			return "redirect:changePw2?error";
 		}
 	}
 	

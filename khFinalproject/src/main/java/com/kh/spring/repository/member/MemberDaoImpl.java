@@ -55,8 +55,10 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto login(MemberDto memberDto) {
 		MemberDto findDto = sqlSession.selectOne("member.get",memberDto.getMemberEmail());
 		//해당 아이디의 회원정보가 존재 && 입력 비밀번호와 조회된 비밀번호가 같다면 => 로그인 성공(객체를 반환)
+		System.out.println("-------------");
 		System.err.println(memberDto.getMemberPw());
 		System.err.println(findDto.getMemberPw());
+		System.out.println("------------");
 		//&& encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())
 		if(findDto != null&& encoder.matches(memberDto.getMemberPw(), findDto.getMemberPw())) {
 			return findDto;
