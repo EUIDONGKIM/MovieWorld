@@ -7,6 +7,7 @@
 <c:set var="memberNo" value="${memberNo eq null ? 0: memberNo}"></c:set>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.js"></script>
+
 	<style>
 	.round.lightblue{
 	border: 2px solid #3e82a4;
@@ -624,8 +625,37 @@
 			
 			<br>
 			<br>
-			
-			<div class="container-800 container-center">
+
+
+	<%-- 모달로 띄워주기 --%>
+
+	<!--Modal Button -->
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+		data-bs-target="#exampleModal">관람평 작성</button>
+
+	<div class="modal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">영화제목란</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>관람평 작성란</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<div class="container-800 container-center">
 				<form class="send-reply">
 					<div class="row center">
 						<span>댓글 작성</span>
