@@ -86,17 +86,11 @@ display: none;
 			</div>
 		</div>
 	</c:if>
+	
 	<c:if test="${param.errorSchedule != null}">
 		<div class="row center">
 			<div class="col">
 				<h4 class="error">해당 지점의 상영이 있습니다.</h4>
-			</div>
-		</div>
-	</c:if>
-	<c:if test="${param.errorScheduleTimeNo != null}">
-		<div class="row center">
-			<div class="col">
-				<h4 class="error">해당 상영의 예매 내역이 있습니다.</h4>
 			</div>
 		</div>
 	</c:if>
@@ -126,7 +120,14 @@ display: none;
 					<td>${list.key.movieNo}</td>
 					
 						<td>
-						<a href="#" class="toggle-one">${list.key.movieTitle}</a>
+						<c:choose>
+								<c:when test="${empty list.value}">
+									<a href="${root }/movie/admin/list?movieTitle=${list.key.movieTitle}">${list.key.movieTitle}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#" class="toggle-one">${list.key.movieTitle}</a>
+								</c:otherwise>
+						</c:choose>
 						</td>
 						
 					<td>${list.key.movieGrade}</td>

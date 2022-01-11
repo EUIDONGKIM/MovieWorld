@@ -178,6 +178,23 @@ public class ScheduleController {
 		}
 	}
 	
+	@GetMapping("/admin/delete_theater")
+	public String delete(@RequestParam int scheduleNo,@RequestParam int theaterNo) throws UnsupportedEncodingException {
+		LastInfoViewDto checkDto = lastInfoViewDao.existScheduleNo(scheduleNo);
+		log.debug("checkDto의 값은!?@@@@@@@={}",checkDto);
+		if(checkDto==null) {
+		boolean success = scheduleDao.delete(scheduleNo);
+		if(success) {
+			return "redirect:/theater/detail?theaterNo="+theaterNo;
+		}
+		else {
+			return "redirect:???"; //실패
+		}
+		}else {
+			return "redirect:/theater/detail?errorSchedule=error&theaterNo="+theaterNo;
+		}
+	}
+	
 	@GetMapping("/time/admin/edit")
 	public String timeEdit(@RequestParam int scheduleTimeNo, Model model) {
 		LastInfoViewDto lastInfoViewDto = lastInfoViewDao.get(scheduleTimeNo);

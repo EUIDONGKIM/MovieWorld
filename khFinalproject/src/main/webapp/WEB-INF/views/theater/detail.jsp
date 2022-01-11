@@ -313,6 +313,16 @@
 	
 	<div>
 	<h3>상영관 목록</h3>
+	
+	<c:if test="${param.errorSchedule != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+
+	
 	<c:forEach var="hallDto" items="${hallList}">
 		<h5>
 			${hallDto.getFullName()} | ${hallDto.hallSeat}석 
@@ -330,7 +340,7 @@
 			${totalInfoViewDto.movieTitle }
 			<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
 			<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
-			<a href="${root }/schedule/admin/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+			<a href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
 		</h5>
 	</c:forEach>
 	</div>
