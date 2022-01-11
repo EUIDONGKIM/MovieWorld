@@ -104,11 +104,13 @@
 			<mvc:mapping path="/seat/admin/**"/>
 			<mvc:mapping path="/actor/admin/**"/>
 			<mvc:mapping path="/price/admin/**"/>
+			<mvc:mapping path="/reservation/admin/**"/>
 			<bean class="com.kh.spring.interceptor.AdminInterceptor"></bean>
 	 	</mvc:interceptor>
 	 	
 	 	 <mvc:interceptor>
 			<mvc:mapping path="/reservation/**"/>
+			<mvc:exclude-mapping path="/reservation/admin/list"/>
 			<mvc:exclude-mapping path="/reservation/"/>
 			<mvc:exclude-mapping path="/reservation/direct"/>
 			<mvc:exclude-mapping path="/reservation/success"/>

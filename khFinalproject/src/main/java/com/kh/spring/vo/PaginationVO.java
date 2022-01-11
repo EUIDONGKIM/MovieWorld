@@ -3,8 +3,6 @@ package com.kh.spring.vo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kh.spring.entity.board.BoardDto;
-
 import lombok.Data;
 
 @Data
@@ -17,7 +15,7 @@ public class PaginationVO {
 	private int blockSize = 10;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
-
+	private List<ReservationListVO> list = new ArrayList<>();
 	
 	public void calculate() throws Exception {
 		//rownum 계산

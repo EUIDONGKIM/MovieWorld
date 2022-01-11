@@ -80,7 +80,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">결제(예매) 관리</h5>
 				    <p class="card-text">결제(예매) 관리</p>
-				    <h5><a href="#" class="card-link">결제(예매) 관리</a></h5>
+				    <h5><a href="${root}/reservation/admin/list" class="card-link">결제(예매) 관리</a></h5>
 				  </div>
 			</div>		
 		</div>

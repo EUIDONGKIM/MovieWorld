@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.reservation.ReservationDto;
+import com.kh.spring.vo.ReservationListVO;
 
 @Repository
 public class ReservationDaoImpl implements ReservationDao {
@@ -72,6 +73,24 @@ public class ReservationDaoImpl implements ReservationDao {
 		param.put("startRow", startRow);
 		param.put("endRow", endRow);
 		return sqlSession.selectList("reservation.listByPage",param);
+	}
+
+	@Override
+	public int count(String column, String keyword) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column", column);
+		param.put("keyword", keyword);
+		return sqlSession.selectOne("reservation.count",param);
+	}
+
+	@Override
+	public List<ReservationListVO> serach(String column, String keyword, int begin, int end) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("column", column);
+		param.put("keyword", keyword);
+		param.put("begin", begin);
+		param.put("end", end);
+		return sqlSession.selectList("reservation.serach",param);
 	}
 
 }
