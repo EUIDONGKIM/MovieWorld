@@ -257,13 +257,27 @@ public class MovieServiceImpl implements MovieService{
 
 	@Override
 	public Map<MovieDto, List<Map<TotalInfoViewDto, List<LastInfoViewDto>>>> getMovieList(String movieTitle,
-			String movieTotal, String scheduleStart, String scheduleEnd) {
+			String movieTotal) {
 		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = new TreeMap<>();
 		List<MovieDto> movieList = new ArrayList<>();
 		
 		if(movieTitle != null) {
 			movieList = movieDao.getTitleList(movieTitle);
 			for(MovieDto movieDto : movieList) {
+				if(movieTotal.equals("D")) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					
+					List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());
+					
+					for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+						Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+						List<LastInfoViewDto> list = lastInfoViewDao.nowListByScheduleNo(totalInfoViewDto.getScheduleNo());
+						tempMap.put(totalInfoViewDto,list);
+						movieValue.add(tempMap);
+					}
+					sendList.put(movieDto,movieValue);
+				}else {
+					
 				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
 				
 				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
@@ -275,50 +289,25 @@ public class MovieServiceImpl implements MovieService{
 					movieValue.add(tempMap);
 				}
 				sendList.put(movieDto,movieValue);
-			}
-		}else if(movieTotal != null) {
-			movieList = movieDao.listNotContent();
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				sendList.put(movieDto,movieValue);
-			}
-		}else if(scheduleStart != null && scheduleEnd != null) {
-			List<Integer> movieNoList = totalInfoViewDao.moiveListByPeriod(scheduleStart,scheduleEnd);
-			movieList = movieDao.nowList(movieNoList);
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				
-				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
-				
-				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
-					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
-					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
-					tempMap.put(totalInfoViewDto,list);
-					
-					movieValue.add(tempMap);
 				}
 				
-				sendList.put(movieDto,movieValue);
+				
 			}
-		}
-		else {			
-			
-			List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
-			movieList = movieDao.nowList(movieNoList);
-			for(MovieDto movieDto : movieList) {
-				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
-				
-				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());
-				
-				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
-					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
-					List<LastInfoViewDto> list = lastInfoViewDao.nowListByScheduleNo(totalInfoViewDto.getScheduleNo());
-					tempMap.put(totalInfoViewDto,list);
-					
-					movieValue.add(tempMap);
+		}else {
+			if(movieTotal.equals("F")) {			
+				List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
+				movieList = movieDao.nowList(movieNoList);
+				for(MovieDto movieDto : movieList) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					sendList.put(movieDto,movieValue);
 				}
 				
-				sendList.put(movieDto,movieValue);
+			}else if(movieTotal.equals("A")) {
+				movieList = movieDao.listNotContent();
+				for(MovieDto movieDto : movieList) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					sendList.put(movieDto,movieValue);
+				}
 			}
 			
 		}

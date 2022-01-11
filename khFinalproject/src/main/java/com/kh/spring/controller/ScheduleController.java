@@ -1,5 +1,8 @@
 package com.kh.spring.controller;
 
+import java.beans.Encoder;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,9 +150,12 @@ public class ScheduleController {
 		return "redirect:/movie/admin/list";
 	}
 	
+	// 극장쪽도 영화쪽이랑 같게,(sql 삭제 구문 다시 확인)
+	// 결제 내역 만들고,
+	// 영화 리스트 검색부분 파라미터 넘겨주기(제가)
 	
 	@GetMapping("/admin/delete")
-	public String delete(@RequestParam int scheduleNo) {
+	public String delete(@RequestParam int scheduleNo,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		LastInfoViewDto checkDto = lastInfoViewDao.existScheduleNo(scheduleNo);
 		log.debug("checkDto의 값은!?@@@@@@@={}",checkDto);
 		if(checkDto==null) {
@@ -161,7 +167,8 @@ public class ScheduleController {
 			return "redirect:???"; //실패
 		}
 		}else {
-			return "redirect:/movie/admin/list?errorSchedule";
+			String change = URLEncoder.encode(movieTitle , "UTF-8");
+			return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal+"&errorSchedule";
 		}
 	}
 	
@@ -187,7 +194,7 @@ public class ScheduleController {
 	
 	
 	@GetMapping("/time/admin/delete")
-	public String timeDelete(@RequestParam int scheduleTimeNo) {
+	public String timeDelete(@RequestParam int scheduleTimeNo,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.exist(scheduleTimeNo);
 		if(statisticsInfoViewDto==null) {
 			
@@ -199,7 +206,8 @@ public class ScheduleController {
 			return "redirect:???"; //실패
 		}
 		}else {
-			return "redirect:/movie/admin/list?errorScheduleTimeNo";
+			String change = URLEncoder.encode(movieTitle , "UTF-8");
+			return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal+"&errorScheduleTimeNo";
 		}
 	}
 	

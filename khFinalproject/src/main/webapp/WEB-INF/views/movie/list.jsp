@@ -27,6 +27,13 @@ display: none;
 			e.preventDefault();
 			$(this).next().toggle();
 		});
+		
+		var movieTotal = '${movieTotal}';
+		$("input[name=movieTotal]").each(function(){
+			if(movieTotal == "D"){				
+			$(this).prop("checked",true);
+			}
+		});
 	});
 </script>
 
@@ -34,17 +41,14 @@ display: none;
 	<div class="row">
 			<h1 class="center">
 				<c:choose>
-					<c:when test="${movieTotal != null}">
+					<c:when test="${movieTotal == 'A'}">
 						[영화 관리 리스트(모든 영화 목록)]
 					</c:when>
-					<c:when test="${movieTitle != null }">
-						[영화 관리 리스트(단일 영화 검색)]
-					</c:when>
-					<c:when test="${scheduleStart != null }">
-						[영화 관리 리스트(상영 기간별 검색)]
+					<c:when test="${movieTotal == 'F' }">
+						[영화 관리 리스트(상영 영화 목록)]
 					</c:when>
 					<c:otherwise>
-						[영화 관리 리스트(상영 영화 목록)]
+						[영화 관리 리스트(단일 영화 검색)]
 					</c:otherwise>
 				</c:choose>
 			</h1>
@@ -57,10 +61,11 @@ display: none;
 	
 		<form action="${root}/movie/admin/list" method="get">
 		<div class="row">
-		<h5>[단일 영화 히스토리 검색]</h5>
+		<h5>[상영 관리용 단일 영화 검색]</h5>
 		</div>		
 	<div class="d-flex flex-row">
 			<input type="text" name="movieTitle" value="${movieTitle }" required class="form-control me-sm-2 form-inline" >
+			<span>현재 상영</span><input type="checkbox" name="movieTotal" value="D">
 			<input type="submit" value="영화 검색" class="btn btn-info my-2 my-sm-0">
 	</div>
 		</form>
@@ -85,29 +90,6 @@ display: none;
 			</div>
 		</div>
 	</c:if>
-
-	<div class="row cneter">
-		<form action="${root}/movie/admin/list" method="get">
-			<div class='col'>
-			<h5>[상영 기간별 목록 조회]</h5>
-			</div>
-			<div class="col">
-			<h5>시작일 : </h5>
-			</div>
-			<div class="col">
-			<input type="date" name="scheduleStart" value="${scheduleStart }" required  class="form-control me-sm-2 form-inline">
-			</div>
-			<h5>종료일 : </h5>
-			<input type="date" name="scheduleEnd" value="${scheduleEnd }" required  class="form-control me-sm-2 form-inline">
-			<div class="d-flex flex-row-reverse bd-highlight">
-				<input type="submit" value="기간별 검색" class="btn btn-info">
-			</div>
-		</form>
-	</div>
-	
-	
-
-
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
 		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal=F'">현재 상영작</button>
@@ -180,9 +162,9 @@ display: none;
 																				<td>${lastInfoViewDto.scheduleTimeDiscountType}</td>
 																				<td>${lastInfoViewDto.scheduleTimeDateTime}</td>
 																				<td>
-																					<a href="${root}/schedule/time/admin/edit?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
+																					<a href="${root}/schedule/time/admin/edit?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
 																					<br>
-																					<a href="${root}/schedule/time/admin/delete?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
+																					<a href="${root}/schedule/time/admin/delete?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
 																				</td>
 																			</tr>
 																		</c:forEach>
@@ -194,9 +176,9 @@ display: none;
 														<td>${map.key.scheduleEnd }</td>
 														<td><a href="${root}/schedule/time/admin/create?scheduleNo=${map.key.scheduleNo}">추가</a></td>
 														<td>
-															<a href="${root}/schedule/admin/edit?scheduleNo=${map.key.scheduleNo}">수정</a>
+															<a href="${root}/schedule/admin/edit?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleNo=${map.key.scheduleNo}">수정</a>
 															<br>
-															<a href="${root}/schedule/admin/delete?scheduleNo=${map.key.scheduleNo}">삭제</a>
+															<a href="${root}/schedule/admin/delete?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleNo=${map.key.scheduleNo}">삭제</a>
 														</td>
 													</tr>
 										</c:forEach>
@@ -216,7 +198,7 @@ display: none;
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
-					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/admin/delete?movieNo=${list.key.movieNo}'">삭제</button>
+					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/admin/delete?movieTitle=${list.key.movieTitle }&movieTotal=${movieTotal}&movieNo=${list.key.movieNo}'">삭제</button>
 					</td>
 	
 				</tr>	
