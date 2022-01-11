@@ -8,7 +8,7 @@
 	<div class="row center">
 		<h1> 관리자 메뉴 </h1>
 	</div>
-	
+	<br><br><br><br>
 	<div class="row">
 		<div class="col-3">
 			<div class="card" style="width: 18rem;">
@@ -24,8 +24,8 @@
 			<div class="card" style="width: 18rem;">
 				  <div class="card-body">
 				    <h5 class="card-title">영화 정보 관리</h5>
-				    <p class="card-text">영화 정보 관리 </p>
-				    <h5><a href="${root}/movie/list" class="card-link">영화 정보 관리</a></h5>
+				    <p class="card-text">영화 및 영화별 상영영화/상영</p>
+				    <h5><a href="${root}/movie/admin/list" class="card-link">영화 정보 관리</a></h5>
 				  </div>
 			</div>
 		</div>
@@ -35,7 +35,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">영화인 정보 관리</h5>
 				    <p class="card-text">영화인 정보 관리 </p>
-				    <h5><a href="${root}/actor/list" class="card-link">영화인 정보 관리</a></h5>
+				    <h5><a href="${root}/actor/admin/list" class="card-link">영화인 정보 관리</a></h5>
 				  </div>
 			</div>
 		</div>
@@ -43,47 +43,19 @@
 		<div class="col-3">
 			<div class="card" style="width: 18rem;">
 				  <div class="card-body">
-				    <h5 class="card-title">영화 리뷰 관리</h5>
-				    <p class="card-text">영화 리뷰 관리 </p>
-				    <h5><a href="${root}/admin/review" class="card-link">영화 리뷰 관리</a></h5>
-				  </div>
-			</div>			
-		</div>
-	</div>
-		
-	 <br><br>
-	
-	<div class="row">
-		<div class="col-3">
-			<div class="card" style="width: 18rem;">
-				  <div class="card-body">
 				    <h5 class="card-title">극장 정보 </h5>
-				    <p class="card-text">극장 정보  </p>
+				    <p class="card-text">극장별 상영관/상영영화/상영 </p>
 				    <h5><a href="${root}/admin/theater" class="card-link">극장 정보</a></h5>
 				  </div>
 			</div>	
 		</div>
 		
-		<div class="col-3">
-			<div class="card" style="width: 18rem;">
-				  <div class="card-body">
-				    <h5 class="card-title">상영관 정보</h5>
-				    <p class="card-text">상영관 정보 </p>
-				    <h5><a href="${root}/admin/hall" class="card-link">상영관 정보</a></h5>
-				  </div>
-			</div>				
-		</div>
+	</div>
 		
-		<div class="col-3">
-			<div class="card" style="width: 18rem;">
-				  <div class="card-body">
-				    <h5 class="card-title">상영 영화 관리</h5>
-				    <p class="card-text">상영 영화 관리</p>
-				    <h5><a href="${root}/admin/schedule" class="card-link">상영 영화 관리</a></h5>
-				  </div>
-			</div>				
-		</div>
-		
+	 <br><br><br><br>
+	
+	<div class="row">
+
 		<div class="col-3">
 			<div class="card" style="width: 18rem;">
 				  <div class="card-body">
@@ -93,11 +65,6 @@
 				  </div>
 			</div>				
 		</div>
-	</div>
-	 
-	<br><br>
-	
-	<div class="row">
 		<div class="col-3">
 			<div class="card" style="width: 18rem;">
 				  <div class="card-body">
@@ -111,34 +78,17 @@
 		<div class="col-3">
 			<div class="card" style="width: 18rem;">
 				  <div class="card-body">
-				    <h5 class="card-title">상품 등록</h5>
-				    <p class="card-text">상품 등록</p>
-				    <h5><a href="${root}/store/storeInsert" class="card-link">상품 등록</a></h5>
-				  </div>
-			</div>	
-		</div>
-		
-		<div class="col-3">
-			<div class="card" style="width: 18rem;">
-				  <div class="card-body">
-				    <h5 class="card-title">상품 목록(관리)</h5>
-				    <p class="card-text">상품 목록(관리)</p>
-				    <h5><a href="${root}/store/storeList" class="card-link">상품 목록(관리)</a></h5>
-				  </div>
-			</div>					
-		</div>
-		
-		<div class="col-3">
-			<div class="card" style="width: 18rem;">
-				  <div class="card-body">
 				    <h5 class="card-title">결제(예매) 관리</h5>
 				    <p class="card-text">결제(예매) 관리</p>
 				    <h5><a href="#" class="card-link">결제(예매) 관리</a></h5>
 				  </div>
 			</div>		
 		</div>
-	
+		
 	</div>
+	 
+	<br><br>
+	
 </div>
 
 

@@ -106,4 +106,10 @@
         
 	</select>
 	
+	<select id="exist" parameterType="int" resultType="LastInfoViewDto">
+		select distinct(movie_no) from last_info_view where movie_no=#{movieNo}
+	</select>
+	<select id="existScheduleNo" parameterType="int" resultType="LastInfoViewDto">
+		select distinct(movie_no) from last_info_view where schedule_no=#{scheduleNo}
+	</select>
 </mapper>

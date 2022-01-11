@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.reservation.StatisticsInfoViewDto;
 import com.kh.spring.vo.ChartVO;
 
 @Repository
@@ -72,6 +73,11 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 		param.put("movieNo", movieNo);
 		param.put("memberNo", memberNo);
 		return sqlSession.selectOne("statisticsInfoView.getByNo",param);
+	}
+
+	@Override
+	public StatisticsInfoViewDto exist(int scheduleTimeNo) {
+		return sqlSession.selectOne("statisticsInfoView.exist",scheduleTimeNo);
 	}
 	
 }

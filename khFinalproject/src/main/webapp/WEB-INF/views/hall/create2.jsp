@@ -12,7 +12,7 @@ $(function(){
 
 <h1> 상영관 생성 </h1>
 
-<form action="create_seat" method="post">
+<form action="${pageContext.request.contextPath}/hall/admin/create_seat" method="post">
 
 	<div class="row">
 		<h3>지점명 : ${theaterDto.theaterName }</h3>

@@ -47,6 +47,7 @@ import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.ReservationService;
+import com.kh.spring.service.ScheduleTimeService;
 import com.kh.spring.vo.ChartTotalVO;
 import com.kh.spring.vo.HallByScheduleTimeVO;
 import com.kh.spring.vo.MovieCountVO;
@@ -103,6 +104,8 @@ public class DataController {
 	private ReviewDao reviewDao;
 	@Autowired
 	private MovieDao movieDao;
+	@Autowired
+	private ScheduleTimeService scheduleTimeService;
 	
 	@GetMapping("/checkSameTime")
 	public String checkSameTime(
@@ -509,30 +512,7 @@ public class DataController {
 	public List<ShowRealTimeVO> getTotal4(@RequestParam int movieNo,
 			@RequestParam int theaterNo,
 			@RequestParam String scheduleTimeDate){
-		int scheduleNo = scheduleDao.getByMovieTheater(movieNo,theaterNo);
-
-		List<ShowRealTimeVO> list = new ArrayList<>();
-		List<HallByScheduleTimeVO> tempList = scheduleTimeDao.listByDate(scheduleNo,scheduleTimeDate);
-		
-
-		for(HallByScheduleTimeVO vo : tempList) {
-			ShowRealTimeVO showRealTimeVO = new ShowRealTimeVO();
-			
-			showRealTimeVO.setHallNo(vo.getHallNo());
-			showRealTimeVO.setHallType(vo.getHallType());
-			showRealTimeVO.setHallName(vo.getHallName());
-			showRealTimeVO.setHallSeat(vo.getHallSeat());
-			showRealTimeVO.setScheduleTimeNo(vo.getScheduleTimeNo());
-			showRealTimeVO.setScheduleNo(vo.getScheduleNo());
-			showRealTimeVO.setScheduleTimeDateTime(vo.getScheduleTimeDateTime());
-			showRealTimeVO.setScheduleTimeDiscountType(vo.getScheduleTimeDiscountType());
-			
-			int disabledSeat = reservationService.getSeatRest(vo.getScheduleTimeNo());
-			showRealTimeVO.setDisabledSeat(disabledSeat);
-			
-			list.add(showRealTimeVO);
-		}
-				
+		List<ShowRealTimeVO> list = scheduleTimeService.getList(movieNo,theaterNo,scheduleTimeDate);		
 		return list;
 	}
 	

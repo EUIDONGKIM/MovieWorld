@@ -51,11 +51,11 @@ display: none;
 	</div>
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
-		<button  class="btn btn-outline-dark" onclick="location.href='${root}/movie/insert'">영화 추가</button>
-		<button  class="btn btn-outline-dark" onclick="location.href='${root}/schedule/create_total'">상영 영화 일괄 생성</button>
+		<button  class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/insert'">영화 추가</button>
+		<button  class="btn btn-outline-dark" onclick="location.href='${root}/schedule/admin/create_total'">상영 영화 일괄 생성</button>
 	</div>
 	
-		<form action="${root}/movie/list" method="get">
+		<form action="${root}/movie/admin/list" method="get">
 		<div class="row">
 		<h5>[단일 영화 히스토리 검색]</h5>
 		</div>		
@@ -64,9 +64,30 @@ display: none;
 			<input type="submit" value="영화 검색" class="btn btn-info my-2 my-sm-0">
 	</div>
 		</form>
-	
+	<c:if test="${param.error != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 영화에 상영하고 있는 영화가 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${param.errorSchedule != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${param.errorScheduleTimeNo != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 상영의 예매 내역이 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+
 	<div class="row cneter">
-		<form action="${root}/movie/list" method="get">
+		<form action="${root}/movie/admin/list" method="get">
 			<div class='col'>
 			<h5>[상영 기간별 목록 조회]</h5>
 			</div>
@@ -89,8 +110,8 @@ display: none;
 
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
-		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/list'">현재 상영작</button>
-		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/list?movieTotal'">모든 영화 목록</button>
+		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal=F'">현재 상영작</button>
+		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list'">모든 영화 목록</button>
 	</div>
 	
 </div>
@@ -159,9 +180,9 @@ display: none;
 																				<td>${lastInfoViewDto.scheduleTimeDiscountType}</td>
 																				<td>${lastInfoViewDto.scheduleTimeDateTime}</td>
 																				<td>
-																					<a href="${root}/schedule/time/edit?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
+																					<a href="${root}/schedule/time/admin/edit?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
 																					<br>
-																					<a href="${root}/schedule/time/delete?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
+																					<a href="${root}/schedule/time/admin/delete?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
 																				</td>
 																			</tr>
 																		</c:forEach>
@@ -171,11 +192,11 @@ display: none;
 														</td>
 														<td>${map.key.scheduleStart }</td>
 														<td>${map.key.scheduleEnd }</td>
-														<td><a href="${root}/schedule/time/create?scheduleNo=${map.key.scheduleNo}">추가</a></td>
+														<td><a href="${root}/schedule/time/admin/create?scheduleNo=${map.key.scheduleNo}">추가</a></td>
 														<td>
-															<a href="${root}/schedule/edit?scheduleNo=${map.key.scheduleNo}">수정</a>
+															<a href="${root}/schedule/admin/edit?scheduleNo=${map.key.scheduleNo}">수정</a>
 															<br>
-															<a href="${root}/schedule/delete?scheduleNo=${map.key.scheduleNo}">삭제</a>
+															<a href="${root}/schedule/admin/delete?scheduleNo=${map.key.scheduleNo}">삭제</a>
 														</td>
 													</tr>
 										</c:forEach>
@@ -193,9 +214,9 @@ display: none;
 	
 					<td>
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
-					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/delete?movieNo=${list.key.movieNo}'">삭제</button>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
+					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/admin/delete?movieNo=${list.key.movieNo}'">삭제</button>
 					</td>
 	
 				</tr>	

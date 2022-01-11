@@ -82,12 +82,12 @@ public class MovieController {
 	private MovieLikeDao movieLikeDao;
 
 	
-	@GetMapping("/insert")
+	@GetMapping("/admin/insert")
 	public String insert() {
 		return "movie/insert";
 	}
 		
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public String insert(
 			@ModelAttribute MovieDto movieDto,
 			@RequestParam MultipartFile photo,
@@ -96,16 +96,16 @@ public class MovieController {
 		
 		int sequence = movieService.insert(movieDto,photo,attach);
 		
-		return "redirect:/movie/insert_actor?movieNo="+sequence;
+		return "redirect:/movie/admin/insert_actor?movieNo="+sequence;
 	}
 	
-	@GetMapping("/insert_actor")
+	@GetMapping("/admin/insert_actor")
 	public String insertActor(Model model,@RequestParam int movieNo) {
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor";
 	}
 	
-	@GetMapping("/insert_popup")
+	@GetMapping("/admin/insert_popup")
 	public String insertPopup(
 			@RequestParam int movieNo,
 			@ModelAttribute PaginationActorVO paginationActorVO,
@@ -116,11 +116,11 @@ public class MovieController {
 		return "movie/insert_actor_popup";
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/admin/list")
 	public String list(
 			Model model,
 			@RequestParam(required = false) String movieTitle,
-			@RequestParam(required = false) String movieTotal,
+			@RequestParam(required = false,defaultValue = "A") String movieTotal,
 			@RequestParam(required = false) String scheduleStart,
 			@RequestParam(required = false) String scheduleEnd
 			) {
@@ -128,7 +128,7 @@ public class MovieController {
 		
 		if(movieTitle != null) {
 			model.addAttribute("movieTitle", movieTitle);
-		}else if(movieTotal != null) {
+		}else if(movieTotal.equals("A")) {
 			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
 			model.addAttribute("scheduleStart", scheduleStart);
@@ -197,19 +197,26 @@ public class MovieController {
 		}
 	
 	
-	@GetMapping("/delete")
+	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int movieNo) {
-		movieService.delete(movieNo);
-		return "redirect:/movie/list";
+		
+		LastInfoViewDto checkDto = lastInfoViewDao.exist(movieNo);
+		if(checkDto == null) {
+			movieService.delete(movieNo);
+			return "redirect:/movie/admin/list";
+		}else {
+			return "redirect:/movie/admin/list?error";
+		}
+		
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int movieNo,Model model) {
 		MovieDto movieDto = movieDao.get(movieNo);
 		model.addAttribute("movieDto",movieDto);
 		return "movie/edit";
 	}
-	@PostMapping("/edit")
+	@PostMapping("/admin/edit")
 	public String edit(
 			@ModelAttribute MovieDto movieDto,
 			@RequestParam(required = false) MultipartFile photo,

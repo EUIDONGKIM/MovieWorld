@@ -56,8 +56,8 @@
         </div>
     </div>
     
-    <a href="${root}/hall/update_seat?hallNo=${hallDto.hallNo}">좌석 상태 설정</a>
-    <form action="${root}/hall/delete" method="post">
+    <a href="${root}/hall/admin/update_seat?hallNo=${hallDto.hallNo}">좌석 상태 설정</a>
+    <form action="${root}/hall/admin/delete" method="post">
     	<input type="hidden" name="hallNo" value="${hallDto.hallNo}">
 	    <button type="submit">상영관 폐점</button>
     </form>

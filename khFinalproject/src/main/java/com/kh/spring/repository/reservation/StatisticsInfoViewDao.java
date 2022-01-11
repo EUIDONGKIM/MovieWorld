@@ -3,6 +3,7 @@ package com.kh.spring.repository.reservation;
 import java.util.List;
 
 import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.reservation.StatisticsInfoViewDto;
 import com.kh.spring.vo.ChartVO;
 
 public interface StatisticsInfoViewDao {
@@ -28,5 +29,7 @@ public interface StatisticsInfoViewDao {
 	List<ChartVO> countForReservationRatio();
 
 	MovieDto getByNo(int memberNo, int movieNo);
+
+	StatisticsInfoViewDto exist(int scheduleTimeNo);
 
 }

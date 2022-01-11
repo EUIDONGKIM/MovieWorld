@@ -23,12 +23,10 @@ import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
-
 import com.kh.spring.service.EmailService;
-import com.kh.spring.service.MovieService;
-
 import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +52,9 @@ public class MemberController {
 	
 	@Autowired
 	private PasswordEncoder encoder;
-  @Autowired
-	private MovieService movieService;
+	@Autowired
+	private MovieLikeDao movieLikeDao;
+  
 
 	
 	
@@ -343,7 +342,7 @@ public class MemberController {
 	public void movieLikeList(Model model, HttpSession session) { 
 		int memberNo = (int)session.getAttribute("memberNo");
 		
-		model.addAttribute("myMovieLikeList",movieService.myMovieLikeList(memberNo));
+		model.addAttribute("count",movieLikeDao.count(memberNo));
 		
 	}
 	

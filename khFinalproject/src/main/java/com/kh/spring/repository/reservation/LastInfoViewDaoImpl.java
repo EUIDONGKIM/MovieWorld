@@ -111,4 +111,14 @@ public class LastInfoViewDaoImpl implements LastInfoViewDao{
 		return sqlSession.selectList("lastInfoView.checkTime",param);
 	}
 
+	@Override
+	public LastInfoViewDto exist(int movieNo) {
+		return sqlSession.selectOne("lastInfoView.exist",movieNo);
+	}
+
+	@Override
+	public LastInfoViewDto existScheduleNo(int scheduleNo) {
+		return sqlSession.selectOne("lastInfoView.existScheduleNo",scheduleNo);
+	}
+
 }

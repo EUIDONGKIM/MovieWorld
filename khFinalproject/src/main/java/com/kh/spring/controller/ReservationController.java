@@ -36,14 +36,13 @@ import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.KakaoPayService;
+import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.KakaoPayApproveRequestVO;
 import com.kh.spring.vo.KakaoPayApproveResponseVO;
 import com.kh.spring.vo.KakaoPayCancelResponseVO;
 import com.kh.spring.vo.KakaoPayReadyRequestVO;
 import com.kh.spring.vo.KakaoPayReadyResponseVO;
 import com.kh.spring.vo.KakaoPaySearchResponseVO;
-import com.kh.spring.vo.MovieCountVO;
-import com.kh.spring.vo.TheaterCityVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,6 +78,8 @@ public class ReservationController {
 	private LastInfoViewDao lastInfoViewDao;
 	@Autowired
 	private HistoryDao historyDao;
+	@Autowired
+	private ReservationService reservationService;
 
 	
 		@RequestMapping("/")
@@ -122,26 +123,8 @@ public class ReservationController {
 		@PostMapping("/confirm")
 		public String confirm(@RequestParam int reservationNo,@RequestParam int memberPoint,HttpSession session) throws URISyntaxException {
 			session.setAttribute("memberPoint", memberPoint);
-			
-			ReservationDto reservationDto = reservationDao.get(reservationNo);
-			List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
-			
-			String item_name = String.valueOf(rList.get(0).getSeatRows())+"행"+
-					String.valueOf(rList.get(0).getSeatCols())+"열";
-
-			if(rList.size()>1)
-			item_name += " 외 "+(rList.size()-1)+"건";
-			
-			long total = (long)(reservationDto.getTotalAmount()-memberPoint);
-			
-			KakaoPayReadyRequestVO requestVO = new KakaoPayReadyRequestVO();
-			requestVO.setPartner_order_id(String.valueOf(reservationDto.getReservationNo()));
-			requestVO.setPartner_user_id((String)session.getAttribute("ses"));
-			requestVO.setItem_name(item_name);
-			requestVO.setQuantity(1);
-			requestVO.setTotal_amount(total);
-			
-			
+			String memberEmail = (String)session.getAttribute("ses");
+			KakaoPayReadyRequestVO requestVO = reservationService.getRequestVO(reservationNo,memberPoint,memberEmail);
 			KakaoPayReadyResponseVO responseVO = kakaoPayService.ready(requestVO);
 
 			session.setAttribute("partner_order_id", requestVO.getPartner_order_id());
@@ -159,58 +142,16 @@ public class ReservationController {
 			String partner_user_id = (String) session.getAttribute("partner_user_id");
 			String tid = (String) session.getAttribute("tid");
 			int memberPoint = (int)session.getAttribute("memberPoint");
+			int memberNo = (int)session.getAttribute("memberNo");
 			
 			session.removeAttribute("partner_order_id");
 			session.removeAttribute("partner_user_id");
 			session.removeAttribute("tid");
 			session.removeAttribute("memberPoint");
 			
-			KakaoPayApproveRequestVO requestVO = new KakaoPayApproveRequestVO();
-			requestVO.setTid(tid);
-			requestVO.setPartner_order_id(partner_order_id);
-			requestVO.setPartner_user_id(partner_user_id);
-			requestVO.setPg_token(pg_token);
-			
-			KakaoPayApproveResponseVO responseVO = kakaoPayService.approve(requestVO);
-			
-			//결제가 완료된 시점에 update시행
-			ReservationDto reservationDto = reservationDao.get(Integer.parseInt(partner_order_id));
-			reservationDto.setTid(tid);
-			reservationDto.setItemName(responseVO.getItem_name());
-			reservationDto.setReservationStatus("결제완료");
-			reservationDto.setPointUse(memberPoint);
-			
-			reservationDao.approve(reservationDto);
-			reservationDetailDao.approve(reservationDto.getReservationNo());
-			
-			//모두 완료되면 해당 회차의 총 인원과 총 금액을 업데이트 시켜준다. / 포인트 사용내역
-			ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
-			scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
-			scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
-			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
-			scheduleTimeDao.reservationUpdate(scheduleTimeDto);
-			
-			
-			int memberNo = (int)session.getAttribute("memberNo");
-			memberDao.usePoint(memberNo,memberPoint);
-			MemberDto memberDto = memberDao.get2(memberNo);
-			HistoryDto historyDto =new HistoryDto();
-			//예매시 포인트 사용 
-			historyDto.setMemberEmail(memberDto.getMemberEmail());
-			historyDto.setHistoryAmount(memberPoint);
-			historyDto.setHistoryMemo("포인트 사용");
-			historyDao.insert(historyDto);
-			
-			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
-			
-			int pointByPay = ((int)reservationDto.getTotalAmount() - memberPoint) * pointPercent / 100;
-			memberDao.returnPoint(memberNo, pointByPay);
-			//예매시 포인트 적립
-			historyDto.setMemberEmail(memberDto.getMemberEmail());
-			historyDto.setHistoryAmount(pointByPay);
-			historyDto.setHistoryMemo("포인트 적립");
-			historyDao.insert(historyDto);
-			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
+			int reservationNo = reservationService.getReservationNo(partner_order_id,partner_user_id,tid,pg_token,memberPoint,memberNo);
+
+			return "redirect:success_result?reservationNo="+reservationNo;
 		}
 		
 		@GetMapping("/success_result")
@@ -251,49 +192,12 @@ public class ReservationController {
 		}
 		
 		@GetMapping("/cancel")
-		public String cancel(@RequestParam int reservationNo, RedirectAttributes attr,HttpSession session) throws URISyntaxException {
-			//(1)
-			ReservationDto reservationDto = reservationDao.get(reservationNo);
-
-			//(2) 취소 가능한 금액을 계산해야 한다
-			long amount = (reservationDto.getTotalAmount()-reservationDto.getPointUse());
-
-			//(3) 취소 처리를 수행한다
-			KakaoPayCancelResponseVO responseVO = kakaoPayService.cancel(reservationDto.getTid(), amount);
-
-			//(4) DB를 갱신
-			reservationDao.cancel(reservationNo);
-			reservationDetailDao.cancel(reservationNo);
-
-			//(5) 상영회차의 금액 변경(통계 차감)
-			ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
-			scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
-			scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
-			scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
-			scheduleTimeDao.reservationMinusUpdate(scheduleTimeDto);
-			
+		public String cancel(@RequestParam int reservationNo,HttpSession session) throws URISyntaxException {
 			int memberNo = (int)session.getAttribute("memberNo");
-			memberDao.returnPoint(memberNo,reservationDto.getPointUse());
-			//예매 취소시 포인트 취소
-			HistoryDto historyDto = new HistoryDto();
-			MemberDto memberDto = memberDao.get2(memberNo);
-			historyDto.setMemberEmail(memberDto.getMemberEmail());
-			historyDto.setHistoryAmount(reservationDto.getPointUse());
-			historyDto.setHistoryMemo("포인트 사용 취소");
-			historyDao.insert(historyDto);
+			reservationService.cancel(reservationNo,memberNo);
 			
-			int pointPercent = gradeDao.get(memberDto.getMemberGrade());
-			int pointByPay = ((int)reservationDto.getTotalAmount() - reservationDto.getPointUse()) * pointPercent / 100;
-			//예매 취소시 포인트 취소
-			memberDao.usePoint(memberNo, pointByPay);
-			historyDto.setMemberEmail(memberDto.getMemberEmail());
-			historyDto.setHistoryAmount(pointByPay);
-			historyDto.setHistoryMemo("포인트 적립금 취소");
-			historyDao.insert(historyDto);
-			
-			attr.addAttribute("reservationNo", reservationNo);
 //			return "redirect:history_detail";
-			return "redirect:success_result?reservationNo="+reservationDto.getReservationNo();
+			return "redirect:success_result?reservationNo="+reservationNo;
 		}
 		
 }

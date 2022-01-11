@@ -1,5 +1,6 @@
 package com.kh.spring.service;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -8,12 +9,16 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.entity.member.HistoryDto;
+import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
-import com.kh.spring.entity.theater.HallTypePriceDto;
 import com.kh.spring.entity.theater.SeatDto;
+import com.kh.spring.repository.member.GradeDao;
+import com.kh.spring.repository.member.HistoryDao;
+import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
@@ -21,6 +26,10 @@ import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.SeatDao;
+import com.kh.spring.vo.KakaoPayApproveRequestVO;
+import com.kh.spring.vo.KakaoPayApproveResponseVO;
+import com.kh.spring.vo.KakaoPayCancelResponseVO;
+import com.kh.spring.vo.KakaoPayReadyRequestVO;
 import com.kh.spring.vo.ReservationVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +52,14 @@ public class ReservationServiceImpl implements ReservationService {
 	private AgeDiscountDao ageDiscountDao;
 	@Autowired
 	private SeatDao seatDao;
-	
-	
+	@Autowired
+	private KakaoPayService kakaoPayService;
+	@Autowired
+	private GradeDao gradeDao;
+	@Autowired
+	private MemberDao memberDao;
+	@Autowired
+	private HistoryDao historyDao;
 	@Override
 	public void insert(String seatData,int reservationKey ,int scheduleTimeNo, int ageNormal, int ageYoung, int ageOld, int memberNo) {
 			//총 인원
@@ -204,6 +219,123 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public void clean() {
 		reservationDao.clean();
+	}
+
+
+	@Override
+	public KakaoPayReadyRequestVO getRequestVO(int reservationNo, int memberPoint,String memberEmail) {
+		
+		ReservationDto reservationDto = reservationDao.get(reservationNo);
+		List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
+		
+		String item_name = String.valueOf(rList.get(0).getSeatRows())+"행"+
+				String.valueOf(rList.get(0).getSeatCols())+"열";
+
+		if(rList.size()>1)
+		item_name += " 외 "+(rList.size()-1)+"건";
+		
+		long total = (long)(reservationDto.getTotalAmount()-memberPoint);
+		
+		KakaoPayReadyRequestVO requestVO = new KakaoPayReadyRequestVO();
+		requestVO.setPartner_order_id(String.valueOf(reservationDto.getReservationNo()));
+		requestVO.setPartner_user_id(memberEmail);
+		requestVO.setItem_name(item_name);
+		requestVO.setQuantity(1);
+		requestVO.setTotal_amount(total);
+		
+		return requestVO;
+	}
+
+
+	@Override
+	public int getReservationNo(String partner_order_id, String partner_user_id, String tid,String pg_token, int memberPoint, int memberNo) throws URISyntaxException {
+		KakaoPayApproveRequestVO requestVO = new KakaoPayApproveRequestVO();
+		requestVO.setTid(tid);
+		requestVO.setPartner_order_id(partner_order_id);
+		requestVO.setPartner_user_id(partner_user_id);
+		requestVO.setPg_token(pg_token);
+		
+		KakaoPayApproveResponseVO responseVO = kakaoPayService.approve(requestVO);
+		
+		//결제가 완료된 시점에 update시행
+		ReservationDto reservationDto = reservationDao.get(Integer.parseInt(partner_order_id));
+		reservationDto.setTid(tid);
+		reservationDto.setItemName(responseVO.getItem_name());
+		reservationDto.setReservationStatus("결제완료");
+		reservationDto.setPointUse(memberPoint);
+		
+		reservationDao.approve(reservationDto);
+		reservationDetailDao.approve(reservationDto.getReservationNo());
+		
+		//모두 완료되면 해당 회차의 총 인원과 총 금액을 업데이트 시켜준다. / 포인트 사용내역
+		ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
+		scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
+		scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
+		scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
+		scheduleTimeDao.reservationUpdate(scheduleTimeDto);
+		
+		memberDao.usePoint(memberNo,memberPoint);
+		MemberDto memberDto = memberDao.get2(memberNo);
+		HistoryDto historyDto =new HistoryDto();
+		//예매시 포인트 사용 
+		historyDto.setMemberEmail(memberDto.getMemberEmail());
+		historyDto.setHistoryAmount(memberPoint);
+		historyDto.setHistoryMemo("포인트 사용");
+		historyDao.insert(historyDto);
+		
+		int pointPercent = gradeDao.get(memberDto.getMemberGrade());
+		
+		int pointByPay = ((int)reservationDto.getTotalAmount() - memberPoint) * pointPercent / 100;
+		memberDao.returnPoint(memberNo, pointByPay);
+		//예매시 포인트 적립
+		historyDto.setMemberEmail(memberDto.getMemberEmail());
+		historyDto.setHistoryAmount(pointByPay);
+		historyDto.setHistoryMemo("포인트 적립");
+		historyDao.insert(historyDto);
+		return reservationDto.getReservationNo();
+	}
+
+
+	@Override
+	public void cancel(int reservationNo, int memberNo) throws URISyntaxException {
+		//(1)
+		ReservationDto reservationDto = reservationDao.get(reservationNo);
+
+		//(2) 취소 가능한 금액을 계산해야 한다
+		long amount = (reservationDto.getTotalAmount()-reservationDto.getPointUse());
+
+		//(3) 취소 처리를 수행한다
+		KakaoPayCancelResponseVO responseVO = kakaoPayService.cancel(reservationDto.getTid(), amount);
+
+		//(4) DB를 갱신
+		reservationDao.cancel(reservationNo);
+		reservationDetailDao.cancel(reservationNo);
+
+		//(5) 상영회차의 금액 변경(통계 차감)
+		ScheduleTimeDto scheduleTimeDto = new ScheduleTimeDto();
+		scheduleTimeDto.setScheduleTimeNo(reservationDto.getScheduleTimeNo());
+		scheduleTimeDto.setScheduleTimeCount(reservationDto.getReservationTotalNumber());
+		scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
+		scheduleTimeDao.reservationMinusUpdate(scheduleTimeDto);
+		
+		memberDao.returnPoint(memberNo,reservationDto.getPointUse());
+		//예매 취소시 포인트 취소
+		HistoryDto historyDto = new HistoryDto();
+		MemberDto memberDto = memberDao.get2(memberNo);
+		historyDto.setMemberEmail(memberDto.getMemberEmail());
+		historyDto.setHistoryAmount(reservationDto.getPointUse());
+		historyDto.setHistoryMemo("포인트 사용 취소");
+		historyDao.insert(historyDto);
+		
+		int pointPercent = gradeDao.get(memberDto.getMemberGrade());
+		int pointByPay = ((int)reservationDto.getTotalAmount() - reservationDto.getPointUse()) * pointPercent / 100;
+		//예매 취소시 포인트 취소
+		memberDao.usePoint(memberNo, pointByPay);
+		historyDto.setMemberEmail(memberDto.getMemberEmail());
+		historyDto.setHistoryAmount(pointByPay);
+		historyDto.setHistoryMemo("포인트 적립금 취소");
+		historyDao.insert(historyDto);
+
 	}
 
 

@@ -45,21 +45,18 @@ public class ActorController {
 	private ActorService actorService;
 	@Autowired
 	private ActorPhotoDao actorPhotoDao;
-	@Autowired
-	private TotalRoleViewDao totalRoleViewDao;
-	@Autowired
-	private MoviePhotoDao moviePhotoDao;
-	@GetMapping("/insert")
+
+	@GetMapping("/admin/insert")
 	public String insert() {
 		return "actor/insert";
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public String insert(@ModelAttribute ActorDto actorDto,
 			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		int sequence = actorService.insert(actorDto,attach);
 		
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 //		return "redirect:/actor/detail?actorNo="+sequence;
 //		return"redirect:/actor/detail?actorNo="+actorDto.getActorNo();
 	}
@@ -69,7 +66,7 @@ public class ActorController {
 		model.addAttribute("list", actorDao.list());
 		return "actor/list";
 	}
-	@GetMapping("/list")
+	@GetMapping("/admin/list")
 	public String list(
 			@ModelAttribute PaginationActorVO paginationActorVO,
 			Model model) throws Exception {
@@ -77,26 +74,26 @@ public class ActorController {
 		return "actor/list";
 	}
 	
-	@GetMapping("/delete")
+	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int actorNo) throws Exception {
 		actorService.delete(actorNo);
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int actorNo,Model model) {
 		ActorDto actorDto = actorDao.get(actorNo);
 		model.addAttribute("actorDto",actorDto);
 		return "actor/edit";
 	}
-	@PostMapping("/edit")
+	@PostMapping("/admin/edit")
 	public String edit(
 			@ModelAttribute ActorDto actorDto,
 			@RequestParam(required = false) MultipartFile attach
 			) throws IllegalStateException, IOException {	
 		
 		actorService.edit(actorDto,attach);
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 		//return "redirect:/actor/detail?actor="+actorDto.getActorNo();
 	}	
 	@GetMapping("/actorImg")
@@ -122,22 +119,7 @@ public class ActorController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int actorNo,Model model) {
 		ActorDto actorDto = actorDao.get(actorNo);
-		List<TotalRoleViewDto> listByActorNo =  totalRoleViewDao.listByActorNo(actorNo);
-		List<MovieChartVO> movieList = new ArrayList<>();
-		
-		for(TotalRoleViewDto totalRoleViewDto : listByActorNo) {
-			List<MoviePhotoDto> photoList = moviePhotoDao.getList(totalRoleViewDto.getMovieNo()); 
-			MoviePhotoDto moviePhotoDto = photoList.get(0);
-			
-			MovieChartVO movieChartVO = new MovieChartVO();
-			movieChartVO.setMovieTitle(totalRoleViewDto.getMovieTitle());
-			movieChartVO.setMovieOpening(totalRoleViewDto.getMovieOpening());
-			movieChartVO.setMovieNo(totalRoleViewDto.getMovieNo());
-			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
-			
-			movieList.add(movieChartVO);
-		}
-
+		List<MovieChartVO> movieList = actorService.getDetailVO(actorNo);
 		
 		model.addAttribute("movieList",movieList);
 		model.addAttribute("actorDto",actorDto);
