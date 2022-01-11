@@ -93,10 +93,11 @@ public class HallController {
 	}
 	
 	@GetMapping("/admin/update_seat")
-	public void hallupdateSeat(@RequestParam int hallNo, Model model) {
+	public String hallupdateSeat(@RequestParam int hallNo, Model model) {
 		HallDto hallDto = hallDao.get(hallNo);
 		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
 		model.addAttribute("hallDto",hallDto);
 		model.addAttribute("seatList", seatDao.list(hallNo));
+		return "/hall/update_seat";
 	}
 }

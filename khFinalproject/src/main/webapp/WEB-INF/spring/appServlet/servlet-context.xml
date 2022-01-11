@@ -94,6 +94,27 @@
 			<mvc:exclude-mapping path="/member/idScanSuccess"/>
 			<bean class="com.kh.spring.interceptor.MemberInterCeptor"></bean>
 	 	</mvc:interceptor>
+	 	
+	 	 <mvc:interceptor>
+			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/hall/admin/**"/>
+			<mvc:mapping path="/movie/admin/**"/>
+			<mvc:mapping path="/schedule/admin/**"/>
+			<mvc:mapping path="/theater/admin/**"/>
+			<mvc:mapping path="/seat/admin/**"/>
+			<mvc:mapping path="/actor/admin/**"/>
+			<mvc:mapping path="/price/admin/**"/>
+			<bean class="com.kh.spring.interceptor.AdminInterceptor"></bean>
+	 	</mvc:interceptor>
+	 	
+	 	 <mvc:interceptor>
+			<mvc:mapping path="/reservation/**"/>
+			<mvc:exclude-mapping path="/reservation/"/>
+			<mvc:exclude-mapping path="/reservation/direct"/>
+			<bean class="com.kh.spring.interceptor.SameInterceptor"></bean>
+	 	</mvc:interceptor>
+	 	
+	 	
 	 </mvc:interceptors>
 
 </beans>

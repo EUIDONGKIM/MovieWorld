@@ -89,8 +89,8 @@ display: none;
 
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
-		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list'">현재 상영작</button>
-		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal'">모든 영화 목록</button>
+		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal=F'">현재 상영작</button>
+		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list'">모든 영화 목록</button>
 	</div>
 	
 </div>
