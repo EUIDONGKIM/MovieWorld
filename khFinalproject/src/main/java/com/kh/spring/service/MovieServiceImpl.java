@@ -25,6 +25,7 @@ import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
+import com.kh.spring.vo.PaginationMovieVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -373,6 +374,76 @@ public class MovieServiceImpl implements MovieService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public PaginationMovieVO pageSearchVO(PaginationMovieVO paginationMovieVO) throws Exception {
+		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = new TreeMap<>();
+		List<MovieDto> movieList = new ArrayList<>();
+		
+		if(paginationMovieVO.getMovieTitle() != null) {
+			movieList = movieDao.getTitleList(paginationMovieVO.getMovieTitle());
+			for(MovieDto movieDto : movieList) {
+				if(paginationMovieVO.getMovieTotal().equals("D")) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					
+					List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.nowList(movieDto.getMovieNo());
+					
+					for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+						Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+						List<LastInfoViewDto> list = lastInfoViewDao.nowListByScheduleNo(totalInfoViewDto.getScheduleNo());
+						tempMap.put(totalInfoViewDto,list);
+						movieValue.add(tempMap);
+					}
+					sendList.put(movieDto,movieValue);
+					paginationMovieVO.setList(sendList);
+				}else {
+					
+				List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+				
+				List<TotalInfoViewDto> totalInfoList = totalInfoViewDao.list(movieDto.getMovieNo());
+				
+				for(TotalInfoViewDto totalInfoViewDto : totalInfoList) {
+					Map<TotalInfoViewDto,List<LastInfoViewDto>> tempMap = new HashMap<>();
+					List<LastInfoViewDto> list = lastInfoViewDao.listByScheduleNo(totalInfoViewDto.getScheduleNo());
+					tempMap.put(totalInfoViewDto,list);
+					movieValue.add(tempMap);
+				}
+				sendList.put(movieDto,movieValue);
+				paginationMovieVO.setList(sendList);
+				}
+				
+				
+			}
+		}else {
+			if(paginationMovieVO.getMovieTotal().equals("F")) {
+				int count = totalInfoViewDao.nowMoiveListCount();
+				paginationMovieVO.setCount(count);
+				paginationMovieVO.calculate();
+				List<Integer> movieNoList = totalInfoViewDao.nowMoiveListSearch(paginationMovieVO.getBegin(),paginationMovieVO.getEnd());
+				movieList = movieDao.nowList(movieNoList);
+				for(MovieDto movieDto : movieList) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					sendList.put(movieDto,movieValue);
+				}
+				paginationMovieVO.setList(sendList);
+				
+			}else if(paginationMovieVO.getMovieTotal().equals("A")) {
+				int count = movieDao.listNotContentCount();
+				paginationMovieVO.setCount(count);
+				paginationMovieVO.calculate();
+				log.debug("처음거1@@@@@={}",paginationMovieVO);
+				movieList = movieDao.listNotContentSearch(paginationMovieVO.getBegin(),paginationMovieVO.getEnd());
+				for(MovieDto movieDto : movieList) {
+					List<Map<TotalInfoViewDto,List<LastInfoViewDto>>> movieValue = new ArrayList<>();
+					sendList.put(movieDto,movieValue);
+				}
+				paginationMovieVO.setList(sendList);
+				log.debug("처음거2@@@@@={}",paginationMovieVO);
+			}
+			
+		}
+		return paginationMovieVO;
 	}
 
 }

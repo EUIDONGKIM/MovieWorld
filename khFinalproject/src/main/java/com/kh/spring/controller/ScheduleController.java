@@ -145,9 +145,15 @@ public class ScheduleController {
 		return "schedule/edit";
 	}
 	@PostMapping("/admin/edit")
-	public String edit(@ModelAttribute ScheduleDto scheduleDto) {
+	public String edit(@ModelAttribute ScheduleDto scheduleDto,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		scheduleDao.edit(scheduleDto);
-		return "redirect:/movie/admin/list";
+		if(movieTitle != null && movieTotal != null) {
+			
+		String change = URLEncoder.encode(movieTitle , "UTF-8");
+			return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal;
+		}else {
+			return "redirect:/movie/admin/list";
+		}
 	}
 	
 	// 극장쪽도 영화쪽이랑 같게,(sql 삭제 구문 다시 확인)
@@ -181,10 +187,16 @@ public class ScheduleController {
 		return "schedule/time/edit";
 	}
 	@PostMapping("/time/admin/edit")
-	public String timeEdit(@ModelAttribute ScheduleTimeDto scheduleTimeDto) {
+	public String timeEdit(@ModelAttribute ScheduleTimeDto scheduleTimeDto,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		boolean success = scheduleTimeDao.edit(scheduleTimeDto);
 		if(success) {
-			return "redirect:/movie/admin/list";
+			if(movieTitle != null && movieTotal != null) {
+			String change = URLEncoder.encode(movieTitle , "UTF-8");
+			return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal;
+			}else {
+				return "redirect:/movie/admin/list";
+			}
+			
 		}
 		else {
 			return "redirect:???"; //실패

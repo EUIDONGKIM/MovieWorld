@@ -50,6 +50,7 @@ import com.kh.spring.vo.OrderByCount;
 import com.kh.spring.vo.OrderByRatio;
 import com.kh.spring.vo.OrderByStar;
 import com.kh.spring.vo.PaginationActorVO;
+import com.kh.spring.vo.PaginationMovieVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -120,17 +121,14 @@ public class MovieController {
 	@GetMapping("/admin/list")
 	public String list(
 			Model model,
-			@RequestParam(required = false) String movieTitle,
-			@RequestParam(required = false,defaultValue = "A") String movieTotal
-			) {	
+			@ModelAttribute PaginationMovieVO paginationMovieVO
+			) throws Exception {	
 
-			model.addAttribute("movieTitle", movieTitle);
-
-		
-		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = 
-				movieService.getMovieList(movieTitle,movieTotal);		
-		model.addAttribute("sendList", sendList);
-		model.addAttribute("movieTotal", movieTotal);
+		PaginationMovieVO paginationMovieVOSend = movieService.pageSearchVO(paginationMovieVO);
+		model.addAttribute("paginationMovieVO",paginationMovieVOSend);
+		model.addAttribute("sendList", paginationMovieVOSend.getList());
+		model.addAttribute("movieTotal", paginationMovieVOSend.getMovieTotal());
+		model.addAttribute("movieTitle", paginationMovieVOSend.getMovieTitle());
 		return "movie/list";
 	}
 
