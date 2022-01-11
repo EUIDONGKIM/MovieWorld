@@ -39,6 +39,6 @@ public class MovieDto implements Comparable<MovieDto>{
 	}
 	@Override
 	public int compareTo(MovieDto o) {
-		return this.movieNo-o.movieNo;
+		return o.movieNo-this.movieNo;
 	}
 }

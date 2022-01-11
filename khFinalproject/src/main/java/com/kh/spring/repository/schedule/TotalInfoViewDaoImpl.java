@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.vo.ChartVO;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Repository
 public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 
@@ -58,6 +60,20 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 	@Override
 	public ChartVO checkStatus(int movieNo) {
 		return sqlSession.selectOne("totalInfoView.checkStatus",movieNo);
+	}
+	@Override
+	public int nowMoiveListCount() {
+		return sqlSession.selectOne("totalInfoView.nowMoiveListCount");
+	}
+	@Override
+	public List<Integer> nowMoiveListSearch(int begin, int end) {
+		log.debug("받는값 begin@@@={}",begin);
+		log.debug("받는값 end@@@={}",end);
+		Map<String,Object> param = new HashMap<>();
+		param.put("begin",begin);
+		param.put("end",end);
+		
+		return sqlSession.selectList("totalInfoView.nowMoiveListSearch",param);
 	}
 	
 	

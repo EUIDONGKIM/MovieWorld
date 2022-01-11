@@ -93,4 +93,17 @@ public class MovieDaoImpl implements MovieDao{
 		return sqlSession.selectList("movie.listNotContent");
 	}
 
+	@Override
+	public int listNotContentCount() {
+		return sqlSession.selectOne("movie.listNotContentCount");
+	}
+
+	@Override
+	public List<MovieDto> listNotContentSearch(int begin, int end) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("begin", begin);
+		param.put("end", end);
+		return sqlSession.selectList("movie.listNotContentSearch",param);
+	}
+
 }

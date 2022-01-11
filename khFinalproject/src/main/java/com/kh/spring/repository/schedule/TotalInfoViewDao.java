@@ -17,4 +17,6 @@ public interface TotalInfoViewDao {
 	List<Integer> moiveListByPeriod(String scheduleStart, String scheduleEnd);
 	List<Integer> nowTMoiveListContainSoon();
 	ChartVO checkStatus(int movieNo);
+	int nowMoiveListCount();
+	List<Integer> nowMoiveListSearch(int begin, int end);
 }

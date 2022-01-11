@@ -42,6 +42,19 @@
 		where sysdate between schedule_start and schedule_end order by movie_no asc
 	</select>
 	
+	<select id="nowMoiveListSearch" parameterType="map" resultType="int">
+		select movie_no from (
+		select rownum rn, tmp.* from(
+		select distinct(movie_no) from total_info_view 
+		where sysdate between schedule_start and schedule_end order by movie_no desc
+		)tmp) where rn between #{begin} and #{end}
+	</select>
+	
+	<select id="nowMoiveListCount" resultType="int">
+		select count(distinct(movie_no)) from total_info_view 
+		where sysdate between schedule_start and schedule_end
+	</select>
+	
 	<select id="nowTMoiveListContainSoon" parameterType="int" resultType="int">
 		select distinct(movie_no) from total_info_view 
 		<![CDATA[where sysdate < schedule_end order by movie_no asc]]>

@@ -47,6 +47,18 @@
 		select movie_no,movie_title,movie_grade,movie_type,movie_country,movie_opening,movie_runtime,movie_starpoint from movie
 	</select>
 	
+	<select id="listNotContentSearch" parameterType="map" resultType="MovieDto">
+			select * from (
+			select rownum rn, TMP.* from (
+		select movie_no,movie_title,movie_grade,movie_type,movie_country,movie_opening,movie_runtime,movie_starpoint from movie order by movie_no desc
+						)TMP
+		) where rn between #{begin} and #{end}
+	</select>
+	
+	<select id="listNotContentCount" resultType="int">
+		select count(*) from movie
+	</select>
+	
 	<select id="get" parameterType="int" resultType="MovieDto">
 		select * from movie where movie_no = #{movieNo}
 	</select>
