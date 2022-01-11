@@ -11,15 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PriceController {
 
-	@GetMapping("/hall_type_price")
-	public void hall() {
+	@GetMapping("/admin/hall_type_price")
+	public String hall() {
+		return "/price/hall_type_price";
 	}
 	
-	@GetMapping("/age_discount")
-	public void age() {
+	@GetMapping("/admin/age_discount")
+	public String age() {
+		return "/price/age_discount";	
 	}
 	
-	@GetMapping("/schedule_time_discount")
-	public void scheduleTime() {
+	@GetMapping("/admin/schedule_time_discount")
+	public String scheduleTime() {
+		return "/price/schedule_time_discount";	
 	}
 }

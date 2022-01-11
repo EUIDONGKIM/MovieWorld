@@ -120,7 +120,7 @@ public class MovieController {
 	public String list(
 			Model model,
 			@RequestParam(required = false) String movieTitle,
-			@RequestParam(required = false) String movieTotal,
+			@RequestParam(required = false,defaultValue = "A") String movieTotal,
 			@RequestParam(required = false) String scheduleStart,
 			@RequestParam(required = false) String scheduleEnd
 			) {
@@ -128,7 +128,7 @@ public class MovieController {
 		
 		if(movieTitle != null) {
 			model.addAttribute("movieTitle", movieTitle);
-		}else if(movieTotal != null) {
+		}else if(movieTotal.equals("A")) {
 			model.addAttribute("movieTotal", movieTotal);
 		}else if(scheduleStart != null && scheduleEnd != null) {
 			model.addAttribute("scheduleStart", scheduleStart);

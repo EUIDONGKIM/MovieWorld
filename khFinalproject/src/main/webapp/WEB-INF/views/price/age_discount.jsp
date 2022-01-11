@@ -87,7 +87,9 @@
 						form.append("<button type='button' class='edit-cancel-btn'>취소</button>");
 						form.append("</form>");
 						
-
+						form.find(".edit-cancel-btn").click(function(){
+							loadList();							
+						});
 						
 						form.submit(function(e){
 							e.preventDefault();
