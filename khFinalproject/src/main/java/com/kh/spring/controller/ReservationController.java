@@ -107,10 +107,8 @@ public class ReservationController {
 				MemberDto memberDto = memberDao.get(memberEmail);
 				memberPoint = memberDto.getMemberPoint();
 			}
-			LastInfoViewDto lastInfoViewDto = null;
 			if(scheduleTimeNo != 0) {				
-				lastInfoViewDao.get(scheduleTimeNo);
-				model.addAttribute("lastInfoViewDto",lastInfoViewDto);
+				model.addAttribute("lastInfoViewDto",lastInfoViewDao.get(scheduleTimeNo));
 			}
 			if(movieNo != 0) {				
 				model.addAttribute("movieNo",movieNo);

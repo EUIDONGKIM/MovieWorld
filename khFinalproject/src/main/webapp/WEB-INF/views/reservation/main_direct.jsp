@@ -280,6 +280,7 @@ $(function(){
 		console.log("무비쳌0",movieNo);
 		movieLoadList();
 		sidoList(movieNo);
+		directChecked();
 	}else{
 		loadList();
 	}
