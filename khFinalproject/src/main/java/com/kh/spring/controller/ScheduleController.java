@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
+import com.kh.spring.entity.reservation.StatisticsInfoViewDto;
 import com.kh.spring.entity.schedule.ScheduleDto;
 import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.entity.theater.TheaterDto;
 import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDiscountDao;
@@ -49,6 +51,8 @@ public class ScheduleController {
 	private TheaterDao theaterDao;
 	@Autowired
 	private LastInfoViewDao lastInfoViewDao;
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
 	
 	@GetMapping("/admin/create")
 	public String create(Model model) {
@@ -146,12 +150,18 @@ public class ScheduleController {
 	
 	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int scheduleNo) {
+		LastInfoViewDto checkDto = lastInfoViewDao.existScheduleNo(scheduleNo);
+		log.debug("checkDto의 값은!?@@@@@@@={}",checkDto);
+		if(checkDto==null) {
 		boolean success = scheduleDao.delete(scheduleNo);
 		if(success) {
 			return "redirect:/movie/admin/list";
 		}
 		else {
 			return "redirect:???"; //실패
+		}
+		}else {
+			return "redirect:/movie/admin/list?errorSchedule";
 		}
 	}
 	
@@ -178,12 +188,18 @@ public class ScheduleController {
 	
 	@GetMapping("/time/admin/delete")
 	public String timeDelete(@RequestParam int scheduleTimeNo) {
+		StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.exist(scheduleTimeNo);
+		if(statisticsInfoViewDto==null) {
+			
 		boolean success = scheduleTimeDao.delete(scheduleTimeNo);
 		if(success) {
 			return "redirect:/movie/admin/list";
 		}
 		else {
 			return "redirect:???"; //실패
+		}
+		}else {
+			return "redirect:/movie/admin/list?errorScheduleTimeNo";
 		}
 	}
 	
