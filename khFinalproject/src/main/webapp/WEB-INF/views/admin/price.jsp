@@ -19,7 +19,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">상영관 종류별 금액 관리</h5>
 				    <p class="card-text">상영관 종류별 금액 관리 </p>
-				    <h5><a href="${root}/price/hall_type_price">상영관 종류별 금액 관리</a></h5>
+				    <h5><a href="${root}/price/admin/hall_type_price">상영관 종류별 금액 관리</a></h5>
 				  </div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">연령대별 할인 금액 관리</h5>
 				    <p class="card-text">연령대별 할인 금액 관리</p>
-				    <h5><a href="${root}/price/age_discount">연령대별 할인 금액 관리</a></h5>
+				    <h5><a href="${root}/price/admin/age_discount">연령대별 할인 금액 관리</a></h5>
 				  </div>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">상영시간 할인 금액 관리</h5>
 				    <p class="card-text">상영시간 할인 금액 관리</p>
-				    <h5><a href="${root}/price/schedule_time_discount">상영시간 할인 금액 관리</a></h5>
+				    <h5><a href="${root}/price/admin/schedule_time_discount">상영시간 할인 금액 관리</a></h5>
 				  </div>
 			</div>
 		</div>

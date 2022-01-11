@@ -64,7 +64,28 @@ display: none;
 			<input type="submit" value="영화 검색" class="btn btn-info my-2 my-sm-0">
 	</div>
 		</form>
-	
+	<c:if test="${param.error != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 영화에 상영하고 있는 영화가 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${param.errorSchedule != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+	<c:if test="${param.errorScheduleTimeNo != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 상영의 예매 내역이 있습니다.</h4>
+			</div>
+		</div>
+	</c:if>
+
 	<div class="row cneter">
 		<form action="${root}/movie/admin/list" method="get">
 			<div class='col'>

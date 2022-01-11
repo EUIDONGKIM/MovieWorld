@@ -35,4 +35,8 @@ public interface LastInfoViewDao {
 
 	List<LastInfoViewDto> checkTime(int scheduleNo, int hallNo, String scheduleTimefirst);
 
+	LastInfoViewDto exist(int movieNo);
+
+	LastInfoViewDto existScheduleNo(int scheduleNo);
+
 }

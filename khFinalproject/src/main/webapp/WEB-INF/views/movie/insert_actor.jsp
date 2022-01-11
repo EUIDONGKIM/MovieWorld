@@ -28,7 +28,7 @@
 		$(".exit-btn").click(function(){
 			var check = confirm("등록을 완료하시겠습니까?");
 			if(check){				
-			location.href = "${pageContext.request.contextPath}/movie/list";
+			location.href = "${pageContext.request.contextPath}/movie/admin/list";
 			}
 		});
 

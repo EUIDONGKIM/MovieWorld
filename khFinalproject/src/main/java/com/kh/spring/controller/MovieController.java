@@ -199,8 +199,15 @@ public class MovieController {
 	
 	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int movieNo) {
-		movieService.delete(movieNo);
-		return "redirect:/movie/admin/list";
+		
+		LastInfoViewDto checkDto = lastInfoViewDao.exist(movieNo);
+		if(checkDto == null) {
+			movieService.delete(movieNo);
+			return "redirect:/movie/admin/list";
+		}else {
+			return "redirect:/movie/admin/list?error";
+		}
+		
 	}
 	
 	@GetMapping("/admin/edit")

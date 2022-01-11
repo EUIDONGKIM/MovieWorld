@@ -111,6 +111,7 @@
 			<mvc:mapping path="/reservation/**"/>
 			<mvc:exclude-mapping path="/reservation/"/>
 			<mvc:exclude-mapping path="/reservation/direct"/>
+			<mvc:exclude-mapping path="/reservation/success"/>
 			<bean class="com.kh.spring.interceptor.SameInterceptor"></bean>
 	 	</mvc:interceptor>
 	 	
