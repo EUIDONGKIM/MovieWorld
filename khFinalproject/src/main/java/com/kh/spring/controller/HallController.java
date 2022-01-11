@@ -37,7 +37,7 @@ public class HallController {
 		return "hall/list";
 	}
 	
-	@RequestMapping("/create")
+	@RequestMapping("/admin/create")
 	public String hallCreate(Model model) {
 		model.addAttribute("hallTypeList", hallDao.getHallTypeList());
 		model.addAttribute("theaterCityVOList",theaterDao.cityList());
@@ -45,7 +45,7 @@ public class HallController {
 		return "hall/create";
 	}
 	
-	@GetMapping("/create2")
+	@GetMapping("/admin/create2")
 	public String hallCreate2(@RequestParam int theaterNo, Model model) {
 		
 		TheaterDto theaterDto = theaterDao.get(theaterNo);
@@ -58,12 +58,12 @@ public class HallController {
 	}
 	
 	
-	@GetMapping("/create_seat")
+	@GetMapping("/admin/create_seat")
 	public String test() {
 		return "hall/create_seat";
 	}
 	
-	@PostMapping("/create_seat")
+	@PostMapping("/admin/create_seat")
 	public String hallCreateSeat(Model model,@ModelAttribute HallDto hallDto) {
 		int hallNo = hallDao.getSeq();
 		hallDto.setHallNo(hallNo);
@@ -73,7 +73,7 @@ public class HallController {
 		return "hall/create_seat";
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping("/admin/delete")
 	public String hallDelete(@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
 		HallDto hallDto = hallDao.get(hallNo);
 		int theaterNo = hallDto.getTheaterNo(); //리다이렉트용 
@@ -84,7 +84,7 @@ public class HallController {
 		return "redirect:/theater/detail";
 	}
 	
-	@GetMapping("detail")
+	@GetMapping("/detail")
 	public void hallDetail(@RequestParam int hallNo, Model model) {
 		HallDto hallDto = hallDao.get(hallNo);
 		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
@@ -92,7 +92,7 @@ public class HallController {
 		model.addAttribute("seatList", seatDao.list(hallNo));
 	}
 	
-	@GetMapping("update_seat")
+	@GetMapping("/admin/update_seat")
 	public void hallupdateSeat(@RequestParam int hallNo, Model model) {
 		HallDto hallDto = hallDao.get(hallNo);
 		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));

@@ -162,9 +162,6 @@
         <li class="nav-item">
           <a class="nav-link active" href="${root}/reservation/">예매</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="${root}/store/storeMain">스토어</a>
-        </li>
         <c:if test="${admin}">
         <li class="nav-item">
           <a class="nav-link active" href="${root}/admin/">관리자페이지</a>

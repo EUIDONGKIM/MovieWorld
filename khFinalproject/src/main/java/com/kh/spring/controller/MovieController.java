@@ -82,12 +82,12 @@ public class MovieController {
 	private MovieLikeDao movieLikeDao;
 
 	
-	@GetMapping("/insert")
+	@GetMapping("/admin/insert")
 	public String insert() {
 		return "movie/insert";
 	}
 		
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public String insert(
 			@ModelAttribute MovieDto movieDto,
 			@RequestParam MultipartFile photo,
@@ -96,16 +96,16 @@ public class MovieController {
 		
 		int sequence = movieService.insert(movieDto,photo,attach);
 		
-		return "redirect:/movie/insert_actor?movieNo="+sequence;
+		return "redirect:/movie/admin/insert_actor?movieNo="+sequence;
 	}
 	
-	@GetMapping("/insert_actor")
+	@GetMapping("/admin/insert_actor")
 	public String insertActor(Model model,@RequestParam int movieNo) {
 		model.addAttribute("movieNo",movieNo);
 		return "movie/insert_actor";
 	}
 	
-	@GetMapping("/insert_popup")
+	@GetMapping("/admin/insert_popup")
 	public String insertPopup(
 			@RequestParam int movieNo,
 			@ModelAttribute PaginationActorVO paginationActorVO,
@@ -116,7 +116,7 @@ public class MovieController {
 		return "movie/insert_actor_popup";
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/admin/list")
 	public String list(
 			Model model,
 			@RequestParam(required = false) String movieTitle,
@@ -197,19 +197,19 @@ public class MovieController {
 		}
 	
 	
-	@GetMapping("/delete")
+	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int movieNo) {
 		movieService.delete(movieNo);
-		return "redirect:/movie/list";
+		return "redirect:/movie/admin/list";
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int movieNo,Model model) {
 		MovieDto movieDto = movieDao.get(movieNo);
 		model.addAttribute("movieDto",movieDto);
 		return "movie/edit";
 	}
-	@PostMapping("/edit")
+	@PostMapping("/admin/edit")
 	public String edit(
 			@ModelAttribute MovieDto movieDto,
 			@RequestParam(required = false) MultipartFile photo,

@@ -44,7 +44,7 @@
     </ul>
     <div class="float-box">
         <div>
-            <form action="${pageContext.request.contextPath}/seat/insert" method="post">
+            <form action="${pageContext.request.contextPath}/seat/admin/insert" method="post">
                 <div id="cinema" class="cinema-wrap" data-name="seat">
             	<div class="cinema-screen">전면스크린</div>
                     <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows}" data-colsize="${hallDto.hallCols}" data-mode="manager" data-fill="auto" data-seatno="visible"></div>

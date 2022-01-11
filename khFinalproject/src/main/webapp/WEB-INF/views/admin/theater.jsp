@@ -49,7 +49,7 @@
 	
 	<div class="row"> 
 		<div class="d-flex flex-row-reverse bd-highlight">
-				<a class="btn btn-info my-2 my-sm-0" href="${root}/theater/create">극장 생성</a>
+				<a class="btn btn-info my-2 my-sm-0" href="${root}/theater/admin/create">극장 생성</a>
 		</div>
 	</div>
 

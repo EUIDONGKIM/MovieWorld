@@ -33,10 +33,10 @@
 				<td>${totalInfoViewDto.theaterName }</td>
 				<td>${totalInfoViewDto.scheduleStart }</td>
 				<td>${totalInfoViewDto.scheduleEnd }</td>
-				<td><a href="${root}/schedule/time/create?scheduleNo=${totalInfoViewDto.scheduleNo}">추가하기</a></td>
+				<td><a href="${root}/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">추가하기</a></td>
 				<td>
-					<a href="${root}/schedule/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
-					<a href="${root}/schedule/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+					<a href="${root}/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
+					<a href="${root}/schedule/admin/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
 				</td>
 			</tr>
 		</c:forEach>	

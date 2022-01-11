@@ -308,8 +308,8 @@
 <hr>
 
 <h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
-	<a href="edit?theaterNo=${theaterDto.theaterNo}">수정</a>
-	<a href="${root}/hall/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
+	<a href="${root}/hall/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
+	<a href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
 	
 	<div>
 	<h3>상영관 목록</h3>
@@ -324,13 +324,13 @@
 	
 	
 	<div>
-	<h3>현재 상영중인 영화<a href="${root}/schedule/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a></h3>
+	<h3>현재 상영중인 영화<a href="${root}/schedule/admin/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a></h3>
 	<c:forEach var="totalInfoViewDto" items="${scheduleList }">
 		<h5>
 			${totalInfoViewDto.movieTitle }
-			<a href="${root }/schedule/time/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
-			<a href="${root }/schedule/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
-			<a href="${root }/schedule/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+			<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
+			<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
+			<a href="${root }/schedule/admin/delete?scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
 		</h5>
 	</c:forEach>
 	</div>
