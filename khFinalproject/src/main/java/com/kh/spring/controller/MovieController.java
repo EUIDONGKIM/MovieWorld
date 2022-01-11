@@ -1,6 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,24 +121,16 @@ public class MovieController {
 	public String list(
 			Model model,
 			@RequestParam(required = false) String movieTitle,
-			@RequestParam(required = false,defaultValue = "A") String movieTotal,
-			@RequestParam(required = false) String scheduleStart,
-			@RequestParam(required = false) String scheduleEnd
-			) {
-		movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);
-		
-		if(movieTitle != null) {
+			@RequestParam(required = false,defaultValue = "A") String movieTotal
+			) {	
+
 			model.addAttribute("movieTitle", movieTitle);
-		}else if(movieTotal.equals("A")) {
-			model.addAttribute("movieTotal", movieTotal);
-		}else if(scheduleStart != null && scheduleEnd != null) {
-			model.addAttribute("scheduleStart", scheduleStart);
-			model.addAttribute("scheduleEnd", scheduleEnd);
-		}
+
 		
 		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = 
-				movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);		
+				movieService.getMovieList(movieTitle,movieTotal);		
 		model.addAttribute("sendList", sendList);
+		model.addAttribute("movieTotal", movieTotal);
 		return "movie/list";
 	}
 
@@ -198,14 +191,21 @@ public class MovieController {
 	
 	
 	@GetMapping("/admin/delete")
-	public String delete(@RequestParam int movieNo) {
+	public String delete(@RequestParam int movieNo
+			,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		
 		LastInfoViewDto checkDto = lastInfoViewDao.exist(movieNo);
 		if(checkDto == null) {
 			movieService.delete(movieNo);
 			return "redirect:/movie/admin/list";
 		}else {
-			return "redirect:/movie/admin/list?error";
+			if(movieTitle != null) {
+				
+			String change = URLEncoder.encode(movieTitle , "UTF-8");
+				return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal+"&error";
+			}else {
+				return "redirect:/movie/admin/list?&error";	
+			}
 		}
 		
 	}

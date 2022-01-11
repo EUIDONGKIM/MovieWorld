@@ -107,9 +107,9 @@
 	</select>
 	
 	<select id="exist" parameterType="int" resultType="LastInfoViewDto">
-		select distinct(movie_no) from last_info_view where movie_no=#{movieNo}
+		<![CDATA[select distinct(movie_no) from last_info_view where movie_no=#{movieNo} and sysdate < schedule_end]]>
 	</select>
 	<select id="existScheduleNo" parameterType="int" resultType="LastInfoViewDto">
-		select distinct(movie_no) from last_info_view where schedule_no=#{scheduleNo}
+		<![CDATA[select distinct(movie_no) from last_info_view where schedule_no=#{scheduleNo} and sysdate < schedule_end]]>
 	</select>
 </mapper>
