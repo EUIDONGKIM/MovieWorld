@@ -24,7 +24,7 @@ public class SeatController {
 	@Autowired
 	private SeatService seatService;
 	
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public String insert(@RequestParam List<String> seat,@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
 		
 		List<SeatDto> seatList = new ArrayList<>();

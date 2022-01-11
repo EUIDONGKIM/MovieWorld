@@ -46,17 +46,17 @@ public class ActorController {
 	@Autowired
 	private ActorPhotoDao actorPhotoDao;
 
-	@GetMapping("/insert")
+	@GetMapping("/admin/insert")
 	public String insert() {
 		return "actor/insert";
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/admin/insert")
 	public String insert(@ModelAttribute ActorDto actorDto,
 			@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
 		int sequence = actorService.insert(actorDto,attach);
 		
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 //		return "redirect:/actor/detail?actorNo="+sequence;
 //		return"redirect:/actor/detail?actorNo="+actorDto.getActorNo();
 	}
@@ -66,7 +66,7 @@ public class ActorController {
 		model.addAttribute("list", actorDao.list());
 		return "actor/list";
 	}
-	@GetMapping("/list")
+	@GetMapping("/admin/list")
 	public String list(
 			@ModelAttribute PaginationActorVO paginationActorVO,
 			Model model) throws Exception {
@@ -74,26 +74,26 @@ public class ActorController {
 		return "actor/list";
 	}
 	
-	@GetMapping("/delete")
+	@GetMapping("/admin/delete")
 	public String delete(@RequestParam int actorNo) throws Exception {
 		actorService.delete(actorNo);
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int actorNo,Model model) {
 		ActorDto actorDto = actorDao.get(actorNo);
 		model.addAttribute("actorDto",actorDto);
 		return "actor/edit";
 	}
-	@PostMapping("/edit")
+	@PostMapping("/admin/edit")
 	public String edit(
 			@ModelAttribute ActorDto actorDto,
 			@RequestParam(required = false) MultipartFile attach
 			) throws IllegalStateException, IOException {	
 		
 		actorService.edit(actorDto,attach);
-		return "redirect:/actor/list";
+		return "redirect:/actor/admin/list";
 		//return "redirect:/actor/detail?actor="+actorDto.getActorNo();
 	}	
 	@GetMapping("/actorImg")

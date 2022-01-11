@@ -16,11 +16,12 @@
 	</div>
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
-		<h3><a  class="btn btn-info" href="${root}/actor/insert">영화인 추가</a></h3>
+		<h3><a  class="btn btn-info" href="${root}/actor/admin/insert">영화인 추가</a></h3>
 	</div>
 	<!-- 검색창시작 -->
 	<div class="row justify-content-md-center">
 	 <div class="col-2">
+<form method="get">
 		<select name="actorJob" class="form-select">
 			<option class="select-job" value="">직업선택</option>
 			<option class="select-job" value="director">감독</option>
@@ -34,6 +35,7 @@
 	 <div class="col-1">
 		<input type="submit" value="검색" class="btn btn-info">
 	 </div>
+</form>
 	<div>
 	</div>
 
@@ -64,8 +66,8 @@
 				<td>${actorDto.actorNationality}</td>
 				<td>
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/actor/detail?actorNo=${actorDto.actorNo}'">상세</button>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/actor/edit?actorNo=${actorDto.actorNo}'">수정</button>
-					<button class="btn btn-outline-primary" onclick="location.href='${root}/actor/delete?actorNo=${actorDto.actorNo}'">삭제</button>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/actor/admin/edit?actorNo=${actorDto.actorNo}'">수정</button>
+					<button class="btn btn-outline-primary" onclick="location.href='${root}/actor/admin/delete?actorNo=${actorDto.actorNo}'">삭제</button>
 				</td>
 			</tr>	
 		</c:forEach>	
@@ -83,13 +85,13 @@
 						<c:when test="${PaginationActorVO.isSearch()}">
 							<li class="page-item">
 								<!-- 검색용 링크 -->
-								<a href="${root }/actor/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getPreviousBlock()}" class="page-link">&lt;</a>
+								<a href="${root }/actor/admin/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getPreviousBlock()}" class="page-link">&lt;</a>
 							</li>
 						</c:when>
 						<c:otherwise>
 							<!-- 목록용 링크 -->
 							<li class="page-item">
-							<a href="${root }/actor/list?p=${PaginationActorVO.getPreviousBlock()}" class="page-link">&lt;</a>
+							<a href="${root }/actor/admin/list?p=${PaginationActorVO.getPreviousBlock()}" class="page-link">&lt;</a>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -106,13 +108,13 @@
 					<c:when test="${PaginationActorVO.isSearch()}">
 						<li class="page-item">
 						<!-- 검색용 링크 -->
-							<a href="${root }/actor/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${i}" class="page-link">${i}</a>
+							<a href="${root }/actor/admin/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${i}" class="page-link">${i}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
 						<li class="page-item">
 						<!-- 목록용 링크 -->
-						<a href="${root }/actor/list?p=${i}" class="page-link">${i}</a>
+						<a href="${root }/actor/admin/list?p=${i}" class="page-link">${i}</a>
 						</li>
 					</c:otherwise>
 				</c:choose>
@@ -127,13 +129,13 @@
 						<c:when test="${PaginationActorVO.isSearch()}">
 							<!-- 검색용 링크 -->
 							<li class="page-item">
-								<a href="${root }/actor/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getNextBlock()}" class="page-link">&gt;</a>
+								<a href="${root }/actor/admin/list?actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getNextBlock()}" class="page-link">&gt;</a>
 							<li>
 						</c:when>
 						<c:otherwise>
 							<!-- 목록용 링크 -->
 							<li class="page-item">
-								<a href="${root }/actor/list?p=${PaginationActorVO.getNextBlock()}" class="page-link">&gt;</a>
+								<a href="${root }/actor/admin/list?p=${PaginationActorVO.getNextBlock()}" class="page-link">&gt;</a>
 							</li>					
 						</c:otherwise>
 					</c:choose>

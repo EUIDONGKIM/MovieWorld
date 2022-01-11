@@ -77,7 +77,7 @@ $(function(){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>${theaterDto.theaterName}점 정보 수정</h1>
 
-<form action="${root}/theater/edit" method="post">
+<form action="${root}/theater/admin/edit" method="post">
 	<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo }">
 	극장명 : <input type="text" name="theaterName" value="${theaterDto.theaterName}"required>
 	<br>

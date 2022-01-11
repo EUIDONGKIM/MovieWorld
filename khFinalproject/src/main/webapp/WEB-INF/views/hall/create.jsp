@@ -48,7 +48,7 @@ $(function(){
 	<option value="{{no}}">{{name}}</option>
 </template>
 
-<form action="create_seat" method="post">
+<form action="${pageContext.request.contextPath}/hall/admin/create_seat" method="post">
 	<div class="row">
 		<label>지역 선택</label>
 		<select class="city" required>

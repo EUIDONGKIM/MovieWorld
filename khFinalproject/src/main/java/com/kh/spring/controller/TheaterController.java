@@ -51,12 +51,12 @@ public class TheaterController {
 	@Autowired
 	private TheaterService theaterService;
 	
-	@GetMapping("/create")
+	@GetMapping("/admin/create")
 	public String create() {
 		return "theater/create";
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("/admin/create")
 	public String create(@ModelAttribute TheaterDto theaterDto) {
 		theaterDao.create(theaterDto);
 		
@@ -122,7 +122,7 @@ public class TheaterController {
 		return "theater/detail";
 	}
 	
-	@GetMapping("/edit")
+	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int theaterNo, Model model) {
 		TheaterDto theaterDto = theaterDao.get(theaterNo);
 		model.addAttribute("scheduleList",totalInfoViewDao.listByTheater(theaterNo));
@@ -130,7 +130,7 @@ public class TheaterController {
 		
 		return "theater/edit";
 	}
-	@PostMapping("/edit")
+	@PostMapping("/admin/edit")
 	public String edit(@ModelAttribute TheaterDto theaterDto, RedirectAttributes redirectAttributes) {
 		theaterService.editTheater(theaterDto);
 		redirectAttributes.addAttribute("theaterNo", theaterDto.getTheaterNo());
@@ -138,7 +138,7 @@ public class TheaterController {
 		return "redirect:/theater/detail";	
 	}
 	
-	@PostMapping("/delete")
+	@PostMapping("/admin/delete")
 	public String delete(@RequestParam int theaterNo, RedirectAttributes redirectAttributes) {
 		boolean success = theaterService.deleteTheater(theaterNo);
 		log.debug("폐점 성공? = {}",success);
@@ -148,7 +148,7 @@ public class TheaterController {
 		}
 		else {
 			redirectAttributes.addAttribute("theaterNo", theaterNo);
-			return "redirect:/theater/edit";
+			return "redirect:/theater/admin/edit";
 		}
 	}
 }
