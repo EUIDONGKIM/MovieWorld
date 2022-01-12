@@ -121,7 +121,7 @@ display: none;
 					
 						<td>
 						<c:choose>
-								<c:when test="${empty list.value}">
+								<c:when test="${empty list.value && movieTotal!='D'}">
 									<a href="${root }/movie/admin/list?movieTitle=${list.key.movieTitle}">${list.key.movieTitle}</a>
 								</c:when>
 								<c:otherwise>

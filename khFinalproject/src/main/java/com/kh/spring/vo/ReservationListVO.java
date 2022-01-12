@@ -6,6 +6,7 @@ import lombok.Data;
 public class ReservationListVO {
 	private int reservationNo;
 	private int memberNo;
+	private String memberPhone;
 	private String memberName;
 	private String tid;
 	private String buyTime;

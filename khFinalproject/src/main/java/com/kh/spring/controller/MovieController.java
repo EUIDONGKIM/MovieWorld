@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +31,6 @@ import com.kh.spring.entity.movie.MovieLikeDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.movie.VideoDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
-import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.repository.actor.ActorDao;
 import com.kh.spring.repository.actor.TotalRoleViewDao;
 import com.kh.spring.repository.movie.MovieDao;
@@ -51,6 +49,7 @@ import com.kh.spring.vo.OrderByRatio;
 import com.kh.spring.vo.OrderByStar;
 import com.kh.spring.vo.PaginationActorVO;
 import com.kh.spring.vo.PaginationMovieVO;
+import com.kh.spring.vo.SearchVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -131,7 +130,20 @@ public class MovieController {
 		model.addAttribute("movieTitle", paginationMovieVOSend.getMovieTitle());
 		return "movie/list";
 	}
+	
+	
+	@GetMapping("/movieSearch")
+	public String list(
+			Model model,
+			@ModelAttribute SearchVO searchVO
+			) throws Exception {	
 
+		SearchVO param = movieService.searchVO(searchVO);
+		model.addAttribute("searchVO",param);
+
+		return "movie/movieSearch";
+	}
+	
 	//무비차트
 	@GetMapping("/movieChart")
 	public String movieChart(Model model,

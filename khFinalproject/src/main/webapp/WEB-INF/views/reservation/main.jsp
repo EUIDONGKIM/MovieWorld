@@ -626,7 +626,9 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				var date = resp[i].scheduleTimeDateTime;
 				console.log("now",now);
 				console.log("date",date);
+				var count = 0;
 				if(date>now){
+					count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
@@ -662,6 +664,10 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				
 				$(".schedule-time-date-time-list").append(tag);
 				
+				}
+				
+				if(count==0){
+					$(".schedule-time-date-time-list").text("금일 상영 시간이 모두 지났습니다.");
 				}
 			}
 			
@@ -750,7 +756,7 @@ function getSeat(scheduleTimeNo){
 			
 			$(".seat-box").removeClass("container-1500").removeClass("container-1330")
 			.removeClass("container-1200").removeClass("container-1050").removeClass("container-915")
-			.removeClass("container-777").removeClass("container-628").removeClass("container-490")
+			.removeClass("container-777").removeClass("container-640").removeClass("container-490")
 			.removeClass("container-center");
 			
 			if(hallCols==10){
@@ -772,7 +778,7 @@ function getSeat(scheduleTimeNo){
 				$(".seat-box").addClass("container-777").addClass("container-center");
 			}
 			if(hallCols==4){
-				$(".seat-box").addClass("container-628").addClass("container-center");
+				$(".seat-box").addClass("container-640").addClass("container-center");
 			}
 			if(hallCols==3){
 				$(".seat-box").addClass("container-490").addClass("container-center");

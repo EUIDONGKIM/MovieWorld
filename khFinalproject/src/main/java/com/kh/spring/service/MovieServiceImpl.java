@@ -26,6 +26,7 @@ import com.kh.spring.vo.ChartVO;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
 import com.kh.spring.vo.PaginationMovieVO;
+import com.kh.spring.vo.SearchVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -444,6 +445,57 @@ public class MovieServiceImpl implements MovieService{
 			
 		}
 		return paginationMovieVO;
+	}
+
+	@Override
+	public SearchVO searchVO(SearchVO searchVO) throws Exception {
+		int count = movieDao.searchCount(searchVO.getKeyword());
+		searchVO.setCount(count);
+		searchVO.calculate();
+		List<MovieDto> movieList = movieDao.search(searchVO.getKeyword(),searchVO.getBegin(),searchVO.getEnd());
+				
+		List<ChartVO> vo = new ArrayList<>();
+		List<MovieChartVO> list = new ArrayList<>();
+		
+		int total = 0;
+		
+			vo = statisticsInfoViewDao.countForReservationRatio();
+			for(ChartVO chartVO : vo) {
+				total += chartVO.getCount();//총 예매 건수 합
+			}
+
+		
+		for(MovieDto movieDto : movieList) {
+			ChartVO checkStatus = totalInfoViewDao.checkStatus(movieDto.getMovieNo());
+			List<MoviePhotoDto> photoList = moviePhotoDao.getList(movieDto.getMovieNo()); 
+			MoviePhotoDto moviePhotoDto = photoList.get(0);
+			
+			MovieChartVO movieChartVO = new MovieChartVO();
+			movieChartVO.setMovieTitle(movieDto.getMovieTitle());
+			movieChartVO.setMovieGrade(movieDto.getMovieGrade());
+			movieChartVO.setMovieNo(movieDto.getMovieNo());
+			movieChartVO.setMovieOpening(movieDto.getMovieOpening());
+			movieChartVO.setMovieStarpoint(movieDto.getMovieStarpoint());
+			movieChartVO.setMoviePhotoNo(moviePhotoDto.getMoviePhotoNo());
+			movieChartVO.setCheckStatus(checkStatus.getText());
+				
+				for(ChartVO chartVO : vo) {
+					if(movieDto.getMovieTitle().equals(chartVO.getText())) {
+						float movieRatio = (float)chartVO.getCount() / (float)total * 100;
+						String num = String.format("%.2f" , movieRatio);
+						float changeToTwo = Float.parseFloat(num);
+						movieChartVO.setMovieRatio(changeToTwo);
+						break;
+						
+					}
+				}
+			
+			
+			list.add(movieChartVO);
+		}
+		searchVO.setList(list);
+		return searchVO;
+		
 	}
 
 }

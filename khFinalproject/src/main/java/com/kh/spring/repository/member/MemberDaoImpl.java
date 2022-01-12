@@ -50,6 +50,19 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto get3(String memberNick) {
 		return sqlSession.selectOne("member.get3",memberNick);
 	}
+	
+	@Override
+	public MemberDto get4(String memberEmail,String to) {
+		//맴버 이메일로 단일조회후 해당 
+		MemberDto findDto = sqlSession.selectOne("member.get",memberEmail);
+
+		if(findDto != null&& encoder.matches(to, findDto.getMemberPw())) {
+			return findDto;
+		}
+		else {//아니면 null을 반환
+			return null;
+		}
+	}
 
 	@Override
 	public MemberDto login(MemberDto memberDto) {
@@ -239,6 +252,8 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.countMemberjoinByYearMonth");
 
 	}
+
+
 
 
 

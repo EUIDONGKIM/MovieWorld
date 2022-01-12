@@ -32,4 +32,6 @@ public interface StatisticsInfoViewDao {
 
 	StatisticsInfoViewDto exist(int scheduleTimeNo);
 
+	StatisticsInfoViewDto isAvailableCancel(int reservationNo);
+
 }

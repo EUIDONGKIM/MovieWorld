@@ -17,10 +17,10 @@
             color:red;
             display: none;
         }
-        .form-input.success ~ span.success { 
+        .form-control.success ~ span.success { 
             display:block;
         }
-        .form-input.fail ~ span.fail {
+        .form-control.fail ~ span.fail {
             display: block;
         }
 </style>
@@ -38,47 +38,50 @@
 			} else{
 				return false;
 			}
-
+		});
+		//닉네임 정규표현식
+		$(function() {
+			$("input[name=memberNick]").on("blur", function() {
+				var regex = /^[가-힣]{2,17}$/;
+				var name = $(this).val();
+				$(this).removeClass("success").removeClass("fail");
+				if (regex.test(name)) {
+					$("input[name=memberNick]").addClass("success");
+					nickCheck(name);
+					$("#edit-btn").prop("disabled",false);
+				} else {
+					$("input[name=memberNick]").addClass("fail");
+					$("#edit-btn").prop("disabled",true);
+				}
+				//닉네임 중복검사식
+				function nickCheck(name){
+					$.ajax({
+						url:"${pageContext.request.contextPath}/member/nickCheck",
+						type : "get",
+						dataType : "text",
+						data : {
+							memberNick : name
+						},	
+						success:function(resp){
+							console.log(resp)
+							if(resp=="nonono"){		
+								$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
+								$("#edit-btn").prop("disabled",true);
+							}else{				
+								$("input[name=memberNick]").next().text("");
+								$("#edit-btn").prop("disabled",false);
+							}
+						},
+						error:function(e){
+							console.log("실패", e);
+						}
+					});
+				}
+			});
+			
 		});
 	});
 	
-	$(function() {
-		$("input[name=memberNick]").on("blur", function() {
-			var regex = /^[가-힣]{2,17}$/;
-			var name = $(this).val();
-			$(this).removeClass("success").removeClass("fail");
-			if (regex.test(name)) {
-				$("input[name=memberNick]").addClass("success");
-				nickCheck(name)
-				$("#join-btn").prop("disabled",false);
-			} else {
-				$("input[name=memberNick]").addClass("fail");
-				$("#join-btn").prop("disabled",true);
-			}
-		});
-		
-		function nickCheck(name){
-			$.ajax({
-				url:"${pageContext.request.contextPath}/member/nickCheck",
-				type : "get",
-				dataType : "text",
-				data : {
-					memberNick : name
-				},	
-				success:function(resp){
-					console.log(resp)
-					if(resp=="nonono"){		
-						$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
-					}else{				
-						$("input[name=memberNick]").next().text("");
-					}
-				},
-				error:function(e){
-					console.log("실패", e);
-				}
-			});
-		}
-	});
 	
 </script>
 <div class="container-700 container-center">
@@ -151,7 +154,7 @@
 				
 						<tr>
 							<td colspan="2" align="right">
-								<input type="submit" value="수정" class="btn btn-info">
+								<input type="submit" value="수정" class="btn btn-info" disabled id="edit-btn">
 							</td>
 						</tr>
 						<c:if test="${admin}">
