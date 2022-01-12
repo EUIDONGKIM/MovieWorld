@@ -101,8 +101,7 @@ public class MemberController {
 		
 		MemberDto findDto = memberDao.login(memberDto);
 		
-		System.out.println("-------------");
-		System.err.println(findDto);
+
 		if(findDto !=null) {
 		
 		 session.setAttribute("memberNo", findDto.getMemberNo());
