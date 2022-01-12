@@ -27,6 +27,14 @@
 	}
 	
 	/*별점 */
+	.content-box {
+	  box-sizing: content-box;
+	  /* Total width: 160px + (2 * 20px) + (2 * 8px) = 216px
+	     Total height: 80px + (2 * 20px) + (2 * 8px) = 136px
+	     Content box width: 160px
+	     Content box height: 80px */
+	}
+	
 	.star-rating {
 	/*   border:solid 1px #ccc; */
 	  display:flex;
@@ -686,9 +694,9 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<div class="row center">
-						<div style="display: inline-block; float:center">
-							<div class="star-rating">
+						<div class="content-box">
+						
+							<div class="star-rating" >
 				    			<input type="radio" id="5-stars" name="starPoint" value="5" checked/>
 				    			<label for="5-stars" class="star">&#9733;</label>
 				    			<input type="radio" id="4-stars" name="starPoint" value="4" />
@@ -700,7 +708,7 @@
 				    			<input type="radio" id="1-star" name="starPoint" value="1" />
 				    			<label for="1-star" class="star">&#9733;</label>
 				  			</div>
-		 				</div>
+		 				
 		 				</div>
 						<textarea type="text" id="reviewContent" name="reviewContent"
 							required rows="4" cols="58" style="resize: none;" placeholder="실관람평을 남겨주세요."></textarea>
@@ -726,7 +734,7 @@
 			</div>
 				
 			
-	</div>
+
 			
 			
 
