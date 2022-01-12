@@ -57,7 +57,7 @@ $(function(){
 });
 </script>
 
-<div class="container-600 container-center"> 
+<div class="container-600 mx-auto"> 
 
 <h1>극장 생성</h1>
 

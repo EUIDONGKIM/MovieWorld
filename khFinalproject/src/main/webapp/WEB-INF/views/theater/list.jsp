@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	.b {
 		border : 1px solid black;
 	}
 </style>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
@@ -32,13 +32,9 @@
 					for(var i = 0 ; i < resp.length ; i++){
 						//여기 고쳐야함
 						var html = 
-// 						"<div class='col'>"+
-							"<ul>"+
-								"<li>"+	
-									"<a class='btn btn-outline-info btn-lg' href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a>"+
-								"</li>"+	
-							"</ul>" 
-// 						"</div>"	
+ 						"<div class='col-3 p-1'>"+
+							"<a class='btn btn btn-outline-primary w-100' href='detail?theaterNo="+resp[i].theaterNo+"'>"+resp[i].theaterName+"</a>"+
+ 						"</div>"	
 						$(".result").append(html);
 					}
 					
@@ -53,24 +49,26 @@
 
 
 <div class="container">
-	<div class="row">
+	<div class="row my-3">
 		<h1>전체 극장</h1>
 	</div>
-	<div class="row bg-light border-5">
 	
+	<hr> 
+	
+	<div class="row">
 		<c:forEach var="theaterCityVO" items="${cityList}">
-			 <div class="col">
-					<a class="city btn btn-outline-info" role="button" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
+			 <div class="col-3 p-1">
+				<a class="city btn btn btn-outline-primary w-100" role="button" data-city="${theaterCityVO.theaterSido}">${theaterCityVO.theaterSido}</a>
 			 </div>
 		</c:forEach>
-	<br><br>
+	</div>
+
 	<hr>
 
-	<div class="row  result">
+	<div class="result row">
 	
 	</div>
 	
-	</div>
 
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
