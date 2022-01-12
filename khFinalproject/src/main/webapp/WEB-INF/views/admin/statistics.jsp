@@ -16,7 +16,7 @@ height: 900px !important;
 	$(function(){
 		//시작하자마자 통계자료를 불러와서 화면에 출력
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalReservation",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalReservation",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -33,7 +33,7 @@ height: 900px !important;
 	$(function(){
 		//시작하자마자 통계자료를 불러와서 화면에 출력
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalPeople",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalPeople",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -50,7 +50,7 @@ height: 900px !important;
 	$(function(){
 		//시작하자마자 통계자료를 불러와서 화면에 출력
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalProfit",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalProfit",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -69,7 +69,7 @@ height: 900px !important;
 	$(function(){
 		//시작하자마자 통계자료를 불러와서 화면에 출력
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countByGenderForTotal",
+			url:"${pageContext.request.contextPath}/admin/statistics/countByGenderForTotal",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -86,7 +86,7 @@ height: 900px !important;
 	$(function(){
 		//시작하자마자 통계자료를 불러와서 화면에 출력
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalReservationByTheater",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalReservationByTheater",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -101,7 +101,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalProfitByTheater",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalProfitByTheater",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -116,7 +116,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/totalPeopleByTheater",
+			url:"${pageContext.request.contextPath}/admin/statistics/totalPeopleByTheater",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -132,7 +132,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countByAgeForTotal",
+			url:"${pageContext.request.contextPath}/admin/statistics/countByAgeForTotal",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -147,7 +147,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countByGradeTotal",
+			url:"${pageContext.request.contextPath}/admin/statistics/countByGradeTotal",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -162,7 +162,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countByGradeReservation",
+			url:"${pageContext.request.contextPath}/admin/statistics/countByGradeReservation",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -177,7 +177,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countByGradePoint",
+			url:"${pageContext.request.contextPath}/admin/statistics/countByGradePoint",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -192,7 +192,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countMemberjoinByYear",
+			url:"${pageContext.request.contextPath}/admin/statistics/countMemberjoinByYear",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -207,7 +207,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countMemberjoinByYearMonth",
+			url:"${pageContext.request.contextPath}/admin/statistics/countMemberjoinByYearMonth",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -222,7 +222,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countPeopleBySido",
+			url:"${pageContext.request.contextPath}/admin/statistics/countPeopleBySido",
 			type:"get",
 			//data:{},
 			dataType:"json",
@@ -237,7 +237,7 @@ height: 900px !important;
 	
 	$(function(){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/countReservationBySido",
+			url:"${pageContext.request.contextPath}/admin/statistics/countReservationBySido",
 			type:"get",
 			//data:{},
 			dataType:"json",

@@ -761,7 +761,7 @@ function getHallRowsAndCols(scheduleTimeNo){
 
 function getSeat(scheduleTimeNo){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/seat",
+		url:"${pageContext.request.contextPath}/member/seat",
 		type:"get",
 		data : {
 			scheduleTimeNo:scheduleTimeNo
@@ -856,7 +856,7 @@ function getSeat(scheduleTimeNo){
 			
 function getReservationKey(){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/getReservationKey",
+		url:"${pageContext.request.contextPath}/member/getReservationKey",
 		type:"get",
 		dataType : "text",
 		success:function(resp){
@@ -873,7 +873,7 @@ function getReservationKey(){
 
 function TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/TempReservation",
+		url:"${pageContext.request.contextPath}/member/TempReservation",
 		type:"post",
 		data : {
 			seatData:seatData,
@@ -897,7 +897,7 @@ function TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYou
 
 function getReservation(reservationKey){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/getReservation",
+		url:"${pageContext.request.contextPath}/member/getReservation",
 		type:"get",
 		data : {
 			reservationKey:reservationKey
@@ -926,7 +926,7 @@ function getReservation(reservationKey){
 
 function getReservationDetail(reservationKey){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/getReservationDetail",
+		url:"${pageContext.request.contextPath}/member/getReservationDetail",
 		type:"get",
 		data : {
 			reservationKey:reservationKey
@@ -954,7 +954,7 @@ function getReservationDetail(reservationKey){
 
 function cancelTempReservation(reservationKey){
 	$.ajax({
-		url:"${pageContext.request.contextPath}/data/cancelTempReservation?"+$.param({"reservationNo":reservationKey}),
+		url:"${pageContext.request.contextPath}/member/cancelTempReservation?"+$.param({"reservationNo":reservationKey}),
 		type:"delete",
 		dataType:"text",
 		success:function(resp){

@@ -35,7 +35,7 @@
         });
         function checkSameTime(scheduleNo,hallNo,scheduleTimefirst){
         	$.ajax({
-				url:"${pageContext.request.contextPath}/data/checkSameTime",
+				url:"${pageContext.request.contextPath}/admin/checkSameTime",
 				type:"get",
 				data:{
 					scheduleNo:scheduleNo,
