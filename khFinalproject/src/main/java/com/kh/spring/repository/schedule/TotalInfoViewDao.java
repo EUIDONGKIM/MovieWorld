@@ -19,4 +19,5 @@ public interface TotalInfoViewDao {
 	ChartVO checkStatus(int movieNo);
 	int nowMoiveListCount();
 	List<Integer> nowMoiveListSearch(int begin, int end);
+	List<Integer> soonMovieList();
 }
