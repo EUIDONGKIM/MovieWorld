@@ -14,6 +14,8 @@ public interface MemberDao {
 	MemberDto get2(int memberNo);
 	//닉네임 확인용 단일조회
 	MemberDto get3(String memberNick);
+	//비밀번호 조회용
+	MemberDto get4(String memberEmail,String to);
 	//로그인
 	MemberDto login(MemberDto memberDto);
 	//포인트 조회

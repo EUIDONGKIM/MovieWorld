@@ -6,7 +6,6 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,6 +75,18 @@ public class MemberDataCotroller {
 		if(certificationDao.check(certificationDto)) result = "NNNNO";
 		else result = "NNNNN";
 		return result;
+	}
+	
+	@GetMapping("/pwCheck")
+	public String pwCheck(@RequestParam String to,HttpSession session) {
+		String memberEmail = (String)session.getAttribute("ses");
+		MemberDto findDto = memberDao.get4(memberEmail,to);
+		
+		if(findDto !=null) {
+			return "gogo";
+		}else {
+			return "nono";
+		}
 	}
 	
 	@PostMapping("/emailSend")
