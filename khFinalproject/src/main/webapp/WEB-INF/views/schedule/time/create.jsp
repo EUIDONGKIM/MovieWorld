@@ -67,46 +67,96 @@
 	<input type="hidden" name="scheduleTimeDiscountType" value="{{type}}">
 </template>
 
-<h1> 상영 영화 생성 </h1>
-<h2>영화명 :${totalInfoViewDto.movieTitle }</h2>
-<h2>극장명 :${totalInfoViewDto.theaterName } </h2>
-<h2>상영 시작일 :${totalInfoViewDto.scheduleStart } </h2>
-<h2>상영 종료일 :${totalInfoViewDto.scheduleEnd } </h2>
-<form method="post">
-	<input type="hidden" name="scheduleNo" value="${totalInfoViewDto.scheduleNo }">
-	
-	<div class="row">
-		<label>상영관 선택</label>
-		<select name="hallNo" required>
-			<option value="">상영관 선택</option>
-				<c:forEach var="hallDto" items="${hallList}">
-					<option value="${hallDto.hallNo}">${hallDto.hallName} / ${hallDto.hallType}</option>
-				</c:forEach>
-		</select>
+<div class="container-600 container-center">
+	<div class="row center">
+		<div class="col">
+			<h1> 상영 영화 생성 </h1>
+		</div>
 	</div>
 	
- 	<div class="row">
-		<label>상영일/시간 선택</label>
-		<input type="datetime-local" name="scheduleTimeDateTime" required min="${totalInfoViewDto.getNowDateToString() }" max="${totalInfoViewDto.getEndDateToString()}"
-		pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required>
+	<div class="row">
+		<div class="col">
+			<h4>영화명 :${totalInfoViewDto.movieTitle }</h4>
+		</div>
 	</div>
 	
+	<div class="row">
+		<div class="col">
+			<h4>극장명 :${totalInfoViewDto.theaterName } </h4>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<h4>상영 시작일 :${totalInfoViewDto.scheduleStart } </h4>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<h4>상영 종료일 :${totalInfoViewDto.scheduleEnd } </h4>
+		</div>
+	</div>
+	<form method="post">
+	<div class="row">
+		<div class="col">
+			<input type="hidden" name="scheduleNo" value="${totalInfoViewDto.scheduleNo }">
+		</div>
+	</div>
 	
 	<div class="row">
-		<label>상영 구분</label>
-		<select name="scheduleTimeDiscountPrice" required>
-					<option value="">상영 구분 선택</option>
-				<c:forEach var="scheduleTimeDiscountDto" items="${scheduleTimeDiscountList}">
-					<option value="${scheduleTimeDiscountDto.scheduleTimeDiscountPrice}" data-type="${scheduleTimeDiscountDto.scheduleTimeDiscountType}">
-					${scheduleTimeDiscountDto.scheduleTimeDiscountType}
-					</option>
-				</c:forEach>
-		</select>
+		<div class="col-3">
+			<label>상영관 선택</label>
+		</div>
+		<div class="col">
+			<select name="hallNo" required  class="form-control">
+				<option value="">상영관 선택</option>
+					<c:forEach var="hallDto" items="${hallList}">
+						<option value="${hallDto.hallNo}">${hallDto.hallName} / ${hallDto.hallType}</option>
+					</c:forEach>
+			</select>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-3">
+			<label>상영일/시간 선택</label>
+		</div>
+		<div class="col">
+				<input type="datetime-local" name="scheduleTimeDateTime"  min="${totalInfoViewDto.getNowDateToString() }" max="${totalInfoViewDto.getEndDateToString()}"
+				pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required class="form-control" >
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-3">
+			<label>상영 구분</label>
+		</div>
+		<div class="col">
+			<select name="scheduleTimeDiscountPrice" required class="form-control">
+						<option value="">상영 구분 선택</option>
+					<c:forEach var="scheduleTimeDiscountDto" items="${scheduleTimeDiscountList}">
+						<option value="${scheduleTimeDiscountDto.scheduleTimeDiscountPrice}" data-type="${scheduleTimeDiscountDto.scheduleTimeDiscountType}">
+						${scheduleTimeDiscountDto.scheduleTimeDiscountType}
+						</option>
+					</c:forEach>
+			</select>
+		</div>
 	</div>
 	
 	<div id="send-type-hidden"></div>
 	
-	<button type="submit">상영 생성</button>
-</form>
+	<div class="row">
+	<button type="submit" class="btn btn-info">상영 생성</button>
+	</div>
+	
+	</form>
+</div>
+
+
+	
+
+	
+ 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
