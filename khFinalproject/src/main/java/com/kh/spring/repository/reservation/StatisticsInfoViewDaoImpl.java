@@ -79,5 +79,10 @@ public class StatisticsInfoViewDaoImpl implements StatisticsInfoViewDao {
 	public StatisticsInfoViewDto exist(int scheduleTimeNo) {
 		return sqlSession.selectOne("statisticsInfoView.exist",scheduleTimeNo);
 	}
+
+	@Override
+	public StatisticsInfoViewDto isAvailableCancel(int reservationNo) {
+		return sqlSession.selectOne("statisticsInfoView.isAvailableCancel",reservationNo);
+	}
 	
 }

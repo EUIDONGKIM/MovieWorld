@@ -47,6 +47,7 @@
 	<select id="get3" parameterType="String" resultType="MemberDto">
 		select * from member where member_nick = #{memberNick}		
 	</select>
+	
 	<!-- 아이디찾기 -->
 	<select id="findId" parameterType="map" resultType="MemberDto">
 		select member_email from member where member_name=#{memberName} and member_phone=#{memberPhone}
