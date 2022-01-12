@@ -88,7 +88,7 @@
 		select count(*) from reservation
         join member using(member_no)
         <where>
-			<if test="column != null and keyword != null">	
+			<if test="column != null and column != '' and keyword != null and keyword != ''">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
 		</where>
@@ -97,10 +97,10 @@
 	<select id="serach" parameterType="map" resultType="ReservationListVO">
 		select * from (
 		select rownum rn, tmp.* from(
-		select reservation_no,member_no,member_name,tid,buy_time,reservation_total_number,total_amount,reservation_status from reservation
+		select reservation_no,member_no,member_phone,member_name,tid,buy_time,reservation_total_number,total_amount,reservation_status from reservation
         join member using(member_no)
 		<where>
-			<if test="column != null and keyword != null">	
+			<if test="column != null and column != '' and keyword != null and keyword != ''">	
 			 and instr(${column},#{keyword}) > 0
 			</if>
 		</where>

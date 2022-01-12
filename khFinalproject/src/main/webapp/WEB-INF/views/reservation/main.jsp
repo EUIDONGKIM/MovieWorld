@@ -626,7 +626,9 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				var date = resp[i].scheduleTimeDateTime;
 				console.log("now",now);
 				console.log("date",date);
+				var count = 0;
 				if(date>now){
+					count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
@@ -662,6 +664,10 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				
 				$(".schedule-time-date-time-list").append(tag);
 				
+				}
+				
+				if(count==0){
+					$(".schedule-time-date-time-list").text("금일 상영 시간이 모두 지났습니다.");
 				}
 			}
 			

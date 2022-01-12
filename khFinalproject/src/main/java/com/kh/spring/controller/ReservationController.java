@@ -18,6 +18,7 @@ import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
+import com.kh.spring.entity.reservation.StatisticsInfoViewDto;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.HistoryDao;
@@ -27,6 +28,7 @@ import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
+import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
@@ -75,7 +77,8 @@ public class ReservationController {
 	private HistoryDao historyDao;
 	@Autowired
 	private ReservationService reservationService;
-
+	@Autowired
+	private StatisticsInfoViewDao statisticsInfoViewDao;
 	
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
@@ -179,6 +182,7 @@ public class ReservationController {
 		@GetMapping("/history_detail")
 		public String historyDetail(
 				@RequestParam int reservationNo,
+				@RequestParam(required = false) String error,
 				Model model
 				) throws URISyntaxException {
 			ReservationDto reservationDto = reservationDao.get(reservationNo);
@@ -186,7 +190,9 @@ public class ReservationController {
 			KakaoPaySearchResponseVO responseVO = kakaoPayService.search(reservationDto.getTid());
 			int resultAmount = (int) (reservationDto.getTotalAmount() - reservationDto.getPointUse());
 			
-
+			if(error != null) {
+				model.addAttribute("error",error);
+			}
 			model.addAttribute("reservationDto",reservationDto);
 			model.addAttribute("rList",rList);
 			model.addAttribute("responseVO",responseVO);
@@ -197,12 +203,18 @@ public class ReservationController {
 		
 		@GetMapping("/cancel")
 		public String cancel(@RequestParam int reservationNo) throws URISyntaxException {
-			ReservationDto reservationDto = reservationDao.get(reservationNo);
-			int memberNo = reservationDto.getMemberNo();
-			reservationService.cancel(reservationNo,memberNo);
+			StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.isAvailableCancel(reservationNo);
 			
+			if(statisticsInfoViewDto == null) {
+				return "redirect:history_detail?error=T&reservationNo="+reservationNo;
+			}else {				
+				ReservationDto reservationDto = reservationDao.get(reservationNo);
+				int memberNo = reservationDto.getMemberNo();
+				reservationService.cancel(reservationNo,memberNo);
+				
 //			return "redirect:history_detail";
-			return "redirect:success_result?reservationNo="+reservationNo;
+				return "redirect:history_detail?reservationNo="+reservationNo;
+			}
 		}
 		
 }

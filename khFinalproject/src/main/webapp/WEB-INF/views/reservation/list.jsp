@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -12,36 +14,56 @@
 </script>
 <div class="container">
 	<div class="row center">
-		<h2>예매 관리 리스트</h2>
+		<h2>[예매 관리 리스트]</h2>
 	</div>
-	
+	<br><br>
 	<!-- 검색창시작 -->
 	<div class="row justify-content-md-center">
 	 <div class="row center">
-	 <form method="get">
+	 <div class="col-4">
+	 </div>
+	  <div class="col-4">
+	 
+	 <form method="get" class="d-flex">
 	
 			<select name="column" class="form-input form-inline">
 				<c:choose>		
 					<c:when test="${paginationVO.columnIs('reservation_no')}">
 						<option value="">선택</option>
 						<option value="reservation_no" selected>예약번호</option>
+						<option value="tid">tid</option>
 						<option value="member_name">회원명</option>
 					</c:when>
-					
-					<c:otherwise>
+					<c:when test="${paginationVO.columnIs('tid')}">
 						<option value="">선택</option>
 						<option value="reservation_no">예약번호</option>
+						<option value="tid" selected>tid</option>
+						<option value="member_name">회원명</option>
+					</c:when>
+					<c:when test="${paginationVO.columnIs('member_name')}">
+						<option value="">선택</option>
+						<option value="reservation_no">예약번호</option>
+						<option value="tid">tid</option>
 						<option value="member_name" selected>회원명</option>
+					</c:when>
+					<c:otherwise>
+						<option value="" selected>선택</option>
+						<option value="reservation_no">예약번호</option>
+						<option value="tid">tid</option>
+						<option value="member_name">회원명</option>
 					</c:otherwise>
 				</c:choose>
 			</select>
 			
-			<input type="search" name="keyword" placeholder="검색어 입력" required 
+			<input type="search" name="keyword" placeholder="검색어 입력"
 					value="${paginationVO.keyword}" class="form-input form-inline">
 			
 			<input type="submit" value="검색" class="form-btn form-inline">
 			
 		</form>
+		</div>
+		 <div class="col-4">
+	 	</div>
 		</div>
 	</div>
 
@@ -52,7 +74,8 @@
 		<tr>
 			<th>예매 번호</th>
 			<th>회원 번호</th>		
-			<th>회원 이름</th>		
+			<th>회원 이름</th>	
+			<th>전화번호</th>	
 			<th>tid</th>		
 			<th>예약시간</th>
 			<th>인원</th>
@@ -62,17 +85,23 @@
 			<td>관리 메뉴</td>
 		</tr>
 	</thead>
-	
 	<tbody>
 		<c:forEach var="reservationListVO" items="${paginationVO.list}">
 			<tr>
 				<td>${reservationListVO.reservationNo}</td>
-				<td>${reservationListVO.memberNo}</td>
+				<td>
+				<a href="${root}/admin/memberlist?column=member_no&keyword=${reservationListVO.memberNo}">
+					${reservationListVO.memberNo}
+				</a>
+				</td>
 				<td>${reservationListVO.memberName}</td>
+				<td>${reservationListVO.memberPhone}</td>
 				<td>${reservationListVO.tid}</td>
 				<td>${reservationListVO.buyTime}</td>
-				<td>${reservationListVO.reservationTotalNumber}</td>
-				<td>${reservationListVO.totalAmount}</td>
+				<td>${reservationListVO.reservationTotalNumber} 명</td>
+				<td>
+					<fmt:formatNumber value="${reservationListVO.totalAmount}" pattern="#,###" /> 원
+				</td>
 				<td>${reservationListVO.reservationStatus}</td>
 				<td>
 					<button class="btn btn-outline-dark" onclick="location.href='${root}/reservation/history_detail?reservationNo=${reservationListVO.reservationNo}'">상세</button>
