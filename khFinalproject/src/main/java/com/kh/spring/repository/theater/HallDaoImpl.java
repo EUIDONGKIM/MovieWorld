@@ -64,5 +64,10 @@ public class HallDaoImpl implements HallDao{
 	public void delete(int hallNo) {
 		sqlSession.delete("hall.delete",hallNo);
 	}
+
+	@Override
+	public void edit(HallDto hallDto) {
+		sqlSession.update("hall.edit",hallDto);
+	}
 	
 }
