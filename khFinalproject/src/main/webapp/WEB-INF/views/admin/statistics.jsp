@@ -229,7 +229,7 @@ height: 900px !important;
 			success:function(resp){
 				console.log("성공", resp);
 				
-				draw1("#countPeoPleBySido", resp);
+				draw2("#countPeoPleBySido", resp);
 			},
 			error:function(e){}
 		});
@@ -393,77 +393,80 @@ height: 900px !important;
 		<h1> 통계 페이지 </h1>
 	</div>
 	<div class="row ">
-			<h1>영화 예매율(예약 건임) 순위</h1>=>통계 view
+			<h1>[영화별 예매율 순위]</h1>
 			<canvas id="totalReservation" width="400" height="400"></canvas>
 	</div>
->	
+	
 	<div class="row">
-			<h1>영화 관람객별 순위</h1> => last info view로 해결
+			<h1>[영화별 관람객별 순위]</h1>
 			<canvas id="totalPeople" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-			<h1>영화 별 매출 순위</h1> => last info view로 해결
+			<h1>[영화별 매출 순위]</h1>
 			<canvas id="totalProfit" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>전체 영화 성별 예매 순위</h1>
+		<h1>[전체 영화별 성별 예매 순위]</h1>
 		<canvas id="countByGenderForTotal" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>영화별 연령 분포</h1> =>통계 view
+		<h1>[전체 영화별 연령 분포]</h1>
 		<canvas id="countByAgeForTotal" width="400" height="400"></canvas>
 	</div>
-	
+	<hr>
+	<hr>
 	<div class="row">
-		<h1>지점별 예매율(판매율) 순위</h1> =>통계 view
+		<h1>[지점별 예매율(판매율) 순위]</h1>
 		<canvas id="totalReservationByTheater" width="400" height="400"></canvas>
 	</div>
 
 	<div class="row">
-		<h1>지점별 영화 매출 현황</h1> => last info view로 해결
+		<h1>[지점별 영화 매출 현황]</h1>
 		<canvas id="totalProfitByTheater" width="400" height="400"></canvas>
 	</div>
-	
+	<hr>
+	<hr>
 	<div class="row">
-		<h1>회원관리</h1>
+		<h1>✿ 회원관리 ✿</h1>
 	</div>
 	
 	<div class="row">
-		<h1>등급별 분포도</h1>
+		<h1>[등급별 분포도]</h1>
 		<canvas id="countByGradeTotal" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>등급별 예매율</h1>
+		<h1>[등급별 예매율]</h1>
 		<canvas id="countByGradeReservation" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>등급별 포인트 비율</h1>
+		<h1>[등급별 포인트 비율]</h1>
 		<canvas id="countByGradePoint" width="400" height="400"></canvas>
 	</div>
-	
+	<hr>
+	<hr>
 	<div class="row">
-		<h1>연도별 가입자 수 통계</h1>
+		<h1>[연도별 가입자 수 통계]</h1>
 		<canvas id="countMemberjoinByYear" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>연도별 월별 가입자 수 통계</h1>
+		<h1>[연도별 월별 가입자 수 통계]</h1>
 		<canvas id="countMemberjoinByYearMonth" width="400" height="400"></canvas>
 	</div>
-
-
+	<hr>
+	<hr>
 	<div class="row">
-		<h1>영화 시도 별 예매순</h1>
+		<h1>[영화 시도 별 예매순]</h1>
 		<canvas id="countReservationBySido" width="400" height="400"></canvas>
 	</div>
 	
 	<div class="row">
-		<h1>영화 시도 별 관람객</h1>
+		<h1>[영화 시도 별 관람객]</h1>
 		<canvas id="countPeoPleBySido" width="400" height="400"></canvas>
 	</div>
 	

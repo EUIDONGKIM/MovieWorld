@@ -1,18 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <h1>대표 결제 정보</h1>
 
 <ul>
-	<li>고유번호 : ${reservationDto.reservationNo}</li>
+	<li>예매번호 : ${reservationDto.reservationNo}</li>
 	<li>거래번호 : ${reservationDto.tid}</li>
 	<li>거래명 : ${reservationDto.itemName}</li>
-	<li>예매금액 : ${reservationDto.totalAmount}</li>
-	<li>포인트 사용 금액 : ${reservationDto.pointUse}</li>
-	<li>총 결제 금액 : ${resultAmount}</li>
+	<li>예매금액 : <fmt:formatNumber value="${reservationDto.totalAmount }" pattern="#,###" /> 원</li>
+	<li>포인트 사용 금액 : <fmt:formatNumber value="${reservationDto.pointUse }" pattern="#,###" /> 점</li>
+	<li>총 결제 금액 : <fmt:formatNumber value="${resultAmount}" pattern="#,###" /> 원</li>
 	<li>거래시각 : ${reservationDto.buyTime}</li>
 </ul>
 	<c:choose>
@@ -23,6 +25,14 @@
 			<h2>취소 할수 없는 상태입니다</h2>
 		</c:otherwise>
 	</c:choose>
+	
+	<c:if test="${param.error != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">상영 시간이 지나서 취소 할수 없는 상태입니다.</h4>
+			</div>
+		</div>
+	</c:if>
 <hr>
 
 <ul>
@@ -34,13 +44,13 @@
 		<br>
 		연령 구분 : ${reservationDetailDto.ageName}
 		<br>
-		연령 할인  : ${reservationDetailDto.ageDiscountPrice}
+		연령 할인  : <fmt:formatNumber value="${reservationDetailDto.ageDiscountPrice}" pattern="#,###" /> 원
 		<br>
 		상영 구분 : ${reservationDetailDto.scheduleTimeDiscountType}
 		<br>
-		상영 할인 : ${reservationDetailDto.scheduleTimeDiscountPrice} 
+		상영 할인 : <fmt:formatNumber value="${reservationDetailDto.scheduleTimeDiscountPrice}" pattern="#,###" /> 원
 		<br>
-		총 금액 : ${reservationDetailDto.reservationDetailPrice}
+		총 금액 : <fmt:formatNumber value="${reservationDetailDto.reservationDetailPrice}" pattern="#,###" /> 원
 		</li>
 </c:forEach>
 </ul>
@@ -65,7 +75,7 @@
 		<li>canceled_at : ${responseVO.canceled_at}</li>
 		<li>selected_card_info : ${responseVO.selected_card_info}</li>
 		<li>
-			payment_action_detail : ${responseVO.payment_action_details}
+			payment_action_detail :
 			<ul>
 				<c:forEach var="detail" items="${responseVO.payment_action_details}">
 				<li>${detail}</li>
