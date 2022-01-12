@@ -308,7 +308,7 @@
 <hr>
 
 <h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
-	<a href="${root}/hall/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
+	<a href="${root}/theater/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
 	<a href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
 	
 	<div>
