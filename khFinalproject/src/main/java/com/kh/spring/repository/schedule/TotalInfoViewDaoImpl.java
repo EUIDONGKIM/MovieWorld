@@ -75,6 +75,10 @@ public class TotalInfoViewDaoImpl implements TotalInfoViewDao{
 		
 		return sqlSession.selectList("totalInfoView.nowMoiveListSearch",param);
 	}
+	@Override
+	public List<Integer> soonMovieList() {
+		return sqlSession.selectList("totalInfoView.soonMovieList");
+	}
 	
 	
 }
