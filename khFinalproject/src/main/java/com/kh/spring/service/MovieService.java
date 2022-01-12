@@ -12,6 +12,7 @@ import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
 import com.kh.spring.vo.PaginationMovieVO;
+import com.kh.spring.vo.SearchVO;
 
 public interface MovieService {
 
@@ -29,5 +30,7 @@ public interface MovieService {
 	List<MovieChartVO> getChartList(List<Integer> movieNoList, int order);
 
 	PaginationMovieVO pageSearchVO(PaginationMovieVO paginationMovieVO) throws Exception;
+
+	SearchVO searchVO(SearchVO searchVO) throws Exception;
 
 }

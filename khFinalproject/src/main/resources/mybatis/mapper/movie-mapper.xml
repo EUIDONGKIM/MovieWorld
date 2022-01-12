@@ -38,7 +38,28 @@
 		)
 	</insert>
 	
-
+	<select id="searchCount" parameterType="String" resultType="int">
+		select count(*) from movie
+        <where>
+			<if test="keyword != null and keyword != ''">	
+			 and instr(movie_title,#{keyword}) > 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="search" parameterType="map" resultType="MovieDto">
+		select * from (
+		select rownum rn, tmp.* from(
+		select * from movie
+		<where>
+			<if test="keyword != null and keyword != ''">	
+			 and instr(movie_title,#{keyword}) > 0
+			</if>
+		</where>
+		order by movie_no desc
+		)tmp) where rn between #{begin} and #{end}
+	</select>
+	
 	<select id="list" resultType="MovieDto">
 		select * from movie
 	</select>

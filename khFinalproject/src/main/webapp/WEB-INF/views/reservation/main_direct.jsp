@@ -817,7 +817,7 @@ function getSeat(scheduleTimeNo){
 			
 			$(".seat-box").removeClass("container-1500").removeClass("container-1330")
 			.removeClass("container-1200").removeClass("container-1050").removeClass("container-915")
-			.removeClass("container-777").removeClass("container-628").removeClass("container-490")
+			.removeClass("container-777").removeClass("container-640").removeClass("container-490")
 			.removeClass("container-center");
 			
 			if(hallCols==10){
@@ -839,7 +839,7 @@ function getSeat(scheduleTimeNo){
 				$(".seat-box").addClass("container-777").addClass("container-center");
 			}
 			if(hallCols==4){
-				$(".seat-box").addClass("container-628").addClass("container-center");
+				$(".seat-box").addClass("container-640").addClass("container-center");
 			}
 			if(hallCols==3){
 				$(".seat-box").addClass("container-490").addClass("container-center");
