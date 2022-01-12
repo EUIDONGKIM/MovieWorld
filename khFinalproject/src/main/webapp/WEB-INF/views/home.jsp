@@ -44,6 +44,7 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+<!-- 슬라이더 배너 끝 -->
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
