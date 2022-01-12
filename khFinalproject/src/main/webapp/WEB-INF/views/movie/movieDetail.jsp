@@ -671,7 +671,7 @@
 				<div class="col-10" style="padding: 5px;">
 					<label
 						style="border: solid 1px; border-radius: 12px; border-block-color: gray; padding: 2; padding: 7px;">
-						{{memberNick}} 님 ${movieDto.movieTitle}재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요. 
+						${{memberNick}} 님 ${movieDto.movieTitle}재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요. 
 						관람일 기준 7일 이내 등록시 50p가 적립됩니다. 포인트는 관람평 최대 10편 지급가능합니다.
 					</label>
 				</div>
