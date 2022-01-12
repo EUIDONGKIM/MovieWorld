@@ -172,7 +172,7 @@
 	<input type="text" name="ageName" placeholder="연령대">
 	<input type="text" name="ageDiscountPrice" placeholder="할인 금액">
 	<button type="submit">등록</button>
-	<a href="#" class="add-cancel-btn">취소</a>
+	<button type="button" class="add-cancel-btn">취소</button>
 </form>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

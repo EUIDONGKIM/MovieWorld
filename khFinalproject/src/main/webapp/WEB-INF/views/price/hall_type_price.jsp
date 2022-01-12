@@ -12,39 +12,39 @@ $(function(){
 	
 	$(".add-btn").click(function(){
 		$("#insert").show();
-		//#insert-form이 전송되면 전송 못하게 막고 ajax로 insert
-		$("#insert-form").submit(function(e){
-			//this == #insert-form
-			e.preventDefault();
-			
-			var dataValue = $(this).serialize();
-			
-			$.ajax({
-				url:"${root}/price/insertHallTypePrice",
-				type:"post",
-				data : dataValue,
-				//dataType 없음
-				success:function(resp){
-					console.log("추가 성공", resp);
-					
-					//주의 : this 는 form이 아니다(this는 함수를 기준으로 계산)
-					//jQuery는 reset() 명령이 없어서 get(0)으로 javascript 객체로 변경
-					//$("#insert-form").get(0).reset();
-					$("#insert-form")[0].reset();
-					
-					//성공하면 목록 갱신
-					$("#insert").hide();
-					loadList();
-				},
-				error:function(e){
-					console.log("실패", e);
-				}
-			});
-		});
 	});
-	
 	$(".add-cancel-btn").click(function(){
 		$("#insert").hide();
+	});
+	
+	//#insert-form이 전송되면 전송 못하게 막고 ajax로 insert
+	$("#insert-form").submit(function(e){
+		//this == #insert-form
+		e.preventDefault();
+		
+		var dataValue = $(this).serialize();
+		
+		$.ajax({
+			url:"${root}/price/insertHallTypePrice",
+			type:"post",
+			data : dataValue,
+			//dataType 없음
+			success:function(resp){
+				console.log("추가 성공", resp);
+				
+				//주의 : this 는 form이 아니다(this는 함수를 기준으로 계산)
+				//jQuery는 reset() 명령이 없어서 get(0)으로 javascript 객체로 변경
+				//$("#insert-form").get(0).reset();
+				$("#insert-form")[0].reset();
+				
+				//성공하면 목록 갱신
+				$("#insert").hide();
+				loadList();
+			},
+			error:function(e){
+				console.log("실패", e);
+			}
+		});
 	});
 
 });
@@ -173,7 +173,7 @@ $(function(){
 	<input type="text" name="hallType" placeholder="상영관 종류">
 	<input type="text" name="hallPrice" placeholder="기본 금액">
 	<button type="submit">등록</button>
-	<a href="#" class="add-cancel-btn">취소</a>
+	<button type="button" class="add-cancel-btn">취소</button>
 </form>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
