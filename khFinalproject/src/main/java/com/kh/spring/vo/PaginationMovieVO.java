@@ -1,21 +1,29 @@
 package com.kh.spring.vo;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import com.kh.spring.entity.actor.ActorDto;
+import com.kh.spring.entity.movie.MovieDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
+import com.kh.spring.entity.schedule.TotalInfoViewDto;
 
 import lombok.Data;
 
 @Data
-public class PaginationVO {
+public class PaginationMovieVO {
 	private int p;
-	private String column;
-	private String keyword;
+	private String movieTitle;
+	private String movieTotal;
 	private int count;
-	private int pageSize = 10;
-	private int blockSize = 10;
+	private int pageSize = 5;
+	private int blockSize = 5;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;
-	private List<ReservationListVO> list = new ArrayList<>();
+	private Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> list = new TreeMap<>();
+	
+	
 	
 	public void calculate() throws Exception {
 		//rownum 계산
@@ -34,13 +42,13 @@ public class PaginationVO {
 	public boolean isPreviousAvailable() {
 		return this.startBlock > 1;
 	}
+	//추가 : 검색모드인가요?
+	public boolean isSearch() {
+		return this.movieTitle != null && !this.movieTitle.equals("");
+	}
 	//추가 : 다음이 존재하나요?
 	public boolean isNextAvailable() {
 		return this.finishBlock < this.lastBlock; 
-	}
-	//추가 : 검색모드인가요?
-	public boolean isSearch() {
-		return this.column != null && !this.column.equals("") && this.keyword != null && !this.keyword.equals("");
 	}
 	//추가 : 진짜 마지막 블록 번호 반환
 	public int getRealLastBlock() {
@@ -54,8 +62,11 @@ public class PaginationVO {
 	public int getNextBlock() {
 		return this.finishBlock + 1;
 	}
-	public boolean columnIs(String column) {
-		return this.column != null && this.column.equals(column);
+
+	public PaginationMovieVO() {
+		if(this.movieTotal == null) {
+			this.movieTotal = "A";
+		}
 	}
 	
 }

@@ -11,6 +11,7 @@ import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.vo.MovieChartVO;
 import com.kh.spring.vo.MyMovieLikeVO;
+import com.kh.spring.vo.PaginationMovieVO;
 
 public interface MovieService {
 
@@ -23,9 +24,10 @@ public interface MovieService {
 	//내가 좋아요한 영화 목록
 	List<MyMovieLikeVO> myMovieLikeList(int memberNo, int startRow, int endRow);
 
-	Map<MovieDto, List<Map<TotalInfoViewDto, List<LastInfoViewDto>>>> getMovieList(String movieTitle, String movieTotal,
-			String scheduleStart, String scheduleEnd);
+	Map<MovieDto, List<Map<TotalInfoViewDto, List<LastInfoViewDto>>>> getMovieList(String movieTitle, String movieTotal);
 
 	List<MovieChartVO> getChartList(List<Integer> movieNoList, int order);
+
+	PaginationMovieVO pageSearchVO(PaginationMovieVO paginationMovieVO) throws Exception;
 
 }

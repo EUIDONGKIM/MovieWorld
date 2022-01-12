@@ -103,6 +103,6 @@
 	</select>
 	
 	<select id="exist" parameterType="int" resultType="StatisticsInfoViewDto">
-		<![CDATA[select distinct(movie_no) from statistics_info_view where schedule_time_no=#{scheduleTimeNo} and sysdate < schedule_end]]>
+		<![CDATA[select distinct(movie_no) from statistics_info_view where schedule_time_no=#{scheduleTimeNo} and sysdate < schedule_time_date_time]]>
 	</select>
 </mapper>

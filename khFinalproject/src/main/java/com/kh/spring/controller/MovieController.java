@@ -1,6 +1,7 @@
 package com.kh.spring.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,6 +50,7 @@ import com.kh.spring.vo.OrderByCount;
 import com.kh.spring.vo.OrderByRatio;
 import com.kh.spring.vo.OrderByStar;
 import com.kh.spring.vo.PaginationActorVO;
+import com.kh.spring.vo.PaginationMovieVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -119,25 +121,14 @@ public class MovieController {
 	@GetMapping("/admin/list")
 	public String list(
 			Model model,
-			@RequestParam(required = false) String movieTitle,
-			@RequestParam(required = false,defaultValue = "A") String movieTotal,
-			@RequestParam(required = false) String scheduleStart,
-			@RequestParam(required = false) String scheduleEnd
-			) {
-		movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);
-		
-		if(movieTitle != null) {
-			model.addAttribute("movieTitle", movieTitle);
-		}else if(movieTotal.equals("A")) {
-			model.addAttribute("movieTotal", movieTotal);
-		}else if(scheduleStart != null && scheduleEnd != null) {
-			model.addAttribute("scheduleStart", scheduleStart);
-			model.addAttribute("scheduleEnd", scheduleEnd);
-		}
-		
-		Map<MovieDto,List<Map<TotalInfoViewDto,List<LastInfoViewDto>>>> sendList = 
-				movieService.getMovieList(movieTitle,movieTotal,scheduleStart,scheduleEnd);		
-		model.addAttribute("sendList", sendList);
+			@ModelAttribute PaginationMovieVO paginationMovieVO
+			) throws Exception {	
+
+		PaginationMovieVO paginationMovieVOSend = movieService.pageSearchVO(paginationMovieVO);
+		model.addAttribute("paginationMovieVO",paginationMovieVOSend);
+		model.addAttribute("sendList", paginationMovieVOSend.getList());
+		model.addAttribute("movieTotal", paginationMovieVOSend.getMovieTotal());
+		model.addAttribute("movieTitle", paginationMovieVOSend.getMovieTitle());
 		return "movie/list";
 	}
 
@@ -198,14 +189,21 @@ public class MovieController {
 	
 	
 	@GetMapping("/admin/delete")
-	public String delete(@RequestParam int movieNo) {
+	public String delete(@RequestParam int movieNo
+			,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
 		
 		LastInfoViewDto checkDto = lastInfoViewDao.exist(movieNo);
 		if(checkDto == null) {
 			movieService.delete(movieNo);
 			return "redirect:/movie/admin/list";
 		}else {
-			return "redirect:/movie/admin/list?error";
+			if(movieTitle != null) {
+				
+			String change = URLEncoder.encode(movieTitle , "UTF-8");
+				return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal+"&error";
+			}else {
+				return "redirect:/movie/admin/list?&error";	
+			}
 		}
 		
 	}

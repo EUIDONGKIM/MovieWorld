@@ -72,12 +72,14 @@ public class TheaterController {
 	}
 	
 	@GetMapping("/detail")
-	public String detail(@RequestParam int theaterNo, Model model) {
+	public String detail(@RequestParam int theaterNo, Model model,@RequestParam(required = false) String errorSchedule) {
 
 		model.addAttribute("theaterDto",theaterDao.get(theaterNo));
 		model.addAttribute("hallList",hallDao.list(theaterNo));
 		model.addAttribute("scheduleList", totalInfoViewDao.listByTheater(theaterNo));
-		
+		if(errorSchedule != null) {
+			model.addAttribute("errorSchedule",errorSchedule);
+		}
 		List<Map<Integer,Map<Integer,List<LastInfoViewDto>>>> list = new ArrayList<>();
 		List<String> dateList = new ArrayList<>();
 		

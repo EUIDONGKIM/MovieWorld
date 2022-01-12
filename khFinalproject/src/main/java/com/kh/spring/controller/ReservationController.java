@@ -9,18 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
-import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
-import com.kh.spring.entity.schedule.ScheduleTimeDto;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.HistoryDao;
@@ -37,12 +34,10 @@ import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
 import com.kh.spring.service.KakaoPayService;
 import com.kh.spring.service.ReservationService;
-import com.kh.spring.vo.KakaoPayApproveRequestVO;
-import com.kh.spring.vo.KakaoPayApproveResponseVO;
-import com.kh.spring.vo.KakaoPayCancelResponseVO;
 import com.kh.spring.vo.KakaoPayReadyRequestVO;
 import com.kh.spring.vo.KakaoPayReadyResponseVO;
 import com.kh.spring.vo.KakaoPaySearchResponseVO;
+import com.kh.spring.vo.PaginationVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,10 +102,8 @@ public class ReservationController {
 				MemberDto memberDto = memberDao.get(memberEmail);
 				memberPoint = memberDto.getMemberPoint();
 			}
-			LastInfoViewDto lastInfoViewDto = null;
 			if(scheduleTimeNo != 0) {				
-				lastInfoViewDao.get(scheduleTimeNo);
-				model.addAttribute("lastInfoViewDto",lastInfoViewDto);
+				model.addAttribute("lastInfoViewDto",lastInfoViewDao.get(scheduleTimeNo));
 			}
 			if(movieNo != 0) {				
 				model.addAttribute("movieNo",movieNo);
@@ -119,6 +112,17 @@ public class ReservationController {
 			model.addAttribute("memberPoint",memberPoint);
 			return "reservation/main_direct";
 		}
+		
+		@GetMapping("/admin/list")
+		public String list(
+				@ModelAttribute PaginationVO paginationVO,
+				Model model) throws Exception {
+			//리스트랑 페이지네이션 정보를 서비스에서 받아온다.
+			PaginationVO param = reservationService.searchNPaging(paginationVO);
+			model.addAttribute("paginationVO",param);
+			return "reservation/list";
+		}
+		
 		
 		@PostMapping("/confirm")
 		public String confirm(@RequestParam int reservationNo,@RequestParam int memberPoint,HttpSession session) throws URISyntaxException {
@@ -192,8 +196,9 @@ public class ReservationController {
 		}
 		
 		@GetMapping("/cancel")
-		public String cancel(@RequestParam int reservationNo,HttpSession session) throws URISyntaxException {
-			int memberNo = (int)session.getAttribute("memberNo");
+		public String cancel(@RequestParam int reservationNo) throws URISyntaxException {
+			ReservationDto reservationDto = reservationDao.get(reservationNo);
+			int memberNo = reservationDto.getMemberNo();
 			reservationService.cancel(reservationNo,memberNo);
 			
 //			return "redirect:history_detail";

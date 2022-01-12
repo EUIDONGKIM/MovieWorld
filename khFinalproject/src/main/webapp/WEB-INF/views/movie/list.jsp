@@ -6,12 +6,10 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <style>
-.inside-one{
-font-size: 9px;
+.after{
 display: none;
 }
 .inside-two{
-font-size: 5px;
 display: none;
 }
 
@@ -21,11 +19,31 @@ display: none;
 		
 		$(".toggle-one").click(function(e){
 			e.preventDefault();
-			$(this).next().toggle();
+			//$(".after").hide();
+			var check=$(this).parents("tbody.before").next("tfoot.after").data("movie-no");
+			$(".after").each(function(){
+			if($(this).data("movie-no") != check){
+				
+				if($(this).show()){
+					$(this).hide();
+				}
+				
+			}	
+			});
+			$(this).parents("tbody.before").next("tfoot.after").toggle();
+			
+			//$(".inside-one").toggle();
 		});
 		$(".toggle-two").click(function(e){
 			e.preventDefault();
 			$(this).next().toggle();
+		});
+		
+		var movieTotal = '${movieTotal}';
+		$("input[name=movieTotal]").each(function(){
+			if(movieTotal == "D"){				
+			$(this).prop("checked",true);
+			}
 		});
 	});
 </script>
@@ -34,17 +52,14 @@ display: none;
 	<div class="row">
 			<h1 class="center">
 				<c:choose>
-					<c:when test="${movieTotal != null}">
+					<c:when test="${movieTotal == 'A'}">
 						[영화 관리 리스트(모든 영화 목록)]
 					</c:when>
-					<c:when test="${movieTitle != null }">
-						[영화 관리 리스트(단일 영화 검색)]
-					</c:when>
-					<c:when test="${scheduleStart != null }">
-						[영화 관리 리스트(상영 기간별 검색)]
+					<c:when test="${movieTotal == 'F' }">
+						[영화 관리 리스트(상영 영화 목록)]
 					</c:when>
 					<c:otherwise>
-						[영화 관리 리스트(상영 영화 목록)]
+						[영화 관리 리스트(단일 영화 검색)]
 					</c:otherwise>
 				</c:choose>
 			</h1>
@@ -57,7 +72,7 @@ display: none;
 	
 		<form action="${root}/movie/admin/list" method="get">
 		<div class="row">
-		<h5>[단일 영화 히스토리 검색]</h5>
+		<h5>[상영 관리용 단일 영화 검색](<label><input type="checkbox" name="movieTotal" value="D"><span>현재 상영 관리 검색)</span></label></h5>
 		</div>		
 	<div class="d-flex flex-row">
 			<input type="text" name="movieTitle" value="${movieTitle }" required class="form-control me-sm-2 form-inline" >
@@ -71,6 +86,7 @@ display: none;
 			</div>
 		</div>
 	</c:if>
+	
 	<c:if test="${param.errorSchedule != null}">
 		<div class="row center">
 			<div class="col">
@@ -78,36 +94,6 @@ display: none;
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${param.errorScheduleTimeNo != null}">
-		<div class="row center">
-			<div class="col">
-				<h4 class="error">해당 상영의 예매 내역이 있습니다.</h4>
-			</div>
-		</div>
-	</c:if>
-
-	<div class="row cneter">
-		<form action="${root}/movie/admin/list" method="get">
-			<div class='col'>
-			<h5>[상영 기간별 목록 조회]</h5>
-			</div>
-			<div class="col">
-			<h5>시작일 : </h5>
-			</div>
-			<div class="col">
-			<input type="date" name="scheduleStart" value="${scheduleStart }" required  class="form-control me-sm-2 form-inline">
-			</div>
-			<h5>종료일 : </h5>
-			<input type="date" name="scheduleEnd" value="${scheduleEnd }" required  class="form-control me-sm-2 form-inline">
-			<div class="d-flex flex-row-reverse bd-highlight">
-				<input type="submit" value="기간별 검색" class="btn btn-info">
-			</div>
-		</form>
-	</div>
-	
-	
-
-
 	
 	<div class="d-flex flex-row-reverse bd-highlight">
 		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal=F'">현재 상영작</button>
@@ -128,15 +114,41 @@ display: none;
 				<th>관리</th>
 			</tr>
 		</thead>	 
-		<tbody>
 			<c:forEach var="list" items="${sendList}">
+		<tbody class="before" data-movie-no="${list.key.movieNo}">
 				<tr>
 					<td>${list.key.movieNo}</td>
-	
+					
 						<td>
-						<a href="#" class="toggle-one">${list.key.movieTitle}</a>
+						<c:choose>
+								<c:when test="${empty list.value}">
+									<a href="${root }/movie/admin/list?movieTitle=${list.key.movieTitle}">${list.key.movieTitle}</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#" class="toggle-one">${list.key.movieTitle}</a>
+								</c:otherwise>
+						</c:choose>
+						</td>
+						
+					<td>${list.key.movieGrade}</td>
+					
+					<td>${list.key.movieType}</td>
+					
+					<td>${fn:substring(list.key.movieOpening,0,10) }</td>
 	
-						<c:if test="${not empty list.value}">
+					<td>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
+					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
+					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/admin/delete?movieTitle=${list.key.movieTitle }&movieTotal=${movieTotal}&movieNo=${list.key.movieNo}'">삭제</button>
+					</td>
+	
+				</tr>
+		</tbody>	
+				<c:if test="${not empty list.value}">
+			<tfoot class="after" data-movie-no="${list.key.movieNo}">
+					<tr>
+						<td colspan="6">
 							<table class="table table-border inside-one">
 								<thead>
 									<tr>		
@@ -178,11 +190,11 @@ display: none;
 																					<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 																				<td>${available}</td>
 																				<td>${lastInfoViewDto.scheduleTimeDiscountType}</td>
-																				<td>${lastInfoViewDto.scheduleTimeDateTime}</td>
+																				<td>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,0,16) }</td>
 																				<td>
-																					<a href="${root}/schedule/time/admin/edit?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
+																					<a href="${root}/schedule/time/admin/edit?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">수정</a>
 																					<br>
-																					<a href="${root}/schedule/time/admin/delete?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
+																					<a href="${root}/schedule/time/admin/delete?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">삭제</a>
 																				</td>
 																			</tr>
 																		</c:forEach>
@@ -194,35 +206,100 @@ display: none;
 														<td>${map.key.scheduleEnd }</td>
 														<td><a href="${root}/schedule/time/admin/create?scheduleNo=${map.key.scheduleNo}">추가</a></td>
 														<td>
-															<a href="${root}/schedule/admin/edit?scheduleNo=${map.key.scheduleNo}">수정</a>
+															<a href="${root}/schedule/admin/edit?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleNo=${map.key.scheduleNo}">수정</a>
 															<br>
-															<a href="${root}/schedule/admin/delete?scheduleNo=${map.key.scheduleNo}">삭제</a>
+															<a href="${root}/schedule/admin/delete?movieTitle=${movieTitle }&movieTotal=${movieTotal}&scheduleNo=${map.key.scheduleNo}">삭제</a>
 														</td>
 													</tr>
 										</c:forEach>
 									</c:forEach>	
 								</tbody>
 							</table>
-							</c:if>
 						</td>
-	
-					<td>${list.key.movieGrade}</td>
-					
-					<td>${list.key.movieType}</td>
-					
-					<td>${fn:substring(list.key.movieOpening,0,10) }</td>
-	
-					<td>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/movieDetail?movieNo=${list.key.movieNo}'">상세</button>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/edit?movieNo=${list.key.movieNo}'">내용 수정</button>
-					<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/insert_actor?movieNo=${list.key.movieNo}'">배역 수정</button>
-					<button class="btn btn-outline-primary" onclick="location.href='${root}/movie/admin/delete?movieNo=${list.key.movieNo}'">삭제</button>
-					</td>
-	
-				</tr>	
+					</tr>
+			</tfoot>	
+				</c:if>
 			</c:forEach>	
-		</tbody>	
 	</table>
+
+	
+	
+	<div class="row">
+		<div class="col">
+		</div>
+		<div class="col outline">
+		<!-- 이전 버튼 -->
+			<ul class="pagination pagination-lg center " style="justify-content: center;">
+			<c:choose>
+				<c:when test="${paginationMovieVO.isPreviousAvailable()}">
+					<c:choose>
+						<c:when test="${paginationMovieVO.isSearch()}">
+							<li class="page-item">
+								<!-- 검색용 링크 -->
+								<a href="${root }/movie/admin/list?movieTotal=${paginationMovieVO.getMovieTotal()}&movieTitle=${paginationMovieVO.getMovieTitle()}&p=${PaginationActorVO.getPreviousBlock()}" class="page-link">&lt;</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<!-- 목록용 링크 -->
+							<li class="page-item">
+							<a href="${root }/movie/admin/list?p=${paginationMovieVO.getPreviousBlock()}&movieTotal=${paginationMovieVO.getMovieTotal()}" class="page-link">&lt;</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link">&lt;</a></li>
+				</c:otherwise>
+			</c:choose>
+		
+			<!-- 페이지 네비게이터 -->
+			<c:forEach var="i" begin="${paginationMovieVO.getStartBlock()}" end="${paginationMovieVO.getRealLastBlock()}" step="1">
+				
+				<c:choose>
+					<c:when test="${paginationMovieVO.isSearch()}">
+						<li class="page-item">
+						<!-- 검색용 링크 -->
+							<a href="${root }/movie/admin/list?movieTotal=${paginationMovieVO.getMovieTotal()}&movieTitle=${paginationMovieVO.getMovieTitle()}&p=${i}" class="page-link">${i}</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+						<!-- 목록용 링크 -->
+						<a href="${root }/movie/admin/list?p=${i}&movieTotal=${paginationMovieVO.getMovieTotal()}" class="page-link">${i}</a>
+						</li>
+					</c:otherwise>
+				</c:choose>
+			
+			</c:forEach>
+	
+			
+			<!-- 다음 -->
+			<c:choose>
+				<c:when test="${paginationMovieVO.isNextAvailable()}">
+					<c:choose>
+						<c:when test="${paginationMovieVO.isSearch()}">
+							<!-- 검색용 링크 -->
+							<li class="page-item">
+								<a href="${root }/movie/admin/list?movieTotal=${paginationMovieVO.getMovieTotal()}&movieTitle=${paginationMovieVO.getMovieTitle()}&p=${PaginationActorVO.getNextBlock()}" class="page-link">&gt;</a>
+							<li>
+						</c:when>
+						<c:otherwise>
+							<!-- 목록용 링크 -->
+							<li class="page-item">
+								<a href="${root }/movie/admin/list?p=${paginationMovieVO.getNextBlock()}&movieTotal=${paginationMovieVO.getMovieTotal()}" class="page-link">&gt;</a>
+							</li>					
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link">&gt;</a></li>
+				</c:otherwise>
+			</c:choose>
+			</ul>
+		</div>
+		<div class="col">
+		</div>
+	</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

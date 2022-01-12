@@ -10,5 +10,5 @@ public class ReplyVO {
 	private int reviewStarpoint;
 	private String reviewDate;
 	private int reviewLike;
-	private String memberEmail;
+	private String memberNick;
 }

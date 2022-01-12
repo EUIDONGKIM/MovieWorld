@@ -28,14 +28,14 @@
 	</insert>
 	
 	<select id="list" parameterType="int" resultType="ReplyVO">
-		select r.movie_no,r.member_no,r.review_content,r.review_starpoint,r.review_date,r.review_like,m.member_email from review r
+		select r.movie_no,r.member_no,r.review_content,r.review_starpoint,r.review_date,r.review_like,m.member_nick from review r
         join member m on r.member_no = m.member_no where movie_no=#{movieNo}
 	</select>
 	
 	<select id="listByPage" parameterType="int" resultType="ReplyVO">
 		select * from (
 			select rownum rn, TMP.* from (
-				select r.movie_no,r.member_no,r.review_content,r.review_starpoint,r.review_date,r.review_like,m.member_email from review r
+				select r.movie_no,r.member_no,r.review_content,r.review_starpoint,r.review_date,r.review_like,m.member_nick from review r
         		join member m on r.member_no = m.member_no where movie_no=#{movieNo}
 			)TMP
 		) where rn between #{startRow} and #{endRow}

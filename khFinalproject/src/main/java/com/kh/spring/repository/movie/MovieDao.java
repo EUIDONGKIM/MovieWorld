@@ -32,4 +32,8 @@ public interface MovieDao {
 	void refreshStar(int movieNo);
 
 	List<MovieDto> listNotContent();
+
+	int listNotContentCount();
+
+	List<MovieDto> listNotContentSearch(int begin, int end);
 }

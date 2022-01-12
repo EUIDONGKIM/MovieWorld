@@ -269,17 +269,16 @@
 			},
 			dataType : "json",
 			success:function(resp){
-				console.log("성공", resp);
+				console.log("내 평점 성공", resp);
 				$(".reply-items").empty();
 				for(var i = 0 ; i < resp.length ; i++){
 				if('${memberNo}' == resp[i].memberNo){
 					var template = $("#template-reply").html();
-					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
+					template = template.replace("{{memberNick}}",resp[i].memberNick);
 					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
 					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
 					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
 					template = template.replace("{{reviewLike}}",resp[i].reviewLike);
-					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
 					template = template.replace("{{memberNo}}",resp[i].memberNo);
 					template = template.replace("{{movieNo}}",resp[i].movieNo);
 					template = template.replace("{{memberNo}}",resp[i].memberNo);
@@ -368,7 +367,7 @@
 
 				if('${memberNo}' != resp[i].memberNo){
 					var template = $("#template-reply-not").html();
-					template = template.replace("{{memberEmail}}",resp[i].memberEmail);
+					template = template.replace("{{memberNick}}",resp[i].memberNick);
 					template = template.replace("{{reviewStarpoint}}",resp[i].reviewStarpoint);
 					template = template.replace("{{reviewDate}}",resp[i].reviewDate);
 					template = template.replace("{{reviewContent}}",resp[i].reviewContent);
@@ -459,7 +458,7 @@
 	
 <template id="template-reply">
 	<tr class="view-row">
-		<td>{{memberEmail}}</td>
+		<td>{{memberNick}}</td>
 		<td>{{reviewStarpoint}}</td>
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>
@@ -481,7 +480,7 @@
 </template>	
 <template id="template-reply-not">
 	<tr class="view-row">
-		<td>{{memberEmail}}</td>
+		<td>{{memberNick}}</td>
 		<td>{{reviewStarpoint}}</td>
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>

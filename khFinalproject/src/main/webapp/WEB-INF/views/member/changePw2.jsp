@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- jquey cdn -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- sha1 암호화 cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/sha1.min.js"></script>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
        .form-input.fail {
             border-color: red;
@@ -49,14 +46,15 @@ $(function() {
 		
 		} else {
 			$("input[name=changePw]").addClass("fail");
+			$("input[name=changePw]").next().text("8~16자 이내 영문,숫자,특수문자[!@#$\s_-]로 작성하세요!").css("color","red");
 			$("#chnage-btn").prop("disabled",true);
-		}
-	});
+			
+		},
 });
 </script>
 
 
-	<div class="container-500 container-center">
+<div class="container-500 container-center">
 		<div class="row center">
 			<h2>비밀번호 변경</h2>
 		</div>
@@ -70,7 +68,7 @@ $(function() {
 					<label>바꿀 비밀번호</label>
 					<input type="password" name="changePw" required class="form-control fsize" id="floatingInput">
 					<span class="success"></span>
-	           		<span class="fail">8~16자 이내 영문,숫자,특수문자[!@#$\s_-]로 작성하세요!</span>
+	           		<span class="fail"></span>
 			</div>
 			
 			<div class="row">		
@@ -83,5 +81,5 @@ $(function() {
 		</div>
 		</c:if>
 		
-	</div>
-
+</div>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
