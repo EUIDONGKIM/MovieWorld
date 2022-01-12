@@ -52,13 +52,13 @@
 											"</div>"+
 											"<div class='col col-9'>"+
 												"<div class='row'>"+
-													"<h4><strong><a href='${root}/movie/movieDetail?movieNo="+resp[i].movieNo+"'>"+resp[i].movieTitle+"</a></strong></h4><p>"+resp[i].movieEngTitle+"</p>"+
+													"<h4><strong><a href='${root}/movie/movieDetail?movieNo="+resp[i].movieNo+"'>"+resp[i].movieTitle+"</a></strong></h4>"+
 												"</div>"+
 												"<hr>"+
 												"<div class='row'>"+
 												"<p>장르 : "+resp[i].movieType+"</p>"+
 												"<p>기본 : "+resp[i].movieGrade+", "+resp[i].movieRuntime+"분, "+resp[i].movieCountry+"</p>"+
-												"<p>개봉 : "+resp[i].getOpeningDay+"</p>"+
+												"<p>개봉 : "+resp[i].openingDay+"</p>"+
 												"</div>"+
 											"</div>"+
 										"</div>"+

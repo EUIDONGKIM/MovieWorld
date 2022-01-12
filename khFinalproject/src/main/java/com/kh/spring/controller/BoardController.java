@@ -70,6 +70,7 @@ public class BoardController {
 		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
 		model.addAttribute("boardSearchVO",param);
 		model.addAttribute("grade",session.getAttribute("grade"));
+		model.addAttribute("boardTypeName",boardTypeName);
 		return "board/main";
 	}
 	

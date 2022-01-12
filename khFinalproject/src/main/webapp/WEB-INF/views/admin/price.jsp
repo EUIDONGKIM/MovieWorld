@@ -4,9 +4,6 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<h1>나중에 모달로 입력 수정 해보자...</h1>
-
-
 <div class="container container-center">
 	<div class="row">
 		<h1> 가격관리 </h1>

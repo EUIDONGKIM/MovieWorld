@@ -81,7 +81,7 @@
       <c:forEach var="movieChartVO" items="${list}" varStatus="status">
 	      		<div class="board">
 	      			<div class="row center">
-					    <strong>NO.${status.index}</strong>
+					    <strong>NO.${status.index+1}</strong>
 	      			</div>
 	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
 	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>	

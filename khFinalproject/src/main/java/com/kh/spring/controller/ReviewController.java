@@ -17,4 +17,5 @@ public class ReviewController {
 	public String list() {
 		return "review/list";
 	}
+
 }

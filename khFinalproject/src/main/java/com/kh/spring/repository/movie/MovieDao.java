@@ -36,4 +36,8 @@ public interface MovieDao {
 	int listNotContentCount();
 
 	List<MovieDto> listNotContentSearch(int begin, int end);
+
+	int searchCount(String keyword);
+
+	List<MovieDto> search(String keyword, int begin, int end);
 }

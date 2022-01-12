@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h1> 홈 화면 </h1>
@@ -46,5 +48,54 @@
 </div>
 <!-- 슬라이더 배너 끝 -->
 
+
+	<div class="container">
+		<h1>현재 상영작</h1>
+     	<div class="board d-flex flex-wrap">
+      		<c:forEach var="movieChartVO" items="${nowList}">
+	      		<div class="board">
+	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
+	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
+      						
+      				<div class="row">
+      					<c:choose>
+      						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
+      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
+      						</c:when>
+      						<c:otherwise>
+      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
+      						</c:otherwise>
+      					</c:choose>
+      				</div>
+      				<div class="row">${fn:substring(movieChartVO.movieOpening,0,10) } 개봉</div>     		
+	      		</div>        
+      		</c:forEach>
+   	    </div>
+	</div>
+	<hr>
+	<div class="container">
+		<h1>개봉 예정작</h1>
+     	<div class="board d-flex flex-wrap">
+      		<c:forEach var="movieChartVO" items="${soonList}">
+	      		<div class="board">
+	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
+	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
+      						
+      				<div class="row">
+      					<c:choose>
+      						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
+      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
+      						</c:when>
+      						<c:otherwise>
+      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
+      						</c:otherwise>
+      					</c:choose>
+      				</div>
+      				<div class="row">${fn:substring(movieChartVO.movieOpening,0,10) } 개봉</div>     		
+	      		</div>        
+      		</c:forEach>
+   	    </div>
+	</div>
+	
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
