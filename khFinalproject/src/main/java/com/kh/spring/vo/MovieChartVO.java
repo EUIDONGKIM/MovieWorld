@@ -14,5 +14,5 @@ public class MovieChartVO{
 	private String movieOpening;
 	private float movieRatio;
 	private int movieCount;
-	
+	private String checkStatus;
 }
