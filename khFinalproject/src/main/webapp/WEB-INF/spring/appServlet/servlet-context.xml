@@ -116,7 +116,13 @@
 			<mvc:exclude-mapping path="/reservation/success"/>
 			<bean class="com.kh.spring.interceptor.SameInterceptor"></bean>
 	 	</mvc:interceptor>
-	 	
+
+	 	 <mvc:interceptor>
+			<mvc:mapping path="/board/write/**"/>
+			<mvc:mapping path="/board/edit/**"/>
+			<mvc:mapping path="/board/delete/**"/>
+			<bean class="com.kh.spring.interceptor.BoardInterceptor"></bean>
+	 	</mvc:interceptor>
 	 	
 	 </mvc:interceptors>
 
