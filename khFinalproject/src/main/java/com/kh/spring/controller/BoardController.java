@@ -23,8 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.spring.entity.board.BoardDto;
 import com.kh.spring.entity.board.BoardFileDto;
+import com.kh.spring.entity.board.BoardVO;
 import com.kh.spring.repository.board.BoardDao;
 import com.kh.spring.repository.board.BoardFileDao;
+import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.service.BoardService;
 import com.kh.spring.vo.BoardSearchVO;
 
@@ -36,6 +38,9 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Autowired
 	private BoardFileDao boardFileDao;
@@ -60,10 +65,11 @@ public class BoardController {
 	@GetMapping("/main")
 	public String list(
 			@ModelAttribute BoardSearchVO boardSearchVO,@RequestParam int boardTypeName,
-			Model model) throws Exception {
+			Model model ,HttpSession session) throws Exception {
 		//리스트랑 페이지네이션 정보를 서비스에서 받아온다.
 		BoardSearchVO param = boardService.searchNPaging(boardSearchVO);
 		model.addAttribute("boardSearchVO",param);
+		model.addAttribute("grade",session.getAttribute("grade"));
 		model.addAttribute("boardTypeName",boardTypeName);
 		return "board/main";
 	}
@@ -101,13 +107,19 @@ public class BoardController {
 	public String detail(@RequestParam int boardNo,@RequestParam int boardTypeName,
 			HttpSession session,
 			Model model) {
-
-		BoardDto boardDto = boardDao.get(boardNo);
-		List<BoardFileDto> boardFileList = boardFileDao.list(boardDto.getBoardNo());
+		BoardVO boardVO = boardDao.get2(boardNo);
+		System.out.println("!---------!테스트");
+		System.err.println(boardVO);
+		System.out.println(boardVO.getMemberNick());
+//		BoardDto boardDto = boardDao.get(boardNo);
+		List<BoardFileDto> boardFileList = boardFileDao.list(boardVO.getBoardNo());
 		String memberEmail=(String)session.getAttribute("ses");
-		model.addAttribute("boardNo",boardNo);
+//		MemberDto findDto = memberDao.get(memberEmail);
+//		model.addAttribute("memberNick",findDto.getMemberNick());
+//		model.addAttribute("boardNo",boardNo);
+		model.addAttribute("grade",session.getAttribute("grade"));
 		model.addAttribute("memberEmail",memberEmail);
-		model.addAttribute("boardDto",boardDto);
+		model.addAttribute("boardVO",boardVO);
 		model.addAttribute("boardFileList",boardFileList);
 		
 			

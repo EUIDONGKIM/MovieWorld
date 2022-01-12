@@ -11,6 +11,8 @@ public interface BoardDao {
 	
 	//게시글 단일조회
 	BoardDto get(int boardNo);
+	//닉네임필요 단일조회
+	BoardVO get2(int boardNo);
 	
 	//특정 사용자가 작성한 게시글 조회
 	List<BoardVO> getUserWrite(String memberEmail);

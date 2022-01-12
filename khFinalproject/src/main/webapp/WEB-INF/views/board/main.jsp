@@ -5,6 +5,8 @@
 
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
+<c:set var="grade" value="${grade}"></c:set>
+<c:set var="admin" value="${grade eq '운영자'}"></c:set>
 
 
 <div class="container-1200 container-center">
@@ -32,11 +34,20 @@
 	<div class="row center">
 		<h6>타인에 대한 무분별한 비판은 제재 대상입니다</h6>
 	</div>
+<c:if test="${admin}">
 	<div class="row" >
 		<div class="col right">
 			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
 		</div>
 	</div>
+</c:if>
+<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5}">
+	<div class="row" >
+		<div class="col right">
+			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
+		</div>
+	</div>
+</c:if>		
 	<div class="row">
 		<table class="table table-hover">
 			<thead>
@@ -76,11 +87,20 @@
 			</tbody>
 		</table>
 	</div>
+<c:if test="${admin}">
 	<div class="row" >
 		<div class="col right">
 			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
 		</div>
 	</div>
+</c:if>
+<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5}">
+	<div class="row" >
+		<div class="col right">
+			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
+		</div>
+	</div>
+</c:if>	
 	
 	<!-- 게시판 아래부분  -->
 	<div class="row">

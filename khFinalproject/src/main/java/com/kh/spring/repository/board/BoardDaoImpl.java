@@ -35,6 +35,11 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
+	public BoardVO get2(int boardNo) {
+		return sqlsession.selectOne("board.get2",boardNo);
+	}
+
+	@Override
 	public int getSequence() {
 		return sqlsession.selectOne("board.getSeq");
 	}
@@ -117,6 +122,7 @@ public class BoardDaoImpl implements BoardDao{
 
 		return sqlsession.selectList("board.search1",param);
 	}
+
 
 
 

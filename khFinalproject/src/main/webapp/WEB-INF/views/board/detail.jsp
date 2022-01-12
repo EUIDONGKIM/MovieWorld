@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 .form-inline{
@@ -8,47 +9,48 @@
  width: auto;
 }
 </style>
-<%-- 번외 : 수정 버튼을 눌렀을 때 처리되도록 구현하는 스크립트(나중에 배움) --%>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
 
-<c:set var="owner" value="${boardDto.memberEmail == memberEmail}"></c:set>
+<c:set var="owner" value="${boardVO.memberEmail == memberEmail}"></c:set>
+<c:set var="grade" value="${grade}"></c:set>
+<c:set var="admin" value="${grade eq '운영자'}"></c:set>
+
 
 <div class="container-1200 container-center">
 
 	<div class="row center">
-		<h2>${boardDto.boardNo}번 게시글</h2>		
+		<h2>${boardVO.boardNo}번 게시글</h2>		
 	</div>
 	
 	<div class="row">
 		<hr>
-		<h3>${boardDto.boardTitle}</h3>
+		<h3>${boardVO.boardTitle}</h3>
 		<hr>
 	</div>
 	
 	<div class="row">
 	 <div class="col">
-		등록일 : ${boardDto.boardDate}
+		등록일 : ${boardVO.boardDate}
 		|
-		작성자 : ${boardDto.memberEmail}
+		작성자 : ${boardVO.memberNick}
 	</div>
 	<div class="col right">
-		조회수 : ${boardDto.boardViews}
+		조회수 : ${boardVO.boardViews}
 	</div>
 	
 	<br>
 	
 	<div class="row" style="min-height:250px;">
-		<pre>${boardDto.boardContent}</pre>
+		<pre>${boardVO.boardContent}</pre>
 	</div>
 	
 	<div class="row right">
 	 <div class="col">
-		<a href="write?boardSuperno=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">답글쓰기</a>
+		<a href="write?boardSuperno=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">답글쓰기</a>
 		<a href="main?boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">목록보기</a>
 		
-		<c:if test="${owner}">
-		<a href="edit?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">수정하기</a>
-		<a href="delete?boardNo=${boardDto.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">삭제하기</a>
+		<c:if test="${owner||admin}">
+		<a href="edit?boardNo=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">수정하기</a>
+		<a href="delete?boardNo=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">삭제하기</a>
 		</c:if>
 	 
 	 </div>
@@ -73,6 +75,6 @@
 
 	
 </div>
-
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
