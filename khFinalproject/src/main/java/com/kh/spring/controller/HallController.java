@@ -84,12 +84,14 @@ public class HallController {
 		return "redirect:/theater/detail";
 	}
 	
-	@GetMapping("/detail")
-	public void hallDetail(@RequestParam int hallNo, Model model) {
+	@GetMapping("/admin/detail")
+	public String hallDetail(@RequestParam int hallNo, Model model) {
 		HallDto hallDto = hallDao.get(hallNo);
 		model.addAttribute("theaterDto",theaterDao.get(hallDto.getTheaterNo()));
 		model.addAttribute("hallDto",hallDto);
 		model.addAttribute("seatList", seatDao.list(hallNo));
+		
+		return "/hall/detail";
 	}
 	
 	@GetMapping("/admin/update_seat")
@@ -99,5 +101,22 @@ public class HallController {
 		model.addAttribute("hallDto",hallDto);
 		model.addAttribute("seatList", seatDao.list(hallNo));
 		return "/hall/update_seat";
+	}
+	
+	@GetMapping("/admin/edit")
+	public String hallEdit(@RequestParam int hallNo, Model model) {
+		HallDto hallDto = hallDao.get(hallNo);
+		
+		model.addAttribute("hallDto",hallDto);
+		model.addAttribute("hallTypeList", hallTypePriceDao.list());
+		
+		return "/hall/edit";
+	}
+	
+	@PostMapping("/admin/edit")
+	public String hallEdit(@ModelAttribute HallDto hallDto, RedirectAttributes redirectAttributes) {
+		hallDao.edit(hallDto);
+		redirectAttributes.addAttribute("hallNo",hallDto.getHallNo());
+		return "redirect:/hall/admin/detail";
 	}
 }

@@ -326,8 +326,7 @@
 	<c:forEach var="hallDto" items="${hallList}">
 		<h5>
 			${hallDto.getFullName()} | ${hallDto.hallSeat}석 
-			<a href="${root}/hall/detail?hallNo=${hallDto.hallNo}">상세보기</a>
-			<a href="#">수정(나중에)</a>
+			<a href="${root}/hall/admin/detail?hallNo=${hallDto.hallNo}">상세보기</a>
 		</h5>
 	</c:forEach>
 	</div>
