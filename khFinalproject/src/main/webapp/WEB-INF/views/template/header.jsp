@@ -180,7 +180,7 @@
         </li>
       </ul>
       <form class="d-flex" method="get" action="${root}/movie/movieSearch">
-        <input class="form-control me-sm-2" type="text" name="keyword" placeholder="Search">
+        <input class="form-control me-sm-2" type="text" name="keyword" value="${searchVO.keyword }" placeholder="Search">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">search</button>
       </form>
     </div>
