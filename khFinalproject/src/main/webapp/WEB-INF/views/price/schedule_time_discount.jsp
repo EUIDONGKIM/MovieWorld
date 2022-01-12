@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
+<style>
+	.cell { 
+		display:table-cell; 
+		border-bottom:1px solid #DDD; 
+		border-top:1px solid #DDD; 
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 $(function(){
@@ -78,15 +84,14 @@ $(function(){
 					});
 					tag.find(".edit-btn").click(function(){
 						var scheduleTimeDiscountNo = $(this).data("schedule-time-discount-no");
-						var scheduleTimeDiscountType = $(this).prevAll(".schedule-time-discount-type").text();
-						var scheduleTimeDiscountPrice = $(this).prevAll(".schedule-time-discount-price").text();
+						var scheduleTimeDiscountType = $(this).parent().prev().prev().find(".schedule-time-discount-type").text();
+						var scheduleTimeDiscountPrice = $(this).parent().prev().find(".schedule-time-discount-price").text();
 						
 						var form = $("<form id='edit-form'>");
 						form.append("<input type='hidden' name='scheduleTimeDiscountNo' value='"+scheduleTimeDiscountNo+"'>");
-						form.append("<input type='text' name='scheduleTimeDiscountType' value='"+scheduleTimeDiscountType+"'>");
-						form.append("<input type='text' name='scheduleTimeDiscountPrice' value='"+scheduleTimeDiscountPrice+"'>");
-						form.append("<button type='submit'>수정</button>");
-						form.append("<button type='button' class='edit-cancel-btn'>취소</button>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='scheduleTimeDiscountType' value='"+scheduleTimeDiscountType+"'></div>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='scheduleTimeDiscountPrice' value='"+scheduleTimeDiscountPrice+"'></div>");
+						form.append("<div class='cell col-2 center'><button type='submit' class='btn btn-primary'>수정</button><button type='button' class='btn btn-outline-primary edit-cancel-btn'>취소</button></div>");
 						form.append("</form>");
 						
 						form.find(".edit-cancel-btn").click(function(){
@@ -103,7 +108,7 @@ $(function(){
 							editScheduleTimeDiscount(scheduleTimeDiscountNoValue, scheduleTimeDiscountTypeValue, scheduleTimeDiscountPriceValue);
 						});
 						
-						var div = $(this).parent();
+						var div = $(this).parent().parent();
 						div.html(form);
 					});
 					$("#result").append(tag);//추가!
@@ -156,23 +161,47 @@ $(function(){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <template id="scheduleTimeDiscount-template">
-	<div class="item">
-		<span class="schedule-time-discount-type">{{scheduleTimeDiscountType}}</span>
-		<span class="schedule-time-discount-price">{{scheduleTimeDiscountPrice}}</span>
-		<button class="edit-btn" data-schedule-time-discount-no="{{scheduleTimeDiscountNo}}">수정</button>
-		<button class="remove-btn" data-schedule-time-discount-no="{{scheduleTimeDiscountNo}}">삭제</button>
+	<div class="item row">
+		<div class="cell col-5"><span class="schedule-time-discount-type">{{scheduleTimeDiscountType}}</span></div>
+		<div class="cell col-5"><span class="schedule-time-discount-price">{{scheduleTimeDiscountPrice}}</span></div>
+		<div class="cell col-2 center">
+			<button class="btn btn-primary edit-btn" data-schedule-time-discount-no="{{scheduleTimeDiscountNo}}">수정</button>
+			<button class="btn btn-outline-primary remove-btn" data-schedule-time-discount-no="{{scheduleTimeDiscountNo}}">삭제</button>
+		</div>
 	</div>
 </template>
 
-<h1>상영시간대별 할인 금액 관리<button type="button" class="add-btn">추가</button></h1>
 
-<div id="result"></div>
-<div id="insert">
-<form id="insert-form">
-	<input type="text" name="scheduleTimeDiscountType" placeholder="상영시간">
-	<input type="text" name="scheduleTimeDiscountPrice" placeholder="할인 금액">
-	<button type="submit">등록</button>
-	<button type="button" class="add-cancel-btn">취소</button>
-</form>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>상영시간대별 할인 금액 관리<button type="button" class="btn btn-primary add-btn">추가</button></h1>
+		</div>
+	</div>
 </div>
+
+<div class="container">
+	<div class="row">
+		<div class="cell col-5"><strong>상영시간</strong></div>
+		<div class="cell col-5"><strong>할인 금액</strong></div>
+		<div class="cell col-2 center"><strong>관리</strong></div>
+	</div>
+</div>
+
+<div id="result" class="container">
+</div>
+
+<form id="insert-form">
+<div id="insert" class="container">
+	<div class="row">
+		<div class="cell col-5"><input type="text" class="form-control" name="scheduleTimeDiscountType" placeholder="상영시간"></div>
+		<div class="cell col-5"><input type="text" class="form-control" name="scheduleTimeDiscountPrice" placeholder="할인 금액"></div>
+		<div class="cell col-2 center">
+			<button type="submit" class="btn btn-primary">등록</button>
+			<button type="button" class="btn btn-outline-primary add-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+</form>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

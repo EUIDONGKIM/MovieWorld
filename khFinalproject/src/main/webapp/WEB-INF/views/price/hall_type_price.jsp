@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
+<style>
+	.cell { 
+		display:table-cell; 
+		border-bottom:1px solid #DDD; 
+		border-top:1px solid #DDD; 
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 $(function(){
@@ -76,22 +82,20 @@ $(function(){
 					});
 					tag.find(".edit-btn").click(function(){
 						var hallTypeNo = $(this).data("hall-type-no");
-						var hallType = $(this).prevAll(".hall-type").text();
-						var hallPrice = $(this).prevAll(".hall-price").text();
+						var hallType = $(this).parent().prev().prev().find(".hall-type").text();
+						var hallPrice = $(this).parent().prev().find(".hall-price").text();
 						
 						var form = $("<form id='edit-form'>");
 						form.append("<input type='hidden' name='hallTypeNo' value='"+hallTypeNo+"'>");
-						form.append("<input type='text' name='hallType' value='"+hallType+"'>");
-						form.append("<input type='text' name='hallPrice' value='"+hallPrice+"'>");
-						form.append("<button type='submit'>수정</button>");
-						form.append("<button type='button' class='edit-cancel-btn'>취소</button>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='hallType' value='"+hallType+"'></div>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='hallPrice' value='"+hallPrice+"'></div>");
+						form.append("<div class='cell col-2 center'><button type='submit' class='btn btn-primary'>수정</button><button type='button' class='btn btn-outline-primary edit-cancel-btn'>취소</button></div>");
 						form.append("</form>");
 						
-							form.find(".edit-cancel-btn").click(function(){
-								loadList();							
-							});
+						form.find(".edit-cancel-btn").click(function(){
+							loadList();							
+						});
 
-						
 						form.submit(function(e){
 							e.preventDefault();
 
@@ -102,7 +106,7 @@ $(function(){
 							editHallTypePrice(hallTypeNoValue, hallTypeValue, hallPriceValue)
 						});
 						
-						var div = $(this).parent();
+						var div = $(this).parent().parent();
 						div.html(form);
 					});
 					$("#result").append(tag);//추가!
@@ -157,23 +161,45 @@ $(function(){
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <template id="hallTypePriceDto-template">
-	<div class="item">
-		<span class="hall-type">{{hallType}}</span>
-		<span class="hall-price">{{hallPrice}}</span>
-		<button class="edit-btn" data-hall-type-no="{{hallTypeNo}}">수정</button>
-		<button class="remove-btn" data-hall-type-no="{{hallTypeNo}}">삭제</button>
+	<div class="item row">
+		<div class="cell col-5"><span class="hall-type">{{hallType}}</span></div>
+		<div class="cell col-5"><span class="hall-price">{{hallPrice}}</span></div>
+		<div class="cell col-2 center">
+			<button class="btn btn-primary edit-btn" data-hall-type-no="{{hallTypeNo}}">수정</button>
+			<button class="btn btn-outline-primary remove-btn" data-hall-type-no="{{hallTypeNo}}">삭제</button>
+		</div>
 	</div>
 </template>
 
-<h1>상영관 종류별 금액 관리<button type="button" class="add-btn">추가</button></h1>
-
-<div id="result"></div>
-<div id="insert">
-<form id="insert-form">
-	<input type="text" name="hallType" placeholder="상영관 종류">
-	<input type="text" name="hallPrice" placeholder="기본 금액">
-	<button type="submit">등록</button>
-	<button type="button" class="add-cancel-btn">취소</button>
-</form>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>상영관 종류별 금액 관리<button type="button" class="btn btn-primary add-btn">추가</button></h1>
+		</div>
+	</div>
 </div>
+
+<div class="container">
+	<div class="row">
+		<div class="cell col-5"><strong>상영관 종류</strong></div>
+		<div class="cell col-5"><strong>기본 금액</strong></div>
+		<div class="cell col-2 center"><strong>관리</strong></div>
+	</div>
+</div>
+
+<div id="result" class="container">
+</div>
+
+<form id="insert-form">
+<div id="insert" class="container">
+	<div class="row">
+		<div class="cell col-5"><input type="text" class="form-control" name="hallType" placeholder="상영관 종류"></div>
+		<div class="cell col-5"><input type="text" class="form-control" name="hallPrice" placeholder="기본 금액"></div>
+		<div class="cell col-2 center">
+			<button type="submit" class="btn btn-primary">등록</button>
+			<button type="button" class="btn btn-outline-primary add-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+</form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

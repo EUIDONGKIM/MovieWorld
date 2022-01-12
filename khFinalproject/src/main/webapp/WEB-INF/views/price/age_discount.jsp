@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
-
+<style>
+	.cell { 
+		display:table-cell; 
+		border-bottom:1px solid #DDD; 
+		border-top:1px solid #DDD; 
+	}
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(function(){
@@ -76,15 +82,14 @@
 					});
 					tag.find(".edit-btn").click(function(){
 						var ageNo = $(this).data("age-no");
-						var ageName = $(this).prevAll(".age-name").text();
-						var ageDiscountPrice = $(this).prevAll(".age-discount-price").text();
+						var ageName = $(this).parent().prev().prev().find(".age-name").text();
+						var ageDiscountPrice = $(this).parent().prev().find(".age-discount-price").text();
 						
 						var form = $("<form id='edit-form'>");
 						form.append("<input type='hidden' name='ageNo' value='"+ageNo+"'>");
-						form.append("<input type='text' name='ageName' value='"+ageName+"'>");
-						form.append("<input type='text' name='ageDiscountPrice' value='"+ageDiscountPrice+"'>");
-						form.append("<button type='submit'>수정</button>");
-						form.append("<button type='button' class='edit-cancel-btn'>취소</button>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='ageName' value='"+ageName+"'></div>");
+						form.append("<div class='cell col-5'><input type='text' class='form-control' name='ageDiscountPrice' value='"+ageDiscountPrice+"'></div>");
+						form.append("<div class='cell col-2 center'><button type='submit' class='btn btn-primary'>수정</button><button type='button' class='btn btn-outline-primary edit-cancel-btn'>취소</button></div>");
 						form.append("</form>");
 						
 						form.find(".edit-cancel-btn").click(function(){
@@ -101,7 +106,7 @@
 							editAgeDiscount(ageNoValue, ageNameValue, ageDiscountPriceValue);
 						});
 						
-						var div = $(this).parent();
+						var div = $(this).parent().parent();
 						div.html(form);
 					});
 					$("#result").append(tag);//추가!
@@ -156,23 +161,45 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <template id="ageDiscount-template">
-	<div class="item">
-		<span class="age-name">{{ageName}}</span>
-		<span class="age-discount-price">{{ageDiscountPrice}}</span>
-		<button class="edit-btn" data-age-no="{{ageNo}}">수정</button>
-		<button class="remove-btn" data-age-no="{{ageNo}}">삭제</button>
+	<div class="item row">
+		<div class="cell col-5"><span class="age-name">{{ageName}}</span></div>
+		<div class="cell col-5"><span class="age-discount-price">{{ageDiscountPrice}}</span></div>
+		<div class="cell col-2 center">
+			<button class="btn edit-btn btn-primary" data-age-no="{{ageNo}}">수정</button>
+			<button class="btn btn-outline-primary remove-btn" data-age-no="{{ageNo}}">삭제</button>
+		</div>
 	</div>
 </template>
 
-<h1>연령대별 할인 금액 관리<button type="button" class="add-btn">추가</button></h1>
-
-<div id="result"></div>
-<div id="insert">
-<form id="insert-form">
-	<input type="text" name="ageName" placeholder="연령대">
-	<input type="text" name="ageDiscountPrice" placeholder="할인 금액">
-	<button type="submit">등록</button>
-	<button type="button" class="add-cancel-btn">취소</button>
-</form>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<h1>연령대별 할인 금액 관리<button type="button" class="btn btn-primary add-btn">추가</button></h1>
+		</div>
+	</div>
 </div>
+
+<div class="container">
+	<div class="row">
+		<div class="cell col-5"><strong>연령대</strong></div>
+		<div class="cell col-5"><strong>할인 금액</strong></div>
+		<div class="cell col-2 center"><strong>관리</strong></div>
+	</div>
+</div>
+
+<div id="result" class="container">
+</div>
+
+<form id="insert-form">
+<div id="insert" class="container">
+	<div class="row">
+		<div class="cell col-5"><input type="text" class="form-control" name="ageName" placeholder="연령대"></div>
+		<div class="cell col-5"><input type="text" class="form-control" name="ageDiscountPrice" placeholder="할인 금액"></div>
+		<div class="cell col-2 center">
+			<button type="submit" class="btn btn-primary">등록</button>
+			<button type="button" class="btn btn-outline-primary add-cancel-btn">취소</button>
+		</div>
+	</div>
+</div>
+</form>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
