@@ -28,7 +28,7 @@
   							</div>
   							</div>
   						<div class="row">
-  						<p>출생일 : ${actorDto.actorBirth }</p>
+  						<p>출생일 : ${fn:substring(actorDto.actorBirth,0,10) }</p>
   						<p>직업 : ${actorDto.actorJob }</p>
   						<p>국적 : ${actorDto.actorNationality }</p>
 													</div>

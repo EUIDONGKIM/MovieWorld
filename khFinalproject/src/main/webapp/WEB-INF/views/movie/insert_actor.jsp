@@ -20,7 +20,7 @@
 		loadVideo();
 		
         $(".btn-search").click(function(){
-        	var target = '${pageContext.request.contextPath}/movie/insert_popup?movieNo='+movieNo;
+        	var target = '${pageContext.request.contextPath}/movie/admin/insert_popup?movieNo='+movieNo;
             window.open(target, "popup", "width=500 , height=500");
         });
         
@@ -57,7 +57,7 @@
 
         function addRole(movieNo,actorNo,actorJob){
             $.ajax({
-			url:"${pageContext.request.contextPath}/data/addRole",
+			url:"${pageContext.request.contextPath}/admin/addRole",
 			type:"post",
             data : {
 				movieNo:movieNo,
@@ -82,7 +82,7 @@
         };
         function addVideo(movieNo,videoTitle,videoRoot){
             $.ajax({
-			url:"${pageContext.request.contextPath}/data/addVideo",
+			url:"${pageContext.request.contextPath}/admin/addVideo",
 			type:"post",
             data : {
 				movieNo:movieNo,
@@ -100,7 +100,7 @@
         };
         function loadVideo(){	
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/getVideo",
+        		url:"${pageContext.request.contextPath}/admin/getVideo",
         		type:"get",
         		data : {
         			movieNo:movieNo
@@ -131,7 +131,7 @@
         }
         function loadDirector(){	
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/getDirector",
+        		url:"${pageContext.request.contextPath}/admin/getDirector",
         		type:"get",
         		data : {
         			movieNo:movieNo
@@ -147,7 +147,8 @@
         				template = template.replace("{{actorEngName}}",resp[i].actorEngName);
         				template = template.replace("{{actorJob}}",resp[i].actorJob);
         				template = template.replace("{{actorNationality}}",resp[i].actorNationality);
-        				template = template.replace("{{actorBirth}}",resp[i].actorBirth);
+        				var birth = resp[i].actorBirth.substring(0,10);
+        				template = template.replace("{{actorBirth}}",birth);
         				
         				var tag = $(template);
         				tag.find(".btn-delete").on("click",function(e){
@@ -165,7 +166,7 @@
         }
         function loadActor(){	
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/getActor",
+        		url:"${pageContext.request.contextPath}/admin/getActor",
         		type:"get",
         		data : {
         			movieNo:movieNo
@@ -199,7 +200,7 @@
         }
         function loadStaff(){	
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/getStaff",
+        		url:"${pageContext.request.contextPath}/admin/getStaff",
         		type:"get",
         		data : {
         			movieNo:movieNo
@@ -233,7 +234,7 @@
         }
         function deleteDirector(actorNo){
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/deleteDirector?"+$.param({"actorNo":actorNo}),
+        		url:"${pageContext.request.contextPath}/admin/deleteDirector?"+$.param({"actorNo":actorNo}),
         		type:"delete",
         		dataType:"text",
         		success:function(resp){
@@ -245,7 +246,7 @@
         }
         function deleteActor(actorNo){
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/deleteActor?"+$.param({"actorNo":actorNo}),
+        		url:"${pageContext.request.contextPath}/admin/deleteActor?"+$.param({"actorNo":actorNo}),
         		type:"delete",
         		dataType:"text",
         		success:function(resp){
@@ -257,7 +258,7 @@
         }
         function deleteStaff(actorNo){
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/deleteStaff?"+$.param({"actorNo":actorNo}),
+        		url:"${pageContext.request.contextPath}/admin/deleteStaff?"+$.param({"actorNo":actorNo}),
         		type:"delete",
         		dataType:"text",
         		success:function(resp){
@@ -269,7 +270,7 @@
         }
         function deleteVideo(videoNo){
         	$.ajax({
-        		url:"${pageContext.request.contextPath}/data/deleteVideo?"+$.param({"videoNo":videoNo}),
+        		url:"${pageContext.request.contextPath}/admin/deleteVideo?"+$.param({"videoNo":videoNo}),
         		type:"delete",
         		dataType:"text",
         		success:function(resp){

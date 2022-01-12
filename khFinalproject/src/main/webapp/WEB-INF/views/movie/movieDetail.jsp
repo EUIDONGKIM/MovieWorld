@@ -270,7 +270,7 @@
 	function replyInsert(reviewContent,reviewStarpoint,movieNo,memberNo){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/replyInsert",
+			url:"${pageContext.request.contextPath}/member/replyInsert",
 			type:"post",
 			data:{
 				reviewContent:reviewContent,
@@ -298,7 +298,7 @@
 		var movieNo = '${movieDto.movieNo}';
 		var memberNo = '${memberNo}';
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/loadReply",
+			url:"${pageContext.request.contextPath}/member/loadReply",
 			type:"get",
 			data:{
 				movieNo : movieNo,
@@ -439,7 +439,7 @@
 	
 	function deleteReply(movieNo,memberNo){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/deleteReply?"+$.param({"movieNo":movieNo,"memberNo":memberNo}),
+			url:"${pageContext.request.contextPath}/data/self/deleteReply?"+$.param({"movieNo":movieNo,"memberNo":memberNo}),
 			type:"delete",
 			dataType:"text",
 			success:function(resp){
@@ -453,7 +453,7 @@
 	
 	function addReplylike(movieNo,memberNo){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/addReplylike",
+			url:"${pageContext.request.contextPath}/member/addReplylike",
 			type:"post",
 			data:{
 				movieNo:movieNo,
@@ -471,7 +471,7 @@
 	
 	function updateReply(reviewContent,reviewStarpoint,movieNo,memberNo){
 		$.ajax({
-			url:"${pageContext.request.contextPath}/data/replyUpdate",
+			url:"${pageContext.request.contextPath}/data/self/replyUpdate",
 			type:"post",
 			data:{
 				reviewContent:reviewContent,

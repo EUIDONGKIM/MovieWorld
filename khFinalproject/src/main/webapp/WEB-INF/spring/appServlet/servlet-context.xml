@@ -105,6 +105,7 @@
 			<mvc:mapping path="/actor/admin/**"/>
 			<mvc:mapping path="/price/admin/**"/>
 			<mvc:mapping path="/reservation/admin/**"/>
+			<mvc:mapping path="/price/**"/>
 			<bean class="com.kh.spring.interceptor.AdminInterceptor"></bean>
 	 	</mvc:interceptor>
 	 	
@@ -114,7 +115,7 @@
 			<mvc:exclude-mapping path="/reservation/"/>
 			<mvc:exclude-mapping path="/reservation/direct"/>
 			<mvc:exclude-mapping path="/reservation/success"/>
-			<bean class="com.kh.spring.interceptor.SameInterceptor"></bean>
+			<bean class="com.kh.spring.interceptor.ReservationInterceptor"></bean>
 	 	</mvc:interceptor>
 
 	 	 <mvc:interceptor>
@@ -122,6 +123,11 @@
 			<mvc:mapping path="/board/edit/**"/>
 			<mvc:mapping path="/board/delete/**"/>
 			<bean class="com.kh.spring.interceptor.BoardInterceptor"></bean>
+	 	</mvc:interceptor>
+	 	
+	 	<mvc:interceptor>
+			<mvc:mapping path="/data/self/**"/>
+			<bean class="com.kh.spring.interceptor.SelfInterceptor"></bean>
 	 	</mvc:interceptor>
 	 	
 	 </mvc:interceptors>

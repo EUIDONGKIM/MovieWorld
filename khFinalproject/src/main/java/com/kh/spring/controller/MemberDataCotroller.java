@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +14,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.spring.entity.board.ReviewDto;
 import com.kh.spring.entity.member.CertificationDto;
 import com.kh.spring.entity.member.HistoryDto;
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
+import com.kh.spring.repository.board.ReviewDao;
 import com.kh.spring.repository.member.CertificationDao;
 import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.movie.MovieDao;
 import com.kh.spring.repository.reservation.ReservationDao;
+import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.service.EmailService;
 import com.kh.spring.service.MovieService;
+import com.kh.spring.service.ReservationService;
 import com.kh.spring.vo.MyMovieLikeVO;
+import com.kh.spring.vo.ReplyVO;
+import com.kh.spring.vo.ReservationVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,8 +53,14 @@ public class MemberDataCotroller {
 	private ReservationDao reservationDao;
 	@Autowired
 	private MovieService movieService;
-
-
+	@Autowired
+	private ReservationService reservationService;
+	@Autowired
+	private ReservationDetailDao reservationDetailDao;
+	@Autowired
+	private ReviewDao reviewDao;
+	@Autowired
+	private MovieDao movieDao;
 	@GetMapping("/idcheck")
 	public String idCheck(@RequestParam String memberEmail) {
 		MemberDto memberDto = memberDao.get(memberEmail);
@@ -133,5 +148,68 @@ public class MemberDataCotroller {
 		
 	}
 	
+	@GetMapping("/seat")
+	public List<ReservationVO> getSeat(@RequestParam int scheduleTimeNo) {
+		return reservationService.getSeatVOList(scheduleTimeNo);
+	}
+	@GetMapping("/getReservationKey")
+	public int getReservationKey() {
+		return reservationDao.getSequence();
+	}
+	@PostMapping("/TempReservation")
+	public void TempReservation(
+			@RequestParam String seatData,
+			@RequestParam int reservationKey,
+			@RequestParam int scheduleTimeNo,
+			@RequestParam(required = false,defaultValue = "0") int ageNormal,
+			@RequestParam(required = false,defaultValue = "0") int ageYoung,
+			@RequestParam(required = false,defaultValue = "0") int ageOld,
+			HttpSession session
+			) {
+		int memberNo = (int)session.getAttribute("memberNo");
+		reservationService.insert(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld,memberNo);
+	}
+	@DeleteMapping("/cancelTempReservation")
+	public boolean cancelTempReservation(@RequestParam int reservationNo) {
+		return reservationService.remove(reservationNo);
+	}
 	
+	@GetMapping("/getReservation")
+	public ReservationDto getReservation(@RequestParam int reservationKey) {
+		return reservationDao.get(reservationKey);
+	}
+	
+	@GetMapping("/getReservationDetail")
+	public List<ReservationDetailDto> getReservationDetail(@RequestParam int reservationKey) {
+		return reservationDetailDao.get(reservationKey);
+	}
+	@PostMapping("/replyInsert")
+	public void replyInsert(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo,
+			@RequestParam int reviewStarpoint,
+			@RequestParam String reviewContent
+			) {
+		ReviewDto reviewDto = new ReviewDto();
+		reviewDto.setMemberNo(memberNo);
+		reviewDto.setMovieNo(movieNo);
+		reviewDto.setReviewStarpoint(reviewStarpoint);
+		reviewDto.setReviewContent(reviewContent);
+		reviewDao.insert(reviewDto);
+		movieDao.refreshStar(movieNo);
+	}
+	@GetMapping("/loadReply")
+	public List<ReplyVO> loadPeopleReply(
+			@RequestParam int movieNo
+			) {
+		return reviewDao.list(movieNo);
+	}
+	
+	@PostMapping("/addReplylike")
+	public void addReplylike(
+			@RequestParam int memberNo,
+			@RequestParam int movieNo
+			) {
+		reviewDao.replyLike(memberNo,movieNo);
+	}
 }
