@@ -25,6 +25,13 @@
 		select * from board where board_no=#{boardNo}
 	</select>
 	
+	<!-- 닉네임을 뽑아오기 위한 단일조회 -->
+	<select id="get2" parameterType="int" resultType="BoardVO">
+		select B.*,member_nick from board b
+		inner join member m on b.member_email = m.member_email 
+        where board_no=#{boardNo}
+	</select> 
+	
 	<!-- 시퀸스 미리뽑아오기  -->
 	<select id="getSeq" resultType="int">
 		select board_no_seq.nextval from dual
