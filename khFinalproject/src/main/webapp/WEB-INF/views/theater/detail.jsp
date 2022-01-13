@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:set var="root" value="${pageContext.request.contextPath }"/>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <style>
 	#map {
 		width:500px;
@@ -303,50 +304,50 @@
 		
 	</div>
 </div>
+<c:if test="${admin}">
 
-	
-
-<div>
-
-<hr>
-
-<h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
-	<a href="${root}/theater/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
-	<a href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
-	
-	<div>
-	<h3>상영관 목록</h3>
-	
-	<c:if test="${param.errorSchedule != null}">
-		<div class="row center">
-			<div class="col">
-				<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+	<div class="container">
+	<h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
+		<a href="${root}/theater/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
+		<a href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
+		
+		<div>
+		<h3>상영관 목록</h3>
+		
+		<c:if test="${param.errorSchedule != null}">
+			<div class="row center">
+				<div class="col">
+					<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+				</div>
 			</div>
+		</c:if>
+	
+		
+		<c:forEach var="hallDto" items="${hallList}">
+			<h5>
+				${hallDto.getFullName()} | ${hallDto.hallSeat}석 
+				<a href="${root}/hall/admin/detail?hallNo=${hallDto.hallNo}">상세보기</a>
+			</h5>
+		</c:forEach>
 		</div>
-	</c:if>
+		
+		
+		<div>
+		<h3>현재 상영중인 영화<a href="${root}/schedule/admin/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a></h3>
+		<c:forEach var="totalInfoViewDto" items="${scheduleList }">
+			<h5>
+				${totalInfoViewDto.movieTitle }
+				<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
+				<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
+				<a href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+			</h5>
+		</c:forEach>
+		</div>
+	</div>
+</c:if>	
 
-	
-	<c:forEach var="hallDto" items="${hallList}">
-		<h5>
-			${hallDto.getFullName()} | ${hallDto.hallSeat}석 
-			<a href="${root}/hall/admin/detail?hallNo=${hallDto.hallNo}">상세보기</a>
-		</h5>
-	</c:forEach>
-	</div>
-	
-	
-	<div>
-	<h3>현재 상영중인 영화<a href="${root}/schedule/admin/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a></h3>
-	<c:forEach var="totalInfoViewDto" items="${scheduleList }">
-		<h5>
-			${totalInfoViewDto.movieTitle }
-			<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
-			<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
-			<a href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
-		</h5>
-	</c:forEach>
-	</div>
-</div>
+
+
 
 
 
