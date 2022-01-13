@@ -560,7 +560,7 @@ function scheduleDateList(movieNo,theaterNo){
 			$(".schedule-time-date-list").empty();
 			var date = new Date();
 			console.log("현재날짜",date);
-			var count = 0;
+
 			for(var i = 0 ; i < resp.length ; i++){
 				var checkDate = new Date(resp[i]);
 				console.log("목록날짜",checkDate);
@@ -586,14 +586,11 @@ function scheduleDateList(movieNo,theaterNo){
 				});
 				
 				$(".schedule-time-date-list").append(tag);
-				count++;
+
 				}
 				
 				}
-				console.log(count);
-				if(count==0){
-					$(".schedule-time-date-list").text('해당 날짜의 상영일이 없습니다.');
-			}
+
 			
 		},
 		error:function(e){
@@ -1020,7 +1017,7 @@ function cancelTempReservation(reservationKey){
 <div class="page">
 
 <template id="seat-list-template">
-	<div class="float-box center">
+	<div class="float-box col align-self-center">
 		<div>
 		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
 
@@ -1032,7 +1029,9 @@ function cancelTempReservation(reservationKey){
 					</div>
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay">
+		<div class="d-grid gap-2 d-md-block">
+		<button type="submit" class="btn-pay btn btn-outline-info"><h1>좌석선택 완료</h1></button>
+		</div>	
 		</div>
 		</form>
 	</div>
@@ -1041,21 +1040,15 @@ function cancelTempReservation(reservationKey){
 <template id="span-template">
 <span>{{row}}-{{col}}</span>
 </template> 
-  	<div class="d-grid gap-2 d-md-block">
+  	 <div class="d-grid gap-2 d-md-block">
 		<button class="btn-prev btn-seat-cancel btn btn-outline-info"><h1>다시 선택하기</h1></button>
-	</div>	 
-  		 
+	</div>	
+	
 	<div class="seat-box">
 		
 	</div>
 
         <div id="seat-send-result"></div>
-
-	
-
-	<div class="row center">
-			<button class="btn-prev btn-seat-cancel btn btn-info"><h4>다시 선택하기</h4></button>
-	</div>
 
 
 </div>
@@ -1064,54 +1057,30 @@ function cancelTempReservation(reservationKey){
 
 <div class="page">
 <template id="reservation-template">
-	<div class="row center">
-		<div class="row center">
-			<label>영화</label>
-			<span>{{movieName}}</span>
-		</div>
-		<div class="row center">
-			<label>영화관</label>
-			<span>{{theaterName}}</span>
-		</div>
-	
-		<div class="row center">
-			<label>상영시간</label>
-			<span>{{scheduleTimeDateTime}}</span>
-		</div>
-		<div class="row center">
-			<label>인원수</label>
-			<span>{{reservationTotalNumber}} 명</span>
-		</div>
-		<div class="row center">
-			<label>총 예매 금액</label>
-			<span>{{totalAmount}}원</span>
-		</div>
+	<div class="card" style="width: 30rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{movieName}}</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">{{theaterName}}</h6>
+		<p class="card-text">상영시간 : {{scheduleTimeDateTime}}</p>
+		<p class="card-text">인원 : {{reservationTotalNumber}} 명</p>
+	    <p class="card-text">총 예매 금액 : {{totalAmount}}원</p>
+		
+	  </div>
 	</div>
 </template>	
 
 <template id="reservation-detail-template">
-	<hr>
-	<div class="row center">
-		<div class="row center">
-			<label>좌석</label>
-			<span>{{row}}행{{col}}열</span>
-		</div>
-		<div class="row center">
-			<label>상영관 종류</label>
-			<span>{{hallType}}</span>
-		</div>
-		<div class="row center">
-			<label>연령 구분</label>
-			<span>{{ageName}}</span>
-		</div>
-		<div class="row center">
-			<label>상영 구분</label>
-			<span>{{scheduleTimeDiscountType}}</span>
-		</div>
-		<div class="row center">
-			<label>개별 금액</label>
-			<span>{{reservationDetailPrice}}</span>
-		</div>
+	<div class="col-auto">
+	<div class="card" style="width: 18rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{row}}행{{col}}열</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">{{hallType}}</h6>
+		<p class="card-text">연령 구분 : {{ageName}}</p>
+		<p class="card-text">상영 구분 : {{scheduleTimeDiscountType}}</p>
+	    <p class="card-text">금액: {{reservationDetailPrice}} 원</p>
+		
+	  </div>
+	</div>
 	</div>
 </template>	
 	
@@ -1122,7 +1091,7 @@ function cancelTempReservation(reservationKey){
 	<hr>
 	
 	<h1>결제 상세 내역 확인</h1>
-	<div id="pay-detail-show"></div>
+	<div id="pay-detail-show" class="row g-3 align-items-center"></div>
 	
 	<hr>
 	<div class="row g-3 align-items-center">

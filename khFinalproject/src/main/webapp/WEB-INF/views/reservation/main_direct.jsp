@@ -646,7 +646,6 @@ function scheduleDateList(movieNo,theaterNo){
 			$(".schedule-time-date-list").empty();
 			var date = new Date();
 			console.log("현재날짜",date);
-			var count = 0;
 
 			for(var i = 0 ; i < resp.length ; i++){
 				var checkDate = new Date(resp[i]);
@@ -674,14 +673,12 @@ function scheduleDateList(movieNo,theaterNo){
 				});
 				
 				$(".schedule-time-date-list").append(tag);
-				count++;
+
 				}
 				
 				}
-				console.log(count);
-				if(count==0){
-					$(".schedule-time-date-list").text('해당 날짜의 상영일이 없습니다.');
-			}
+
+
 			
 		},
 		error:function(e){
