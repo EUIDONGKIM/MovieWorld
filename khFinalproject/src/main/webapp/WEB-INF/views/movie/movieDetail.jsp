@@ -728,7 +728,7 @@
 					</div>
 					<div class="modal-body">
 						<div class="content-box">
-						
+							
 							<div class="star-rating" >
 				    			<input type="radio" id="5-stars" name="starPoint" value="5" checked/>
 				    			<label for="5-stars" class="star">&#9733;</label>
