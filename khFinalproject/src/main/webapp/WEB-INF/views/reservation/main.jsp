@@ -867,7 +867,7 @@ function getReservation(reservationKey){
 			var template = $("#reservation-template").html();
 			template = template.replace("{{movieName}}",movieName);
 			template = template.replace("{{theaterName}}",theaterName);
-			var date = new Date(scheduleTimeDateTime).toString();
+			var date = new Date(scheduleTimeDateTime).toLocaleString();
 			template = template.replace("{{scheduleTimeDateTime}}",date);
 			template = template.replace("{{reservationTotalNumber}}",resp.reservationTotalNumber);
 			template = template.replace("{{totalAmount}}",resp.totalAmount);
@@ -938,22 +938,16 @@ function cancelTempReservation(reservationKey){
 	<template id="movie-list-template">
 		<div>	
 			<input type="radio" class="btn-check" id="{{id}}" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
-			<label class="btn btn-outline-success" for="{{id}}">{{grade}} {{name}}</label>		
+			<label class="btn btn-outline-info" for="{{id}}">{{grade}} | {{name}}</label>		
 		</div>	
 	</template>
 
 	<template id="list-template">
 		<div>
 			<input type="radio" class="btn-check" id="{{id}}" name="{{key}}" value="{{value}}" data-name="{{name}}">
-			<label class="btn btn-outline-success" for="{{id}}">{{name}}</label>
+			<label class="btn btn-outline-info" for="{{id}}">{{name}}</label>
 		</div>	
 	</template>
-
-	<div class="row">
-		<div class="d-grid gap-2 col mx-auto">
-			<button type="button" class="btn-init btn btn-outline-info"><h1>다시 선택</h1></button>
-		</div>
-	</div>
 	
 	<div class="row">
 		<div class=col-3>
@@ -1044,7 +1038,14 @@ function cancelTempReservation(reservationKey){
 	</div>
 	<hr><br>
 	<div class="row">
-		<div class="d-grid gap-2 col mx-auto">
+
+		<div class="d-grid gap-2 col d-md-flex">
+			<button type="button" class="btn-init btn btn-outline-info"><h1>다시 선택</h1></button>
+		</div>
+
+	
+	
+		<div class="d-grid gap-2 col d-md-flex justify-content-md-end">
 			<button class="btn-next btn btn-outline-info"><h1>다음 단계</h1></button>
 		</div>
 	</div>
@@ -1055,7 +1056,11 @@ function cancelTempReservation(reservationKey){
 <div class="page">
 
 <template id="seat-list-template">
+
 	<div class="float-box" style="justify-content: center">
+
+	<div class="float-box col align-self-center">
+
 		<div>
 		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
 		<div class="row center">
@@ -1063,6 +1068,7 @@ function cancelTempReservation(reservationKey){
 					<div class="cinema-screen"><h3>스크린</h3></div>
 						<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple"></div>
 					</div>
+
 				<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
 		</div>
 			<div class="row center">
@@ -1073,6 +1079,14 @@ function cancelTempReservation(reservationKey){
 				<div class="col"></div>
 			</div>
 		  </div>
+
+			</div>
+	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
+	<div class="d-grid gap-2 d-md-block">
+	<button type="submit" class="btn-pay btn btn-outline-info"><h1>좌석선택 완료</h1></button>
+	</div>	
+	</div>
+
 		</form>
 	</div>
 </template>		
@@ -1080,7 +1094,9 @@ function cancelTempReservation(reservationKey){
 <template id="span-template">
 <span>{{row}}-{{col}}</span>
 </template> 
-  		 
+  	<div class="d-grid gap-2 d-md-block">
+		<button class="btn-prev btn-seat-cancel btn btn-outline-info"><h1>다시 선택하기</h1></button>
+	</div>	 
   		 
 	<div class="seat-box">
 		
@@ -1089,9 +1105,14 @@ function cancelTempReservation(reservationKey){
         <div id="seat-send-result"></div>
 
 	
+
 	<div class="row center">
 			<button class="btn-prev btn-seat-cancel btn btn-info"><h4>다시 선택하기</h4></button>
 	</div>
+
+
+</div>
+
 
 
 <div class="page">
@@ -1157,41 +1178,92 @@ function cancelTempReservation(reservationKey){
 	<div id="pay-detail-show"></div>
 	
 	<hr>
-	
-	<h1>포인트 사용</h1>
-	
+	<div class="row g-3 align-items-center">
+		<div class="col-auto">
+		    <label for="inputPassword6" class="col-form-label">포인트 사용</label>
+		 </div>
+		 
+		<div class="col-auto">
+	    	<input type="number" name="memberPoint" class="form-control" aria-describedby="passwordHelpInline" placeholder="포인트 사용 " min="1000" value="0" step="100">
+	  	</div>
+		
+		<div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		      내현재 포인트
+		    </span>
+		  </div>
+		  
+		  <div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		      :
+		    </span>
+		  </div>
+		  
+		  <div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		      ${memberPoint } 점
+		    </span>
+		  </div>
+		<div class="col-auto">
+		    <div class="d-grid gap-2 col d-md-flex">
+			<button class="btn-use-point btn btn-outline-info">포인트 사용</button>
+			</div>
+		 </div>
+		 
+		 <div class="col-auto">
+		    <div class="d-grid gap-2 col d-md-flex justify-content-md-end">
+			<button class="btn-init-point btn btn-outline-info">포인트 다시 선택</button>
+			</div>
+		 </div>
+		 
+	</div>
 	<hr>
 	
+	<div class="row g-3 align-items-center">
+		  <div class="col-auto">
+		    <label for="inputPassword6" class="col-form-label">최종 결제 금액</label>
+		  </div>
+		  
+		  <div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		      :
+		    </span>
+		  </div>
+		  
+		<div class="col-auto">
+	    	<input type="text" name="total-amount" class="form-control" aria-describedby="passwordHelpInline" placeholder="총 금액" readonly>
+	  	</div>
+	  	
+	  	  <div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		     -
+		    </span>
+		  </div>
+	  	
+		<div class="col-auto">
+	    	<input type="text" name="use-amount" value="0" class="form-control" aria-describedby="passwordHelpInline" placeholder="포인트 사용 금액" readonly>
+	  	</div>
+	  	
+	  	<div class="col-auto">
+		    <span id="passwordHelpInline" class="form-text">
+		     =
+		    </span>
+		  </div>
+	  	
+	  	<div class="col-auto">
+	    	<input type="text" name="result-amount" value="0" class="form-control" aria-describedby="passwordHelpInline" placeholder="최종 결제 금액" readonly>
+	  	</div>
+	</div>
 	<div class="row">
-		<label>내 현재 포인트</label>
-		<span>${memberPoint } 점</span>
+		<div class="d-grid gap-2 col d-md-flex">
+			<button class="btn-prev btn-pay-cancel btn btn-outline-info" ><h1>이전 단계</h1></button>
+		</div>
+
+		<div class="d-grid gap-2 col d-md-flex justify-content-md-end">
+			<button class="btn-pay-confirm btn btn-outline-info"><h1>카카오 결제</h1></button>
+		</div>
 	</div>
-	
-	<div class="row">
-		<label>포인트 사용하기</label>
-		<input type="number" name="memberPoint" min="1000" value="0" step="100">
-	</div>
-	
-	<div class="row">
-		<button class="btn-use-point btn btn-info">포인트 사용</button>
-		<button class="btn-init-point btn btn-info">포인트 다시 선택</button>
-	</div>
-	
-	<div class="row">
-		<label>최종 결제 금액</label>
-		총 금액  :<input type="text" name="total-amount" readonly> -
-		포인트 사용 금액  :<input type="text" name="use-amount" value="0" readonly> =
-		최종 결제 금액  :<input type="text" name="result-amount" value="0" readonly>
-	</div>
-	
-	<div class="row center">
-		<button class="btn-pay-confirm btn btn-info"><h1>결제 진행(카카오 페이)</h1></button>
-	</div>
-	
-	
-	<div class="row center">
-		<button class="btn-prev btn-pay-cancel btn btn-info" ><h1>이전 단계</h1></button>
-	</div>
+
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
