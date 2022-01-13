@@ -41,9 +41,9 @@
 	  flex-direction: row-reverse;
 	  font-size:2.5em;
 	  justify-content:space-around;
-	  padding:0 .2em;
+	  padding:0 5.7em;
 	  text-align:center;
-	  width:5em;
+	  width:6em;
 	}
 	.star-rating input {
 	  display:none;
@@ -499,8 +499,8 @@
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>
 		<td>
-			<button class="reply-already-like" style="color: red;display: none;">좋아요({{reviewLikePlus}})</button>
-			<button class="reply-like">좋아요({{reviewLike}})</button>
+			<button class="reply-already-like" style="color: red;display: none;">♡좋아요({{reviewLikePlus}})</button>
+			<button class="reply-like">♡좋아요({{reviewLike}})</button>
 			<button class="edit-btn">수정</button>
 			<button class="delete-btn" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">삭제</button>
 		</td>
@@ -595,6 +595,7 @@
 				</div>
 		<br>
 		<br>
+		
 			<table class="table table-bordered">
  				<thead>
   					 <tr>
@@ -613,6 +614,7 @@
 			<br>
 			<br>
 			
+			<!-- 트레일러 동영상 -->
 			<table class="table table-bordered">
  				<thead>
   					 <tr class="table-active">
@@ -634,7 +636,39 @@
 			
 			<br>
 			<br>
-			
+
+			<!-- TEST 스틸컷 이미지 -->
+			<div class="conainer-bordered">
+				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198776_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198776_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198775_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+							class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#carouselExampleControls" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
+							class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+
+
+
+
+
+			<!-- 스틸컷 이미지 -->
 			<table class="table table-bordered">
  				<thead>
   					 <tr class="table-active">
@@ -666,23 +700,22 @@
 
 	<!--Modal Button -->
 	<!-- Button trigger modal -->
-	<div class="container-800 container-center">
+	<div class="container-1000 container-center">
 		<div class="row">
-				<div class="col-10" style="padding: 5px;">
+				<div class="col-10 center" >
 					<label
-						style="border: solid 1px; border-radius: 12px; border-block-color: gray; padding: 2; padding: 7px;">
-						${{memberNick}} 님 ${movieDto.movieTitle}재미있게 보셨나요? 영화의 어떤 점이 좋았는지 이야기해주세요. 
-						관람일 기준 7일 이내 등록시 50p가 적립됩니다. 포인트는 관람평 최대 10편 지급가능합니다.
+						style="border: solid 1px; border-radius: 12px; border-color: gray;  padding: 20px;">
+						${{memberNick}} 님 ${movieDto.movieTitle}재미있게 보셨나요? 
+						영화의 어떤 점이 좋았는지 이야기해주세요. 
 					</label>
 				</div>
-				<div class="col-2" style="padding: 0;">
+				<div class="col-2">
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-							data-bs-target="#exampleModal" style="height: 88px; ">관람평 작성</button>
+							data-bs-target="#exampleModal" style="height: 66px; padding:9px;">관람평 작성</button>
 				</div>
 				
 				</div>
 
-		</div>
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -711,7 +744,7 @@
 		 				
 		 				</div>
 						<textarea type="text" id="reviewContent" name="reviewContent"
-							required rows="4" cols="58" style="resize: none;" placeholder="실관람평을 남겨주세요."></textarea>
+							required rows="4" cols="58" style="resize: none; margin-top:15px" placeholder="실관람평을 남겨주세요."></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
@@ -730,9 +763,10 @@
 					</tbody>
 				</table>
 				
-				<button id="more-btn">더보기</button>
+				<button class="btn btn-primary" id="more-btn">더보기</button>
 			</div>
 				
+		</div>
 			
 
 			
