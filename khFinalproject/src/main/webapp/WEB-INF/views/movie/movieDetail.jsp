@@ -14,6 +14,7 @@
 	color: #3e82a4;
 	width: 110px;
 	height: 30px;
+	
 	}
 	canvas{ 
 	width: 600px !important; 
@@ -34,7 +35,7 @@
 	     Content box width: 160px
 	     Content box height: 80px */
 	}
-	
+	/*d*/
 	.star-rating {
 	/*   border:solid 1px #ccc; */
 	  display:flex;
@@ -639,7 +640,6 @@
 			<br>
 
 			<!-- TEST 스틸컷 이미지 -->
-			<div class="conainer-bordered">
 				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-inner">
 						<div class="carousel-item active">
@@ -663,7 +663,6 @@
 							class="visually-hidden">Next</span>
 					</button>
 				</div>
-			</div>
 
 
 
@@ -718,6 +717,7 @@
 				</div>
 
 		<!-- Modal -->
+						<form class="send-reply">
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -729,7 +729,8 @@
 					</div>
 					<div class="modal-body">
 						<div class="content-box">
-						<form class="send-reply">
+
+
 							<div class="star-rating" >
 				    			<input type="radio" id="5-stars" name="starPoint" value="5" checked/>
 				    			<label for="5-stars" class="star">&#9733;</label>
@@ -752,10 +753,10 @@
 							data-bs-dismiss="modal">취소</button>
 						<button type="submit" class="btn btn-primary">등록</button>
 					</div>
-					</form>
 				</div>
 			</div>
 		</div>
+						</form>
 			
 				<table class="table">
 					<thead class="reply-items">
