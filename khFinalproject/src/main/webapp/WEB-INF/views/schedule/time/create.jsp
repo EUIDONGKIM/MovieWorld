@@ -31,14 +31,13 @@
         	var scheduleTimefirst = day + " " + time + ":00";
         	console.log(scheduleTimefirst);
         	
-        	checkSameTime(scheduleNo,hallNo,scheduleTimefirst);
+        	checkSameTime(hallNo,scheduleTimefirst);
         });
-        function checkSameTime(scheduleNo,hallNo,scheduleTimefirst){
+        function checkSameTime(hallNo,scheduleTimefirst){
         	$.ajax({
 				url:"${pageContext.request.contextPath}/admin/checkSameTime",
 				type:"get",
 				data:{
-					scheduleNo:scheduleNo,
 					hallNo:hallNo,
 					scheduleTimefirst:scheduleTimefirst
 					},

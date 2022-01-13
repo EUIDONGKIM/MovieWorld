@@ -34,11 +34,10 @@ public class AdminDataController {
 	
 	@GetMapping("/checkSameTime")
 	public String checkSameTime(
-			@RequestParam int scheduleNo,
 			@RequestParam int hallNo,
 			@RequestParam String scheduleTimefirst
 			) {
-		List<LastInfoViewDto> checkList = lastInfoViewDao.checkTime(scheduleNo,hallNo,scheduleTimefirst);
+		List<LastInfoViewDto> checkList = lastInfoViewDao.checkTime(hallNo,scheduleTimefirst);
 		String check;
 		if(!checkList.isEmpty()) {
 			check="NNNNN";
