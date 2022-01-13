@@ -14,6 +14,7 @@
 	color: #3e82a4;
 	width: 110px;
 	height: 30px;
+	
 	}
 	canvas{ 
 	width: 600px !important; 
@@ -34,7 +35,7 @@
 	     Content box width: 160px
 	     Content box height: 80px */
 	}
-	
+	/*d*/
 	.star-rating {
 	/*   border:solid 1px #ccc; */
 	  display:flex;
@@ -639,7 +640,6 @@
 			<br>
 
 			<!-- TEST 스틸컷 이미지 -->
-			<div class="conainer-bordered">
 				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 					<div class="carousel-inner">
 						<div class="carousel-item active">
@@ -663,7 +663,6 @@
 							class="visually-hidden">Next</span>
 					</button>
 				</div>
-			</div>
 
 
 
