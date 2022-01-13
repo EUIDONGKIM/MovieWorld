@@ -15,6 +15,7 @@ public class MemberDto {
 	private String memberGrade;
 	private int memberPoint;
 	private String memberJoin;
+	private String memberLogin;
 	
 	public String getMemberBirthDay() {
 			return this.memberBirth.substring(0,10);

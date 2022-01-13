@@ -107,6 +107,8 @@ public class MemberController {
 		 session.setAttribute("memberNo", findDto.getMemberNo());
 		 session.setAttribute("ses",findDto.getMemberEmail());
 		 session.setAttribute("grade", findDto.getMemberGrade());
+		 //마지막 로그인 정보 업데이트
+		 memberDao.lastLogin(findDto.getMemberEmail());
 		 
 		 //만약 등급이 정지라면 로그인 실패
 		 String memberGrade = (String)session.getAttribute("grade");

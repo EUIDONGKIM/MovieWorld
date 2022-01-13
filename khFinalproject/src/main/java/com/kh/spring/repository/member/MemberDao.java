@@ -36,6 +36,8 @@ public interface MemberDao {
 	boolean changeInformation(MemberDto memberDto , String memberPw);
 	//관리자자용 개인정보변경
 	boolean changeInformationAdmin(MemberDto memberDto);
+	//마지막 로그인 시간 변경
+	boolean lastLogin(String memberEmail);
 	
 	//회원 탈퇴
 	boolean quit(String memberEmail, String memberPw);

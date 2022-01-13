@@ -228,6 +228,12 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+	public boolean lastLogin(String memberEmail) {
+		int pass= sqlSession.update("member.lastLogin",memberEmail);
+		return pass>0;
+	}
+
+	@Override
 	public int getPoint(String memberEmail) {
 		return sqlSession.selectOne("member.getPoint",memberEmail);
 	}
@@ -252,6 +258,7 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectList("member.countMemberjoinByYearMonth");
 
 	}
+
 
 
 
