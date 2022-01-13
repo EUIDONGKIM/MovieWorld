@@ -322,13 +322,16 @@ function sidoLoadList(){
 		dataType : "json",
 		success:function(resp){
 			$(".theater-sido-list").empty();
-			
+			var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
+				count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","theaterSido");
 				template = template.replace("{{name}}",resp[i].theaterSido);
+				template = template.replace("{{name}}",resp[i].theaterSido);
 				template = template.replace("{{value}}",resp[i].theaterSido);
-				
+				template = template.replace("{{id}}","s"+count);
+				template = template.replace("{{id}}","s"+count);
 				var tag = $(template);
 				tag.find("input[name=theaterSido]").on("input",function(){
 					theaterSido = $(this).attr("value");
@@ -365,7 +368,9 @@ function movieLoadList(){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
 				template = template.replace("{{runtime}}",resp[i].movieRuntime);
-
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
 					movieRuntime = $(this).data("runtime");
@@ -409,7 +414,8 @@ function movieSearchList(theaterSido,theaterNo){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
 				template = template.replace("{{runtime}}",resp[i].movieRuntime);
-
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
 					movieRuntime = $(this).data("runtime");
@@ -445,6 +451,8 @@ function theaterNameList(theaterSido){
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{value}}",resp[i].theaterNo);
+				template = template.replace("{{id}}","n"+resp[i].theaterNo);
+				template = template.replace("{{id}}","n"+resp[i].theaterNo);
 				var tag = $(template);
 				
 				tag.find("input[type=radio]").on("input",function(){
@@ -480,12 +488,16 @@ function sidoList(movieNo){
 		dataType : "json",
 		success:function(resp){
 			$(".theater-sido-list").empty();
-			
+			var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
+				count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","theaterSido");
 				template = template.replace("{{name}}",resp[i]);
+				template = template.replace("{{name}}",resp[i]);
 				template = template.replace("{{value}}",resp[i]);
+				template = template.replace("{{id}}","s"+count);
+				template = template.replace("{{id}}","s"+count);
 				
 				var tag = $(template);
 				tag.find("input[name=theaterSido]").on("input",function(){
@@ -530,6 +542,8 @@ function theaterNoList(movieNo,theaterSido){
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{value}}",resp[i].theaterNo);
+				template = template.replace("{{id}}","tn"+resp[i].theaterNo);
+				template = template.replace("{{id}}","tn"+resp[i].theaterNo);
 				
 				var tag = $(template);
 				
@@ -580,8 +594,10 @@ function scheduleDateList(movieNo,theaterNo){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeDate");
 				template = template.replace("{{name}}",resp[i]);
+				template = template.replace("{{name}}",resp[i]);
 				template = template.replace("{{value}}",resp[i]);
-				
+				template = template.replace("{{id}}","n"+resp[i]);
+				template = template.replace("{{id}}","n"+resp[i]);
 				var tag = $(template);
 				
 				tag.find("input[type=radio]").on("input",function(){
@@ -644,9 +660,14 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				if(sellCheck==0) sellCheck='매진';
 				template = 
 				template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + "\n" + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
+				template = 
+				template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + "\n" + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
+					
 				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
 				template = template.replace("{{hallType}}",resp[i].hallName+"["+resp[i].hallType+"]");
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
+				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
+				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
 				
 				var tag = $(template);
 
@@ -907,6 +928,7 @@ function cancelTempReservation(reservationKey){
 </script>
 <div class="page">
 <div class="container container-center">
+
 	<div class="row center">
 		<div class="col">
 			<h1>예매 화면</h1>
@@ -914,23 +936,19 @@ function cancelTempReservation(reservationKey){
 	</div>
 	
 	<template id="movie-list-template">
-		<div>
-			<label>
-			<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
-			<span>{{grade}} {{name}}</span>		
-			</label>
+		<div>	
+			<input type="radio" class="btn-check" id="{{id}}" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
+			<label class="btn btn-outline-success" for="{{id}}">{{grade}} {{name}}</label>		
 		</div>	
 	</template>
 
 	<template id="list-template">
 		<div>
-			<label>
-			<span>{{name}}</span>
-			<input type="radio" name="{{key}}" value="{{value}}" data-name="{{name}}">
-			</label>
+			<input type="radio" class="btn-check" id="{{id}}" name="{{key}}" value="{{value}}" data-name="{{name}}">
+			<label class="btn btn-outline-success" for="{{id}}">{{name}}</label>
 		</div>	
 	</template>
-	
+
 	<div class="row">
 		<div class="d-grid gap-2 col mx-auto">
 			<button type="button" class="btn-init btn btn-outline-info"><h1>다시 선택</h1></button>
@@ -1030,6 +1048,7 @@ function cancelTempReservation(reservationKey){
 			<button class="btn-next btn btn-outline-info"><h1>다음 단계</h1></button>
 		</div>
 	</div>
+	
 </div>
 </div>
 

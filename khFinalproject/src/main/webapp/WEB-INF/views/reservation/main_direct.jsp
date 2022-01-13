@@ -380,12 +380,16 @@ function sidoLoadList(){
 		dataType : "json",
 		success:function(resp){
 			$(".theater-sido-list").empty();
-			
+			var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
+				count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","theaterSido");
 				template = template.replace("{{name}}",resp[i].theaterSido);
+				template = template.replace("{{name}}",resp[i].theaterSido);
 				template = template.replace("{{value}}",resp[i].theaterSido);
+				template = template.replace("{{id}}","s"+count);
+				template = template.replace("{{id}}","s"+count);
 				
 				var tag = $(template);
 				tag.find("input[name=theaterSido]").on("input",function(){
@@ -424,7 +428,9 @@ function movieLoadList(){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
 				template = template.replace("{{runtime}}",resp[i].movieRuntime);
-
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
 					movieRuntime = $(this).data("runtime");
@@ -468,7 +474,8 @@ function movieSearchList(theaterSido,theaterNo){
 				template = template.replace("{{name}}",resp[i].movieTitle);
 				template = template.replace("{{value}}",resp[i].movieNo);
 				template = template.replace("{{runtime}}",resp[i].movieRuntime);
-
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
+				template = template.replace("{{id}}","m"+resp[i].movieNo);
 				var tag = $(template);
 				tag.find("input[name=movieNo]").on("input",function(){
 					movieRuntime = $(this).data("runtime");
@@ -504,6 +511,9 @@ function theaterNameList(theaterSido){
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{value}}",resp[i].theaterNo);
+				template = template.replace("{{id}}","n"+resp[i].theaterNo);
+				template = template.replace("{{id}}","n"+resp[i].theaterNo);
+				
 				var tag = $(template);
 				
 				tag.find("input[type=radio]").on("input",function(){
@@ -545,12 +555,16 @@ function sidoList(movieNo){
 			
 			directChecked();
 			$(".theater-sido-list").empty();
-			
+			var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
+				count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","theaterSido");
 				template = template.replace("{{name}}",resp[i]);
+				template = template.replace("{{name}}",resp[i]);
 				template = template.replace("{{value}}",resp[i]);
+				template = template.replace("{{id}}","s"+count);
+				template = template.replace("{{id}}","s"+count);
 				
 				var tag = $(template);
 				tag.find("input[name=theaterSido]").on("input",function(){
@@ -595,7 +609,8 @@ function theaterNoList(movieNo,theaterSido){
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{name}}",resp[i].theaterName);
 				template = template.replace("{{value}}",resp[i].theaterNo);
-				
+				template = template.replace("{{id}}","tn"+resp[i].theaterNo);
+				template = template.replace("{{id}}","tn"+resp[i].theaterNo);
 				var tag = $(template);
 				
 				tag.find("input[type=radio]").on("input",function(){
@@ -645,8 +660,10 @@ function scheduleDateList(movieNo,theaterNo){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeDate");
 				template = template.replace("{{name}}",resp[i]);
+				template = template.replace("{{name}}",resp[i]);
 				template = template.replace("{{value}}",resp[i]);
-				
+				template = template.replace("{{id}}","n"+resp[i]);
+				template = template.replace("{{id}}","n"+resp[i]);
 				var tag = $(template);
 				
 				tag.find("input[type=radio]").on("input",function(){
@@ -707,10 +724,14 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				if(sellCheck==0) sellCheck='매진';
 				template = 
 				template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + "\n" + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
+				template = 
+				template.replace("{{name}}",resp[i].hallName+"["+resp[i].hallType+"]"+resp[i].scheduleTimeDiscountType + "\n" + firstTime + "~" + checkDate.getHours()+":"+checkDate.getMinutes()+"["+sellCheck+"|"+resp[i].hallSeat+"]");
+					
 				template = template.replace("{{scheduleTimeDiscountType}}",resp[i].scheduleTimeDiscountType);
 				template = template.replace("{{hallType}}",resp[i].hallName+"["+resp[i].hallType+"]");
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
-				
+				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
+				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
 				var tag = $(template);
 
 				tag.find("input[type=radio]").on("input",function(){
@@ -968,114 +989,127 @@ function cancelTempReservation(reservationKey){
 });
 </script>
 
-<h1> 예매 화면 </h1>
-
-<template id="movie-list-template">
-	<div>
-		<label>
-		<input type="radio" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
-		<span>{{grade}} {{name}}</span>		
-		</label>
-	</div>	
-</template>
-
-<template id="list-template">
-	<div>
-		<label>
-		<span>{{name}}</span>
-		<input type="radio" name="{{key}}" value="{{value}}" data-name="{{name}}">
-		</label>
-	</div>	
-</template>
-
-<div class="container-1500 container-center page">
+<div class="page">
+<div class="container container-center">
 
 	<div class="row center">
-		<button type="button" class="btn-init"><h1>다시 선택</h1></button>
+		<div class="col">
+			<h1>예매 화면</h1>
+		</div>
 	</div>
 	
-	<div class="row float-container">
-		
-		<div class="float-item-left">
-			<div class="row"><h2>영화</h2></div>
-				<div class="movie-list">
-				</div>
+	<template id="movie-list-template">
+		<div>	
+			<input type="radio" class="btn-check" id="{{id}}" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
+			<label class="btn btn-outline-success" for="{{id}}">{{grade}} {{name}}</label>		
+		</div>	
+	</template>
+
+	<template id="list-template">
+		<div>
+			<input type="radio" class="btn-check" id="{{id}}" name="{{key}}" value="{{value}}" data-name="{{name}}">
+			<label class="btn btn-outline-success" for="{{id}}">{{name}}</label>
+		</div>	
+	</template>
+
+	<div class="row">
+		<div class="d-grid gap-2 col mx-auto">
+			<button type="button" class="btn-init btn btn-outline-info"><h1>다시 선택</h1></button>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class=col-3>
+			<div class="row center border bg-secondary text-white"><h2>영화</h2></div>
+			<div class="movie-list "></div>
 		</div>
 
-		<div class="float-item-left">
-			<div class="row"><h2>지역</h2></div>
-				<div class="theater-sido-list">
-				</div>
+		<div class=col-1>
+			<div class="row center border bg-secondary text-white"><h2>지역</h2></div>
+			<div class="theater-sido-list"></div>
 		</div>
 		
-		
-		<div class="float-item-left">
-			<div class="row"><h2>극장(명)</h2></div>
-				<div class="flex-container">
-					<div class="theater-name-list">영화 또는 지역을 먼저 선택하세요.</div>
-				</div>
-			
+		<div class=col-1>
+			<div class="row center border bg-secondary text-white"><h2>극장</h2></div>
+			<div class="theater-name-list">영화 또는 지역을 먼저 선택하세요.</div>
 		</div>
 		
-		<div class="float-item-left">
-			<div class="row"><h2>날짜</h2></div>
-				<div class="flex-container">
-					<div class="schedule-time-date-list">
-						영화와 지점을 먼저 선택하세요.
+		<div class=col-2>
+			<div class="row center border bg-secondary text-white" ><h2>날짜</h2></div>
+			<div class="schedule-time-date-list">
+			영화와 지점을 먼저 선택하세요.
+			</div>
+		</div>
+		<div class=col-2>
+			<div class="row center border bg-secondary text-white"><h2>시간</h2></div>
+			<div class="schedule-time-date-time-list">상영 날짜를 선택해주세요.</div>
+		</div>
+		<div class=col-3>
+			<div class="row center border bg-secondary text-white"><h2>인원 선택</h2></div>
+			<div class="row">
+				<div class="row">
+				    <span class="fw-bold" >[일반]</span>
+				    	<div class="col">
+					    	<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>선택
+				    	</div>
+				    	<div class="col">
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="1">1명
+				    	</div>
+				    	<div class="col">
+				    		<input type="radio" name="ageNormal" class="ageNormal" value="2">2명
+				    	</div>
+					    <div class="col">
+					    	<input type="radio" name="ageNormal" class="ageNormal" value="3">3명
+				    	</div>
+				    </div>
+				</div>
+				<div class="row">
+					<span class="fw-bold" >[학생]</span>
+						<div class="col">
+							<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>선택
+						</div>
+						<div class="col">
+							<input type="radio" name="ageYoung" class="ageYoung" value="1">1명
+						</div>
+						<div class="col">
+							<input type="radio" name="ageYoung" class="ageYoung" value="2">2명
+						</div>
+						<div class="col">
+							<input type="radio" name="ageYoung" class="ageYoung" value="3">3명
+						</div>
+				</div>
+				
+				<div class="row">
+					 <span class="fw-bold">[경로]</span>
+					<div class="col">
+						<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>선택
+					</div>
+					<div class="col">
+						<input type="radio" name="ageOld" class="ageOld" value="1">1명
+					</div>
+					<div class="col">
+						<input type="radio" name="ageOld" class="ageOld" value="2">2명
+					</div>
+					<div class="col">
+						 <input type="radio" name="ageOld" class="ageOld" value="3">3명
 					</div>
 				</div>
 			
+			<div class="row">
+				<span class="fw-bold">[Total]</span>
+				<input type="number"  name="ageTotal" class="ageTotal" value="0" readonly> 
+			</div>
 		</div>
-		
-		<div class="float-item-left">
-			<div class="row"><h2>시간</h2></div>
-				<div class="flex-container">
-					<div class="schedule-time-date-time-list">상영 날짜를 선택해주세요.</div>
-				</div>
 		</div>
-		
-		<div class="float-item-left">
-			<div class="row"><h2>인원 선택</h2></div>
-				<div class="flex-container">
-					<div class="row">
-					    <span>[일반]</span>
-					    	<input type="radio" name="ageNormal" id="ageNormal-id" value="0" checked>선택
-					    	<input type="radio" name="ageNormal" class="ageNormal" value="1">1명
-					    	<input type="radio" name="ageNormal" class="ageNormal" value="2">2명
-					    	<input type="radio" name="ageNormal" class="ageNormal" value="3">3명
-					    </div>
-					 </div>
-					<div class="flex-container">    
-					    <div class="row">
-					    <span>[청소년]</span>
-					    	<input type="radio" name="ageYoung" id="ageYoung-id" value="0" checked>선택
-					    	<input type="radio" name="ageYoung" class="ageYoung" value="1">1명
-					    	<input type="radio" name="ageYoung" class="ageYoung" value="2">2명
-					    	<input type="radio" name="ageYoung" class="ageYoung" value="3">3명
-					    </div>
-					  </div>
-					<div class="flex-container">   
-					    <div class="row">
-					    <span>[경로]</span>
-					    	<input type="radio" name="ageOld" id="ageOld-id" value="0" checked>선택
-					    	<input type="radio" name="ageOld" class="ageOld" value="1">1명
-					    	<input type="radio" name="ageOld" class="ageOld" value="2">2명
-					    	<input type="radio" name="ageOld" class="ageOld" value="3">3명
-			    		</div>
-			    	</div>	
-			    	<div class="flex-container">  
-					    <div class="row">
-					    	<span>총 인원</span><input type="number" name="ageTotal" class="ageTotal" value="0" readonly> 
-					    </div>	
-					</div>    
-				</div>
+			<hr><br>
+	<div class="row">
+		<div class="d-grid gap-2 col mx-auto">
+			<button class="btn-next btn btn-outline-info"><h1>다음 단계</h1></button>
 		</div>
-		
-	<div class="row center">
-		<button class="btn-next"><h1>다음 단계</h1></button>
-	</div>
 	</div>
 
+	</div>
+</div>
 
 <div class="page">
 

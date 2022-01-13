@@ -1,5 +1,6 @@
 package com.kh.spring.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,13 +27,17 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model) {
 		List<Integer> movieNoList = totalInfoViewDao.nowMoiveList();
-		List<MovieChartVO> nowList = movieService.getChartList(movieNoList,1);
-		Collections.sort(nowList,new OrderByRatio());
+		List<MovieChartVO> nowListTemp = movieService.getChartList(movieNoList,1);
+		Collections.sort(nowListTemp,new OrderByRatio());
 		
 		List<Integer> soonMovieList = totalInfoViewDao.soonMovieList();
 		List<MovieChartVO> soonList = movieService.getChartList(soonMovieList,1);
 		Collections.sort(soonList,new OrderByRatio());
 		
+		List<MovieChartVO> nowList = new ArrayList<>();
+		for(int i = 0 ; i<10 ;i++) {
+			nowList.add(nowListTemp.get(i));
+		}
 		model.addAttribute("nowList",nowList);
 		model.addAttribute("soonList",soonList);
 		return "home";

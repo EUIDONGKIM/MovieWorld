@@ -45,7 +45,7 @@
             
             function addRole(movieNo,actorNo){
                 $.ajax({
-    			url:"${pageContext.request.contextPath}/data/addRole",
+    			url:"${pageContext.request.contextPath}/admin/addRole",
     			type:"post",
                 data : {
     				movieNo:movieNo,
@@ -100,11 +100,11 @@
 				<c:choose>
 					<c:when test="${PaginationActorVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="${root }/movie/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getPreviousBlock()}">&lt;</a>
+						<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getPreviousBlock()}">&lt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="${root }/movie/insert_popup?movieNo=${movieNo}&p=${PaginationActorVO.getPreviousBlock()}">&lt;</a>
+						<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&p=${PaginationActorVO.getPreviousBlock()}">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -118,11 +118,11 @@
 			<c:choose>
 				<c:when test="${PaginationActorVO.isSearch()}">
 					<!-- 검색용 링크 -->
-					<a href="${root }/movie/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${i}">${i}</a>
+					<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${i}">${i}</a>
 				</c:when>
 				<c:otherwise>
 					<!-- 목록용 링크 -->
-					<a href="${root }/movie/insert_popup?movieNo=${movieNo}&p=${i}">${i}</a>
+					<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&p=${i}">${i}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -134,11 +134,11 @@
 				<c:choose>
 					<c:when test="${PaginationActorVO.isSearch()}">
 						<!-- 검색용 링크 -->
-						<a href="${root }/movie/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getNextBlock()}">&gt;</a>
+						<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&actorJob=${PaginationActorVO.actorJob}&actorName=${PaginationActorVO.actorName}&p=${PaginationActorVO.getNextBlock()}">&gt;</a>
 					</c:when>
 					<c:otherwise>
 						<!-- 목록용 링크 -->
-						<a href="${root }/movie/insert_popup?movieNo=${movieNo}&p=${PaginationActorVO.getNextBlock()}">&gt;</a>
+						<a href="${root }/movie/admin/insert_popup?movieNo=${movieNo}&p=${PaginationActorVO.getNextBlock()}">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
