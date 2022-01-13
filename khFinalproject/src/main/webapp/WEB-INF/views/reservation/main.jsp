@@ -1056,22 +1056,37 @@ function cancelTempReservation(reservationKey){
 <div class="page">
 
 <template id="seat-list-template">
+
+	<div class="float-box" style="justify-content: center">
+
 	<div class="float-box col align-self-center">
+
 		<div>
 		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
-
-			<div id="cinema" class="cinema-wrap" data-name="seat">
-				<div class="cinema-screen"><h3>스크린</h3></div>
-					
-					<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple">
-						
+		<div class="row center">
+				<div id="cinema" class="cinema-wrap" data-name="seat">
+					<div class="cinema-screen"><h3>스크린</h3></div>
+						<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple"></div>
 					</div>
+
+				<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
+		</div>
+			<div class="row center">
+				<div class="col"></div>
+				<div class="col">
+					<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay btn btn-info center mt-3 mb-3">
+				</div>
+				<div class="col"></div>
+			</div>
+		  </div>
+
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
 	<div class="d-grid gap-2 d-md-block">
 	<button type="submit" class="btn-pay btn btn-outline-info"><h1>좌석선택 완료</h1></button>
 	</div>	
 	</div>
+
 		</form>
 	</div>
 </template>		
@@ -1091,7 +1106,13 @@ function cancelTempReservation(reservationKey){
 
 	
 
+	<div class="row center">
+			<button class="btn-prev btn-seat-cancel btn btn-info"><h4>다시 선택하기</h4></button>
+	</div>
+
+
 </div>
+
 
 
 <div class="page">
