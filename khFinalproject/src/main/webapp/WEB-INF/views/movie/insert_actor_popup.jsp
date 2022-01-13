@@ -104,7 +104,7 @@
 	<c:forEach var="actorDto" items="${PaginationActorVO.list}">
 	     <div class="row">
        		 <label>
-            	<input type="radio" name="actorNo" value="${actorDto.actorNo}">
+            	<input type="radio" name="actorNo" value="${actorDto.actorNo}" class="form-check-input">
                 <span>${actorDto.actorNo} | ${actorDto.actorJob} | ${actorDto.actorName} | ${actorDto.actorNationality}</span>
             </label>
         </div>
