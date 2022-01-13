@@ -102,9 +102,8 @@ public class LastInfoViewDaoImpl implements LastInfoViewDao{
 	}
 
 	@Override
-	public List<LastInfoViewDto> checkTime(int scheduleNo, int hallNo, String scheduleTimefirst) {
+	public List<LastInfoViewDto> checkTime(int hallNo, String scheduleTimefirst) {
 		Map<String,Object> param = new HashMap<>();
-		param.put("scheduleNo",scheduleNo);
 		param.put("hallNo",hallNo);
 		param.put("scheduleTimefirst",scheduleTimefirst);
 
