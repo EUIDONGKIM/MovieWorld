@@ -146,7 +146,7 @@ public class TheaterController {
 		log.debug("폐점 성공? = {}",success);
 		if(success) {
 			redirectAttributes.addFlashAttribute("deleteResult",success);
-			return "redirect:/theater/list";//성공하면 목록으로
+			return "redirect:/admin/theater";//성공하면 목록으로
 		}
 		else {
 			redirectAttributes.addAttribute("theaterNo", theaterNo);

@@ -30,7 +30,7 @@ public class TheaterServiceImpl implements TheaterService{
 	@Override
 	public boolean deleteTheater(int theaterNo) {
 		if(reservationInfoViewDao.getByTheater(theaterNo).isEmpty()) {
-			//theaterDao.delete(theaterNo);
+			theaterDao.delete(theaterNo);
 			return true;
 		}
 		else {

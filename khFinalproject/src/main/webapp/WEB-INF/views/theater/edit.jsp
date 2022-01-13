@@ -25,7 +25,7 @@ $(function(){
     	var operation = $(this).data("oper");
     	
     	if(operation == "delete"){
-    		$("form").attr("action","${root}/theater/delete");
+    		$("form").attr("action","${root}/theater/admin/delete");
     	}
     	else if(operation == "cancel"){
     		self.location = "${root}/theater/detail?theaterNo=${theaterDto.theaterNo}";
@@ -75,32 +75,56 @@ $(function(){
 });
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<div class="container-600 mx-auto">
 <h1>${theaterDto.theaterName}점 정보 수정</h1>
 
 <form action="${root}/theater/admin/edit" method="post">
+
 	<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo }">
-	극장명 : <input type="text" name="theaterName" value="${theaterDto.theaterName}"required>
-	<br>
+	<div class="row">
+	    <div class="col">
+	      	<label class="form-label">극장명</label>
+	      	<input type="text" class="form-control" value="${theaterDto.theaterName}" name="theaterName" required>
+	    </div>
+    </div>
 	
-	<!-- 다음 주소 api사용 -->
-	주소 : <input type="text" name="theaterAddress" value="${theaterDto.theaterAddress}" required><button type="button" class="find-address-btn">주소찾기</button>
-	<br>
-	상세주소 : <input type="text" name="theaterDetailAddress" value="${theaterDto.theaterDetailAddress}">
-	<input type="hidden" name="theaterSido" value="${theaterDto.theaterSido}" required>
-	<br>
+	<div class="row">
+		<label class="form-label">주소</label>
+		<div class="col">
+			<input type="text" class="form-control" value="${theaterDto.theaterAddress}" name="theaterAddress" required>
+		</div>
+		<div class="col-auto">
+			<button type="button" class="btn btn-primary find-address-btn">주소찾기</button>
+		</div>
+	</div>
 	
-	설명 : <textarea name=theaterInfo>${theaterDto.theaterInfo }</textarea> 
-	<br>
-	<button type="submit" data-oper="edit">수정</button>
-	<button type="submit" data-oper="delete" class="delete-btn">폐점</button>
-	<button type="submit" data-oper="cancel">취소</button>
+	<input type="hidden" value="${theaterDto.theaterSido}" name="theaterSido" required>
+	
+	<div class="row">
+		<div class="col">
+			<label class="form-label">상세주소</label>
+			<input type="text" class="form-control" value="${theaterDto.theaterDetailAddress}" name="theaterDetailAddress" required>
+		</div>
+	</div>
+	
+   	<div class="row">
+   		<div class="col">
+      		<label class="form-label">설명</label>
+      		<textarea class="form-control" name="theaterInfo" rows="10" required>${theaterDto.theaterInfo }</textarea>
+   		</div>
+    </div>	
+	<button type="submit" class="btn btn-primary" data-oper="edit">수정</button>
+	<button type="submit" class="delete-btn btn btn-outline-primary" data-oper="delete" class="delete-btn">폐점</button>
+	<button type="submit" class="btn btn-outline-primary" data-oper="cancel">취소</button>
 </form>
 
 <c:if test="${scheduleList.size() > 0}">
-<div>
+<div class="row">
 	현재 상영중인 영화가 있으면 폐점이 불가능합니다.
 </div>
 </c:if>
+</div> 
 
 
 
