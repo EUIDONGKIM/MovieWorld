@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="direct" value="${lastInfoViewDto != null}"></c:set>
 <c:set var="initDto" value="${lastInfoViewDto}"></c:set>
@@ -1155,53 +1156,30 @@ function cancelTempReservation(reservationKey){
 
 <div class="page">
 <template id="reservation-template">
-	<div class="row center">
-		<div class="row center">
-			<label>영화</label>
-			<span>{{movieName}}</span>
-		</div>
-		<div class="row center">
-			<label>영화관</label>
-			<span>{{theaterName}}</span>
-		</div>
-		<div class="row center">
-			<label>상영시간</label>
-			<span>{{scheduleTimeDateTime}}</span>
-		</div>
-		<div class="row center">
-			<label>인원수</label>
-			<span>{{reservationTotalNumber}} 명</span>
-		</div>
-		<div class="row center">
-			<label>총 예매 금액</label>
-			<span>{{totalAmount}}원</span>
-		</div>
+	<div class="card" style="width: 30rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{movieName}}</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">{{theaterName}}</h6>
+		<p class="card-text">상영시간 : {{scheduleTimeDateTime}}</p>
+		<p class="card-text">인원 : {{reservationTotalNumber}} 명</p>
+	    <p class="card-text">총 예매 금액 : {{totalAmount}}원</p>
+		
+	  </div>
 	</div>
 </template>	
 
 <template id="reservation-detail-template">
-	<hr>
-	<div class="row center">
-		<div class="row center">
-			<label>좌석</label>
-			<span>{{row}}행{{col}}열</span>
-		</div>
-		<div class="row center">
-			<label>상영관 종류</label>
-			<span>{{hallType}}</span>
-		</div>
-		<div class="row center">
-			<label>연령 구분</label>
-			<span>{{ageName}}</span>
-		</div>
-		<div class="row center">
-			<label>상영 구분</label>
-			<span>{{scheduleTimeDiscountType}}</span>
-		</div>
-		<div class="row center">
-			<label>개별 금액</label>
-			<span>{{reservationDetailPrice}}</span>
-		</div>
+	<div class="col-auto">
+	<div class="card" style="width: 18rem;">
+	  <div class="card-body">
+	    <h5 class="card-title">{{row}}행{{col}}열</h5>
+	    <h6 class="card-subtitle mb-2 text-muted">{{hallType}}</h6>
+		<p class="card-text">연령 구분 : {{ageName}}</p>
+		<p class="card-text">상영 구분 : {{scheduleTimeDiscountType}}</p>
+	    <p class="card-text">금액: {{reservationDetailPrice}} 원</p>
+		
+	  </div>
+	</div>
 	</div>
 </template>	
 	
@@ -1212,7 +1190,7 @@ function cancelTempReservation(reservationKey){
 	<hr>
 	
 	<h1>결제 상세 내역 확인</h1>
-	<div id="pay-detail-show"></div>
+	<div id="pay-detail-show" class="row g-3 align-items-center"></div>
 	
 	<hr>
 	<div class="row g-3 align-items-center">
