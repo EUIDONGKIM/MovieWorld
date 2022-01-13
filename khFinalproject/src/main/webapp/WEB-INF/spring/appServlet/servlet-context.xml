@@ -118,6 +118,20 @@
 			<bean class="com.kh.spring.interceptor.ReservationInterceptor"></bean>
 	 	</mvc:interceptor>
 
+		 
+		
+<!-- 		<mvc:interceptor> -->
+<!-- 			<mvc:mapping path="/board/main/**"/> -->
+<!-- 			<mvc:exclude-mapping path="/board/main?boardTypeName=1"/> -->
+<!-- 			<mvc:exclude-mapping path="/board/main?boardTypeName=2"/> -->
+<!-- 			<mvc:exclude-mapping path="/board/main?boardTypeName=3"/> -->
+<!-- 			<mvc:exclude-mapping path="/board/main?boardTypeName=4"/> -->
+<!-- 			<mvc:exclude-mapping path="/board/main?boardTypeName=5"/> -->
+				
+<!-- 			<bean class="com.kh.spring.interceptor.BoardInterceptor"></bean> -->
+<!-- 	 	</mvc:interceptor> 	 -->
+
+
 	 	 <mvc:interceptor>
 			<mvc:mapping path="/board/write/**"/>
 			<mvc:mapping path="/board/edit/**"/>

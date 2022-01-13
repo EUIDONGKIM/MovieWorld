@@ -157,13 +157,7 @@
 								<input type="submit" value="수정" class="btn btn-info" disabled id="edit-btn">
 							</td>
 						</tr>
-						<c:if test="${admin}">
-						 <tr>
-						 	 <td>
-								<a href="${root}/admin/memberDrop?memberNo=${memberDto.memberNo}" id="drop" class="btn btn-primary">회원탈퇴</a>
-						 	 </td>
-						 </tr>
-						</c:if>
+					
 					</tbody>
 				</table>
 			

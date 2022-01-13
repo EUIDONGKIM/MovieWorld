@@ -37,6 +37,11 @@
  .b{
       border:1px solid black;
   }
+  
+  a{
+   color: black;
+   text-decoration-line : none;
+  }
 </style>
 
 </head>
@@ -72,11 +77,11 @@
 					<br><br><br>
 						<div class="row center">
 							<div class="col-6">
-								<h4>로그인: ${login}</h4>
-							</div>
-							<div class="col-6">
-								<h4>등급 : ${grade}</h4>
-								<h4>회원번호 : ${memberNo}</h4>
+								<c:if test="${login}">
+										<h6>로그인: ${login}</h6>
+										<h6>등급 : ${grade}</h6>
+										<h6>회원번호 : ${memberNo}</h6>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -96,13 +101,13 @@
 							<c:if test="${!login}">							
 									<li>
 									<a href="${root}/member/login">
-										<img src="${root}/resources/image/로그인.png"  width="50px" height="50px">
+										<img src="${root}/resources/image/log-in.svg"  width="50px" height="50px">
 										<span>로그인</span>
 									</a>
 									</li>
 									<li>
 									<a href="${root}/member/join">
-										<img src="${root}/resources/image/회원가입.png" class="memberInfo_wrap2" width="50px" height="50px">
+										<img src="${root}/resources/image/user-plus.svg" class="memberInfo_wrap2" width="50px" height="50px">
 										<label>회원가입</label>
 									</a>
 									</li>
@@ -110,7 +115,7 @@
 							<c:if test="${login}">
 								<li>
 									<a href="${root}/member/logout">
-										<img src="${root}/resources/image/로그인.png"  class="memberInfo_wrap2" width="50px" height="50px">
+										<img src="${root}/resources/image/log-out.svg"  class="memberInfo_wrap2" width="50px" height="50px">
 										<span>로그아웃</span>
 									</a>
 								</li>
@@ -124,13 +129,13 @@
 						<ul>
 							<li>
 								<a href="${root}/member/mypage">
-									<img src="${root}/resources/image/마이페이지.png" class="memberInfo_wrap2" width="50px" height="50px">
+									<img src="${root}/resources/image/user.svg" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>MYPAGE</label>
 								</a>
 							</li>
 							<li>
 								<a href="${root}/board/main?boardTypeName=1">
-									<img src="${root}/resources/image/고객센터.png" class="memberInfo_wrap2" width="50px" height="50px">
+									<img src="${root}/resources/image/monitor.svg" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>고객센터</label>
 								</a>
 							</li>	
@@ -180,7 +185,7 @@
         </li>
       </ul>
       <form class="d-flex" method="get" action="${root}/movie/movieSearch">
-        <input class="form-control me-sm-2" type="text" name="keyword" value="${searchVO.keyword }" placeholder="Search">
+        <input class="form-control me-sm-2" type="text" name="keyword" value="${searchVO.keyword }" placeholder="영화검색">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">search</button>
       </form>
     </div>

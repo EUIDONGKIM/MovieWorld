@@ -4,10 +4,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:set var="root" value="${pageContext.request.contextPath }"/>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <style>
 	#map {
 		width:500px;
 		height:400px;
+	}
+	
+	.c { 
+		border-bottom:1px solid #DDD; 
+		border-top:1px solid #DDD; 
 	}
 </style>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd24b2186cc6c3b286f427d9685ecdcf&libraries=services"></script>
@@ -82,226 +88,223 @@
 
 </script>
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
-<div class="row center">
-<h1>${theaterDto.theaterName}</h1>
-<pre>${theaterDto.theaterInfo}</pre>
-</div>
-
-<hr>
-<h2>교통안내</h2>
 <template id="marker-info-window-template">
 	<div style="padding:5px;">
 		무비월드 ${theaterDto.theaterName}<br>
 		<a href="https://map.kakao.com/link/to/${theaterDto.theaterAddress},{{latitude}},{{longitude}}" style="color:blue" target="_blank">길찾기</a>
 	</div>
 </template>
-<div id="theater-address" data-address="${theaterDto.theaterAddress}">도로명주소 : ${theaterDto.getTheaterFullAddress()}</div>
-<div id="map"></div>
 
-<hr>
-<!-- 
- List<Map<Integer,Map<Integer,List<LastInfoViewDto>>>>
- -->
-<h2>상영시간표</h2>
-	<div class="row">
+<div class="container">
+	<div class="row text-center my-3">
+		<h1>${theaterDto.theaterName}</h1>
+	</div>
+	<div class="row text-center">
+		<pre>${theaterDto.theaterInfo}</pre>
+	</div>
 	
-			<div class="col">
-				<c:forEach var="i" items="${dateList}" varStatus="index">
-					<button class="btn-page btn" data-count="${index.count}" data-value="${i}">${i}</button>
-				</c:forEach>
+	<hr>
+	
+	<div class="row">
+		<h4>교통안내</h4>
+	</div>
+	<div class="row ms-2">
+		<p class="p-0 m-0"id="theater-address" data-address="${theaterDto.theaterAddress}">도로명주소 : ${theaterDto.getTheaterFullAddress()}</p>
+		<div id="map"></div>
+	</div>
+	
+	<hr>
+	
+	<div class="row">
+		<h4>상영시간표</h4>
+	</div>
+	
+	<div class="row">
+		<c:forEach var="i" items="${dateList}" varStatus="index">
+			<div class="col p-0">
+				<button class="btn-page btn btn btn-outline-primary w-100" data-count="${index.count}" data-value="${i}">${i}</button>
 			</div>
-			<h3>
-			<div class="row center show-date">
-				${dateList[0]}
-			</div>
-			</h3>
+		</c:forEach>
+	</div>
+	
+	<div class="row my-3">
+		<h5 class="show-date">${dateList[0]}</h5>
+	</div>
+	
+	<div class="row">
 			
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList1}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList2}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList3}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList4}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList5}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList6}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
-		
 		<div class="page">
 			<c:forEach var="mapListByMovie" items="${infoList7}">
-					
 				<c:forEach var="mapListByhall" items="${mapListByMovie.value }" varStatus="status">
-							<c:if test="${status.index == 0}">						
-								<h4>${mapListByhall.value[0].movieTitle} | ${mapListByhall.value[0].movieType} | ${mapListByhall.value[0].movieRuntime}분 | ${fn:substring(mapListByhall.value[0].movieOpening,0,10) } 개봉</h4>
-							</c:if>
-				
+					<c:if test="${status.index == 0}">	
+						<div class="row bg-primary text-white m-0">
+							<h5>${mapListByhall.value[0].movieTitle} / ${mapListByhall.value[0].movieGrade} / ${mapListByhall.value[0].movieType} / ${mapListByhall.value[0].movieRuntime}분</h5>
+						</div>					
+					</c:if>
 						<c:forEach var="lastInfoViewDto" items="${mapListByhall.value }" varStatus="status">
 							<c:if test="${status.index == 0}">	
-								<h4>${lastInfoViewDto.hallType} | ${lastInfoViewDto.hallName} | 총 좌석 : ${lastInfoViewDto.hallSeat} 석</h4>
+							<div class="row border border-primary m-0">
+								<p>${lastInfoViewDto.hallName}[${lastInfoViewDto.hallType}] 총 ${lastInfoViewDto.hallSeat}석</p>
+							</div>
 							</c:if>
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
-									${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
-								<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
-							<br>
+								<div class="row mx-0 my-1 c">
+									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+								</div>
 						</c:forEach>
-						<br>
-						
 				</c:forEach>
-				
-				<hr>
 			</c:forEach>
 		</div>
 		
 	</div>
+</div>
+
+	
 
 <div>
 
