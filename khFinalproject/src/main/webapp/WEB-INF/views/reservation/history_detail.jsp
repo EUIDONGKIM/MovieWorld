@@ -16,11 +16,16 @@
 		</div>
 	</c:if>
 
-	<div class="container card text-center" style="width: 30rem;">
+	<div class="card text-center" style="width: 30rem;">
 	  <div class="card-body">
 	    <h3 class="card-title">[대표 결제 정보]</h3>
 	    <h4 class="card-subtitle mb-2 text-muted">예매번호 : ${reservationDto.reservationNo}</h4>
 		<p class="card-text">거래번호 : ${reservationDto.tid}</p>
+		<p class="card-text">영화명 : ${lastInfoviewDto.movieTitle}</p>
+		<p class="card-text">지점 : ${lastInfoviewDto.theaterName}</p>
+		<p class="card-text">주소 : ${lastInfoviewDto.theaterAddress}</p>
+		<p class="card-text">상영관 : ${lastInfoviewDto.hallName}(${lastInfoviewDto.hallType })</p>
+		<p class="card-text">상영일 : ${fn:substring(lastInfoviewDto.scheduleTimeDateTime,0,16) }</p>
 		<p class="card-text">예매금액 : <fmt:formatNumber value="${reservationDto.totalAmount }" pattern="#,###" /> 원</p>
 	    <p class="card-text">포인트 사용 금액 : <fmt:formatNumber value="${reservationDto.pointUse }" pattern="#,###" /> 점</p>
 		<p class="card-text">총 결제 금액 : <fmt:formatNumber value="${resultAmount}" pattern="#,###" /> 원</p>
@@ -40,7 +45,7 @@
 
 
 <hr>
-		<h3 class="center">[예매 세부 정보]</h3>
+		<h3>[예매 세부 정보]</h3>
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 			<c:forEach var="reservationDetailDto" items="${rList}">
 		  <div class="col">
@@ -61,7 +66,7 @@
 
 <hr>
 
-<div class="container card border-dark mb-3" style="max-width: 60rem;">
+<div class="card border-dark mb-3" style="max-width: 60rem;">
   <div class="card-header">결제 세부 정보</div>
   <div class="card-body text-dark">
     <h5 class="card-title">tid : ${responseVO.tid}</h5>

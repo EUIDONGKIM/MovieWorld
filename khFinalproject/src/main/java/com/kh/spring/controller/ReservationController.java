@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.member.MemberDto;
 import com.kh.spring.entity.movie.MoviePhotoDto;
+import com.kh.spring.entity.reservation.LastInfoViewDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
 import com.kh.spring.entity.reservation.StatisticsInfoViewDto;
+import com.kh.spring.entity.schedule.TotalInfoViewDto;
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.HistoryDao;
@@ -32,6 +34,7 @@ import com.kh.spring.repository.reservation.ReservationDetailDao;
 import com.kh.spring.repository.reservation.ReservationInfoViewDao;
 import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
+import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.SeatDao;
@@ -83,6 +86,8 @@ public class ReservationController {
 	private StatisticsInfoViewDao statisticsInfoViewDao;
 	@Autowired
 	private MoviePhotoDao moviePhotoDao;
+	@Autowired
+	private TotalInfoViewDao totalInfoViewDao;
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
 
@@ -194,7 +199,7 @@ public class ReservationController {
 			List<ReservationDetailDto> rList = reservationDetailDao.get(reservationNo);
 			KakaoPaySearchResponseVO responseVO = kakaoPayService.search(reservationDto.getTid());
 			int resultAmount = (int) (reservationDto.getTotalAmount() - reservationDto.getPointUse());
-			
+			LastInfoViewDto lastInfoviewDto = lastInfoViewDao.get(reservationDto.getScheduleTimeNo());
 			if(error != null) {
 				model.addAttribute("error",error);
 			}
@@ -202,7 +207,7 @@ public class ReservationController {
 			model.addAttribute("rList",rList);
 			model.addAttribute("responseVO",responseVO);
 			model.addAttribute("resultAmount",resultAmount);
-			
+			model.addAttribute("lastInfoviewDto",lastInfoviewDto);
 			return "reservation/history_detail";
 		}
 		

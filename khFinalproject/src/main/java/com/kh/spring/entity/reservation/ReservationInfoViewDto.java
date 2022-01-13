@@ -2,7 +2,7 @@ package com.kh.spring.entity.reservation;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@NoArgsConstructor
+
 @Data
 public class ReservationInfoViewDto {
 	private int movieNo;
