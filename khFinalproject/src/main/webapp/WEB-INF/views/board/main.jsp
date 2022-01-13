@@ -7,7 +7,7 @@
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
-
+<!-- 충놀나서꺠졋나용 -->
 
 <div class="container-1200 container-center">
 	<div class="row center">
@@ -41,13 +41,15 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5} && ${!admin}">
-	<div class="row" >
-		<div class="col right">
-			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
+<c:if test="${!admin }">
+	<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5}">
+		<div class="row" >
+			<div class="col right">
+				<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
+			</div>
 		</div>
-	</div>
-</c:if>		
+	</c:if>		
+</c:if>
 	<div class="row">
 		<table class="table table-hover">
 			<thead>
