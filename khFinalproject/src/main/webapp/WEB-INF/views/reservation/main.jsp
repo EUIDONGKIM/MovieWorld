@@ -748,28 +748,28 @@ function getSeat(scheduleTimeNo){
 			.removeClass("container-center");
 			
 			if(hallCols==10){
-				$(".seat-box").addClass("container-1500").addClass("container-center");
+				$(".seat-box").addClass("container-1500").addClass("container-center").css("margin-left","21%");
 			}
 			if(hallCols==9){
-				$(".seat-box").addClass("container-1330").addClass("container-center");
+				$(".seat-box").addClass("container-1330").addClass("container-center").css("margin-left","21%");
 			}
 			if(hallCols==8){
-				$(".seat-box").addClass("container-1200").addClass("container-center");
+				$(".seat-box").addClass("container-1200").addClass("container-center").css("margin-left","23%");
 			}
 			if(hallCols==7){
-				$(".seat-box").addClass("container-1050").addClass("container-center");
+				$(".seat-box").addClass("container-1050").addClass("container-center").css("margin-left","25%");
 			}
 			if(hallCols==6){
-				$(".seat-box").addClass("container-915").addClass("container-center");
+				$(".seat-box").addClass("container-915").addClass("container-center").css("margin-left","27%");
 			}
 			if(hallCols==5){
-				$(".seat-box").addClass("container-777").addClass("container-center");
+				$(".seat-box").addClass("container-777").addClass("container-center").css("margin-left","31%");
 			}
 			if(hallCols==4){
-				$(".seat-box").addClass("container-640").addClass("container-center");
+				$(".seat-box").addClass("container-640").addClass("container-center").css("margin-left","33%");
 			}
 			if(hallCols==3){
-				$(".seat-box").addClass("container-490").addClass("container-center");
+				$(".seat-box").addClass("container-490").addClass("container-center").css("margin-left","35%");
 			}
 			
 			$(".seat-box").append(tag);
@@ -1014,7 +1014,7 @@ function cancelTempReservation(reservationKey){
 </div>
 </div>
 
-<div class="page">
+<div class="page container container-center">
 
 <template id="seat-list-template">
 	<div class="float-box col align-self-center">
@@ -1029,7 +1029,7 @@ function cancelTempReservation(reservationKey){
 					</div>
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-		<div class="d-grid gap-2 d-md-block">
+		<div class="center mt-3">
 		<button type="submit" class="btn-pay btn btn-outline-info"><h1>좌석선택 완료</h1></button>
 		</div>	
 		</div>
@@ -1040,13 +1040,14 @@ function cancelTempReservation(reservationKey){
 <template id="span-template">
 <span>{{row}}-{{col}}</span>
 </template> 
-  	 <div class="d-grid gap-2 d-md-block">
+  	 <div class="center mb-3">
 		<button class="btn-prev btn-seat-cancel btn btn-outline-info"><h1>다시 선택하기</h1></button>
 	</div>	
-	
+
 	<div class="seat-box">
 		
 	</div>
+
 
         <div id="seat-send-result"></div>
 
@@ -1057,7 +1058,7 @@ function cancelTempReservation(reservationKey){
 
 <div class="page">
 <template id="reservation-template">
-	<div class="card" style="width: 30rem;">
+	<div class="card text-center" style="width: 30rem;">
 	  <div class="card-body">
 	    <h5 class="card-title">{{movieName}}</h5>
 	    <h6 class="card-subtitle mb-2 text-muted">{{theaterName}}</h6>
@@ -1071,7 +1072,7 @@ function cancelTempReservation(reservationKey){
 
 <template id="reservation-detail-template">
 	<div class="col-auto">
-	<div class="card" style="width: 18rem;">
+	<div class="card text-center" style="width: 18rem;">
 	  <div class="card-body">
 	    <h5 class="card-title">{{row}}행{{col}}열</h5>
 	    <h6 class="card-subtitle mb-2 text-muted">{{hallType}}</h6>
