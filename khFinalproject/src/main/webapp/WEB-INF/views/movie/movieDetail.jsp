@@ -35,7 +35,7 @@
 	     Content box width: 160px
 	     Content box height: 80px */
 	}
-	/*d*/
+	
 	.star-rating {
 	/*   border:solid 1px #ccc; */
 	  display:flex;
@@ -546,7 +546,7 @@
   								<em class="round lightblue">
   									<span>${showStatus }</span>
   								</em>
- 								<button type="button" class="btn-like btn btn-sm btn-outline-secondary">
+ 								<button type="button" class="btn-like btn btn-sm btn-outline-secondary" style="margin: 10px;">
 				           				<!-- 좋아요 아이콘 -->
 				           			<c:choose>
 				           				<c:when test="${myMovieLike}">
@@ -617,6 +617,7 @@
 			<br>
 			
 			<!-- 트레일러 동영상 -->
+		<div class="container center" style="width: 1000px;">
 			<table class="table table-bordered">
  				<thead>
   					 <tr class="table-active">
@@ -635,38 +636,10 @@
  					</c:forEach>  			 		
 				</tbody>
 			</table>	
+		
 			
 			<br>
 			<br>
-
-			<!-- TEST 스틸컷 이미지 -->
-				<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198776_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198776_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
-						</div>
-						<div class="carousel-item">
-							<img src="https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82479/82479198775_727.jpg" width="197px" height="260px" class="d-block w-100" alt="...">
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button"
-						data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-							class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button"
-						data-bs-target="#carouselExampleControls" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
-							class="visually-hidden">Next</span>
-					</button>
-				</div>
-
-
-
-
 
 			<!-- 스틸컷 이미지 -->
 			<table class="table table-bordered">
@@ -679,13 +652,27 @@
  				
    					<tr>
    						<td>
-	   						<div class="board d-flex flex-wrap">
-		   						<c:forEach var="moviePhotoDto" items="${moviePhotoList}" varStatus="status">
-		   							<c:if test="${status.index != 0}">
-		   								<img src="${root}/movie/movieImg?moviePhotoNo=${moviePhotoDto.moviePhotoNo}" width="197px" height="260px">
-		   							</c:if>
-		   						</c:forEach>
-	   						</div>
+		   					<div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+								<div class="carousel-inner">
+								    <c:forEach var="moviePhotoDto" items="${moviePhotoList}" varStatus="status">
+			   							<c:if test="${status.index != 0}">						
+											<div class="carousel-item ${status.index == 1 ? 'active' : ''	 }">
+				   								<img src="${root}/movie/movieImg?moviePhotoNo=${moviePhotoDto.moviePhotoNo}" style="margin:0 auto" width="197px" height="260px" class="d-block" alt="...">
+											</div>		   								
+			   							</c:if>
+			   						</c:forEach>
+								</div>
+								<button class="carousel-control-prev" type="button"
+									data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Previous</span>
+								</button>
+								<button class="carousel-control-next" type="button"
+									data-bs-target="#carouselExampleControls" data-bs-slide="next">
+									<span class="carousel-control-next-icon" aria-hidden="true"></span>
+									<span class="visually-hidden">Next</span>
+								</button>
+							</div>		
      			 		</td>
   			 		</tr>
   			 		
@@ -694,7 +681,7 @@
 			
 			<br>
 			<br>
-
+	</div>
 
 	<%-- 모달로 띄워주기 --%>
 

@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="movieNo" value="${movieNo}"></c:set>  
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <style>
 	#actorNo,
 	#directorNo,
@@ -285,67 +287,61 @@
 </script>
    <%-- 현재 template으로 되어있어서, 추가할 때 확인용으로 달아두신거, (추가가 실패해도 추가가 뜨도록 되어있음, db에서 실패되어도),,에이작스를 쓰면 --%>
     <template id="add-role-template"> 
-        <div class="row center">
-            <label>영화인 번호 : </label>    
-            <span>{{actorNo}}</span>
-            <label>| 영화인 : </label>
-            <span>{{actorName}}</span>
-             <label>| 영어이름 : </label>
-            <span>{{actorEngName}}</span>
-            <label>| 영화인 분류: </label>
-            <span>{{actorJob}}</span>
-             <label>| 국적 : </label>
-            <span>{{actorNationality}}</span>
-             <label>| 출생일 : </label>
-            <span>{{actorBirth}}</span>
+        <div class="row" >
+            <label>영화인 번호 : {{actorNo}} </label>
+            <label>영화인 : {{actorName}} </label>
+            <label>영어이름 : {{actorEngName}}</label>
+            <label>영화인 분류: {{actorJob}}</label>
+          	<label>국적 : {{actorNationality}}</label>
+           	<label>출생일 : {{actorBirth}}</label>
+            
             <button class="btn-delete" data-actor_no="{{actorNo}}">삭제</button>
         </div>
     </template>
 
     <template id="video-template">
-        <div class="row center">
-        	<label>비디오 번호 : </label>    
-            <span>{{videoNo}}</span>
-            <label>비디오 명 : </label>    
-            <span>{{videoTitle}}</span>
-            <label>/ 경로(URL) : </label>
-            <span>{{videoRoot}}</span>
+        <div class="row">
+        	<label>비디오 번호 : {{videoNo}}</label>    
+            <label>비디오 명 : {{videoTitle}}</label>    
+            <label>경로(URL) : {{videoRoot}}</label>
             <button class="btn-delete-video" data-video_no="{{videoNo}}">삭제</button>
         </div>
     </template>
     
     
-    <div class="row center">
-	    <button class="btn-search"><h1>[[영화인 검색 및 추가]]</h1></button>
-	</div>
+    <!--  여기부터 디자인 시 작 -->
+    <div class="container-600 container-center">
+		<div class="row">
+	    	<button class="btn-search"><strong>영화인 검색 및 추가</strong></button>
+		</div>
     
 	<hr>
-    <h1>[[역할 추가]]</h1>
+    <strong>역할 추가</strong>
     <hr>
-	<h2 class="center"> - 감독 - </h2>
+	<strong class="center"> 감독 </strong>
 	<input type="text" name="directorNo" id="directorNo" readonly>
 	<div id="result-director"></div>
 	 <hr>
 	 
-	<h2 class="center"> - 배우 - </h2>
+	<strong class="center"> 배우 </strong>
 	<input type="text" name="actorNo" id="actorNo" readonly>
 	<div id="result-actor"></div>
 	 <hr>
 	 
-	<h2 class="center"> - 스태프 - </h2>
+	<strong class="center"> 스태프 </strong>
 	<input type="text" name="staffNo" id="staffNo" readonly>
 	<div id="result-staff"></div>
 	<hr>
 
-    <h1>[[비디오 추가]]</h1>
+   <strong> 비디오 추가 </strong>
 
     <div class="row video-item">
-        <div class="row center">
-            <label>비디오 제목 : </label>
+        <div class="row">
+            <label>비디오 제목</label>
             <input type="text" name="videoTitle">
         </div>
 
-        <div class="row center">
+        <div class="row">
             <label>비디오 링크(URL) : </label>
             <input type="text" name="videoRoot">
         </div>
@@ -359,4 +355,7 @@
 	<div class="row center">
 		<button class="exit-btn">추가 완료</button>
 	</div>
+	
+</div>
+	
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
