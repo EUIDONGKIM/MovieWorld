@@ -7,7 +7,7 @@
 <c:set var="searchList" value="${boardSearchVO.list}"></c:set>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
-<!-- 충놀나서꺠졋나용 -->
+<!-- 충놀나서꺠졋나용 -->ㅁㄴㅇㄴㅁㅇ
 
 <div class="container-1200 container-center">
 	<div class="row center">
