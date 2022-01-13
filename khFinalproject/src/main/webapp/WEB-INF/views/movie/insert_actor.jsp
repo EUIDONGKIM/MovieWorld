@@ -23,7 +23,7 @@
 		
         $(".btn-search").click(function(){
         	var target = '${pageContext.request.contextPath}/movie/admin/insert_popup?movieNo='+movieNo;
-            window.open(target, "popup", "width=500 , height=500");
+            window.open(target, "popup", "width=600 , height=600");
         });
         
         

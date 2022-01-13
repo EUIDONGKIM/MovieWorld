@@ -39,6 +39,33 @@
 				return false;
 			}
 		});
+		//비밀번호가 일치하나요?
+		$("input[name=memberPw]").on("blur",function(){
+			var to = $(this).val();
+			function pwCheck(to){
+		        $.ajax({
+					url:"${pageContext.request.contextPath}/member/pwCheck",
+					type:"get",
+		        data : {
+						to:to,
+					},   
+		       dataType : "text",  
+				success:function(resp){
+					console.log("통신성공", resp);
+					if(resp == 'gogo'){
+
+					}else{
+						$("input[name=memberPw]").addClass("fail");
+					}
+					
+				},
+				error:function(e){
+					console.log("실패", e);
+				}
+		    });
+		        
+			};
+		});
 		//닉네임 정규표현식
 		$(function() {
 			$("input[name=memberNick]").on("blur", function() {
@@ -104,7 +131,10 @@
 						<c:if test="${!admin}">
 							<tr>
 								<th>비밀번호</th>
-								<td><input type="password" name="memberPw" required class="form-control fsize" id="floatingInput"></td>
+								<td><input type="password" name="memberPw" required class="form-control fsize" id="floatingInput">
+								<span class="success"></span>
+	           		 			<span class="fail">비밀번호가일치하지않습니다</span>
+	           		 			</td>
 							</tr>
 						</c:if>
 						<tr>

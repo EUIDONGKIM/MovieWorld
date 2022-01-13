@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.spring.entity.member.MemberDto;
+import com.kh.spring.entity.movie.MoviePhotoDto;
 import com.kh.spring.entity.reservation.ReservationDetailDto;
 import com.kh.spring.entity.reservation.ReservationDto;
 import com.kh.spring.entity.reservation.ReservationInfoViewDto;
@@ -23,6 +24,7 @@ import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.repository.member.GradeDao;
 import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
+import com.kh.spring.repository.movie.MoviePhotoDao;
 import com.kh.spring.repository.reservation.AgeDiscountDao;
 import com.kh.spring.repository.reservation.LastInfoViewDao;
 import com.kh.spring.repository.reservation.ReservationDao;
@@ -79,7 +81,8 @@ public class ReservationController {
 	private ReservationService reservationService;
 	@Autowired
 	private StatisticsInfoViewDao statisticsInfoViewDao;
-	
+	@Autowired
+	private MoviePhotoDao moviePhotoDao;
 		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
 
@@ -170,12 +173,14 @@ public class ReservationController {
 			ReservationInfoViewDto reservationInfoViewDto = reservationInfoViewDao.get(reservationDto.getScheduleTimeNo());
 			HallDto hallDto = hallDao.get(reservationInfoViewDto.getHallNo());
 			int resultAmount = (int) (reservationDto.getTotalAmount() - reservationDto.getPointUse());
+			List<MoviePhotoDto> list = moviePhotoDao.getList(reservationInfoViewDto.getMovieNo());
+			int moviePhotoNo = list.get(0).getMoviePhotoNo();
 			
 			model.addAttribute("reservationDto",reservationDto);
 			model.addAttribute("reservationInfoViewDto",reservationInfoViewDto);
 			model.addAttribute("hallDto",hallDto);
 			model.addAttribute("resultAmount",resultAmount);
-			
+			model.addAttribute("moviePhotoNo",moviePhotoNo);
 			return "reservation/success_result";
 		}
 		
