@@ -73,7 +73,7 @@ public class HallController {
 		return "hall/create_seat";
 	}
 	
-	@PostMapping("/admin/delete")
+	@RequestMapping("/admin/delete")
 	public String hallDelete(@RequestParam int hallNo, RedirectAttributes redirectAttributes) {
 		HallDto hallDto = hallDao.get(hallNo);
 		int theaterNo = hallDto.getTheaterNo(); //리다이렉트용 

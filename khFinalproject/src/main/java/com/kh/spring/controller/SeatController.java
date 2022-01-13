@@ -47,6 +47,6 @@ public class SeatController {
 		
 		redirectAttributes.addAttribute("hallNo",hallNo);
 		
-		return "redirect:/hall/detail";
+		return "redirect:/hall/admin/detail";
 	}
 }
