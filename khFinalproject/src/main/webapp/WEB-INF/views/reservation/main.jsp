@@ -61,7 +61,6 @@
     width: 70px !important;
     height: 70px !important;
     }
-
 </style>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -84,7 +83,6 @@ $(function(){
 	var scheduleTimeNo;
 	var hallRows;
 	var hallCols;
-
 	
 	var ageNormal=0;
 	var ageYoung=0;
@@ -118,11 +116,8 @@ $(function(){
 	});
 	
 	 $(".btn-use-point").click(function(e){
-
 		 var price = $("input[name=total-amount]").val();
-
 		 e.preventDefault();
-
 		 if(usePoint==0){
 			 alert("사용할 포인트를 입력해주세요!");
 			 return;
@@ -146,7 +141,6 @@ $(function(){
     
     $(".btn-next").click(function(e){
         e.preventDefault();
-
         if(!memberEmail) {
 			var confirm = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?")
         	if(confirm){
@@ -174,7 +168,6 @@ $(function(){
 	        seatTotal = this.getQueryString();
 	        console.log(seatTotal);
 	    });
-
         p++;
         $(".page").hide();
         $(".page").eq(p).show();
@@ -184,12 +177,10 @@ $(function(){
 	
 	 $(".btn-prev").click(function(e){
          e.preventDefault();
-
          p--;
          $(".page").hide();
          $(".page").eq(p).show();
      });
-
 	 $(".btn-seat-cancel").click(function(){
 		 loadList();
 		//강사님 좌석 체크박스 컨트롤 하는 법 및 좌석 체크들 해제하기.
@@ -253,7 +244,6 @@ $(function(){
 		console.log(ageTotal);
 	});
 loadList();
-
 function loadList(){
 	//첫 화면바로 띄워주기
 	movieRuntime = null;
@@ -305,16 +295,13 @@ function loadList(){
 	$(".ageNormal").prop("disabled",true);
 	$(".ageYoung").prop("disabled",true);
 	$(".ageOld").prop("disabled",true);
-
 	movieLoadList();
 	sidoLoadList();
 }
-
 $(".btn-init").click(function(e){
 	e.preventDefault();
 	loadList();
 });
-
 function sidoLoadList(){	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getSido",
@@ -353,7 +340,6 @@ function sidoLoadList(){
 		}
 	});
 }
-
 function movieLoadList(){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getMovie",
@@ -393,7 +379,6 @@ function movieLoadList(){
 		}
 	});
 }
-
 function movieSearchList(theaterSido,theaterNo){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal11",
@@ -434,7 +419,6 @@ function movieSearchList(theaterSido,theaterNo){
 		}
 	});
 }
-
 function theaterNameList(theaterSido){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal",
@@ -477,7 +461,6 @@ function theaterNameList(theaterSido){
 		}
 	});	
 }
-
 function sidoList(movieNo){	
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal1",
@@ -522,7 +505,6 @@ function sidoList(movieNo){
 		}
 	});
 }
-
 function theaterNoList(movieNo,theaterSido){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal2",
@@ -563,7 +545,6 @@ function theaterNoList(movieNo,theaterSido){
 	});
 	
 }
-
 function scheduleDateList(movieNo,theaterNo){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal3",
@@ -580,7 +561,6 @@ function scheduleDateList(movieNo,theaterNo){
 			var date = new Date();
 			console.log("현재날짜",date);
 			var count = 0;
-
 			for(var i = 0 ; i < resp.length ; i++){
 				var checkDate = new Date(resp[i]);
 				console.log("목록날짜",checkDate);
@@ -602,7 +582,6 @@ function scheduleDateList(movieNo,theaterNo){
 				
 				tag.find("input[type=radio]").on("input",function(){
 					scheduleTimeDate = $(this).attr("value");
-
 					scheduleDateTimeDateList(scheduleTimeDate);
 				});
 				
@@ -622,7 +601,6 @@ function scheduleDateList(movieNo,theaterNo){
 		}
 	});
 }
-
 function scheduleDateTimeDateList(scheduleTimeDate){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal4",
@@ -635,7 +613,6 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 		dataType : "json",
 		success:function(resp){
 			$(".schedule-time-date-time-list").empty();
-
 			for(var i = 0 ; i < resp.length ; i++){
 				console.log("잔여좌석!!!!!!!!!!",resp[i].disabledSeat);
 				var now = new Date().getTime();
@@ -648,7 +625,6 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
-
 				scheduleTimeDateTime = resp[i].scheduleTimeDateTime;
 				console.log("scheduleTimeDateTime",scheduleTimeDateTime);
 				console.log("scheduleTimeDateTime 데이터 타입",typeof scheduleTimeDateTime);
@@ -670,7 +646,6 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
 				
 				var tag = $(template);
-
 				tag.find("input[type=radio]").on("input",function(){
 					scheduleTimeNo = $(this).attr("value");
 					scheduleTimeDiscountType = $(this).data("scheduleTimeDiscountType");
@@ -698,8 +673,6 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 		}
 	});
 }
-
-
 function getHallRowsAndCols(scheduleTimeNo){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal5",
@@ -718,8 +691,6 @@ function getHallRowsAndCols(scheduleTimeNo){
 		}
 	});
 }
-
-
 function getSeat(scheduleTimeNo){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/member/seat",
@@ -739,7 +710,6 @@ function getSeat(scheduleTimeNo){
 			template = template.replace("{{scheduleTimeNo}}",scheduleTimeNo);
 			
 			var tag = $(template);
-
 			tag.find(".btn-pay").click(function(e){
 	        	if(seatTotal==null || seatTotal.split("&").length != ageTotal){
 	        		return;
@@ -829,7 +799,6 @@ function getReservationKey(){
 		}
 	});
 };
-
 function TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYoung,ageOld){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/member/TempReservation",
@@ -852,8 +821,6 @@ function TempReservation(seatData,reservationKey,scheduleTimeNo,ageNormal,ageYou
 		}
 	});
 };
-
-
 function getReservation(reservationKey){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/member/getReservation",
@@ -882,7 +849,6 @@ function getReservation(reservationKey){
 		}
 	});
 }
-
 function getReservationDetail(reservationKey){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/member/getReservationDetail",
@@ -910,7 +876,6 @@ function getReservationDetail(reservationKey){
 		}
 	});
 }
-
 function cancelTempReservation(reservationKey){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/member/cancelTempReservation?"+$.param({"reservationNo":reservationKey}),
@@ -923,7 +888,6 @@ function cancelTempReservation(reservationKey){
 		error:function(e){}
 	});
 }
-
 });
 </script>
 <div class="page">
@@ -1056,37 +1020,20 @@ function cancelTempReservation(reservationKey){
 <div class="page">
 
 <template id="seat-list-template">
-
-	<div class="float-box" style="justify-content: center">
-
-	<div class="float-box col align-self-center">
-
+	<div class="float-box center">
 		<div>
 		<form action="${pageContext.request.contextPath}/reservation/insert" method="post" class="seat-send-form">
-		<div class="row center">
-				<div id="cinema" class="cinema-wrap" data-name="seat">
-					<div class="cinema-screen"><h3>스크린</h3></div>
-						<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple"></div>
+
+			<div id="cinema" class="cinema-wrap" data-name="seat">
+				<div class="cinema-screen"><h3>스크린</h3></div>
+					
+					<div class="cinema-seat-area" data-rowsize="{{hallRows}}" data-colsize="{{hallCols}}" data-rowname="number" data-colname="number" data-mode="client" data-fill="manual" data-seatno="visible" data-choice="multiple">
+						
 					</div>
-
-				<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-		</div>
-			<div class="row center">
-				<div class="col"></div>
-				<div class="col">
-					<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay btn btn-info center mt-3 mb-3">
-				</div>
-				<div class="col"></div>
-			</div>
-		  </div>
-
 			</div>
 	<input type="hidden" name="scheduleTimeNo" value="{{scheduleTimeNo}}">
-	<div class="d-grid gap-2 d-md-block">
-	<button type="submit" class="btn-pay btn btn-outline-info"><h1>좌석선택 완료</h1></button>
-	</div>	
-	</div>
-
+	<input type="submit" value="좌석선택 완료!이제 결제하러 가기.." class="btn-pay">
+		</div>
 		</form>
 	</div>
 </template>		
