@@ -1153,7 +1153,7 @@ function cancelTempReservation(reservationKey){
 
 <div class="page">
 <template id="reservation-template">
-	<div class="card" style="width: 30rem;">
+	<div class="card text-center" style="width: 30rem;">
 	  <div class="card-body">
 	    <h5 class="card-title">{{movieName}}</h5>
 	    <h6 class="card-subtitle mb-2 text-muted">{{theaterName}}</h6>
@@ -1167,7 +1167,7 @@ function cancelTempReservation(reservationKey){
 
 <template id="reservation-detail-template">
 	<div class="col-auto">
-	<div class="card" style="width: 18rem;">
+	<div class="card text-center" style="width: 18rem;">
 	  <div class="card-body">
 	    <h5 class="card-title">{{row}}행{{col}}열</h5>
 	    <h6 class="card-subtitle mb-2 text-muted">{{hallType}}</h6>
