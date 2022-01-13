@@ -123,25 +123,25 @@
         			<div class="col-6">
         				<div class="row">
         					<div class="col" style="font-size:30px">
-        					${memberDto.memberName}회원님
+        					${memberDto.memberName} 회원님
         					</div>
         				</div>
         				<hr>
         				<div class="row">
         					<div class="col">
-        					회원님의 등급은 ${memberDto.memberGrade}입니다
+        					회원님의 등급은 ${memberDto.memberGrade} 입니다
         					</div>
         				</div>
         				
         				<div class="row">
         					<div class="col">
-        						회원님의 포인트는 ${memberDto.memberPoint}입니다
+        						회원님의 포인트는 ${memberDto.memberPoint} 입니다
         					</div>
         				</div>
         				
         				<div class="row">
         					<div class="col">
-        						회원님의 마지막 로그인은 00: 00 : 00 입니다
+        						회원님의 마지막 로그인은 ${memberDto.memberLogin} 입니다
         					</div>
         				</div>
         			</div>
