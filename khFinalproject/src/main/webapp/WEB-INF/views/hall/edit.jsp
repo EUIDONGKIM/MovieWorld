@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -17,7 +18,10 @@ $(function(){
 </script>
 
 <div class="container-600 container-center">
-<h1> 상영관 수정 </h1>
+
+<div class="row my-3">
+	<h1> 상영관 수정 </h1>
+</div>
 
 <form method="post">
 
@@ -39,8 +43,8 @@ $(function(){
 	</div>
 	
 	<button type="submit" class="btn btn-primary">수정</button>
+	<a class="btn btn-outline-primary" href="${root}/hall/admin/delete?hallNo=${hallDto.hallNo}">삭제</a>
 </form>
 </div>
-
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.movie.MovieDto;
 import com.kh.spring.entity.reservation.LastInfoViewDto;
@@ -240,4 +241,24 @@ public class ScheduleController {
 		}
 	}
 	
+	@RequestMapping("/admin/delete_time")
+	public String timeDelete2(@RequestParam int scheduleTimeNo, RedirectAttributes redirectAttributes) {
+		StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.exist(scheduleTimeNo);
+		int theaterNo = scheduleTimeDao.getTheaterNo(scheduleTimeNo);
+		redirectAttributes.addAttribute("theaterNo",theaterNo);
+		if(statisticsInfoViewDto==null) {
+			
+			boolean success = scheduleTimeDao.delete(scheduleTimeNo);
+			
+			if(success) {
+				return "redirect:/theater/detail";
+			} else {
+				return "redirect:???"; //실패
+			}
+			
+		} else {
+			redirectAttributes.addFlashAttribute("msg","예매내역이 존재하면 스케줄을 삭제할 수 없습니다.");
+			return "redirect:/theater/detail";
+		}
+	}
 }

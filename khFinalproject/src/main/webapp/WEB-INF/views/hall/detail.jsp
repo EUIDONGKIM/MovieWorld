@@ -38,11 +38,18 @@
         
 	});
 </script>
-
-<h1>상영관 정보</h1>
-<h2><a href="${root}/theater/detail?theaterNo=${theaterDto.theaterNo}">${theaterDto.theaterName}</a>점 ${hallDto.getFullName()}</h2>
-<h2>이용 가능한 좌석 수 : ${hallDto.hallSeat}</h2>
-
+<div class="container">
+	<div class="row my-3">
+		<h1>
+			<a href="${root}/theater/detail?theaterNo=${theaterDto.theaterNo}">${theaterDto.theaterName}</a>점 ${hallDto.getFullName()}
+			<a class="btn btn-info mx-2" href="${root}/hall/admin/edit?hallNo=${hallDto.hallNo}">수정</a>
+			<a class="btn btn-info mx-2" href="${root}/hall/admin/update_seat?hallNo=${hallDto.hallNo}">좌석 재설정</a>
+		</h1>
+	</div>
+	<div class="row">
+		<h2>이용 가능한 좌석 수 : ${hallDto.hallSeat}</h2>
+	</div>
+	
     <div class="float-box">
         <div>
 			<div id="cinema" class="cinema-wrap" data-name="seat">
@@ -55,11 +62,7 @@
 			</div>
         </div>
     </div>
-    
-    <a href="${root}/hall/admin/update_seat?hallNo=${hallDto.hallNo}">좌석 상태 설정</a>
-    <a href="${root}/hall/admin/edit?hallNo=${hallDto.hallNo}">상영관 정보 수정</a>
-    <form action="${root}/hall/admin/delete" method="post">
-    	<input type="hidden" name="hallNo" value="${hallDto.hallNo}">
-	    <button type="submit">상영관 삭제</button>
-    </form>
+</div>
+
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -22,6 +22,14 @@
 <script>
 	$(function(){
 		
+		var msg = "${msg}";
+		if(msg.length > 0){
+			alert(msg);
+		}
+		
+		
+		
+		
 		//지도 생성 준비 코드
 		var container = document.querySelector("#map");
 		var options = {
@@ -151,7 +159,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -175,7 +189,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -199,7 +219,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -223,7 +249,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -247,7 +279,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -271,7 +309,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -295,7 +339,13 @@
 								<c:set var = "disabled" value = "${lastInfoViewDto.scheduleTimeCount }" />
 								<c:set var = "available" value = "${lastInfoViewDto.hallSeat - disabled }" />
 								<div class="row mx-0 my-1 c">
-									<p>${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a></p>
+									<p>
+										${fn:substring(lastInfoViewDto.scheduleTimeDateTime,11,16) } | ${lastInfoViewDto.scheduleTimeDiscountType} | 잔여 좌석 : ${available } 석
+										<a href="${root}/reservation/direct?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">[예매 바로가기]</a>
+										<c:if test="${admin}">
+											<a class="schedule-delete-btn btn btn-info" href="${root}/schedule/admin/delete_time?scheduleTimeNo=${lastInfoViewDto.scheduleTimeNo}">x</a>
+										</c:if>
+									</p>								
 								</div>
 						</c:forEach>
 				</c:forEach>
@@ -306,43 +356,90 @@
 </div>
 <c:if test="${admin}">
 
+<hr>
+
 	<div class="container">
-	<h2>관리메뉴(관리자만 볼 수 있게) <a href="${root}/admin/theater">목록으로...</a></h2>
-		<a href="${root}/theater/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a>
-		<a href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 추가</a>
+	
+		<div class="row my-5">
+			<h1>영화관 관리<a class="btn btn-info mx-2" href="${root}/admin/theater">목록</a><a class="btn btn-info mx-2" href="${root}/theater/admin/edit?theaterNo=${theaterDto.theaterNo}">수정</a></h1>
+		</div>
 		
-		<div>
-		<h3>상영관 목록</h3>
+		<hr>
+		
+		<div class="row">
+			<h4>상영관 현황</h4>
+		</div>
+		
+		<div class="row"> 
+			<div class="d-flex flex-row-reverse bd-highlight">
+				<a class="btn btn-info my-2 my-sm-0" href="${root}/hall/admin/create2?theaterNo=${theaterDto.theaterNo}">상영관 생성</a>
+			</div>
+		</div>
+		<table class="table table-hover">
+		 	<thead>
+			 	<tr>
+			 		<th>상영관 이름</th>
+			 		<th>상영관 종류</th>
+			 		<th>좌석 수</th>
+			 		<th>메뉴</th>
+			 	</tr>
+		 	</thead>
+		 	<tbody>
+		 		<c:forEach var="hallDto" items="${hallList}">
+		 		<tr>
+		 			<td>${hallDto.hallName}</td>
+		 			<td>${hallDto.hallType}</td>
+		 			<td>${hallDto.hallSeat}</td>
+		 			<td><a href="${root}/hall/admin/detail?hallNo=${hallDto.hallNo}">상세보기</a></td>			 		
+ 				</tr>
+	 		</c:forEach>
+	 		</tbody>
+		</table>
+		<hr>
+		<div class="row">
+			<h4>현재 상영중인 영화</h4>
+		</div>
 		
 		<c:if test="${param.errorSchedule != null}">
 			<div class="row center">
 				<div class="col">
-					<h4 class="error">해당 지점의 상영이 있습니다.</h4>
+					<h5 class="error">해당 지점의 상영 스케쥴이 있습니다.</h5>
 				</div>
 			</div>
 		</c:if>
-	
 		
-		<c:forEach var="hallDto" items="${hallList}">
-			<h5>
-				${hallDto.getFullName()} | ${hallDto.hallSeat}석 
-				<a href="${root}/hall/admin/detail?hallNo=${hallDto.hallNo}">상세보기</a>
-			</h5>
-		</c:forEach>
-		</div>
+		<div class="row"> 
+			<div class="d-flex flex-row-reverse bd-highlight">
+				<a class="btn btn-info my-2 my-sm-0" href="${root}/schedule/admin/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a>
+			</div>
+		</div>		
+		<table class="table table-hover">
+		 	<thead>
+			 	<tr>
+					<th>제목</th>		
+					<th>등급</th>
+					<th>시작일</th>
+					<th>종료일</th>
+					<th>관리</th>
+			 	</tr>
+		 	</thead>
+		 	<tbody>
+				<c:forEach var="totalInfoViewDto" items="${scheduleList}">
+		 		<tr>
+		 			<td>${totalInfoViewDto.movieTitle}</td>
+		 			<td>${totalInfoViewDto.movieGrade}</td>
+		 			<td>${totalInfoViewDto.scheduleStart}</td>
+		 			<td>${totalInfoViewDto.scheduleEnd}</td>
+		 			<td>
+						<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">스케쥴 등록</a>
+						<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
+						<a href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
+		 			</td>			 		
+ 				</tr>
+	 		</c:forEach>
+	 		</tbody>
+		</table>
 		
-		
-		<div>
-		<h3>현재 상영중인 영화<a href="${root}/schedule/admin/create2?theaterNo=${theaterDto.theaterNo}">상영 영화 생성</a></h3>
-		<c:forEach var="totalInfoViewDto" items="${scheduleList }">
-			<h5>
-				${totalInfoViewDto.movieTitle }
-				<a href="${root }/schedule/time/admin/create?scheduleNo=${totalInfoViewDto.scheduleNo}">상영 스케쥴 등록</a>
-				<a href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">시작일 / 종료일 수정</a>
-				<a href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
-			</h5>
-		</c:forEach>
-		</div>
 	</div>
 </c:if>	
 

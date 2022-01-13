@@ -74,5 +74,11 @@
 		hall_no = #{hallNo}
 		where schedule_time_no = #{scheduleTimeNo}
 	</update>
+	
+	<select id="getTheaterNo" parameterType="int" resultType="int">
+		select theater_no from schedule_time st
+		inner join hall h on h.hall_no = st.hall_no
+		where st.schedule_time_no = #{schedultTimeNo}
+	</select>
  	
 </mapper>

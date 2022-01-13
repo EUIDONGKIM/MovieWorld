@@ -10,19 +10,27 @@ $(function(){
 });
 </script>
 
-<h1> 상영관 생성 </h1>
-
-<form action="${pageContext.request.contextPath}/hall/admin/create_seat" method="post">
-
-	<div class="row">
-		<h3>지점명 : ${theaterDto.theaterName }</h3>
-		<input type="hidden" name="theaterNo" value="${theaterDto.theaterNo}">
+<div class="container-600 mx-auto">
+	<div class="row my-3">
+		<h1>상영관 생성</h1>
 	</div>
 
-
+	<form action="${pageContext.request.contextPath}/hall/admin/create_seat" method="post">
+	
 	<div class="row">
-		<label>상영관 종류</label>
-		<select name="hallType" required>
+		<label class="form-label">지점명</label>
+		<input type="hidden" name="theaterNo" class="form-control" value="${theaterDto.theaterNo}" readonly>
+		<input type="text" class="form-control" value="${theaterDto.theaterName}" readonly>
+	</div>
+	
+	<div class="row">
+		<label class="form-label">상영관 이름</label>
+		<input type="text" name="hallName" value="${hallCount + 1}관" required>
+	</div>
+	
+	<div class="row">
+		<label class="form-label">상영관 종류</label>
+		<select class="form-select" name="hallType" required>
 			<option value="">종류 선택</option>
 				<c:forEach var="hallTypePriceDto" items="${hallTypeList}">
 					<option>${hallTypePriceDto.hallType}</option>
@@ -30,16 +38,9 @@ $(function(){
 		</select>
 	</div>
 	
-	
 	<div class="row">
-		<label>상영관 이름</label>
-		<input type="text" name="hallName" value="${hallCount + 1}관"required>
-	</div>
-	
-	
-	<div class="row">
-		<label>행수</label>
-		<select name="hallRows" required>
+		<label class="form-label">행수</label>
+		<select class="form-select" name="hallRows" required>
 			<option value="">행수 선택</option>
 				<c:forEach var="i" begin="1" end="10" step="1">
 					<option>${i}</option>
@@ -49,8 +50,8 @@ $(function(){
 	
 	
 	<div class="row">
-		<label>열수</label>
-		<select name="hallCols" required>
+		<label class="form-label">열수</label>
+		<select class="form-select" name="hallCols" required>
 			<option value="">열수 선택</option>
 				<c:forEach var="i" begin="1" end="10" step="1">
 					<option>${i}</option>
@@ -58,8 +59,9 @@ $(function(){
 		</select>
 	</div>
 	
-	<button type="submit">좌석 설정</button>
+	<button class="btn btn-primary" type="submit">좌석 설정</button>
 </form>
+</div>
 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -18,4 +18,5 @@ public interface ScheduleDao {
 	
 	//상영 시작일 종료일 수정
 	void edit(ScheduleDto schedulDto);
+	
 }

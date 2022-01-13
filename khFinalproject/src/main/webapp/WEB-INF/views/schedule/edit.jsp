@@ -47,9 +47,7 @@
 		</div>
 	</div>
 	
-	<div class="row">
-		<button type="submit" class="btn btn-info">수정</button>
-	</div>
+	<button type="submit" class="btn btn-info">수정</button>
 	
 	</form>
 </div>
