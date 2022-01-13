@@ -41,7 +41,7 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5}">
+<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5} && ${!admin}">
 	<div class="row" >
 		<div class="col right">
 			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5}">
+<c:if test="${boardSearchVO.boardTypeName==4 || boardSearchVO.boardTypeName==5} && ${!admin}">
 	<div class="row" >
 		<div class="col right">
 			<a href="write?boardTypeName=${param.boardTypeName}" class="btn btn-info">글쓰기</a>

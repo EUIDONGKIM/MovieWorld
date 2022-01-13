@@ -16,78 +16,118 @@ $(function(){
 });
 </script>
 
-<h1> 영화 추가 </h1>
 <%--
 		영화 장르, 국가, 런타임 직접 입력
 		영화 등급 선택으로 만들어
  --%>
+ <div class="container-600 container-center">
+	<div class="row">
+		<div class="col center">
+			<h1> 영화 추가 </h1>
+		</div>
+	</div>
+	<form method="post" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-3">
+				 <label>영화제목[KOR]</label>
+			</div>
+			<div class="col">
+				<input type="text" name="movieTitle" required class="form-control form-control-lg">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-3">
+				<label>영화제목[ENG]</label>
+			</div>
+			<div class="col">
+				<input type="text" name="movieEngTitle" required class="form-control form-control-lg">
+			</div>
+		</div>
 
-<form method="post" enctype="multipart/form-data">
-	<div class= "container-500 container-center">
-		<div class="row center">
-			<label>영화 한국어 제목</label>
-				<input type="text" name="movieTitle" required>
-		</div>
-	
-	<div class="row">
-			<label>영화 영어 제목</label>
-				<input type="text" name="movieEngTitle" required>
-		</div>
-	
-	<div class="row">
-			<label>영화 등급</label>
-				<select name="movieGrade" required>
+		<div class="row">
+			<div class="col-3">
+				<label>영화 등급</label>
+			</div>
+			<div class="col">
+				<select name="movieGrade" required class="form-select">
 					<option value="">등급 선택</option>
 					<option>12세 관람가</option>
 					<option>15세 관람가</option>
 					<option>청소년 관람불가</option>
 					<option>전체 관람가</option>	
 				</select>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-3">
+				<label>장르</label>
+			</div>
+			<div class="col">
+				<input type="text" name="movieType" required class="form-control form-control-lg">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-3">
+				<label>국가</label>
+			</div>
+			<div class="col">
+				<input type="text" name="movieCountry" required class="form-control form-control-lg">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-3">
+				<label>개봉일</label>
+			</div>
+			<div class="col">
+				<input type="date" name="movieOpening" required class="form-control form-control-lg">
+			</div>
 		</div>
 	
-	<div class="row">
-			<label>장르</label>
-				<input type="text" name="movieType" required>
-		</div>
-		
 		<div class="row">
-			<label>국가</label>
-				<input type="text" name="movieCountry" required>
+			<div class="col-3">
+				<label>런타임</label>
+			</div>
+			<div class="col">
+				<input type="number" name="movieRuntime" required min="0" class="form-control form-control-lg">
+			</div>
 		</div>
-		
-		<div class="row">
-			<label>개봉일</label>
-				<input type="date" name="movieOpening" required>
-		</div>
-		
-		<div class="row">
-			<label>런타임</label>
-				<input type="number" name="movieRuntime" required min="0">
-		</div>
-		
-		<div class="row">
-			<label>영화 줄거리</label>
-				<textarea 
-				style="width: 200px; height: 200px"
-            	name="movieContent"
-            	placeholder="내용을 입력해주세요."
-            	required></textarea>
-		</div>
-		
-		<div class="row">
-			<label>메인 포스터 이미지(한장)</label>
-				<input type="file" name="photo" accept="image/*" required>
-		</div>
-		
-		<div class="row">
-			<label>스틸컷(여러장)</label>
-				<input type="file" name="attach" accept="image/*" multiple="multiple">
-		</div>
-		<div class="row center">
-			<button type="submit">역할/동영상 추가</button>
-		</div>
-	</div>
-</form>
 
+		<div class="row">
+			<div class="col-3">
+				<label>영화 줄거리</label>
+			</div>
+			<div class="col">
+				<textarea  name="movieContent" placeholder="내용을 입력해주세요." required rows="3" cols="56" class="form-control"></textarea>
+			</div>
+		</div>		
+		
+		<div class="row">
+			<div class="col-3">
+				<label>메인 포스터 이미지(한장)</label>
+			</div>
+			<div class="col">
+				<input type="file" name="photo" accept="image/*" required class="form-control">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-3">
+				<label>스틸컷(여러장)</label>
+			</div>
+			<div class="col">
+				<input type="file" name="attach" accept="image/*" multiple="multiple" class="form-control">
+			</div>
+		</div>		
+		
+		<div class="row">
+		 	<button type="submit" class="btn btn-info">역할/동영상 추가</button>
+		</div>
+		
+	</form>
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
