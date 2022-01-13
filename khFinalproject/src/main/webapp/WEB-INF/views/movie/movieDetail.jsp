@@ -218,7 +218,7 @@
 		$(".send-reply").submit(function(e){
 			e.preventDefault();
 			var reviewContent = $("#reviewContent").val();
-			var reviewStarpoint = $("#reviewStarpoint").val();
+			var reviewStarpoint = $("input[name=starPoint]").val();
 			var movieNo = '${movieDto.movieNo}';
 			var memberNo = '${memberNo}';
 			if(memberNo == '0'){
@@ -283,6 +283,7 @@
 				alert("성공적으로 추가되었습니다.");
 				$("#reviewContent").val("");
 				$("#reviewStarpoint").val("");
+				$(".btn-close").click();
 				loadReply();
 			},
 			error:function(e){
@@ -521,8 +522,8 @@
 		<td>{{reviewDate}}</td>
 		<td>{{reviewContent}}</td>
 		<td>
-			<button class="reply-like" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">좋아요({{reviewLike}})</button>
-			<button class="reply-already-like" style="color: red;display: none;">좋아요({{reviewLikePlus}})</button>
+			<button class="reply-like" data-movie_no="{{movieNo}}" data-member_no="{{memberNo}}">♡좋아요({{reviewLike}})</button>
+			<button class="reply-already-like" style="color: red;display: none;">♡좋아요({{reviewLikePlus}})</button>
 		</td>
 	</tr>
 </template>		
@@ -705,7 +706,7 @@
 				<div class="col-10 center" >
 					<label
 						style="border: solid 1px; border-radius: 12px; border-color: gray;  padding: 20px;">
-						${{memberNick}} 님 ${movieDto.movieTitle}재미있게 보셨나요? 
+						 ${movieDto.movieTitle}재미있게 보셨나요? 
 						영화의 어떤 점이 좋았는지 이야기해주세요. 
 					</label>
 				</div>
@@ -717,6 +718,7 @@
 				</div>
 
 		<!-- Modal -->
+						<form class="send-reply">
 		<div class="modal fade" id="exampleModal" tabindex="-1"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
@@ -728,7 +730,8 @@
 					</div>
 					<div class="modal-body">
 						<div class="content-box">
-							
+
+
 							<div class="star-rating" >
 				    			<input type="radio" id="5-stars" name="starPoint" value="5" checked/>
 				    			<label for="5-stars" class="star">&#9733;</label>
@@ -744,16 +747,17 @@
 		 				
 		 				</div>
 						<textarea type="text" id="reviewContent" name="reviewContent"
-							required rows="4" cols="58" style="resize: none; margin-top:15px" placeholder="실관람평을 남겨주세요."></textarea>
+							required rows="4" cols="58" style="resize: none; margin-top:15px; width:95%;" placeholder="실관람평을 남겨주세요."></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary">등록</button>
+						<button type="submit" class="btn btn-primary">등록</button>
 					</div>
 				</div>
 			</div>
 		</div>
+						</form>
 			
 				<table class="table">
 					<thead class="reply-items">
