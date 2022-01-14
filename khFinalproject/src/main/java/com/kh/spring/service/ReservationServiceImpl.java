@@ -276,11 +276,11 @@ public class ReservationServiceImpl implements ReservationService {
 		scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 		scheduleTimeDao.reservationUpdate(scheduleTimeDto);
 
-		memberDao.usePoint(memberNo,memberPoint);
 		MemberDto memberDto = memberDao.get2(memberNo);
 		HistoryDto historyDto =new HistoryDto();
 		//예매시 포인트 사용 
 		if(memberPoint>0) {
+		memberDao.usePoint(memberNo,memberPoint);
 		historyDto.setMemberEmail(memberDto.getMemberEmail());
 		historyDto.setHistoryAmount(memberPoint);
 		historyDto.setHistoryMemo("포인트 사용");
@@ -323,15 +323,18 @@ public class ReservationServiceImpl implements ReservationService {
 		scheduleTimeDto.setScheduleTimeSum((int)reservationDto.getTotalAmount());
 		scheduleTimeDao.reservationMinusUpdate(scheduleTimeDto);
 		
-		memberDao.returnPoint(memberNo,reservationDto.getPointUse());
 		//예매 취소시 포인트 취소
 		HistoryDto historyDto = new HistoryDto();
 		MemberDto memberDto = memberDao.get2(memberNo);
+		if(reservationDto.getPointUse()>0) {
+			
+			memberDao.returnPoint(memberNo,reservationDto.getPointUse());
 		historyDto.setMemberEmail(memberDto.getMemberEmail());
 		historyDto.setHistoryAmount(reservationDto.getPointUse());
 		historyDto.setHistoryMemo("포인트 사용 취소");
 		historyDao.insert(historyDto);
 		
+		}
 		int pointPercent = gradeDao.get(memberDto.getMemberGrade());
 		int pointByPay = ((int)reservationDto.getTotalAmount() - reservationDto.getPointUse()) * pointPercent / 100;
 		//예매 취소시 포인트 취소

@@ -165,7 +165,7 @@
           <a class="nav-link active" href="${root}/theater/list">극장</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="${root}/reservation/">예매</a>
+          <a class="nav-link active" href="${root}/reservation/direct">예매</a>
         </li>
         <c:if test="${admin}">
         <li class="nav-item">
