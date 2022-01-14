@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -59,6 +60,11 @@
 			});
         }
         
+    	$(".cancel-btn").click(function(e){
+    		e.preventDefault();
+    		self.location = "${root}/theater/detail?theaterNo=${totalInfoViewDto.theaterNo}";
+    	});
+        
 	});
 </script>
 
@@ -66,36 +72,26 @@
 	<input type="hidden" name="scheduleTimeDiscountType" value="{{type}}">
 </template>
 
-<div class="container-600 container-center">
-	<div class="row center">
-		<div class="col">
-			<h1> 상영 영화 생성 </h1>
-		</div>
+<div class="container-600 mx-auto">
+	<div class="row my-3">
+		<h1>${totalInfoViewDto.theaterName}점 상영 영화 생성 </h1>
 	</div>
 	
 	<div class="row">
-		<div class="col">
-			<h4>영화명 :${totalInfoViewDto.movieTitle }</h4>
-		</div>
+		<label class="form-label">영화명</label>
+		<input class="form-control" type="text" value="${totalInfoViewDto.movieTitle}" readonly>
+	</div>
+
+	<div class="row">
+		<label class="form-label">상영 시작일</label>
+		<input class="form-control" type="text" value="${totalInfoViewDto.scheduleStart}" readonly>
 	</div>
 	
 	<div class="row">
-		<div class="col">
-			<h4>극장명 :${totalInfoViewDto.theaterName } </h4>
-		</div>
+		<label class="form-label">상영 종료일</label>
+		<input class="form-control" type="text" value="${totalInfoViewDto.scheduleEnd}" readonly>
 	</div>
 
-	<div class="row">
-		<div class="col">
-			<h4>상영 시작일 :${totalInfoViewDto.scheduleStart } </h4>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col">
-			<h4>상영 종료일 :${totalInfoViewDto.scheduleEnd } </h4>
-		</div>
-	</div>
 	<form method="post">
 	<div class="row">
 		<div class="col">
@@ -104,35 +100,24 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-3">
-			<label>상영관 선택</label>
-		</div>
-		<div class="col">
-			<select name="hallNo" required  class="form-control">
-				<option value="">상영관 선택</option>
-					<c:forEach var="hallDto" items="${hallList}">
-						<option value="${hallDto.hallNo}">${hallDto.hallName} / ${hallDto.hallType}</option>
-					</c:forEach>
-			</select>
-		</div>
+		<label class="form-label">상영관 선택</label>
+		<select class="form-select" name="hallNo" required  class="form-control">
+			<option value="">상영관 선택</option>
+				<c:forEach var="hallDto" items="${hallList}">
+					<option value="${hallDto.hallNo}">${hallDto.hallName} / ${hallDto.hallType}</option>
+				</c:forEach>
+		</select>
 	</div>
 	
 	<div class="row">
-		<div class="col-3">
-			<label>상영일/시간 선택</label>
-		</div>
-		<div class="col">
-				<input type="datetime-local" name="scheduleTimeDateTime"  min="${totalInfoViewDto.getNowDateToString() }" max="${totalInfoViewDto.getEndDateToString()}"
+		<label class="form-label">상영일/시간 선택</label>
+		<input type="datetime-local" name="scheduleTimeDateTime"  min="${totalInfoViewDto.getNowDateToString() }" max="${totalInfoViewDto.getEndDateToString()}"
 				pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" required class="form-control" >
-		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-3">
-			<label>상영 구분</label>
-		</div>
-		<div class="col">
-			<select name="scheduleTimeDiscountPrice" required class="form-control">
+		<label class="form-label">상영 구분</label>
+			<select name="scheduleTimeDiscountPrice" required class="form-select">
 						<option value="">상영 구분 선택</option>
 					<c:forEach var="scheduleTimeDiscountDto" items="${scheduleTimeDiscountList}">
 						<option value="${scheduleTimeDiscountDto.scheduleTimeDiscountPrice}" data-type="${scheduleTimeDiscountDto.scheduleTimeDiscountType}">
@@ -140,15 +125,12 @@
 						</option>
 					</c:forEach>
 			</select>
-		</div>
 	</div>
 	
 	<div id="send-type-hidden"></div>
 	
-	<div class="row">
-	<button type="submit" class="btn btn-info">상영 생성</button>
-	</div>
-	
+	<button type="submit" class="btn btn-primary">상영 생성</button>
+	<button type="button" class="cancel-btn btn btn-outline-primary">취소</button>
 	</form>
 </div>
 
