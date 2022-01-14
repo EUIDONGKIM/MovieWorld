@@ -56,7 +56,7 @@
 		    Else '50대 이상'
 		end text
 		FROM statistics_info_view where reservation_status='결제완료' and movie_no=#{movieNo})
-		group by text order by count desc
+		group by text
 	</select>
 	
 	
@@ -71,7 +71,7 @@
 		    Else '50대 이상'
 		end text
 		FROM statistics_info_view where reservation_status='결제완료')
-		group by text order by count desc
+		group by text
 	</select>
 	
 	<select id="totalReservationByTheater" resultType="ChartVO">
