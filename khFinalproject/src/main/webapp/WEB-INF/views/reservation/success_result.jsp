@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="grade" value="${grade}"></c:set>
 <c:set var="admin" value="${grade eq '운영자'}"></c:set>
 <c:set var="reservationStatus" value="${reservationDto.reservationStatus}"></c:set>

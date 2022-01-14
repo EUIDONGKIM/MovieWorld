@@ -700,6 +700,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 		success:function(resp){
 			$(".schedule-time-date-time-list").empty();
 
+				var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
 				console.log("잔여좌석!!!!!!!!!!",resp[i].disabledSeat);
 				var now = new Date().getTime();
@@ -707,6 +708,7 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				console.log("now",now);
 				console.log("date",date);
 				if(date>now){
+					count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
@@ -747,7 +749,11 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				$(".schedule-time-date-time-list").append(tag);
 				
 				}
+				
 			}
+				if(count==0){
+					$(".schedule-time-date-time-list").text("해당 날짜의 상영이 없거나 종료되었습니다.");
+				}
 			
 		},
 		error:function(e){
