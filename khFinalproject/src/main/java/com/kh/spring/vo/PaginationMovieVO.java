@@ -17,7 +17,7 @@ public class PaginationMovieVO {
 	private String movieTitle;
 	private String movieTotal;
 	private int count;
-	private int pageSize = 5;
+	private int pageSize = 10;
 	private int blockSize = 5;
 	private int begin, end;
 	private int startBlock, finishBlock, lastBlock;

@@ -184,7 +184,8 @@
         				template = template.replace("{{actorEngName}}",resp[i].actorEngName);
         				template = template.replace("{{actorJob}}",resp[i].actorJob);
         				template = template.replace("{{actorNationality}}",resp[i].actorNationality);
-        				template = template.replace("{{actorBirth}}",resp[i].actorBirth);
+        				var birth = resp[i].actorBirth.substring(0,10);
+        				template = template.replace("{{actorBirth}}",birth);
         				
         				var tag = $(template);
         				tag.find(".btn-delete").on("click",function(e){
@@ -218,7 +219,8 @@
         				template = template.replace("{{actorEngName}}",resp[i].actorEngName);
         				template = template.replace("{{actorJob}}",resp[i].actorJob);
         				template = template.replace("{{actorNationality}}",resp[i].actorNationality);
-        				template = template.replace("{{actorBirth}}",resp[i].actorBirth);
+        				var birth = resp[i].actorBirth.substring(0,10);
+        				template = template.replace("{{actorBirth}}",birth);
         				
         				var tag = $(template);
         				tag.find(".btn-delete").on("click",function(e){
@@ -287,25 +289,36 @@
 </script>
    <%-- 현재 template으로 되어있어서, 추가할 때 확인용으로 달아두신거, (추가가 실패해도 추가가 뜨도록 되어있음, db에서 실패되어도),,에이작스를 쓰면 --%>
     <template id="add-role-template"> 
-        <div class="row" >
-            <label>영화인 번호 : {{actorNo}} </label>
-            <label>영화인 : {{actorName}} </label>
-            <label>영어이름 : {{actorEngName}}</label>
-            <label>영화인 분류: {{actorJob}}</label>
-          	<label>국적 : {{actorNationality}}</label>
-           	<label>출생일 : {{actorBirth}}</label>
-            
-            <button class="btn-delete" data-actor_no="{{actorNo}}">삭제</button>
-        </div>
+	     <div class="col-auto">
+			<div class="card text-center" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title">영화인 번호 : {{actorNo}}</h5>
+			    <h6 class="card-subtitle mb-2 text-muted">영화인 : {{actorName}}</h6>
+				<p class="card-text">영어이름 : {{actorEngName}}</p>
+				<p class="card-text">영화인 분류: {{actorJob}}</p>
+			    <p class="card-text">국적 : {{actorNationality}}</p>
+				<p class="card-text">출생일 : {{actorBirth}}</p>
+			  </div>
+			  <div class="card-body">
+			  	<button class="btn-delete" data-actor_no="{{actorNo}}">삭제</button>
+			  </div>
+			</div>
+		</div>
     </template>
 
     <template id="video-template">
-        <div class="row">
-        	<label>비디오 번호 : {{videoNo}}</label>    
-            <label>비디오 명 : {{videoTitle}}</label>    
-            <label>경로(URL) : {{videoRoot}}</label>
-            <button class="btn-delete-video" data-video_no="{{videoNo}}">삭제</button>
-        </div>
+    	<div class="col-auto">
+			<div class="card text-center" style="width: 18rem;">
+			  <div class="card-body">
+			    <h5 class="card-title">비디오 번호 : {{videoNo}}</h5>
+			    <h6 class="card-subtitle mb-2 text-muted">비디오 명 : {{videoTitle}}</h6>
+				<p class="card-text">경로(URL) : {{videoRoot}}</p>
+			  </div>
+			  <div class="card-body">
+			  	<button class="btn-delete-video" data-video_no="{{videoNo}}">삭제</button>
+			  </div>
+			</div>
+		</div>
     </template>
     
     
@@ -320,17 +333,17 @@
     <hr>
 	<strong class="center"> 감독 </strong>
 	<input type="text" name="directorNo" id="directorNo" readonly>
-	<div id="result-director"></div>
+	<div id="result-director" class="row g-3 align-items-center"></div>
 	 <hr>
 	 
 	<strong class="center"> 배우 </strong>
 	<input type="text" name="actorNo" id="actorNo" readonly>
-	<div id="result-actor"></div>
+	<div id="result-actor" class="row g-3 align-items-center"></div>
 	 <hr>
 	 
 	<strong class="center"> 스태프 </strong>
 	<input type="text" name="staffNo" id="staffNo" readonly>
-	<div id="result-staff"></div>
+	<div id="result-staff" class="row g-3 align-items-center"></div>
 	<hr>
 
    <strong> 비디오 추가 </strong>
@@ -350,7 +363,7 @@
 	<div class="row center">
     	<button class="video-add-btn">비디오 추가</button>
 	</div>
-   		 <div class="video-result"></div>
+   		 <div class="video-result row g-3 align-items-center"></div>
  <hr>   
 	<div class="row center">
 		<button class="exit-btn">추가 완료</button>
