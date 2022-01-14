@@ -44,6 +44,8 @@ public class MemberController {
 
 	@Autowired
 	private MovieLikeDao movieLikeDao;
+	
+
   
 
 	
@@ -56,6 +58,7 @@ public class MemberController {
 	}
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
+		System.out.println(memberDto);
 		memberDao.join(memberDto);
 		
 		return "redirect:join_success";
@@ -147,7 +150,6 @@ public class MemberController {
 		//세션에서 아이디를 꺼내와서 해당 아이디로 조회후 값이 있다면 마이페이지로 이동
 		String memberEmail = (String)session.getAttribute("ses");
 		model.addAttribute("memberDto",memberDao.get(memberEmail));
-		System.err.println("@@@@@@@@마이페이지입갤@@@@@@@@@@");
 		return "member/mypage";
 	}
 	
@@ -159,7 +161,8 @@ public class MemberController {
 	@PostMapping("/idScan")
 	public String idScan(@RequestParam String memberName,@RequestParam String memberPhone,
 			Model model) {
-		
+		System.out.println(memberName);
+		System.out.println(memberPhone);
 		MemberDto isPass=memberDao.findId(memberName, memberPhone);
 		if(isPass!=null) {
 			//System.out.println(isPass.getMemberEmail());
@@ -262,9 +265,11 @@ public class MemberController {
 	public String quit(String memberPw,HttpSession session) {
 		String memberEmail = (String)session.getAttribute("ses");
 		boolean result =memberDao.quit(memberEmail, memberPw);
+		System.out.println("quit");
 		if(result) {
 			session.removeAttribute("ses");
 			session.removeAttribute("grade");
+
 			return "redirect:quit_success";
 		}else {
 			return "redirect:quit?error";
