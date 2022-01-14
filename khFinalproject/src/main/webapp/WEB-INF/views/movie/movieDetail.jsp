@@ -565,26 +565,30 @@
   							<hr>
   							</div>
   							</div>
-  						<div class="row">
 
-  						감독 : 
-  							<c:forEach var="totalRoleViewDto" items="${totalRoleViewList}" varStatus="status">
-  								<c:if test="${totalRoleViewDto.actorJob == 'director'}" >
-  									<a href="${root}/actor/detail?actorNo=${totalRoleViewDto.actorNo}">${totalRoleViewDto.actorName}</a>
-  									<c:if test="${not status.last}">,</c:if>
-  								</c:if>
-  							</c:forEach>
-  						/ 
-  						배우 : 
+  						<div class="container-left">
+							<label style="font-size 18px;">감독 :</label> 
+									<c:forEach var="totalRoleViewDto" items="${totalRoleViewList}" varStatus="status">
+  										<c:if test="${totalRoleViewDto.actorJob == 'director'}" >
+  											<a href="${root}/actor/detail?actorNo=${totalRoleViewDto.actorNo}">${totalRoleViewDto.actorName}</a>
+  											<c:if test="${not status.last}"></c:if>
+  										</c:if>
+  									</c:forEach>
+  						</div>
+
+  						<div class="container-left">
+  						<label style="font-size 18px;">배우 : </label> 
   							<c:forEach var="totalRoleViewDto" items="${totalRoleViewList}" varStatus="status">
   								<c:if test="${totalRoleViewDto.actorJob == 'actor' }" >
   									<a href="${root}/actor/detail?actorNo=${totalRoleViewDto.actorNo}">${totalRoleViewDto.actorName}</a>
-  									<c:if test="${not status.last}">,</c:if>
+  									<c:if test="${not status.last}"></c:if>
   								</c:if>
   							</c:forEach>
-  						
-						장르 : ${movieDto.movieType} / 기본 : ${movieDto.movieGrade}, ${movieDto.movieRuntime}분, ${movieDto.movieCountry}
-						개봉 : ${movieDto.getOpeningDay()}
+  						</div>
+  						<div class="row">
+							<label style="font-size 18px;">장르 : ${movieDto.movieType} / 기본 : ${movieDto.movieGrade}, ${movieDto.movieRuntime}분, ${movieDto.movieCountry}</label>
+							<strong style="font-size 18px;">개봉 : ${movieDto.getOpeningDay()}</strong>
+  						</div>
 						</div>
   					</div>
   				</div>
@@ -653,11 +657,11 @@
    					<tr>
    						<td>
 		   					<div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
-								<div class="carousel-inner">
+								<div class="carousel-inner" style="height:400px">
 								    <c:forEach var="moviePhotoDto" items="${moviePhotoList}" varStatus="status">
 			   							<c:if test="${status.index != 0}">						
 											<div class="carousel-item ${status.index == 1 ? 'active' : ''	 }">
-				   								<img src="${root}/movie/movieImg?moviePhotoNo=${moviePhotoDto.moviePhotoNo}" style="margin:0 auto" width="197px" height="260px" class="d-block" alt="...">
+				   								<img src="${root}/movie/movieImg?moviePhotoNo=${moviePhotoDto.moviePhotoNo}" style="margin:0 auto" width="304px" height="390px" class="d-block" alt="...">
 											</div>		   								
 			   							</c:if>
 			   						</c:forEach>
