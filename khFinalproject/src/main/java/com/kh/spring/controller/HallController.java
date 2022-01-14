@@ -12,10 +12,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.spring.entity.theater.HallDto;
 import com.kh.spring.entity.theater.TheaterDto;
+import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.HallTypePriceDao;
 import com.kh.spring.repository.theater.SeatDao;
 import com.kh.spring.repository.theater.TheaterDao;
+import com.kh.spring.service.HallService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +33,10 @@ public class HallController {
 	private HallTypePriceDao hallTypePriceDao;
 	@Autowired
 	private SeatDao seatDao;
+	@Autowired
+	private ScheduleTimeDao scheduleTimeDao;
+	@Autowired
+	private HallService hallService;
 	
 	@RequestMapping("/list")
 	public String hallList(Model model) {
@@ -78,7 +84,7 @@ public class HallController {
 		HallDto hallDto = hallDao.get(hallNo);
 		int theaterNo = hallDto.getTheaterNo(); //리다이렉트용 
 		
-		hallDao.delete(hallNo);
+		hallService.delete(hallNo);
 		redirectAttributes.addAttribute("theaterNo",theaterNo);
 		
 		return "redirect:/theater/detail";
@@ -107,6 +113,7 @@ public class HallController {
 	public String hallEdit(@RequestParam int hallNo, Model model) {
 		HallDto hallDto = hallDao.get(hallNo);
 		
+		model.addAttribute("isScheduleTimeExist",scheduleTimeDao.isScheduleTimeExist(hallNo));
 		model.addAttribute("hallDto",hallDto);
 		model.addAttribute("hallTypeList", hallTypePriceDao.list());
 		
@@ -115,7 +122,7 @@ public class HallController {
 	
 	@PostMapping("/admin/edit")
 	public String hallEdit(@ModelAttribute HallDto hallDto, RedirectAttributes redirectAttributes) {
-		hallDao.edit(hallDto);
+		hallService.edit(hallDto);;
 		redirectAttributes.addAttribute("hallNo",hallDto.getHallNo());
 		return "redirect:/hall/admin/detail";
 	}

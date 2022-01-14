@@ -14,6 +14,17 @@ $(function(){
 			$(this).prop("selected",true);
 		}
 	}); 
+	
+	var isScheduleTimeExist = ${isScheduleTimeExist};
+	console.log(isScheduleTimeExist);
+	if(!isScheduleTimeExist){
+		console.log("수정 삭제 불가능");
+		$(".form-control").attr("disabled",true);
+		$(".form-select").attr("disabled",true);
+		$(".btn").attr("disabled",true);
+		$(".btn").bind("click",false);
+	}
+	
 });
 </script>
 
@@ -45,6 +56,12 @@ $(function(){
 	<button type="submit" class="btn btn-primary">수정</button>
 	<a class="btn btn-outline-primary" href="${root}/hall/admin/delete?hallNo=${hallDto.hallNo}">삭제</a>
 </form>
+
+	<c:if test="${isScheduleTimeExist == false}">
+	<div class="row">
+		해당 상영관에 상영 예정인 영화가 있으면 수정과 삭제가 불가능합니다.
+	</div>
+</c:if>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

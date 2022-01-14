@@ -44,7 +44,7 @@ $(function(){
 			<label>영화제목[ENG]</label>
 		</div>
 			<div class="col">
-				<input type="text" name="movieEngTitle" value="${movieDto.movieTitle }" required class="form-control form-control-lg">
+				<input type="text" name="movieEngTitle" value="${movieDto.movieEngTitle }" required class="form-control form-control-lg">
 		</div>
 	</div>
 	
