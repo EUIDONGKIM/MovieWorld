@@ -45,10 +45,10 @@
 	
 	<div class="row right">
 	 <div class="col">
-		<a href="write?boardSuperno=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">답글쓰기</a>
 		<a href="main?boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">목록보기</a>
 		
 		<c:if test="${owner||admin}">
+		<a href="write?boardSuperno=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">답글쓰기</a>
 		<a href="edit?boardNo=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">수정하기</a>
 		<a href="delete?boardNo=${boardVO.boardNo}&boardTypeName=${param.boardTypeName}" class="btn btn-outline-info">삭제하기</a>
 		</c:if>
