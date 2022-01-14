@@ -127,7 +127,7 @@ $(function(){
 		</div>	
 		
 		<div class="row">
-			<button type="submit">수정 완료</button>
+			<button type="submit" class="btn btn-info">수정 완료</button>
 		</div>
 		
 	</form>

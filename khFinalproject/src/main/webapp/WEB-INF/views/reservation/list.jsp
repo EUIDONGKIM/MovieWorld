@@ -26,7 +26,7 @@
 	 
 	 <form method="get" class="d-flex">
 	
-			<select name="column" class="form-input form-inline">
+			<select name="column" class="form-select form-inline">
 				<c:choose>		
 					<c:when test="${paginationVO.columnIs('reservation_no')}">
 						<option value="">선택</option>
@@ -56,9 +56,9 @@
 			</select>
 			
 			<input type="search" name="keyword" placeholder="검색어 입력"
-					value="${paginationVO.keyword}" class="form-input form-inline">
+					value="${paginationVO.keyword}" class="form-control form-inline">
 			
-			<input type="submit" value="검색" class="form-btn form-inline">
+			<input type="submit" value="검색" class="btn btn-info form-inline">
 			
 		</form>
 		</div>
