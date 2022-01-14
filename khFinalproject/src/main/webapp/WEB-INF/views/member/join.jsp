@@ -60,7 +60,7 @@ $(function() {
         	emailSender(to);
         
         	 $("#userinput_email2").next().next().text('이메일로 인증번호를 전송하였습니다.').css("color","blue");
-        	 $("#id").attr('disabled', true);
+//         	 $("#id").attr('disabled', true);
         	 $("#userinput_email2").prop("disabled",false);
         	 $(".email-confirm-btn").prop("disabled",false);
         	 
@@ -235,8 +235,10 @@ $(function() {
 				console.log(resp)
 				if(resp=="nonono"){		
 					$("input[name=memberNick]").next().text("이미 사용중인 닉네임입니다.");
+					$("#join-btn").prop("disabled",true);
 				}else{				
 					$("input[name=memberNick]").next().text("");
+					$("#join-btn").prop("disabled",false);
 				}
 			},
 			error:function(e){
