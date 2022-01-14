@@ -38,7 +38,7 @@
  
  	 <select id="listByDate" parameterType="map" resultType="HallByScheduleTimeVO">
  	 	select * from schedule_time st
-        left outer join hall using(hall_no)
+        join hall using(hall_no)
         where st.schedule_no=#{scheduleNo} and
  		to_char(st.schedule_time_date_time,'YYYY-MM-DD') = #{scheduleTimeDate}
  	</select>
