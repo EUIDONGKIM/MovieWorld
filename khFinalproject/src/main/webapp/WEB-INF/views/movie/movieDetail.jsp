@@ -692,7 +692,7 @@
 				<div class="col-10 center" >
 					<label
 						style="border: solid 1px; border-radius: 12px; border-color: gray;  padding: 20px;">
-						 ${movieDto.movieTitle}재미있게 보셨나요? 
+						 ${movieDto.movieTitle} 재미있게 보셨나요? 
 						영화의 어떤 점이 좋았는지 이야기해주세요. 
 					</label>
 				</div>
