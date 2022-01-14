@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +24,7 @@ import com.kh.spring.repository.member.HistoryDao;
 import com.kh.spring.repository.member.MemberDao;
 import com.kh.spring.repository.movie.MovieLikeDao;
 import com.kh.spring.repository.reservation.ReservationDao;
-import com.kh.spring.repository.reservation.StatisticsInfoViewDao;
 import com.kh.spring.service.EmailService;
-import com.kh.spring.util.RandomUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,13 +43,6 @@ public class MemberController {
 	private ReservationDao reservationDao;
 
 	@Autowired
-	private StatisticsInfoViewDao statisticsInfoViewDao;
-	@Autowired
-	private RandomUtil randomUtil;
-	
-	@Autowired
-	private PasswordEncoder encoder;
-	@Autowired
 	private MovieLikeDao movieLikeDao;
   
 
@@ -67,6 +57,7 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
 		memberDao.join(memberDto);
+		
 		return "redirect:join_success";
 	}
 	
@@ -156,7 +147,7 @@ public class MemberController {
 		//세션에서 아이디를 꺼내와서 해당 아이디로 조회후 값이 있다면 마이페이지로 이동
 		String memberEmail = (String)session.getAttribute("ses");
 		model.addAttribute("memberDto",memberDao.get(memberEmail));
-	
+		System.err.println("@@@@@@@@마이페이지입갤@@@@@@@@@@");
 		return "member/mypage";
 	}
 	

@@ -26,7 +26,7 @@
 		values(
 			member_no_seq.nextval,#{memberEmail},#{memberPw},
 			#{memberName},#{memberNick},#{memberGender},
-			#{memberBirth}, #{memberPhone},'브론즈',0,sysdate
+			#{memberBirth}, #{memberPhone},'브론즈',0,sysdate,sysdate
 		)
 	</insert>
 	<!-- 포인트조회 -->
