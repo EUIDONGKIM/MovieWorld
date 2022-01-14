@@ -999,7 +999,7 @@ function cancelTempReservation(reservationKey){
 	<template id="movie-list-template">
 		<div>	
 			<input type="radio" class="btn-check" id="{{id}}" name="movieNo" value="{{value}}" data-name="{{name}}" data-runtime="{{runtime}}" data-hallNo="{{hallNo}}" data-hallType="{{hallType}}" data-scheduleTimeDiscountType="{{scheduleTimeDiscountType}}">
-			<label class="btn btn-outline-info" for="{{id}}">{{grade}} {{name}}</label>		
+			<label class="btn btn-outline-info" for="{{id}}">({{grade}}) {{name}}</label>		
 		</div>	
 	</template>
 
@@ -1012,7 +1012,7 @@ function cancelTempReservation(reservationKey){
 
 	
 	<div class="row">
-		<div class=col-3>
+		<div class=col-4>
 			<div class="row center border bg-secondary text-white"><h2>영화</h2></div>
 			<div class="movie-list "></div>
 		</div>
@@ -1027,7 +1027,7 @@ function cancelTempReservation(reservationKey){
 			<div class="theater-name-list">영화 또는 지역을 먼저 선택하세요.</div>
 		</div>
 		
-		<div class=col-2>
+		<div class=col-1>
 			<div class="row center border bg-secondary text-white" ><h2>날짜</h2></div>
 			<div class="schedule-time-date-list">
 			영화와 지점을 먼저 선택하세요.

@@ -69,6 +69,7 @@
 
 	<!-- 검색창 끝 -->
 	<br><br><br>
+	<div class="container-1400 container-center">
 <table class="table">
 	<thead>
 		<tr>
@@ -111,6 +112,7 @@
 		</c:forEach>	
 	</tbody>	
 </table>
+</div>
 </div>
 
 
