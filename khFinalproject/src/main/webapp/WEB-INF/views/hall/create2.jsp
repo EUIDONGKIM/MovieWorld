@@ -25,7 +25,7 @@ $(function(){
 	
 	<div class="row">
 		<label class="form-label">상영관 이름</label>
-		<input type="text" name="hallName" value="${hallCount + 1}관" required>
+		<input type="text" class="form-control" name="hallName" value="${hallCount + 1}관" required>
 	</div>
 	
 	<div class="row">
