@@ -20,7 +20,7 @@
 			</div>
 				<div class="row">
 					<div class="col-md-2" style="float: none; margin:0 auto;">
-  					<img src="${root}/actor/actorImg?actorPhotoNo=${actorDto.actorNo}" width="197px" height="260px">
+  					<img src="${root}/actor/actorImg?actorPhotoNo=${actorPhotoNo}" width="197px" height="260px">
   					</div>
   					
   					<div class="col col-9">
