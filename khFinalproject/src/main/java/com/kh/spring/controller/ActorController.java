@@ -99,10 +99,10 @@ public class ActorController {
 	@GetMapping("/actorImg")
 	@ResponseBody					
 	public ResponseEntity<ByteArrayResource> imgFile(
-				@RequestParam int actorNo
+				@RequestParam int actorPhotoNo
 			) throws IOException {
-		ActorPhotoDto actorPhotoDto = actorPhotoDao.getByActor(actorNo);
-		byte[] data = actorPhotoDao.load(actorPhotoDto.getActorPhotoNo());
+		ActorPhotoDto actorPhotoDto = actorPhotoDao.get(actorPhotoNo);
+		byte[] data = actorPhotoDao.load(actorPhotoNo);
 		ByteArrayResource resource = new ByteArrayResource(data);
 		
 		String encodeName = URLEncoder.encode(actorPhotoDto.getActorPhotoUploadName() , "UTF-8");
@@ -120,7 +120,8 @@ public class ActorController {
 	public String detail(@RequestParam int actorNo,Model model) {
 		ActorDto actorDto = actorDao.get(actorNo);
 		List<MovieChartVO> movieList = actorService.getDetailVO(actorNo);
-		
+		ActorPhotoDto actorPhotoDto = actorPhotoDao.getByActor(actorNo);
+		model.addAttribute("actorPhotoNo",actorPhotoDto.getActorPhotoNo());
 		model.addAttribute("movieList",movieList);
 		model.addAttribute("actorDto",actorDto);
 		return "actor/detail";
