@@ -7,7 +7,7 @@
 
 	<style>
 	.board{
-	padding:20px;
+	padding:34px;
 	}
 	</style>
 	<script>
@@ -80,18 +80,20 @@
 	      	<div class="board d-flex flex-wrap">
       <c:forEach var="movieChartVO" items="${list}" varStatus="status">
 	      		<div class="board">
-	      			<div class="row center">
+	      			<div class="row center" style="background-color : red; color : white;">
 					    <strong>NO.${status.index+1}</strong>
 	      			</div>
-	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
+	      			<div class="row">
+	      		  		<a style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
 	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>	
+	      			</div>
       				<div class="row">
       					<c:choose>
       						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
-      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
+      							<a  style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
       						</c:when>
       						<c:otherwise>
-      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
+      							<a  style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
       						</c:otherwise>
       					</c:choose>
       				</div>
@@ -99,7 +101,7 @@
       				<div class="row">평점 : ${movieChartVO.movieStarpoint}점</div>
       				<div class="row">${fn:substring(movieChartVO.movieOpening,0,10) } 개봉</div>
       				<div class="row">
-      					<a href="${root}/reservation/direct?movieNo=${movieChartVO.movieNo}">예매하기</a>
+      					<a style="padding:0 0" href="${root}/reservation/direct?movieNo=${movieChartVO.movieNo}">예매하기</a>
       				</div>      		
 	      		</div>        
       </c:forEach>

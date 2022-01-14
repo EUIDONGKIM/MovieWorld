@@ -19,8 +19,11 @@
 					<hr>
 			</div>
 				<div class="row">
-  					<div class="col"><img src="${root}/actor/actorImg?actorPhotoNo=${actorDto.actorNo}" width="250px" height="250px"></div>
-  					<div class="col col-8">
+					<div class="col-md-2" style="float: none; margin:0 auto;">
+  					<img src="${root}/actor/actorImg?actorPhotoNo=${actorDto.actorNo}" width="197px" height="260px">
+  					</div>
+  					
+  					<div class="col col-9">
   						<div class="row">
   							<div class="col-sm">
   								<strong class="inline">${actorDto.actorName }(${actorDto.actorEngName })</strong>
@@ -37,21 +40,23 @@
   				</div>
 			<br>
 			<hr>
-			<div class="row center"><p>[필모그래피]</p></div>
+			<div class="row"><strong>필모그래피</strong></div>
 	<div class="container">
      	<div class="board d-flex flex-wrap">
       		<c:forEach var="movieChartVO" items="${movieList}">
 	      		<div class="board">
-	      		  		<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
+	      			<div class="row"> 
+	      		  		<a style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">
 	      				<img src="${root}/movie/movieImg?moviePhotoNo=${movieChartVO.moviePhotoNo}" width="197px" height="260px"></a>
+	      			</div>
       						
       				<div class="row">
       					<c:choose>
       						<c:when test="${fn:length(movieChartVO.movieTitle) < 12}">
-      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
+      							<a style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${movieChartVO.movieTitle }</a>
       						</c:when>
       						<c:otherwise>
-      							<a href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
+      							<a style="padding:0 0" href="${root}/movie/movieDetail?movieNo=${movieChartVO.movieNo}">${fn:substring(movieChartVO.movieTitle,0,12) }...</a>
       						</c:otherwise>
       					</c:choose>
       				</div>
@@ -62,7 +67,7 @@
 	</div>
 			
 			
-			
+			</div>
 		</div>
 	
 
