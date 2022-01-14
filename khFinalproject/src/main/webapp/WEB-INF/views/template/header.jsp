@@ -78,9 +78,9 @@
 						<div class="row center">
 							<div class="col-6">
 								<c:if test="${login}">
-										<h6>로그인: ${login}</h6>
+<%-- 										<h6>로그인: ${login}</h6> --%>
 										<h6>등급 : ${grade}</h6>
-										<h6>회원번호 : ${memberNo}</h6>
+<%-- 										<h6>회원번호 : ${memberNo}</h6> --%>
 								</c:if>
 							</div>
 						</div>

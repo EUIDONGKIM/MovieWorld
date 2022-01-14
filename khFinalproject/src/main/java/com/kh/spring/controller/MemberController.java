@@ -161,7 +161,8 @@ public class MemberController {
 	@PostMapping("/idScan")
 	public String idScan(@RequestParam String memberName,@RequestParam String memberPhone,
 			Model model) {
-		
+		System.out.println(memberName);
+		System.out.println(memberPhone);
 		MemberDto isPass=memberDao.findId(memberName, memberPhone);
 		if(isPass!=null) {
 			//System.out.println(isPass.getMemberEmail());
