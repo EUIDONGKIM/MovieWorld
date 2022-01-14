@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.css">
     <style>
         *{
@@ -19,6 +20,9 @@
         .float-box > .result {
             padding:0.5rem;
         }
+        .cinema-none{
+    	pointer-events : none;
+    	}
     </style>
     <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@0.0.19/cinema/hacademy-cinema.js"></script>
     <script>
@@ -29,11 +33,26 @@
             });
             print(cinema);
             function print(app){
-                document.querySelector(".result").textContent = app.getQueryString();
             }
         });
+        
+        $(function(){
+        	
+        	var isScheduleTimeExist = ${isScheduleTimeExist};
+        	console.log(isScheduleTimeExist);
+        	if(!isScheduleTimeExist){
+        		console.log("수정 삭제 불가능");
+        		$("#cinema").addClass("cinema-none");
+        		$(".edit-btn").attr("disabled",true);
+        	}
+        	
+        	
+        	$(".cancel-btn").click(function(e){
+        		e.preventDefault();
+        		self.location = "${root}/hall/admin/detail?hallNo=${hallDto.hallNo}";
+        	});
+        });
     </script>    
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <div class="container">
 	<div class="row my-3">
@@ -48,6 +67,7 @@
 	        <li>좌석번호를 표시하고 싶은 경우 .cinema-seat-area에 data-seatno="visible"로 설정</li>
 	    </ul>
 	</div>
+
     <div class="float-box">
         <div>
             <form action="${pageContext.request.contextPath}/seat/admin/insert" method="post">
@@ -56,12 +76,20 @@
                     <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows}" data-colsize="${hallDto.hallCols}" data-mode="manager" data-fill="auto" data-seatno="visible"></div>
                     <%-- <div class="cinema-seat-area" data-rowsize="${hallDto.hallRows }" data-colsize="${hallDto.hallCols }" data-mode="manager" data-fill="auto" data-seatno="visible"></div> --%>
                 </div>
-        
+
                 <input type="hidden" name="hallNo" value="${hallDto.hallNo}">
-                <input class="btn btn-primary mt-3" type="submit" value="좌석 재설정">
+                <input class="edit-btn btn btn-primary mt-3" type="submit" value="좌석 재설정">
+               	<button type="button" class="cancel-btn btn btn-outline-primary mt-3">취소</button>
             </form>
         </div>
     </div>
+          
+  	<c:if test="${isScheduleTimeExist == false}">
+	<div class="row">
+		해당 상영관에 상영 예정인 영화가 있으면 좌석 재설정이 불가능합니다.
+	</div>
+	</c:if>
+    
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

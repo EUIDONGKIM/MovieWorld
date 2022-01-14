@@ -21,9 +21,14 @@ $(function(){
 		console.log("수정 삭제 불가능");
 		$(".form-control").attr("disabled",true);
 		$(".form-select").attr("disabled",true);
-		$(".btn").attr("disabled",true);
-		$(".btn").bind("click",false);
+		$(".edit-btn").attr("disabled",true);
+		$(".delete-btn").bind("click",false);
 	}
+	
+	$(".cancel-btn").click(function(e){
+		e.preventDefault();
+		self.location = "${root}/hall/admin/detail?hallNo=${hallDto.hallNo}";
+	});
 	
 });
 </script>
@@ -53,11 +58,12 @@ $(function(){
 		</select>
 	</div>
 	
-	<button type="submit" class="btn btn-primary">수정</button>
-	<a class="btn btn-outline-primary" href="${root}/hall/admin/delete?hallNo=${hallDto.hallNo}">삭제</a>
+	<button type="submit" class="edit-btn btn btn-primary">수정</button>
+	<a class="delete-btn btn btn-outline-primary" href="${root}/hall/admin/delete?hallNo=${hallDto.hallNo}">삭제</a>
+	<button type="button" class="cancel-btn btn btn-outline-primary">취소</button>
 </form>
 
-	<c:if test="${isScheduleTimeExist == false}">
+<c:if test="${isScheduleTimeExist == false}">
 	<div class="row">
 		해당 상영관에 상영 예정인 영화가 있으면 수정과 삭제가 불가능합니다.
 	</div>
