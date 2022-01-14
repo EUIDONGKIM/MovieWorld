@@ -44,6 +44,8 @@ public class MemberController {
 
 	@Autowired
 	private MovieLikeDao movieLikeDao;
+	
+
   
 
 	
@@ -159,7 +161,8 @@ public class MemberController {
 	@PostMapping("/idScan")
 	public String idScan(@RequestParam String memberName,@RequestParam String memberPhone,
 			Model model) {
-		
+		System.out.println(memberName);
+		System.out.println(memberPhone);
 		MemberDto isPass=memberDao.findId(memberName, memberPhone);
 		if(isPass!=null) {
 			//System.out.println(isPass.getMemberEmail());
@@ -262,9 +265,11 @@ public class MemberController {
 	public String quit(String memberPw,HttpSession session) {
 		String memberEmail = (String)session.getAttribute("ses");
 		boolean result =memberDao.quit(memberEmail, memberPw);
+		System.out.println("quit");
 		if(result) {
 			session.removeAttribute("ses");
 			session.removeAttribute("grade");
+
 			return "redirect:quit_success";
 		}else {
 			return "redirect:quit?error";
