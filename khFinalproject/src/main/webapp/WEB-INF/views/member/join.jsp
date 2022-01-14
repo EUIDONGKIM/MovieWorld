@@ -60,6 +60,7 @@ $(function() {
         	emailSender(to);
         
         	 $("#userinput_email2").next().next().text('이메일로 인증번호를 전송하였습니다.').css("color","blue");
+        	 $("#id").attr('disabled', true);
         	 $("#userinput_email2").prop("disabled",false);
         	 $(".email-confirm-btn").prop("disabled",false);
         	 
@@ -728,7 +729,7 @@ $(function(){
 		    <div class="row">
 		    	<div class="col">
 			    	 <label>아이디(이메일)*</label>
-					 <input type="email" name="memberEmail" required placeholder="E-mail" class="form-input" id="id">
+					 <input type="email" name="memberEmail" required  placeholder="E-mail" class="form-input" id="id">
 					 <input type="button" value="이메일 인증" class="btn btn-info email-send-btn"  style="position: absolute; margin-left: -119px ; height:52px;">
 					 <span class="success"></span>
 	           		 <span class="fail">이메일 형식이 올바르지 않습니다.</span>
