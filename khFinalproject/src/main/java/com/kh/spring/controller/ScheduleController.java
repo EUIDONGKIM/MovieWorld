@@ -179,6 +179,26 @@ public class ScheduleController {
 		}
 	}
 	
+	//영화관 상세페이지로 리다이렉트
+	@GetMapping("/admin/edit2")
+	public String edit2(@RequestParam int scheduleNo, Model model) {
+		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(scheduleNo);
+		MovieDto movieDto = movieDao.get(totalInfoViewDto.getMovieNo());
+		
+		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
+		model.addAttribute("movieDto",movieDto);
+		
+		return "schedule/edit2";
+	}
+	@PostMapping("/admin/edit2")
+	public String edit2(@ModelAttribute ScheduleDto scheduleDto, RedirectAttributes redirectAttributes)  {
+		log.debug("스케쥴디티오...{}",scheduleDto);
+		scheduleDao.edit(scheduleDto);
+		int theaterNo = scheduleDao.get(scheduleDto.getScheduleNo()).getTheaterNo();
+		redirectAttributes.addAttribute("theaterNo",theaterNo);
+		return "redirect:/theater/detail";
+	}
+	
 	// 극장쪽도 영화쪽이랑 같게,(sql 삭제 구문 다시 확인)
 	// 결제 내역 만들고,
 	// 영화 리스트 검색부분 파라미터 넘겨주기(제가)

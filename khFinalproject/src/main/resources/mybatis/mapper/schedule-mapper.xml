@@ -49,5 +49,8 @@
  		where schedule_no = #{scheduleNo}
  	</update>
  	
+ 	<select id="get" parameterType="int" resultType="ScheduleDto">
+ 		select * from schedule where schedule_no = #{scheduleNo}
+ 	</select>
  	
 </mapper>

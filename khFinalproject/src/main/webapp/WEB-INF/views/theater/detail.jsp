@@ -432,7 +432,7 @@
 		 			<td>${totalInfoViewDto.scheduleEnd}</td>
 		 			<td>
 						<a class="btn btn-info" href="${root }/schedule/time/admin/create2?scheduleNo=${totalInfoViewDto.scheduleNo}">스케쥴 등록</a>
-						<a class="btn btn-info" href="${root }/schedule/admin/edit?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
+						<a class="btn btn-info" href="${root }/schedule/admin/edit2?scheduleNo=${totalInfoViewDto.scheduleNo}">수정</a>
 						<a class="btn btn-outline-info" href="${root }/schedule/admin/delete_theater?theaterNo=${theaterDto.theaterNo}&scheduleNo=${totalInfoViewDto.scheduleNo}">삭제</a>
 		 			</td>			 		
  				</tr>

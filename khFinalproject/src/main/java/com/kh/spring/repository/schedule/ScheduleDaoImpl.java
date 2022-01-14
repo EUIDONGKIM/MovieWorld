@@ -49,4 +49,9 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		sqlSession.update("schedule.edit", schedulDto);
 	}
 
+	@Override
+	public ScheduleDto get(int scheduleNo) {
+		return sqlSession.selectOne("schedule.get",scheduleNo);
+	}
+
 }
