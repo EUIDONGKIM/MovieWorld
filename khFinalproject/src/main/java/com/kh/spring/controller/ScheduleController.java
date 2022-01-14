@@ -134,6 +134,28 @@ public class ScheduleController {
 		return "redirect:/movie/admin/list";
 	}
 	
+	//영화관으로 리다이렉트
+	@GetMapping("/time/admin/create2")
+	public String timeCreate2(@RequestParam int scheduleNo,Model model) {
+		
+		TotalInfoViewDto totalInfoViewDto = totalInfoViewDao.get(scheduleNo);
+		model.addAttribute("hallList", hallDao.list(totalInfoViewDto.getTheaterNo()));
+		model.addAttribute("totalInfoViewDto",totalInfoViewDto);
+		model.addAttribute("scheduleTimeDiscountList", scheduleTimeDiscountDao.list());
+		
+		return "schedule/time/create2";
+	}
+	@PostMapping("/time/admin/create2")
+	public String timeCreate2(@ModelAttribute ScheduleTimeDto scheduleTimeDto, RedirectAttributes redirectAttributes) {
+		log.debug("디티오 ==== {}",scheduleTimeDto);
+		scheduleTimeDao.insert(scheduleTimeDto);
+		int theaterNo = hallDao.get(scheduleTimeDto.getHallNo()).getTheaterNo();
+		log.debug("영화관 번호....={}",theaterNo);
+		redirectAttributes.addAttribute("theaterNo", theaterNo);
+		return "redirect:/theater/detail";
+	}
+	
+	
 	
 	@GetMapping("/admin/edit")
 	public String edit(@RequestParam int scheduleNo, Model model) {
