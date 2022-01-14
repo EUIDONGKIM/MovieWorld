@@ -49,6 +49,4 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		sqlSession.update("schedule.edit", schedulDto);
 	}
 
-
-
 }

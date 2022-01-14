@@ -75,4 +75,10 @@ public class ScheduleTimeDaoImpl implements ScheduleTimeDao{
 		return sqlSession.selectOne("scheduleTime.getTheaterNo", scheduleTimeNo);
 	}
 
+
+	@Override
+	public boolean isScheduleTimeExist(int hallNo) {
+		return sqlSession.selectList("scheduleTime.exist", hallNo).isEmpty();
+	}
+
 }

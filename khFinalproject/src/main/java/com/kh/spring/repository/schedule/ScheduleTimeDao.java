@@ -25,4 +25,6 @@ public interface ScheduleTimeDao {
 	boolean edit(ScheduleTimeDto scheduleTimeDto);
 
 	int getTheaterNo(int scheduleTimeNo);
+
+	boolean isScheduleTimeExist(int hallNo);
 }

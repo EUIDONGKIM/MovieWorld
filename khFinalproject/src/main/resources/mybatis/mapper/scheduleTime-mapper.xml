@@ -80,5 +80,9 @@
 		inner join hall h on h.hall_no = st.hall_no
 		where st.schedule_time_no = #{schedultTimeNo}
 	</select>
+	
+	<select id="exist" parameterType="int" resultType="ScheduleTimeDto">
+		<![CDATA[select * from schedule_time where hall_no = #{hallNo} and sysdate < schedule_time_date_time]]>
+	</select>
  	
 </mapper>
