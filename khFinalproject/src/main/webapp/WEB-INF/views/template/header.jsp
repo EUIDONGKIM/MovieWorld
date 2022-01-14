@@ -134,7 +134,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="${root}/board/main?boardTypeName=1">
+								<a href="${root}/board/main?boardTypeName=3">
 									<img src="${root}/resources/image/monitor.svg" class="memberInfo_wrap2" width="50px" height="50px">
 									<label>고객센터</label>
 								</a>
@@ -174,7 +174,7 @@
         </c:if>
         <li class="nav-item dropdown">
         	
-        	<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="${root}/board/main?boardTypeName=1" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
+        	<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="${root}/board/main?boardTypeName=3" role="button" aria-haspopup="true" aria-expanded="false">고객센터</a>
         	<div class="dropdown-menu">
 				<a class="dropdown-item" href="${root}/board/main?boardTypeName=2">자주찾는질문</a>
             	<a class="dropdown-item" href="${root}/board/main?boardTypeName=3">공지/뉴스</a>
