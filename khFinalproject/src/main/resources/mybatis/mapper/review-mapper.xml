@@ -36,7 +36,7 @@
 		select * from (
 			select rownum rn, TMP.* from (
 				select r.movie_no,r.member_no,r.review_content,r.review_starpoint,r.review_date,r.review_like,m.member_nick from review r
-        		join member m on r.member_no = m.member_no where movie_no=#{movieNo}
+        		join member m on r.member_no = m.member_no where movie_no=#{movieNo} order by r.review_date desc 
 			)TMP
 		) where rn between #{startRow} and #{endRow}
 	</select>
