@@ -95,6 +95,15 @@ display: none;
 		</div>
 	</c:if>
 	
+	<c:if test="${param.errorScheduleTimeNo != null}">
+		<div class="row center">
+			<div class="col">
+				<h4 class="error">해당 시간의 예매정보가 존재합니다.</h4>
+			</div>
+		</div>
+	</c:if>
+	
+	
 	<div class="d-flex flex-row-reverse bd-highlight">
 		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list?movieTotal=F'">현재 상영작</button>
 		<button class="btn btn-outline-dark" onclick="location.href='${root}/movie/admin/list'">모든 영화 목록</button>

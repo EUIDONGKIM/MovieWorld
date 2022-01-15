@@ -598,6 +598,7 @@ function scheduleDateList(movieNo,theaterNo){
 		}
 	});
 }
+
 function scheduleDateTimeDateList(scheduleTimeDate){
 	$.ajax({
 		url:"${pageContext.request.contextPath}/data/getTotal4",
@@ -610,21 +611,23 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 		dataType : "json",
 		success:function(resp){
 			$(".schedule-time-date-time-list").empty();
+
+				var count = 0;
 			for(var i = 0 ; i < resp.length ; i++){
 				console.log("잔여좌석!!!!!!!!!!",resp[i].disabledSeat);
 				var now = new Date().getTime();
 				var date = resp[i].scheduleTimeDateTime;
 				console.log("now",now);
 				console.log("date",date);
-				var count = 0;
 				if(date>now){
 					count++;
 				var template = $("#list-template").html();
 				template = template.replace("{{key}}","scheduleTimeNo");
 				//scheduleTimeDateTime = resp[i].scheduleTimeDateTime.substring(11,16);
+
 				scheduleTimeDateTime = resp[i].scheduleTimeDateTime;
 				console.log("scheduleTimeDateTime",scheduleTimeDateTime);
-				console.log("scheduleTimeDateTime 데이터 타입",typeof scheduleTimeDateTime);
+				
 				var checkDate = new Date(resp[i].scheduleTimeDateTime);
 				var firstTime = checkDate.getHours()+":"+checkDate.getMinutes();
 				
@@ -641,8 +644,8 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				template = template.replace("{{value}}",resp[i].scheduleTimeNo);
 				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
 				template = template.replace("{{id}}","s"+resp[i].scheduleTimeNo);
-				
 				var tag = $(template);
+
 				tag.find("input[type=radio]").on("input",function(){
 					scheduleTimeNo = $(this).attr("value");
 					scheduleTimeDiscountType = $(this).data("scheduleTimeDiscountType");
@@ -659,10 +662,10 @@ function scheduleDateTimeDateList(scheduleTimeDate){
 				
 				}
 				
-				if(count==0){
-					$(".schedule-time-date-time-list").text("금일 상영 시간이 모두 지났습니다.");
-				}
 			}
+				if(count==0){
+					$(".schedule-time-date-time-list").text("해당 날짜의 상영이 없거나 종료되었습니다.");
+				}
 			
 		},
 		error:function(e){
