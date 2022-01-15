@@ -1,4 +1,4 @@
-# KH SEMI PROJECT KIM4PACKJANG
+# KH FiNAL PROJECT 영화보조
 <img src="https://user-images.githubusercontent.com/88869260/149605235-a10a3344-b9fd-4e1e-9738-5d0ba48f7d79.png" width="250" height="200">
 <img src="https://user-images.githubusercontent.com/88869260/149605551-e90404e8-6b1e-4d14-8132-b055b5627cde.png" width="250" height="200">
 
@@ -29,11 +29,13 @@
  - Oracle: SQL-Developer
  - VScode
  
-
 #### api
  - 다음 우편번호 서비스 
  - 카카오지도
- - 카카오페이 
+ - 카카오페이
+
+#### test
+ - apache jmter
 
 ### 개발 일정
 
