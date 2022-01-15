@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.spring.repository.reservation.ReservationDao;
 import com.kh.spring.repository.schedule.ScheduleDao;
 import com.kh.spring.repository.schedule.ScheduleTimeDao;
 import com.kh.spring.vo.HallByScheduleTimeVO;
@@ -19,6 +20,10 @@ public class ScheduleTimeServiceImpl implements ScheduleTimeService{
 	private ScheduleTimeDao scheduleTimeDao;
 	@Autowired
 	private ScheduleDao scheduleDao;
+	@Autowired
+	private ReservationDao reservationDao;
+	
+	
 	@Override
 	public List<ShowRealTimeVO> getList(int movieNo, int theaterNo, String scheduleTimeDate) {
 		int scheduleNo = scheduleDao.getByMovieTheater(movieNo,theaterNo);
@@ -45,6 +50,15 @@ public class ScheduleTimeServiceImpl implements ScheduleTimeService{
 			list.add(showRealTimeVO);
 		}
 		return list;
+	}
+	@Override
+	public boolean delete(int scheduleTimeNo) {
+		if(reservationDao.paymentCompletedListByScheduleTimeNo(scheduleTimeNo).isEmpty()) {
+			scheduleTimeDao.delete(scheduleTimeNo);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
