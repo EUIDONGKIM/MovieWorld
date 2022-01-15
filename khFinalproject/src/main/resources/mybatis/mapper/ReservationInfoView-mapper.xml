@@ -45,7 +45,7 @@
 		theater_no=#{theaterNo}
 		)
 		group by movie_no,movie_title,movie_grade
-		order by count
+		order by count desc
 	</select>
 	
 	<select id="getByTheater" parameterType="int" resultType="ReservationInfoViewDto">

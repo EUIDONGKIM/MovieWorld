@@ -88,7 +88,7 @@ public class ReservationController {
 	private MoviePhotoDao moviePhotoDao;
 	@Autowired
 	private TotalInfoViewDao totalInfoViewDao;
-		@RequestMapping("/main")
+		@RequestMapping("/")
 		public String main(Model model,HttpSession session) {
 
 			String memberEmail = (String)session.getAttribute("ses");
