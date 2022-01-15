@@ -173,20 +173,20 @@
                   </div>
             </div>
             <div class="col-md-10 b" style="height: auto">
-			
-                	<div id="page1">
+
+                <div id="page1">
+				 <img src="${pageContext.request.contextPath}/resources/image/마이페이지.png">
+                </div>
+                
+  				<div id="page2">
 				
                 </div>
                 
-  				  <div id="page2">
+				<div id="page3">
 				
                 </div>
                 
-					<div id="page3">
-				
-                </div>
-                
-  					<div id="page4">
+  				<div id="page4">
 				
                 </div>
                 
