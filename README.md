@@ -59,6 +59,7 @@ https://www.cgv.co.kr/
 
 ### flow chart
 회원
+<br>
 <img src="https://user-images.githubusercontent.com/88869260/149605134-4757d66c-536e-4f1e-869d-83636dfdff36.png">
 <br>
 게시판
