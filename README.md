@@ -57,26 +57,28 @@ https://www.cgv.co.kr/
 <img src="https://user-images.githubusercontent.com/88869260/149605037-2c8a644d-9943-43b6-9362-ae9c1c6f8af0.png">
 #### 참고사이트 : [DrawIO](https://www.draw.io/)
 
-
-### 시퀀스 다이어그램(Sequence Diagram)
-
 ### flow chart
 회원
 <img src="https://user-images.githubusercontent.com/88869260/149605134-4757d66c-536e-4f1e-869d-83636dfdff36.png">
-
+<br>
 게시판
+<br>
 <img src="https://user-images.githubusercontent.com/88869260/149605434-c809d98d-4cab-4403-8e18-9c45a1914063.png">
-
+<br>
 영화/스케쥴
+<br>
 <img src="[image](https://user-images.githubusercontent.com/88869260/149605497-75a57336-116c-4165-94e3-4181da2c479e.png">
-
+<br>
 예약
+<br>
 <img src="https://user-images.githubusercontent.com/88869260/149605449-401ef77f-c7b8-4839-abeb-804e16f46082.png">
-
+<br>
 영화인/가격
+<br>
 <img src="https://user-images.githubusercontent.com/88869260/149605467-44160db4-ed37-477e-8220-c05f11ad227c.png">
-
+<br>
 극장및/상영관
+<br>
 <img src="https://user-images.githubusercontent.com/88869260/149605480-330b2ef7-f552-4d85-b83c-cb7b38631bbb.png">
 
 
