@@ -1,5 +1,5 @@
 # KH SEMI PROJECT KIM4PACKJANG
-<img src="https://user-images.githubusercontent.com/88869260/149605235-a10a3344-b9fd-4e1e-9738-5d0ba48f7d79.png" width="200" height="200">
+<img src="https://user-images.githubusercontent.com/88869260/149605235-a10a3344-b9fd-4e1e-9738-5d0ba48f7d79.png" width="250" height="200">
 
 
 ## 프로젝트 소개
