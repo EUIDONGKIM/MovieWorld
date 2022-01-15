@@ -38,12 +38,12 @@
         
 	});
 </script>
-<div class="container">
+<div class="container mx-auto">
 	<div class="row my-3">
 		<h1>
 			<a href="${root}/theater/detail?theaterNo=${theaterDto.theaterNo}">${theaterDto.theaterName}</a>점 ${hallDto.getFullName()}
-			<a class="btn btn-info mx-2" href="${root}/hall/admin/edit?hallNo=${hallDto.hallNo}">수정</a>
-			<a class="btn btn-info mx-2" href="${root}/hall/admin/update_seat?hallNo=${hallDto.hallNo}">좌석 재설정</a>
+			<a class="btn btn-primary mx-2" href="${root}/hall/admin/edit?hallNo=${hallDto.hallNo}">수정</a>
+			<a class="btn btn-primary mx-2" href="${root}/hall/admin/update_seat?hallNo=${hallDto.hallNo}">좌석 재설정</a>
 		</h1>
 	</div>
 	<div class="row">

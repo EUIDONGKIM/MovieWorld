@@ -1,31 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <script>
 $(function(){
-	
+	$(".cancel-btn").click(function(e){
+		e.preventDefault();
+		self.location = "${root}/theater/detail?theaterNo=${theaterDto.theaterNo}";
+	});
 });
 </script>
 
 <div class="container-600 mx-auto">
 	<div class="row my-3">
-		<h1>상영관 생성</h1>
+		<h1>${theaterDto.theaterName}점 상영관 생성</h1>
 	</div>
 
 	<form action="${pageContext.request.contextPath}/hall/admin/create_seat" method="post">
 	
 	<div class="row">
-		<label class="form-label">지점명</label>
 		<input type="hidden" name="theaterNo" class="form-control" value="${theaterDto.theaterNo}" readonly>
-		<input type="text" class="form-control" value="${theaterDto.theaterName}" readonly>
 	</div>
 	
 	<div class="row">
 		<label class="form-label">상영관 이름</label>
-		<input type="text" name="hallName" value="${hallCount + 1}관" required>
+		<input type="text" class="form-control" name="hallName" value="${hallCount + 1}관" required>
 	</div>
 	
 	<div class="row">
@@ -60,6 +62,7 @@ $(function(){
 	</div>
 	
 	<button class="btn btn-primary" type="submit">좌석 설정</button>
+	<button type="button" class="cancel-btn btn btn-outline-primary">취소</button>
 </form>
 </div>
 

@@ -22,9 +22,9 @@
 	
 	<select id="listMoiveByCount" resultType="MovieCountVO">
 		select movie_no,movie_title,movie_grade,movie_runtime,sum(schedule_time_count) count
-		from reservation_info_view 
+		from reservation_info_view where schedule_end > sysdate
 		group by movie_no,movie_title,movie_grade,movie_runtime
-		order by count
+		order by count desc
 	</select>
 	
 	<select id="listSidoByMovie" parameterType="int" resultType="String">
