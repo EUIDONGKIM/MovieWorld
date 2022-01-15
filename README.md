@@ -61,21 +61,27 @@ https://www.cgv.co.kr/
 ### 시퀀스 다이어그램(Sequence Diagram)
 
 ### flow chart
-관리자 기능중 -1
-<img src="https://user-images.githubusercontent.com/88869260/144250759-413dc666-3d12-4f2d-905f-1cc933f90cc0.png">
-
+회원
+<img src="https://user-images.githubusercontent.com/88869260/149605134-4757d66c-536e-4f1e-869d-83636dfdff36.png">
 
 게시판
-<img src="https://user-images.githubusercontent.com/88869260/144250958-83a49289-8cbd-45ce-9479-54c457dc738f.png">
+<img src="https://user-images.githubusercontent.com/88869260/149605434-c809d98d-4cab-4403-8e18-9c45a1914063.png">
 
-회원
-<img src="https://user-images.githubusercontent.com/88869260/144251070-3cf33573-65b6-40b5-8593-e9115e9444f4.png">
+영화/스케쥴
+<img src="[image](https://user-images.githubusercontent.com/88869260/149605497-75a57336-116c-4165-94e3-4181da2c479e.png">
 
-상품
-<img src="https://user-images.githubusercontent.com/88869260/144251124-86a38bb8-b704-417a-8390-7f8cf72fea2b.png">
+예약
+<img src="https://user-images.githubusercontent.com/88869260/149605449-401ef77f-c7b8-4839-abeb-804e16f46082.png">
+
+영화인/가격
+<img src="https://user-images.githubusercontent.com/88869260/149605467-44160db4-ed37-477e-8220-c05f11ad227c.png">
+
+극장및/상영관
+<img src="https://user-images.githubusercontent.com/88869260/149605480-330b2ef7-f552-4d85-b83c-cb7b38631bbb.png">
+
 
 ### 계층형 관계도
-통계
+
 <img src="https://user-images.githubusercontent.com/88869260/149605167-3ab4b80d-823a-4bcf-818d-a4d038b742df.png">
 
 
