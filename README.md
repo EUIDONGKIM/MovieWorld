@@ -1,4 +1,4 @@
-# KH FiNAL PROJECT 영화보조
+# KH FINAL PROJECT 영화보조
 <img src="https://user-images.githubusercontent.com/88869260/149605235-a10a3344-b9fd-4e1e-9738-5d0ba48f7d79.png" width="250" height="200">
 <img src="https://user-images.githubusercontent.com/88869260/149605551-e90404e8-6b1e-4d14-8132-b055b5627cde.png" width="250" height="200">
 
