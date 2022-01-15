@@ -1,5 +1,5 @@
 # KH SEMI PROJECT KIM4PACKJANG
-<img src="https://i.esdrop.com/d/0w9ssozl3pla/wrQybLWLJ5.png">
+<img src="https://user-images.githubusercontent.com/88869260/149604959-ae1f4d49-5af1-420b-a4c3-f1f2527bddc0.png">
 
 
 ## 프로젝트 소개
