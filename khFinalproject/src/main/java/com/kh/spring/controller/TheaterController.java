@@ -136,7 +136,6 @@ public class TheaterController {
 	public String edit(@ModelAttribute TheaterDto theaterDto, RedirectAttributes redirectAttributes) {
 		theaterService.editTheater(theaterDto);
 		redirectAttributes.addAttribute("theaterNo", theaterDto.getTheaterNo());
-		redirectAttributes.addFlashAttribute("editResult","editSuccess");
 		return "redirect:/theater/detail";	
 	}
 	

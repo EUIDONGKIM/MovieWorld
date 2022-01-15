@@ -29,4 +29,6 @@ public interface ReservationDao {
 	int count(String column, String keyword);
 
 	List<ReservationListVO> serach(String column, String keyword, int begin, int end);
+	
+	List<ReservationDto> paymentCompletedListByScheduleTimeNo(int scheduleTimeNo);
 }

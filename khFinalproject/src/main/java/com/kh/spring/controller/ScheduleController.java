@@ -31,6 +31,7 @@ import com.kh.spring.repository.schedule.ScheduleTimeDiscountDao;
 import com.kh.spring.repository.schedule.TotalInfoViewDao;
 import com.kh.spring.repository.theater.HallDao;
 import com.kh.spring.repository.theater.TheaterDao;
+import com.kh.spring.service.ScheduleTimeService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,6 +58,8 @@ public class ScheduleController {
 	private LastInfoViewDao lastInfoViewDao;
 	@Autowired
 	private StatisticsInfoViewDao statisticsInfoViewDao;
+	@Autowired
+	private ScheduleTimeService scheduleTimeService;
 	
 	@GetMapping("/admin/create")
 	public String create(Model model) {
@@ -267,16 +270,9 @@ public class ScheduleController {
 	
 	@GetMapping("/time/admin/delete")
 	public String timeDelete(@RequestParam int scheduleTimeNo,@RequestParam(required = false) String movieTitle,@RequestParam(required = false) String movieTotal) throws UnsupportedEncodingException {
-		StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.exist(scheduleTimeNo);
-		if(statisticsInfoViewDto==null) {
-			
-		boolean success = scheduleTimeDao.delete(scheduleTimeNo);
+		boolean success = scheduleTimeService.delete(scheduleTimeNo);
 		if(success) {
 			return "redirect:/movie/admin/list";
-		}
-		else {
-			return "redirect:???"; //실패
-		}
 		}else {
 			String change = URLEncoder.encode(movieTitle , "UTF-8");
 			return "redirect:/movie/admin/list?movieTitle="+change+"&movieTotal="+movieTotal+"&errorScheduleTimeNo";
@@ -285,18 +281,11 @@ public class ScheduleController {
 	
 	@RequestMapping("/admin/delete_time")
 	public String timeDelete2(@RequestParam int scheduleTimeNo, RedirectAttributes redirectAttributes) {
-		StatisticsInfoViewDto statisticsInfoViewDto = statisticsInfoViewDao.exist(scheduleTimeNo);
 		int theaterNo = scheduleTimeDao.getTheaterNo(scheduleTimeNo);
+		boolean success = scheduleTimeService.delete(scheduleTimeNo);
 		redirectAttributes.addAttribute("theaterNo",theaterNo);
-		if(statisticsInfoViewDto==null) {
-			
-			boolean success = scheduleTimeDao.delete(scheduleTimeNo);
-			
-			if(success) {
-				return "redirect:/theater/detail";
-			} else {
-				return "redirect:???"; //실패
-			}
+		if(success) {
+			return "redirect:/theater/detail";
 			
 		} else {
 			redirectAttributes.addFlashAttribute("msg","예매내역이 존재하면 스케줄을 삭제할 수 없습니다.");

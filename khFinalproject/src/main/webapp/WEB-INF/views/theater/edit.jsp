@@ -12,6 +12,7 @@ $(function(){
 		$("input[name=theaterName]").attr("disabled",true);
 		$("input[name=theaterAddress]").attr("disabled",true);
 		$("input[name=theaterDetailAddress]").attr("disabled",true);
+		$("input[name=theaterSido]").attr("disabled",true);
 		$(".find-address-btn").attr("disabled",true);
 		
 		$(".delete-btn").attr("disabled",true);
