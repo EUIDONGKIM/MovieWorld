@@ -9,7 +9,7 @@
 
 ### 개발 환경
 #### 운영체제(OS) 및 버전
- - window 7 , window 10
+ - window 10
 #### Front End
   - CSS
   - JavaScript
