@@ -27,7 +27,6 @@
             });
             print(cinema);
             function print(app){
-                document.querySelector(".result").textContent = app.getQueryString();
             }
         });
     </script>    

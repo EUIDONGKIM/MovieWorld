@@ -108,4 +108,9 @@
 		)tmp) where rn between #{begin} and #{end}
 	</select>
 	
+	<!-- 상영스케줄 삭제 가능한지 확인용 -->
+	<select id="exist" parameterType="int" resultType="ReservationDto">
+		select * from reservation where schedule_time_no = #{scheduleTimeNo} and reservation_status = '결제완료'
+	</select>
+	
 </mapper>

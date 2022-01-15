@@ -93,4 +93,10 @@ public class ReservationDaoImpl implements ReservationDao {
 		return sqlSession.selectList("reservation.serach",param);
 	}
 
+	@Override
+	public List<ReservationDto> paymentCompletedListByScheduleTimeNo(int scheduleTimeNo) {
+		return sqlSession.selectList("reservation.exist", scheduleTimeNo);
+	}
+
+
 }
