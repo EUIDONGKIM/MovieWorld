@@ -1,11 +1,11 @@
 # KH SEMI PROJECT KIM4PACKJANG
-<img src="https://user-images.githubusercontent.com/88869260/149604959-ae1f4d49-5af1-420b-a4c3-f1f2527bddc0.png">
+<img src="https://user-images.githubusercontent.com/88869260/149605235-a10a3344-b9fd-4e1e-9738-5d0ba48f7d79.png" width="200" height="200">
 
 
 ## 프로젝트 소개
 
 ### 애플리케이션 개발 목적
-학습한 기술 중 다양한 항목을 접목하여, 테스트 및 구현을 해 보기 위해 쇼핑몰 사이트를 구현하기로 하였습니다.
+코로나 19로 인하여 영화산업 매출이 급격하게 감소하여 영화 시장에 도움이 되기 위하여 영화 예약 사이트를 제작 
 
 ### 개발 환경
 #### 운영체제(OS) 및 버전
@@ -35,26 +35,26 @@
 
 ### 개발 일정
 
-<img src="https://i.esdrop.com/d/0w9ssozl3pla/dS6kvZlqoE.png"  width="100%">
+<img src="https://user-images.githubusercontent.com/88869260/149604959-ae1f4d49-5af1-420b-a4c3-f1f2527bddc0.png"  width="100%">
 
 
 ### 시장 조사 내용
 
 영화 예매 사이트 CGV
-<img src="https://user-images.githubusercontent.com/88869260/144250524-7c1265cc-8bca-4f26-86fc-e457645d4901.png">
+<img src="https://user-images.githubusercontent.com/88869260/149604978-a64c14e6-0bbd-4e05-91e8-cfa2881ad141.png">
 https://www.cgv.co.kr/
 
 ## 다이어그램
 
 ### 데이터베이스 다이어그램(ERD)
-<img src="https://i.esdrop.com/d/0w9ssozl3pla/KPuqJFQelQ.png">
-<img src="https://i.esdrop.com/d/0w9ssozl3pla/QFDEksLgYg.png">
+<img src="https://user-images.githubusercontent.com/88869260/149605155-8d371acd-35f2-4cd7-bf33-21818d03e040.png">
+<img src="https://user-images.githubusercontent.com/88869260/149605160-0d5ddb9d-b7e9-45d2-a322-f780534ecada.png">
 
 
 #### 참고사이트 : [ERD Cloud](https://www.erdcloud.com/)
 
 ### 유스케이스 다이어그램(Use-Case Diagram)
-<img src="https://user-images.githubusercontent.com/88869260/143809412-606ee0f9-a099-42d1-9c7c-72047ed0c0dc.png">
+<img src="https://user-images.githubusercontent.com/88869260/149605037-2c8a644d-9943-43b6-9362-ae9c1c6f8af0.png">
 #### 참고사이트 : [DrawIO](https://www.draw.io/)
 
 
