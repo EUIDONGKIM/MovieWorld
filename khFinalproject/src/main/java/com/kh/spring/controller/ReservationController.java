@@ -166,7 +166,7 @@ public class ReservationController {
 			
 			int reservationNo = reservationService.getReservationNo(partner_order_id,partner_user_id,tid,pg_token,memberPoint,memberNo);
 
-			return "redirect:success_result?reservationNo="+reservationNo;
+			return "redirect:/reservation/success_result?reservationNo="+reservationNo;
 		}
 		
 		@GetMapping("/success_result")
@@ -223,7 +223,7 @@ public class ReservationController {
 				reservationService.cancel(reservationNo,memberNo);
 				
 //			return "redirect:history_detail";
-				return "redirect:history_detail?reservationNo="+reservationNo;
+				return "redirect:/reservation/history_detail?reservationNo="+reservationNo;
 			}
 		}
 		
