@@ -43,7 +43,7 @@ $(function(){
 </template>
 <template id="template-end">
 		<label>상영 종료일</label>
-		<input type="date" name="scheduleEnd" required min="{{min}}" max="{{max}}">
+		<input type="date" name="scheduleEnd" required min="{{min}}">
 </template>
 
 
