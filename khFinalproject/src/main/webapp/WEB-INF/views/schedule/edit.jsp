@@ -43,7 +43,7 @@
 			<label>상영 종료일</label>
 		</div>
 		<div class="col">
-				<input type="date" name="scheduleEnd" value="${totalInfoViewDto.scheduleEnd}" required min="${movieDto.getOpeningDay()}" max="${movieDto.getEndingDay()}" class="form-control">
+				<input type="date" name="scheduleEnd" value="${totalInfoViewDto.scheduleEnd}" required min="${movieDto.getOpeningDay()}" class="form-control">
 		</div>
 	</div>
 	
