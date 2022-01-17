@@ -73,7 +73,7 @@
 		
 		<div class="row schedule-end">
 			<label class="form-label">상영 종료일</label>
-			<input class="form-control" type="date" name="scheduleEnd" required min=${movieDto.getOpeningDay() }>
+			<input class="form-control" type="date" name="scheduleEnd" required min=${movieDto.getOpeningDay() }  max=${movieDto.getEndingDay() }>
 		</div>
 		
 		<button class="btn btn-primary" type="submit">상영 영화 일괄 생성</button>
