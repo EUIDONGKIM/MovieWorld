@@ -51,10 +51,10 @@ public class KakaoPayServiceImpl implements KakaoPayService{
 				
 				//카카오서버에게 결제 결과에 따른 페이지를 미리 안내(단, 애플리케이션에 등록된 주소만 가능)
 				//=(주의) 반드시 완성된 주소를 알려줘야 카카오에서 우리 서버로 다시 돌아올 수 있다
-				body.add("approval_url", "http://localhost:8080/spring/reservation/success");
-				body.add("cancel_url", "http://localhost:8080/spring/reservation/cancel");
-				body.add("fail_url", "http://localhost:8080/spring/reservation/fail");
-				
+				body.add("approval_url", "http://www.sysout.co.kr/movieworld/reservation/success");
+				body.add("cancel_url", "http://www.sysout.co.kr/movieworld/reservation/cancel");
+				body.add("fail_url", "http://www.sysout.co.kr/movieworld/reservation/fail");
+
 				//2-3. Header와 Body를 합성
 				HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
 				
